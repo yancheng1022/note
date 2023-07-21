@@ -1,0 +1,192 @@
+{
+  "main": {
+    "id": "f44571c1078ea503",
+    "type": "split",
+    "children": [
+      {
+        "id": "77b8f5a4d3a91262",
+        "type": "tabs",
+        "dimension": 60.0253807106599,
+        "children": [
+          {
+            "id": "4186e2768b99004e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "coding/JUC.md",
+                "mode": "source",
+                "source": false
+              }
+            },
+            "group": "8e5f1276b6022577"
+          }
+        ]
+      },
+      {
+        "id": "66850dfa479f4451",
+        "type": "tabs",
+        "dimension": 39.974619289340104,
+        "children": [
+          {
+            "id": "0a3098b6eaf905dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "coding/JUC.md",
+                "mode": "preview",
+                "source": false
+              }
+            },
+            "group": "8e5f1276b6022577"
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "07e774d80b88c862",
+    "type": "split",
+    "children": [
+      {
+        "id": "75bfa4a1e023c57e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b7f713f372dcd6f5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "a37981197d918634",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "pcre",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "75c02d62a1531476",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8ae727db9b69a191",
+    "type": "split",
+    "children": [
+      {
+        "id": "96d1623dc8186416",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d6faa3407d1cf557",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "coding/JUC.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d3e93cb53cae7c12",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "coding/JUC.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "79d36a66eafd588c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "0894c2e381ae7534",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "coding/JUC.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
+    }
+  },
+  "active": "4186e2768b99004e",
+  "lastOpenFiles": [
+    "coding/nginx.md",
+    "coding/JUC.md",
+    "img/Nginx.md",
+    "img/7.jpg",
+    "img/6.jpg",
+    "img/5.jpg",
+    "img/4.jpg",
+    "img/3.jpg",
+    "img/2.jpg",
+    "img/1 1.jpg",
+    "img/1.jpg",
+    "img/Pasted image 20230721221659.png",
+    "img/Pasted image 20230721221634.png",
+    "coding/img",
+    "img/2.jpg.md",
+    "img",
+    "coding"
+  ]
+}
