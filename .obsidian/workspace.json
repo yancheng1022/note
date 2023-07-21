@@ -6,7 +6,6 @@
       {
         "id": "77b8f5a4d3a91262",
         "type": "tabs",
-        "dimension": 60.0253807106599,
         "children": [
           {
             "id": "4186e2768b99004e",
@@ -19,17 +18,16 @@
                 "source": false
               }
             },
-            "group": "8e5f1276b6022577"
+            "group": "bbb567d14374714a"
           }
         ]
       },
       {
-        "id": "66850dfa479f4451",
+        "id": "1fee78092aaff1c9",
         "type": "tabs",
-        "dimension": 39.974619289340104,
         "children": [
           {
-            "id": "0a3098b6eaf905dc",
+            "id": "f2e91085a06fda77",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -39,7 +37,7 @@
                 "source": false
               }
             },
-            "group": "8e5f1276b6022577"
+            "group": "bbb567d14374714a"
           }
         ]
       }
@@ -169,7 +167,7 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "4186e2768b99004e",
+  "active": "f2e91085a06fda77",
   "lastOpenFiles": [
     "coding/nginx.md",
     "coding/JUC.md",
