@@ -124,11 +124,11 @@ public class Demo {
 
 ## 2.2、spring与日志框架整合
 spring与日志框架整合，日志框架就可以在控制台中，输出spring框架运行过程中的一些重要信息
-
+![[img/Pasted image 20230722131755.png]]
 - spring如何整合日志框架？
 ```java
-spring 1,2,3 早期都是与commons-logging.jar
-spring5.x默认整合的日志框架logback 或 log4j2
+spring 1,2,3 早期都是jcl
+spring4.x开始使用slf4j，默认整合的日志框架logback 或 log4j2
 ```
 
 当然spring5中我们也可以不采用默认，而去整合我们熟悉的log4j
