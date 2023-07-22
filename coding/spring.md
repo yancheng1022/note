@@ -62,7 +62,7 @@ public class BeanFactory{
     }
 }
 ```
-# 2、spring 工厂
+# 2、spring IOC
 ## 2.1、第一个spring程序
 ### 2.1.1、核心API
 
@@ -198,50 +198,20 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
+![[img/Pasted image 20230722174535.png]]
 1. 实例化（Instantiation）：当Spring容器接收到Bean的定义时，会使用反射机制创建一个Bean实例。
-2. 属性赋值（Populate Bean）：Spring容器会将Bean的属性值或依赖注入到Bean实例中。
-3. 初始化（Initialization）：在Bean的所有依赖注入和属性赋值完成之后，Spring容器会调用Bean的初始化方法，例如实现InitializingBean接口的afterPropertiesSet方法或者在配置文件中使用init-method属性指定的自定义初始化方法。
-4. 使用（In Use）：在初始化完成之后，Bean就可以被使用了。
-5. 销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，Spring容器会调用Bean的销毁方法，例如实现DisposableBean接口的destroy方法或者在配置文件中使用destroy-method属性指定的自定义销毁方法。
+2. 属性赋值（Populate Bean）： Spring 将值和bean的引用注入到bean对应的属性中
+3. 回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法。
+> Spring的依赖注入的最大亮点就是你所有的Bean对Spring容器的存在是没有意识的。即你可以将你的容器替换成别的容器，例如Goggle Guice,这时Bean之间的耦合度很低。
+> 但是在实际的项目中，我们不可避免的要用到Spring容器本身的功能资源，这时候Bean必须要意识到Spring容器的存在，才能调用Spring所提供的资源，这就是所谓的Spring Aware。其实Spring Aware本来就是Spring设计用来框架内部使用的，若使用了Spring Aware，你的Bean将会和Spring框架耦合。  
+
+1. 初始化（Initialization）：分别调用（1）BeanPostProcessor的前置处理器，（2）InitialzingBean的afterPropertiesSet（）方法，（3）调用init初始化方法（4）调用BeanPostProcessor的后置处理器
+2. 使用（In Use）：在初始化完成之后，Bean就可以被使用了。
+3. 销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
 
 
-## 2.9、beanPostProcessor 
+# 3、spring AOP
 
-1. beanPostProcessor作用：对spring创建的对象进行再加工
-2. beanPostProcessor流程：spring**创建完对象并进行注入后**，调用postProcessBeforeInitialization进行处理，**执行完对象的初始化操作后**，调用postProcessAfterInitialization
-
-### 2.9.1、BeanPostProcessor编码
-
-1. 类实现BeanPostProcessor接口
-```java
-public class MyBeanPostProcessor implements BeanPostProcessor {
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        // 注意：BeanPostProcessor会对所有spring对象处理，所以需要先判断类型
-        if (bean instanceof Person){
-            Person person = (Person) bean;
-            person.setAge(22);
-            return person;
-        }
-        return bean;
-    }
-}
-```
-
-2. spring的配置文件中进行配置
-```xml
-<bean id="myProcessor" class="processor.MyBeanPostProcessor"></bean>
-```
-# 3、spring aop
-> aop和动态代理的区别？
-
-1、[aop](https://so.csdn.net/so/search?q=aop&spm=1001.2101.3001.7020)针对功能应用层面
-2、代理针对底层方法
-3、aop有前切、后切、环切，但是动态代理没有，aop底层用动态代理实现
-4、就像filter和interceptor，都是拦截功能，一个在应用层，一个在底层
 ## 3.1、spring动态代理
 ### 3.1.1、spring动态代理概念
 
@@ -396,7 +366,7 @@ execution() ：切入点函数
 ```java
 * com.kaka..*.*()
     
-    其中的..*代表当钱包及其子包
+    其中的..*代表当前包及其子包
     如果是.*代表当前包
 ```
 
@@ -492,7 +462,7 @@ execution(* login(..)) or execution(* register(..))
 > 切面 = 切入点 + 额外功能
 
 多个额外功能相同的方法所代表的点连起来就是一个面
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1644648592099-51e09155-759a-4735-b69e-94ef5ae68efa.png#clientId=uf02c53de-33f5-4&from=paste&height=368&id=ua516ebed&originHeight=736&originWidth=801&originalType=binary&ratio=1&rotation=0&showTitle=false&size=200258&status=done&style=none&taskId=u7ed81bfb-ec3e-4689-b460-ca0498e61a7&title=&width=400.5)
+![[img/Pasted image 20230722190135.png]]
 ### 3.2.2、AOP底层实现原理
 #### 3.2.2.1、核心问题
 > 1. aop如何创建动态代理类（动态字节码技术）
@@ -502,9 +472,7 @@ execution(* login(..)) or execution(* register(..))
 ### 3.2.3、动态代理类的创建
 #### 3.2.3.1、JDK动态代理
 
-- Proxy.newProxyInstancec方法参数的详解：
-
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1644841658838-cb0e060e-8733-46d2-9fa1-7d7c0bd68a5c.png#clientId=u08615971-5f78-4&from=paste&height=418&id=u2e8d7092&originHeight=835&originWidth=1595&originalType=binary&ratio=1&rotation=0&showTitle=false&size=726931&status=done&style=none&taskId=uc23fa177-2137-4427-8143-b8b86273158&title=&width=797.5)
+- Proxy.newProxyInstancec：
 
 - 编码实现
 ```java
@@ -634,7 +602,7 @@ public class MyAspect {
     <!--
         切面:
             1. 额外功能
-            2. 切入点啊
+            2. 切入点
             3. 组装切面
     -->
     <bean id="around" class="com.yusael.aspect.MyAspect"/>
@@ -682,36 +650,7 @@ AOP 底层实现 2 种代理创建方式：
 <!-- 动态代理模式切换为cglib -->
 <aop:aspectj-autoproxy proxy-target-class="true"/>
 ```
-#### 3.2.4.3、AOP开发中一个的坑
-在同⼀个业务类中，进⾏业务方法间的相互调用，只有最外层的方法，才是加入了额外功能(内部的方法，通过普通的方式调用，都调用的是原始方法)。如果想让内层的方法也调用代理对象的方法，就要实现 AppicationContextAware 获得⼯厂，进而获得代理对象
-> User 类有一个日志代理，下面的login方法调用register方法，login会走代理，register不会走代理
 
-```java
-public class UserServiceImpl implements UserService, ApplicationContextAware {
-    private ApplicationContext ctx;
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ctx = applicationContext;
-    }
-    @Override
-    public void register(User user) {
-        System.out.println("UserServiceImpl.register 业务运算 + DAO");
-
-        // this.login("zhenyu", "123456"); // 这么写调用的是本类的 login 方法, 即原始对象的 login 方法
-        // 为什么不在这里创建一个工厂获取代理对象呢？
-        // Spring的工厂是重量级资源, 一个应用中应该只创建一个工厂.
-        // 因此我们必须通过 ApplicationContextAware 拿到已经创建好的工厂
-        UserService userService = (UserService) ctx.getBean("userService");
-        userService.login("yusael", "123456");
-    }
-
-    @Override
-    public boolean login(String name, String password) {
-        System.out.println("UserServiceImpl.login 业务运算 + DAO");
-        return true;
-    }
-} 
-```
 # 4、spring 持久层
 ## 4.1、spring与mybatis整合
 
@@ -795,7 +734,7 @@ public void test() {
     userDAO.save(user);
 }
 ```
-## 4.2、spring和mybatis整合细节
+## 4.2、关于事务提交的疑问
 
 **问题**：Spring 与 Myabatis 整合后，为什么 DAO 不提交事务，但是数据能够插入数据库中？
 
@@ -832,9 +771,6 @@ sqlSession.commit();，底层还是调用的 Connection
 sqlSession.rollback();，底层还是调用的 Connection
 > 结论：控制事务的底层，都是通过 Connection 对象完成的
 
-[
-
-](https://blog.csdn.net/weixin_43734095/article/details/106505754)
 ### 4.3.2、spring控制事务的开发
 spring是通过aop的方式进行事务开发
 **增强功能：**原理也是在方法执行前关闭自动提交，spring帮我们封装成datasourcetransactionmanager，不需要自己去写增强方法
@@ -923,7 +859,6 @@ public class UserServiceImpl implements UserService {
 ```
 > 本质：表锁（对数据库某个表加锁）
 
-#### 
 ##### 4.3.3.1.2、安全与效率对比：
 
 - 并发安全：SERIALIZABLE > READ_ONLY > READ_COMMITTED
@@ -945,9 +880,7 @@ Oracle：读已提交（READ_COMMITTED）
 | REQUIRED | 开启新的事务 | 融合到外部事务中 | @Transactional(propagation = Propagation.REQUIRED) | 增、删、改方法（保证了肯定会有事务的存在） |
 | REQUIRES_NEW | 开启新的事务 | 挂起外部事务，创建新的事务 | @Transactional(propagation = Propagation.REQUIRES_NEW) | 日志记录方法中（保证外部事务异常时能正常的记录日志） |
 | SUPPORTS | 不开启事务 | 融合到外部事务中 | @Transactional(propagation = Propagation.SUPPORTS) | 查询方法 |
-| NOT_SUPPORTED | 不开启事务 | 挂起外部事务
-
-  | @Transactional(propagation = Propagation.NOT_SUPPORTED) | 极其不常用 |
+| NOT_SUPPORTED | 不开启事务 | 挂起外部事务| @Transactional(propagation = Propagation.NOT_SUPPORTED) | 极其不常用 |
 | NEVER | 不开启事务 | 抛出异常 | @Transactional(propagation = Propagation.NEVER) | 极其不常用 |
 | MANDATORY（强制的） | 抛出异常 | 融合到外部事物中 | @Transactional(propagation = Propagation.MANDATORY) | 极其不常用 |
 
@@ -958,9 +891,6 @@ Spring 中**传播属性的默认值**是：REQUIRED
 - 增删改 方法：使用默认值 REQUIRED
 - 查询 方法：显示指定传播属性的值为 SUPPORTS
 
-##### 4.3.3.2.3、设置传播属性解决嵌套问题的原理
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1645518673161-6ffcf7da-173e-42a2-8c97-3d432e029b36.png#clientId=uedacebd7-a805-4&from=paste&height=369&id=u272937e7&originHeight=714&originWidth=975&originalType=binary&ratio=1&rotation=0&showTitle=false&size=155184&status=done&style=none&taskId=ufd3e529c-5d24-4437-b8e6-73f0e34b0db&title=&width=504)
-TXB和TXC由于设置了传播属性REQUIRED，所以都会融合到外部事务TXA中，这样保证了只有一个TXA事务，不存在事务嵌套的问题了
 
 #### 4.2.2.3、只读属性
 针对于 **只进行查询操作的业务方法**，可以加入只读属性，提高运行效率。
@@ -980,14 +910,12 @@ TXB和TXC由于设置了传播属性REQUIRED，所以都会融合到外部事务
 4. 超时属性的默认值：-1
 
 -1 表示超时属性由对应的数据库来指定（一般不会主动指定，-1 即可）
-[
 
-](https://blog.csdn.net/weixin_43734095/article/details/106505754)
 #### 4.2.2.5、异常属性
 Spring 事务处理过程中：
 
 - 默认对于 RuntimeException 及其子类，采用 **回滚** 的策略。
-- 默认对于 Exception 及其子类，采用 **提交** 的策略。
+- 默认对于 对于其他类型的异常，采用 **提交** 的策略（例如IO异常、网络异常等，可以在程序中使用try-catch块来处理这些异常，或者在方法签名中使用throws关键字将异常抛出给调用者处理。如果Spring默认采用回滚策略，会导致这些异常被回滚，可能会带来意想不到的后果，例如文件未能正确关闭、网络连接未能正确关闭等）。
 ```java
 @Transactional(rollbackFor = java.lang.Exception.class, xxx, xxx)
 
@@ -1030,82 +958,12 @@ ContextLoaderListener 使用方式：web.xml 中
 </context-param>
 
 ```
-[
-](https://blog.csdn.net/weixin_43734095/article/details/106536493)
-### 5.1.2、代码整合
 
-   把service对象注入到控制器对象
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1645578029195-b7767ab4-d636-4fc2-991d-cc1f93e79d53.png#clientId=u0b0dc890-af37-4&from=paste&height=291&id=u670d783c&originHeight=291&originWidth=904&originalType=binary&ratio=1&rotation=0&showTitle=false&size=129900&status=done&style=none&taskId=ucdb05e8a-63dc-4cae-a2d3-c35bd752ae0&title=&width=904)
-# 6、spring多配置文件的处理
-spring会根据需要，把配置信息分门别类的放置在多个配置文件中，便于后续的管理及维护
-DAO --- applicationContext-dao.xml
-Service --- applicationContext-service.xml
-Controller --- applicationContext-controller.xml
 
-## 6.1、通配符方式
-
-1. 非web环境
-```xml
-ApplicationContext ctx = new WebXmlApplicationContext("/applicationContext-*.xml");
-```
-
-2. web环境
-```xml
-<context-param>
-	<param-name> contextConfigLocation </param-name>
-	<param-value> classpath:applicationContext-*.xml </param-value>
-</context-param>
-
-```
-## 6.2、import标签
-applicationContext.xml 作为主配置文件，整合其它配置内容
-```xml
-<import resource = " applicationContext-dao.xml" />
-<import resource = " applicationContext-service.xml" />
-<import resource = " applicationContext-controller.xml" />
-```
-# 7、注解编程
-## 7.1、注解扫描
-
-1. **扫描当前包及其子包**
-```xml
-<context:component-scan base-package="com.yusael"/>
-```
-
-2. **设置不扫描哪些注解**
-```xml
-<!-- 配置扫描注解,不扫描@Controller注解 -->
-<context:component-scan base-package="com.fq">
-    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-</context:component-scan>
-```
-type="xxx"，xxx 有以下几个可选项：
-
-- assignable：排除特定的类型
-- annotation：排除特定的注解
-- aspectj：切入点表达式，比较常用
-
-包切入点： com.yusael.bean..*
-类切入点： *..User
-
-- regex：正则表达式，不常用，与切入点类似
-- custom：自定义排除策略，常用于框架底层开发（在 SpringBoot 源码中大量使用）
-
-3. **设置扫描哪些注解**
-
-与排除方式使用的区别：
-use-default-filters="false" 让 Spring 默认的注解扫描方式失效
-<context:include-filter type="" expression=""/> 用于指定扫描哪些注解
-type="xxx" 与排除方式完全一样，可以参考上面
-```xml
-<context:component-scan base-package="com.baizhiedu" use-default-filters="false">
-	<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-</context:component-scan>
-```
-## 7.2、spring基础注解（spring2.X）
-### 7.2.1、对象创建相关
-#### 7.2.1.1、@Component
+# 6、注解编程
+## 6.1、spring基础注解（spring2.X）
+### 6.1.1、对象创建相关
+#### 6.1.1.1、@Component
 
 1. 作用：替换原有Spring配置文件中的 <bean> 标签
 - id 属性：在 @Component 中提供了默认的设置方式：首单词首字母小写（UserDAO --> userDAO）
@@ -1114,12 +972,12 @@ type="xxx" 与排除方式完全一样，可以参考上面
 ```java
 @Component("u")
 ```
-#### 7.2.1.2、@Repository、@Service、@Contoller
+#### 6.1.1.2、@Repository、@Service、@Contoller
 @Repository、@Service、@Controller 都是 @Component 的 **衍生注解**。
 本质上这些衍生注解就是 @Component，通过源码可以看见他们都使用了 @Component；
 它们的存在是为了：**更加准确的表达一个类型的作用**
 
-#### 7.2.1.3、@Scope
+#### 6.1.1.3、@Scope
 作用：控制简单对象创建次数
 注意：不添加 @Scope，Spring 提供默认值 singleton
 ```java
@@ -1133,7 +991,7 @@ public class Customer {}
 @Scope("prototype")
 public class Customer {}
 ```
-#### 7.2.1.4、@Lazy
+#### 6.1.1.4、@Lazy
 作用：延迟创建单实例对象
 注意：一旦使用 @Lazy 注解后，Spring 会在使用这个对象的时候，才创建这个对象
 ```java
@@ -1145,7 +1003,7 @@ public class Account {
     }
 }
 ```
-#### 7.2.1.5、@PostConstruct、@PreDestroy
+#### 6.1.1.5、@PostConstruct、@PreDestroy
 初始化相关方法： @PostConstruct
 ```java
 InitializingBean
@@ -1156,8 +1014,8 @@ InitializingBean
 DisposableBean
 <bean destory-method=""/>
 ```
-### 7.2.2、注入相关注解
-#### 7.2.2.1、@Autowired（用户自定义类型）
+### 6.1.2、注入相关注解
+#### 6.1.2.1、@Autowired（用户自定义类型）
 
 1. @Autowired 注解 **基于类型进行注入** [推荐]：
 - 注入对象的类型，必须与目标成员变量类型相同或者是其子类（实现类）
@@ -1176,7 +1034,7 @@ private UserDAO userDAO;
 
 3. @Autowired 注解放置位置：
 - 放置在对应成员变量的 set 方法上，调用 set 方法赋值（在 set 里写的代码会被执行）
-- **直接放置在成员变量上**，Spring 通过反射直接对成员变量进行赋值 [推荐]
+- **直接放置在成员变量上**，Spring 通过反射直接对成员变量进行赋值
 
 4. JSR提供的@Resource注解
 > JavaEE 规范中类似功能的注解：
@@ -1184,7 +1042,7 @@ private UserDAO userDAO;
 等价于 @Autowired 与 @Qualifier 联合实现的效果
 注意：@Resource 注解如果名字没有配对成功，会继续 **按照类型进行注入**
 
-#### 7.2.2.2、@value、@PropertySource（JDK 类型）
+#### 6.1.2.2、@value、@PropertySource（JDK 类型）
 
 1. @value 注解的基本使用（xml配置）：
 ```java
@@ -1225,8 +1083,8 @@ public class AppConfig1 {
 - @Value 注解 + Properties 这种方式，不能注入集合类型
 Spring 提供新的配置形式 YAML(YML) (更多的用于SpringBoot中)
 ## 
-## 7.3、spring的高级注解（spring3.X及以上）
-### 7.3.1、@Configuration（配置bean）
+## 6.2、spring的高级注解（spring3.X及以上）
+### 6.2.1、@Configuration（配置bean）
 
 1. Spring 在 3.x 提供的新的注解@Configuration，用于替换 XML 配置文件
 2. 使用了 @Configuration 后，用 AnnotationConfigApplicationContext 创建工厂：
@@ -1237,7 +1095,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class)
 方法2: 指定配置bean所在的路径(某个包及其子包)
 ApplicationContext ctx = new AnnotationConfigApplicationContext("com.yusael");
 ```
-### 7.3.2、@Bean
+### 6.2.2、@Bean
 @Bean 注解在配置 bean 中进行使用，等同于 XML 配置文件中的 <bean 标签
 > **简单对象**：直接能够通过 new 方式创建的对象
 > - User、UserService、UserDAO
@@ -1269,7 +1127,7 @@ public class AppConfig{
   }
 }
 ```
-### 7.3.3、@ComponentScan
+### 6.2.3、@ComponentScan
 @ComponentScan 注解在配置 bean 中进行使用，等同于 XML 配置文件中的 <context:component-scan> 标签
 目的：进行相关注解的扫描（@Component、@Value、@Autowired …)
 ```java
@@ -1280,29 +1138,4 @@ public class AppConfig{
 public class AppConfig2 {
 }
 ```
-# 8、spring框架中YML的使用
-YML(YAML) 是一种新形式的配置文件，比 XML 更简单，比 Properties 更强大
 
-1. **Properties 进行配置的问题：**
-
-（1）Properties 表达过于繁琐，无法表达数据的内在联系
-（2）Properties 无法表达对象、集合类型
-
-2. **定义yml文件**
-
-xxx.yml xxx.yaml
-
-3. **基本语法**
-```java
-1. 基本语法
-      name: suns
-      password: 123456
-2. 对象概念 
-      account: 
-         id: 1
-         password: 123456
-3. 定义集合 
-      service: 
-         - 11111
-         - 22222
-```
