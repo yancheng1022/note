@@ -5,7 +5,6 @@ categories:
   - coding
 tags:
   - nginx
-abbrlink: 58122
 ---
 # 1、nginx简介
 ## 1.1、nginx概述
