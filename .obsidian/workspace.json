@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/nginx.md",
                 "mode": "source",
                 "source": false
               }
@@ -32,7 +32,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/nginx.md",
                 "mode": "preview",
                 "source": false
               }
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/nginx.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/nginx.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "coding/JUC.md"
+                "file": "coding/nginx.md"
               }
             }
           }
@@ -167,10 +167,10 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "f2e91085a06fda77",
+  "active": "4186e2768b99004e",
   "lastOpenFiles": [
-    "coding/nginx.md",
     "coding/JUC.md",
+    "coding/nginx.md",
     "img/Nginx.md",
     "img/7.jpg",
     "img/6.jpg",
