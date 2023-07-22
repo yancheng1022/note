@@ -124,7 +124,7 @@ public class Demo {
 
 ## 2.2、spring与日志框架整合
 spring与日志框架整合，日志框架就可以在控制台中，输出spring框架运行过程中的一些重要信息
-![[img/Pasted image 20230722131755.png]]
+![](img/Pasted%20image%2020230722131755.png)
 - spring如何整合日志框架？
 ```java
 spring 1,2,3 早期都是jcl
@@ -198,7 +198,8 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
-![[img/Pasted image 20230722174535.png]]
+
+![](img/Pasted%20image%2020230722174535.png)
 1. 实例化（Instantiation）：当Spring容器接收到Bean的定义时，会使用反射机制创建一个Bean实例。
 2. 属性赋值（Populate Bean）： Spring 将值和bean的引用注入到bean对应的属性中
 3. 回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法。
@@ -462,7 +463,7 @@ execution(* login(..)) or execution(* register(..))
 > 切面 = 切入点 + 额外功能
 
 多个额外功能相同的方法所代表的点连起来就是一个面
-![[img/Pasted image 20230722190135.png]]
+![](img/Pasted%20image%2020230722190135.png)
 ### 3.2.2、AOP底层实现原理
 #### 3.2.2.1、核心问题
 > 1. aop如何创建动态代理类（动态字节码技术）
@@ -923,41 +924,24 @@ Spring 事务处理过程中：
 ```
 
 
-# 5、spring整合mvc框架
+# 5、spring mvc
+spring mvc相关内容请参考spring mvc的笔记，这里只讨论spring mvc和spring 容器的关系 
 
-## 5.1、整合思想
-### 5.1.1、准备工厂
-（1）Web 开发过程中如何创建工厂?
-```java
-ApplicationContext ctx = new WebXmlApplicationContext("/applicationContext.xml");
-```
-（2）如何保证工厂唯一，同时被共用？
-
-- **共用**：工厂存储在 ServletContext 这个作用域中，ServletContext.setAttribute("xxx", ctx);
-- **唯一**：在 ServletContext 对象创建的同时创建工厂（因为servletContext只被创建一次）。
-
-ServletContextListener 在 ServletContext 对象创建的同时，被调用（只会被调用一次），
-把创建工厂的代码写在 ServletContextListener 中，也会保证只调用一次，保证了工厂的唯一性。
-
-> Spring 封装了一个 ContextLoaderListener，主要做了两件事：
-> （1）创建工厂
-> （2）把工厂存在 ServletContext 中
+## 5.1、父子容器关系
+1. Spring框架的核心是Spring容器（BeanFactory，ApplicationContext ）。Spring MVC是Spring框架中的一个模块，它提供了一种基于MVC模式的Web应用程序开发方式。 Spring MVC框架的核心是Spring MVC容器（WebApplicationContext）
+2. Spring MVC容器继承了Spring容器的所有功能，并且提供了一些额外的功能，如处理HTTP请求和响应、支持多种视图技术等
+3. Spring 容器是父容器，SpringMVC 是子容器，子容器可以访问父容器的 Bean，但是父容器不能访问子容器的 Bean（参考类继承的访问权限）
+4. 调用子容器的getBean方法获取bean的时候，会沿着当前容器开始向上面的容器进行查找，直到找到对应的bean为止
 
 
-ContextLoaderListener 使用方式：web.xml 中
-> ContextLoaderListener对创建web工厂进行了封装
+## 5.2、为什么要划分父子容器
+1. 分离关注点：Spring MVC负责处理Web请求和响应，与业务逻辑无关，因此需要将Spring MVC容器与Spring容器分离，以便更好地分离关注点，简化应用程序的开发和维护（单一职责原则）
+2. 性能优化：Spring MVC容器的初始化速度比Spring容器快，因为它只需要初始化与Web请求相关的对象。而Spring容器需要初始化整个应用程序中的所有对象，这可能会影响应用程序的性能
 
-```xml
-<listener>
-	<listener-class> org.springframework.web.context.ContextLoaderListener </listen-class>
-</listener>
+## 5.3、springBoot舍弃了父子容器的概念
 
-<context-param>
-	<param-name> contextConfigLocation </param-name>
-	<param-value> classpath:applicationContext.xml </param-value>
-</context-param>
-
-```
+SpringBoot只有一个容器。
+Spring Boot框架采用了“约定优于配置”的设计理念，旨在简化Spring应用程序的开发和部署
 
 
 # 6、注解编程

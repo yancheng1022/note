@@ -2,5 +2,7 @@
   "attachmentFolderPath": "img",
   "newLinkFormat": "absolute",
   "readableLineLength": false,
-  "showFrontmatter": true
+  "showFrontmatter": true,
+  "useMarkdownLinks": true,
+  "promptDelete": false
 }

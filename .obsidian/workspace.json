@@ -4,25 +4,6 @@
     "type": "split",
     "children": [
       {
-        "id": "77b8f5a4d3a91262",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "4186e2768b99004e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "coding/spring.md",
-                "mode": "source",
-                "source": false
-              }
-            },
-            "group": "cba3eaed51dee518"
-          }
-        ]
-      },
-      {
         "id": "5559028072dfdb4b",
         "type": "tabs",
         "children": [
@@ -33,11 +14,30 @@
               "type": "markdown",
               "state": {
                 "file": "coding/spring.md",
+                "mode": "source",
+                "source": false
+              }
+            },
+            "group": "3c18a7e7acc1a3d5"
+          }
+        ]
+      },
+      {
+        "id": "9bf2f975113d6b3e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fe005e60f49c5cf5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "coding/spring.md",
                 "mode": "preview",
                 "source": false
               }
             },
-            "group": "cba3eaed51dee518"
+            "group": "3c18a7e7acc1a3d5"
           }
         ]
       }
@@ -167,28 +167,28 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "4186e2768b99004e",
+  "active": "ce50db37a6619316",
   "lastOpenFiles": [
-    "img/Pasted image 20230722190210.png",
     "img/Pasted image 20230722190135.png",
-    "img/Pasted image 20230722174535.png",
-    "img/Pasted image 20230722174528.png",
     "img/Pasted image 20230722131755.png",
+    "img/Pasted image 20230722174535.png",
+    "coding/JUC.md",
     "coding/spring.md",
+    "coding/nginx.md",
+    "img/2.jpg",
+    "img/Pasted.md",
+    "img/1 2.jpg",
+    "img/1 1.jpg",
+    "img/1.jpg",
+    "img/Pasted image 20230722190210.png",
+    "img/Pasted image 20230722174528.png",
     "Excalidraw/spring bean生命周期.excalidraw.md",
     "Excalidraw",
     "Excalidraw/Drawing 2023-07-22 16.33.54.excalidraw.md",
     "Excalidraw/Drawing 2023-07-22 11.50.49.excalidraw.md",
     "Excalidraw/Drawing 2023-07-22 11.50.53.excalidraw.md",
-    "coding/nginx.md",
-    "coding/JUC.md",
     "img/Nginx.md",
     "img/7.jpg",
-    "img/6.jpg",
-    "img/5.jpg",
-    "img/4.jpg",
-    "img/3.jpg",
-    "img/2.jpg",
     "coding/img",
     "img/2.jpg.md",
     "img",
