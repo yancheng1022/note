@@ -167,291 +167,44 @@ log4j.appender.console.layout.ConversionPattern =  %d{yyyy-MM-dd HH:mm:ss} %-5p 
 之前我们为成员变量赋值是通过set方法，但这种方式会产生耦合
 
 ### 2.3.3、如何进行注入？
-#### 2.3.3.1、set注入
+#### 2.3.3.1、属性（field ）注入
+所谓基于 field 注入，就是在bean的变量上使用注解进行依赖注入。本质上是通过反射的方式直接注入到field。这是我平常开发中看的最多也是最熟悉的一种方式，同时，也正是 Spring 团队所不推荐的方式（容易违背了单一职责原则：使用这种基于 field 注入的方式，添加依赖是很简单的，就算你的类中有十几个依赖你可能都觉得没有什么问题，普通的开发者很可能会无意识地给一个类添加很多的依赖）
 
-- 类的成员变量提供get set方法
-- 配置spring配置文件
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="person" class="bean.Person">
-        <!--基本数据类型-->
-        <property name="name" value="kaka" />
-        <property name="age" value="25"/>
-
-        <!--数组-->
-        <property name="emails">
-            <list>
-                <value>kaka1022@163.com</value>
-                <value>kaka1022@qq.com</value>
-            </list>
-        </property>
-
-        <!--map-->
-        <property name="other">
-            <map>
-                <entry key="sex" value="man" />
-            </map>
-        </property>
-
-        <!--properties-->
-        <property name="p">
-            <props>
-                <prop key="key1">value1</prop>
-            </props>
-        </property>
-
-        <!--自定义类型-->
-        <property name="company" ref ="userDao" />
-    </bean>
-
-    <bean id="userDao" class="bean.Company">
-        <property name="name" value="alibaba" />
-        <property name="account" value="10000" />
-    </bean>
-</beans>
-```
-#### 2.3.3.2、构造注入
-spring调用构造方法，通过配置文件，为成员变量赋值
-
-- 提供有参构造方法
 ```java
-public class Person {
-    private String name;
-    private Integer age; 
+@Autowired
+private Svc svc;
+```
 
-    public Person(String name,Integer age){
-        this.name = name;
-        this.age = age;
-    }
+#### 2.3.3.2、setter注入
+通过对应变量的`setXXX()`方法以及在方法上面使用注解，来完成依赖注入。比如：
+```java
+private Helper helper;
+
+@Autowired
+public void setHelper(Helper helper) {
+    this.helper = helper;
+}
+```
+#### 2.3.3.3、构造方法注入
+将各个必需的依赖全部放在带有注解构造方法的参数中，并在构造方法中完成对应变量的初始化，这种方式，就是基于构造方法的注入。比如：
+```java
+private final Svc svc;
+
+@Autowired
+public HelpService(@Qualifier("svcB") Svc svc) {
+    this.svc = svc;
 }
 ```
 
-- spring配置文件
-```xml
-    <!-- 构造参数个数相同时，通过在标签引入type属性进行区分 -->
-    <bean id="person2" class="bean.Person">
-        <constructor-arg type="java.lang.String" value="kaka" />
-        <constructor-arg type="int" value="10" />
-    </bean>
-```
-## 2.4、spring工厂创建复杂对象
-### 2.4.1、什么是复杂对象
-```markdown
-1. 简单对象：可以直接通过new构造方法创建的对象
-2. 复杂对象：不能直接通过ew构造方法创建的对象 
-eg：Connection （Class.forName("com.mysql.jdbc.Driver")）
-    SqlSessionFactory（new SqlSessionFactoryBuilder().build(inputStream)）
-```
-### 2.4.2、spring工厂创建复杂对象的三种方式
-#### 2.4.2.1、FactoryBean接口
+## 2.4、spring对象的生命周期
+### 2.4.1、spring bean的生命周期
+1. 实例化（Instantiation）：当Spring容器接收到Bean的定义时，会使用反射机制创建一个Bean实例。
+2. 属性赋值（Populate Bean）：Spring容器会将Bean的属性值或依赖注入到Bean实例中。
+3. 初始化（Initialization）：在Bean的所有依赖注入和属性赋值完成之后，Spring容器会调用Bean的初始化方法，例如实现InitializingBean接口的afterPropertiesSet方法或者在配置文件中使用init-method属性指定的自定义初始化方法。
+4. 使用（In Use）：在初始化完成之后，Bean就可以被使用了。
+5. 销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，Spring容器会调用Bean的销毁方法，例如实现DisposableBean接口的destroy方法或者在配置文件中使用destroy-method属性指定的自定义销毁方法。
 
-- 实现FactoryBean接口
-```java
-public class ConnectionFactoryBean implements FactoryBean<Connection> {
-    private String driverClassName;
-	private String url;
-    private String password;
-    
-    // 用于书写创建复杂对象的代码
-    public Connection getObject() throws Exception {
-        Class.forName(driverClassName);
-        Connection connection = DriverManager.getConnection(url, user, password);
-        return connection;
-    }
-    // 创建复杂对象的Class对象
-    public Class<?> getObjectType() {
-        return Connection.class;
-    }
-    // 是否是单例
-    public boolean isSingleton() {
-        return false;
-    }
-}
-```
 
-- spring配置文件配置
-```xml
-    <!-- 对于复杂对象，这里获取到的不是ConnectionFactoryBean这个类的对象，而是它创建的复杂对象Connection -->
-	<!-- 如果真的是想获得ConnectionFactoryBean，ctx.getBean("&conn") -->
-    <bean id="conn" class="bean.ConnectionFactoryBean">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test?useSSL=false" />
-        <property name="user" value="root" />
-        <property name="password" value="root" />
-    </bean>
-```
-#### 2.4.2.2、实例工厂
-```
-避免spring框架的侵入（不用实现FactoryBean接口）
-```
-
-- 实例工厂
-```java
-public class ConnectionFactory {
-    public Connection getConnection(){
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weiguang?useSSL=false","root","root");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
-}
-```
-
-- 配置文件
-```xml
-    <bean id="connectionFactory" class="factory.ConnectionFactory" />
-    <bean id = "conn" factory-bean="connectionFactory" factory-method="getConnection" />
-```
-#### 2.4.2.3、静态工厂
-
-- 静态工厂
-```java
-public class ConnectionFactory {
-    public static Connection getConnection(){
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weiguang?useSSL=false","root","root");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
-}x
-```
-
-- 配置文件
-```xml
-<bean id="connectionFactory" class="factory.ConnectionFactory" factory-method="getConnection"/>
-```
-## 2.5、控制spring工厂创建对象的次数
-### 2.5.1、如何控制简单对象创建次数
-```xml
-<!-- 默认单例 -->
-<bean id="person" scope="singleton|prototype" class="bean.Person"/>
-```
-### 2.5.2、如何控制复杂对象的创建次数
-```java
-FactoryBean{
-	isSingleton(){
-		return true|false;
-	}
-}
-```
-### 2.5.3、什么样的对象只需要创建一次？
-```markdown
-只创建一次的对象：
-sqlSessionFactory
-Dao
-Service
-
-需要创建多次的对象：
-Connection（需要控制事务）
-SqlSession
-Struts2 Action
-
-```
-## 2.6、spring对象的生命周期
-### 2.6.1、spring生命周期的三个阶段
-
-- 创建阶段
-```markdown
-1. scope="singleton" ，spring对象创建的同时创建对象
-2. scope="prototype" ，获取对象时创建对象
-3. 案例
-    public static void main(String[] args) {
-        // 此时创建单例对象
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
-        // 此时创建多例对象
-        Person person = (Person)ctx.getBean("person");
-        System.out.println(person);
-    }
- 4. 单例对象想要在获取时才创建可以设置  lazy-init="true"
-```
-
-- 初始化阶段
-```markdown
-1. spring工厂在创建完对象后，调用程序员编写的对象的初始化方法，完成对应的初始化操作
-2. 定义初始化方法的两种方式
-（1）实现IntializingBean接口，实现afterProperitesSet（）方法
-（2）对象中提供一个普通方法，然后spring配置文件中配置 init-method=""
-3. 一个对象两种初始化方法都实现，初始化的顺序是什么？
-先执行接口的初始化操作，再执行普通的初始化方法
-4. 属性注入发生在初始化操作的前面
-```
-
-- 销毁阶段
-```markdown
-1. spring销毁对象前，会调用对象的销毁方法，完成销毁操作
-2. spring销毁对象是再工厂关闭的时候调用程序员编写的销毁方法完成销毁操作
-3. 定义销毁方法的两种方式
-（1）实现disposableBean接口，实现destroy（）方法
-（2）定义一个普通销毁方法，然后spring文件中配置 destroy-method=""
-4. 一个对象两种销毁方法都实现，销毁的顺序是什么？
-先执行接口的销毁操作，再执行普通的销毁方法
-5. 销毁方法只适用于 scope="singleton",prototype不适用
-```
-## 2.7、配置文件参数化
-```markdown
-1. 提供一个小配置文件（.properties）
-jdbc.driverClassName=com.mysql.jdbc.driver
-jdbc.url=jdbc:mysql://localhost:3306/test?useSSL=false
-jdbc.user=root
-jdbc.password=root
-
-2. spring配置文件与小配置文件整合
-<context:property-placeholder location="classpath:/db.properties">
-
-3. 在配置文件中通过${}获取小配置文件中的值
-    <bean id="conn" class="bean.ConnectionFactoryBean">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="user" value="${jdbc.user}" />
-        <property name="password" value="${jdbc.password}" />
-    </bean>
-```
-## 2.8、类型转换器
-### 2.8.1、类型转换器概念
-```markdown
-作用：spring通过类型转换器把配置文件中字符串类型的数据转换成对象中成员变量对应类型的数据，从而完成了注入
-```
-### 2.8.2、自定义类型转换器
-
-1. 背景：当spring没有提供特定的类型转换器时（如Date），而程序员在使用过程中还要使用，那么就要程序员自己定义类型转换器
-> spring框架内置日期类型转换器支持 2022/02/03，不支持2022-02-03这种格式
-
-2. 实现步骤：
-
-（1）自定义类实现converter接口
-```java
-public class DateConverter implements Converter<String, Date> {
-    public Date convert(String s) {
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            date = sdf.parse(s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
-}
-```
-（2）在spring配置文件中进行配置
-```xml
-		<bean id="DateConverter" class="xxx.DateConverter">
-  
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters"><set><ref bean="DateConverter" /></set></property>
-    </bean>
-```
 ## 2.9、beanPostProcessor 
 
 1. beanPostProcessor作用：对spring创建的对象进行再加工

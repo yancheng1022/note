@@ -6,6 +6,7 @@
       {
         "id": "77b8f5a4d3a91262",
         "type": "tabs",
+        "dimension": 61.36363636363637,
         "children": [
           {
             "id": "4186e2768b99004e",
@@ -25,6 +26,7 @@
       {
         "id": "1fee78092aaff1c9",
         "type": "tabs",
+        "dimension": 38.63636363636363,
         "children": [
           {
             "id": "f2e91085a06fda77",
@@ -169,11 +171,12 @@
   },
   "active": "4186e2768b99004e",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2023-07-22 16.33.54.excalidraw.md",
+    "coding/spring.md",
+    "Excalidraw",
     "img/Pasted image 20230722131755.png",
     "Excalidraw/Drawing 2023-07-22 11.50.49.excalidraw.md",
     "Excalidraw/Drawing 2023-07-22 11.50.53.excalidraw.md",
-    "coding/spring.md",
-    "Excalidraw",
     "coding/nginx.md",
     "coding/JUC.md",
     "img/Nginx.md",
@@ -186,7 +189,6 @@
     "img/1 1.jpg",
     "img/1.jpg",
     "img/Pasted image 20230721221659.png",
-    "img/Pasted image 20230721221634.png",
     "coding/img",
     "img/2.jpg.md",
     "img",
