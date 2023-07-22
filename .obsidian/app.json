@@ -1,4 +1,6 @@
 {
   "attachmentFolderPath": "img",
-  "newLinkFormat": "absolute"
+  "newLinkFormat": "absolute",
+  "readableLineLength": false,
+  "showFrontmatter": true
 }
