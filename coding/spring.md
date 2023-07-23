@@ -124,7 +124,9 @@ public class Demo {
 
 ## 2.2、spring与日志框架整合
 spring与日志框架整合，日志框架就可以在控制台中，输出spring框架运行过程中的一些重要信息
-![](img/Pasted%20image%2020230722131755.png)
+
+![日志框架](https://gitee.com/guoyancheng/note-img/raw/master/202307230809049.png)
+
 - spring如何整合日志框架？
 ```java
 spring 1,2,3 早期都是jcl
@@ -199,7 +201,9 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
 
-![](img/Pasted%20image%2020230722174535.png)
+![spring bean生命周期.png](https://gitee.com/guoyancheng/note-img/raw/master/202307230810153.png)
+
+
 1. 实例化（Instantiation）：当Spring容器接收到Bean的定义时，会使用反射机制创建一个Bean实例。
 2. 属性赋值（Populate Bean）： Spring 将值和bean的引用注入到bean对应的属性中
 3. 回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法。
@@ -463,7 +467,9 @@ execution(* login(..)) or execution(* register(..))
 > 切面 = 切入点 + 额外功能
 
 多个额外功能相同的方法所代表的点连起来就是一个面
-![](img/Pasted%20image%2020230722190135.png)
+
+![aop切面.png](https://gitee.com/guoyancheng/note-img/raw/master/202307230811032.png)
+
 ### 3.2.2、AOP底层实现原理
 #### 3.2.2.1、核心问题
 > 1. aop如何创建动态代理类（动态字节码技术）

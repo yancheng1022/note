@@ -247,7 +247,7 @@ log.debug("运行结束...");
 > - Tomcat 中的 Acceptor 和 Poller 线程都是守护线程，所以 Tomcat 接收到 shutdown 命令后，不会等待它们处理完当前请求 
 
 
-## 2.9、线程状态12
+## 2.9、线程状态
 | 状态   | 说明 |
 | --- | --- |
 | NEW | 初始状态:线程被创建，但还没有调用start()方法 |
@@ -257,8 +257,8 @@ log.debug("运行结束...");
 | TIMEWAITING | 超时等待状态:该状态不同于WAITIND，它是可以在指定的时间自行返回的 |
 | TERMINATED | 终止状态:表示当前线程已经执行完毕 |
 
+![线程状态.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230805650.jpg)
 
-![](img/2.jpg)
 # 3、共享模型之管程
 管程（monitor），管理共享变量以及对其的操作过程，让这个类是线程安全的
 ## 3.1、monitor
@@ -267,7 +267,8 @@ Monitor 被翻译为**监视器**或**管程**
 
 ### 3.1.1、Monitor结构
 **结构**：owner  entryList  waitSet
-![](img/3.jpg)
+
+![Monitor结构.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230806070.jpg)
 
 ### 3.1.2、Monitor原理
 （1）刚开始monitor中owner为null 
@@ -281,7 +282,8 @@ Monitor 被翻译为**监视器**或**管程**
 1. **对象头**
 
 包括：对象头：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
-![](img/4.jpg)
+
+![java对象头.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230807229.jpg)
 
 2. **实例数据**
 
@@ -298,7 +300,8 @@ Monitor 被翻译为**监视器**或**管程**
 ### 3.3.2、轻量级锁
 > 使用场景：如果一个对象虽然有多线程要加锁，但加锁的时间是错开的（也就是没有竞争），那么可以使用轻量级锁来优化
 
-![](img/5.jpg)
+![轻量级锁.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230807172.jpg)
+
 
 1. 创建 锁记录（Lock Record）对象，内部存储锁记录地址和状态00，还有对象引用指向锁对象
 2. 让锁记录中引用 指向锁对象，并尝试用 cas 替换 Object 的 Mark Word，将 Mark Word 的值存入锁记录
@@ -316,7 +319,8 @@ Monitor 被翻译为**监视器**或**管程**
 ### 3.3.3、重量级锁
 > 使用场景：如果在尝试加轻量级锁的过程中，CAS 操作无法成功，这时一种情况就是有其它线程为此对象加上了轻量级锁（有竞争），这时需要进行锁膨胀，将轻量级锁变为重量级锁
 
-![](img/6.jpg)
+![重量级锁.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230808653.jpg)
+
 
 1. 当 Thread-1 进行轻量级加锁时，Thread-0 已经对该对象加了轻量级锁
 2. 这时 Thread-1 加轻量级锁失败，进入锁膨胀流程 
@@ -402,7 +406,9 @@ public class DeadLock {
 ### 3.6.3、定位死锁
 检测死锁可以使用 jconsole工具，或者使用 jps 定位进程 id，再用 jstack 定位死锁
 ### 3.6.4、哲学家就餐问题
-![](img/7.jpg)
+
+![哲学家就餐问题.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230808443.jpg)
+
 有五位哲学家，围坐在圆桌旁。 他们只做两件事，思考和吃饭，思考一会吃口饭，吃完饭后接着思考。 吃饭时要用两根筷子吃，桌上共有 5 根筷子，每位哲学家左右手边各有一根筷子。 如果筷子被身边的人拿着，自己就得等待 
 
 1. 筷子类
