@@ -38,6 +38,7 @@ tags:
 
 - 如果是串行执行，那么总共花费的时间是 10 + 11 + 9 + 1 = 31ms 
 - 但如果是四核 cpu，各个核心分别使用线程 1 执行计算 1，线程 2 执行计算 2，线程 3 执行计算 3，那么 3 个 线程是并行的，花费时间只取决于最长的那个线程运行的时间，即 11ms最后加上汇总时间只会花费 12ms 
+
 > 需要在多核 cpu 才能提高效率，单核仍然时是轮流执行
 
 # 2、java线程
@@ -257,7 +258,8 @@ log.debug("运行结束...");
 | TIMEWAITING | 超时等待状态:该状态不同于WAITIND，它是可以在指定的时间自行返回的 |
 | TERMINATED | 终止状态:表示当前线程已经执行完毕 |
 
-![线程状态.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230805650.jpg)
+![线程状态](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930532.jpg)
+
 
 # 3、共享模型之管程
 管程（monitor），管理共享变量以及对其的操作过程，让这个类是线程安全的
@@ -268,7 +270,8 @@ Monitor 被翻译为**监视器**或**管程**
 ### 3.1.1、Monitor结构
 **结构**：owner  entryList  waitSet
 
-![Monitor结构.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230806070.jpg)
+![monitor结构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930118.jpg)
+
 
 ### 3.1.2、Monitor原理
 （1）刚开始monitor中owner为null 
@@ -283,7 +286,8 @@ Monitor 被翻译为**监视器**或**管程**
 
 包括：对象头：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
 
-![java对象头.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230807229.jpg)
+![java对象头](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930015.jpg)
+
 
 2. **实例数据**
 
@@ -300,7 +304,8 @@ Monitor 被翻译为**监视器**或**管程**
 ### 3.3.2、轻量级锁
 > 使用场景：如果一个对象虽然有多线程要加锁，但加锁的时间是错开的（也就是没有竞争），那么可以使用轻量级锁来优化
 
-![轻量级锁.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230807172.jpg)
+![轻量级锁](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930202.jpg)
+
 
 
 1. 创建 锁记录（Lock Record）对象，内部存储锁记录地址和状态00，还有对象引用指向锁对象
@@ -319,7 +324,7 @@ Monitor 被翻译为**监视器**或**管程**
 ### 3.3.3、重量级锁
 > 使用场景：如果在尝试加轻量级锁的过程中，CAS 操作无法成功，这时一种情况就是有其它线程为此对象加上了轻量级锁（有竞争），这时需要进行锁膨胀，将轻量级锁变为重量级锁
 
-![重量级锁.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230808653.jpg)
+![重量级锁](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230931871.jpg)
 
 
 1. 当 Thread-1 进行轻量级加锁时，Thread-0 已经对该对象加了轻量级锁
@@ -329,6 +334,7 @@ Monitor 被翻译为**监视器**或**管程**
 （2）然后自己进入 Monitor 的 EntryList阻塞队列
 
 3. 当 Thread-0 退出同步块解锁时，使用 cas 将 Mark Word 的值恢复给对象头，失败。这时会进入重量级解锁流程，即按照 Monitor 地址找到 Monitor 对象，设置 Owner 为 null，唤醒 EntryList 中阻塞线程（不公平）
+
 > 调用wait方法，会将此线程放入到wait set中，然后放弃锁。直到有其它线程调用notify（），才会重新进入entrylist中，重新争夺锁的拥有权
 
 ### 3.3.4、自旋锁
@@ -407,11 +413,13 @@ public class DeadLock {
 检测死锁可以使用 jconsole工具，或者使用 jps 定位进程 id，再用 jstack 定位死锁
 ### 3.6.4、哲学家就餐问题
 
-![哲学家就餐问题.jpg](https://gitee.com/guoyancheng/note-img/raw/master/202307230808443.jpg)
+![哲学家就餐问题](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230931868.jpg)
+
 
 有五位哲学家，围坐在圆桌旁。 他们只做两件事，思考和吃饭，思考一会吃口饭，吃完饭后接着思考。 吃饭时要用两根筷子吃，桌上共有 5 根筷子，每位哲学家左右手边各有一根筷子。 如果筷子被身边的人拿着，自己就得等待 
 
 1. 筷子类
+
 ```java
 class Chopstick {
     String name;
@@ -428,6 +436,7 @@ class Chopstick {
 ```
 
 2. 哲学家类
+
 ```java
 class Philosopher extends Thread {
     Chopstick left;
@@ -463,6 +472,7 @@ class Philosopher extends Thread {
 ```
 
 3. 就餐
+
 ```java
 Chopstick c1 = new Chopstick("1");
 Chopstick c2 = new Chopstick("2");
@@ -578,6 +588,7 @@ write(写入)：将store入主内存的变量,放入到主内存的变量中
 根据上面的ThreadPoolExecutor这个构造方法，JDK Executors类中提供了众多工厂方法来创建各种用途的线程池
 
 1. **newFixedThreadPool**
+
 ```java
 public static ExecutorService newFixedThreadPool(int nThreads) {
     return new ThreadPoolExecutor(nThreads, nThreads,
@@ -585,6 +596,7 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
                                   new LinkedBlockingQueue<Runnable>());
 }
 ```
+
 > 特点：
 > - 核心线程数 == 最大线程数（没有救急线程被创建），因此也无需超时时间 
 > - 阻塞队列是无界的，可以放任意数量的任务 
@@ -594,6 +606,7 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 
 
 2. **newCachedThreadPool**
+
 ```java
 public static ExecutorService newCachedThreadPool() {
     return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
@@ -601,6 +614,7 @@ public static ExecutorService newCachedThreadPool() {
                                   new SynchronousQueue<Runnable>());
 }
 ```
+
 > 特点 
 > - 核心线程数是 0，最大线程数是 Integer.MAX_VALUE，救急线程的空闲生存时间是 60s，意味着 
 >    - 全部都是救急线程（60s 后可以回收）
@@ -612,7 +626,8 @@ public static ExecutorService newCachedThreadPool() {
 > 适合任务数比较密集，但每个任务执行时间较短的情况
 
 
-3. **newSingleThreadExecutor**
+3. newSingleThreadExecutor
+
 ```java
 public static ExecutorService newSingleThreadExecutor() {
     return new FinalizableDelegatedExecutorService
@@ -885,6 +900,7 @@ pool-1-thread-10 已加载完
 
 1. 遗留的线程安全集合如 Hashtable ， Vector 
 2. 使用 Collections 装饰的线程安全集合（调用所有方法时加synchronized修饰）
+
 >    - Collections.synchronizedCollection 
 >    - Collections.synchronizedList 
 >    - Collections.synchronizedMap 
@@ -894,7 +910,8 @@ pool-1-thread-10 已加载完
 >    - Collections.synchronizedSortedMap 
 >    - Collections.synchronizedSortedSet 
 
-2. JUC下的安全集合: Blocking、CopyOnWrite、Concurrent 
+4. JUC下的安全集合: Blocking、CopyOnWrite、Concurrent 
+
 > - Blocking 大部分实现基于锁，并提供用来阻塞的方法 (Lock)
 > - CopyOnWrite 之类容器修改开销相对较重 (修改时拷贝)
 > - Concurrent 类型的容器 （内部很多操作使用cas优化）

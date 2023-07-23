@@ -16,15 +16,18 @@ tags:
 spring是一个轻量级的javaEE解决方案，整合了众多优秀的设计模式
 
 - 轻量级
+
 > 1. 对于运行环境没有额外要求（tomcat jetty weblogic等都可以）
 > 2. 代码一致性高（不需要实现额外接口）
 
 
 - javaEE解决方案
+
 > 包含了java web开发中 controller service dao层的解决方案
 
 
 - 整合设计模式
+
 > 工厂
 > 代理
 > 模板
@@ -67,6 +70,7 @@ public class BeanFactory{
 ### 2.1.1、核心API
 
 - ApplicationContext
+
 ```markdown
 1. 作用：屏蔽实现的差异
 
@@ -84,6 +88,7 @@ applicationContext工厂的对象占用大量内存
 ### 2.1.2、程序开发
 
 1. 引入依赖
+
 ```xml
         <dependency>
             <groupId>org.springframework</groupId>
@@ -105,6 +110,7 @@ new - xmlConfiguration File - spring config
 ```
 
 3. 通过工厂获取实例
+
 ```java
 public class Demo {
     public static void main(String[] args) {
@@ -125,16 +131,17 @@ public class Demo {
 ## 2.2、spring与日志框架整合
 spring与日志框架整合，日志框架就可以在控制台中，输出spring框架运行过程中的一些重要信息
 
-![日志框架](https://gitee.com/guoyancheng/note-img/raw/master/202307230809049.png)
+![日志框架](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230929873.png)
+
 
 - spring如何整合日志框架？
-```java
-spring 1,2,3 早期都是jcl
+
+> spring 1,2,3 早期都是jcl
 spring4.x开始使用slf4j，默认整合的日志框架logback 或 log4j2
-```
 
 当然spring5中我们也可以不采用默认，而去整合我们熟悉的log4j
 1. pom
+
 ```xml
 		<!--日志门面-->
         <dependency>
@@ -151,6 +158,7 @@ spring4.x开始使用slf4j，默认整合的日志框架logback 或 log4j2
 ```
 
 2. log4j.properties
+
 ```properties
 ### 配置根
 log4j.rootLogger = debug, console
@@ -201,12 +209,13 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
 
-![spring bean生命周期.png](https://gitee.com/guoyancheng/note-img/raw/master/202307230810153.png)
+![spring bean生命周期](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230927436.png)
 
 
 1. 实例化（Instantiation）：当Spring容器接收到Bean的定义时，会使用反射机制创建一个Bean实例。
 2. 属性赋值（Populate Bean）： Spring 将值和bean的引用注入到bean对应的属性中
 3. 回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法。
+
 > Spring的依赖注入的最大亮点就是你所有的Bean对Spring容器的存在是没有意识的。即你可以将你的容器替换成别的容器，例如Goggle Guice,这时Bean之间的耦合度很低。
 > 但是在实际的项目中，我们不可避免的要用到Spring容器本身的功能资源，这时候Bean必须要意识到Spring容器的存在，才能调用Spring所提供的资源，这就是所谓的Spring Aware。其实Spring Aware本来就是Spring设计用来框架内部使用的，若使用了Spring Aware，你的Bean将会和Spring框架耦合。  
 
@@ -223,6 +232,7 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 1. 概念：通过代理类为目标类增加额外功能
 2. 好处：利于目标类的维护
 ### 3.1.2、搭建开发环境
+
 ```xml
         <dependency>
             <groupId>org.springframework</groupId>
@@ -243,6 +253,7 @@ public HelpService(@Qualifier("svcB") Svc svc) {
 ### 3.1.3、spring动态代理开发步骤（MethodBeforeAdvice）
 
 1. 创建目标对象
+
 ```java
 public class UserServiceImpl implements UserService{
     public void login() {
@@ -256,6 +267,8 @@ public class UserServiceImpl implements UserService{
 2. 额外功能
 
 MethodBeforeAdvice接口
+
+
 ```java
 public class Before implements MethodBeforeAdvice {
     // 参数： 目标方法 目标方法参数 目标对象
@@ -269,7 +282,7 @@ public class Before implements MethodBeforeAdvice {
 
 3. 定义切入点
 
- 	切入点：额外功能加入的位置(方法)
+ 切入点：额外功能加入的位置(方法)
 ```java
     <aop:config>
         <!--所有方法，都作为切入点，加入额外功能-->
@@ -278,6 +291,7 @@ public class Before implements MethodBeforeAdvice {
 ```
 
 4. 组装（2 3步整合）
+
 ```java
     <aop:config>
         <!--所有方法，都作为切入点，加入额外功能-->
@@ -288,6 +302,7 @@ public class Before implements MethodBeforeAdvice {
 ```
 
 5. 测试
+
 ```java
     public static void main(String[] args) {
         //目的：获得spring工厂创建的动态代理对象并进行调用
@@ -303,6 +318,7 @@ public class Before implements MethodBeforeAdvice {
 ### 3.1.4、思考
 
 1. spring创建的动态代理类在哪里？
+
 ```java
 spring框架在运行时，通过动态字节码技术，在JVM创建的，运行在JVM内部，等程序结束后，会和JVM一起消失
 
@@ -311,6 +327,7 @@ spring框架在运行时，通过动态字节码技术，在JVM创建的，运�
 ```
 
 2. 动态字节码技术？
+
 ```java
 通过第三方动态字节码框架（ASM, Javassist, cglib）直接在JVM生成字节码，进而创建对象，当虚拟机结束，动态字节码跟着消失
 ```
@@ -340,6 +357,8 @@ public class Around  implements MethodInterceptor {
 
 ### 3.1.6、切入点详解
 #### 3.1.6.1、切入点表达式
+
+
 ```java
 <aop:pointcut id="pc" expression="execution(* *(..))"/>
 
@@ -353,21 +372,25 @@ execution() ：切入点函数
 ```
 
 - 定义login方法且login方法有两个字符串类型的参数作为切入点
+
 ```java
 * login(String,String)
 ```
 
 - 定义login方法且login方法有第一个参数必须为String作为切入点
+
 ```java
 * login(String,..)
 ```
 
 - kaka包下UserServiceImpl类的login方法作为切入点（方法切入点表达式）
+
 ```java
 * com.kaka.UserServiceImpl.login(..)
 ```
 
 - kaka包及其子包下的所有类的方法作为切入点（包切入点表达式）
+
 ```java
 * com.kaka..*.*()
     
@@ -376,6 +399,7 @@ execution() ：切入点函数
 ```
 
 - 任意包下UserServiceImpl类作为切入点（类切入点表达式）
+
 ```java
 * *..UserServiceImpl.*(..)
   
@@ -386,6 +410,7 @@ execution() ：切入点函数
 切入点函数：用于执行切入点表达式
 
 1. execution
+
 ```java
 作用：最为重要的切入点函数，功能最全
 	  执行方法切入点表达式 类切入点表达式 包切入点表达式
@@ -395,6 +420,7 @@ execution执行切入点表达式，书写麻烦
 ```
 
 2. args
+
 ```java
 作用：主要用于函数（方法）参数的匹配
 方法参数必须是两个字符串类型的参数
@@ -404,6 +430,7 @@ args(String,String)
 ```
 
 3. within
+
 ```java
 作用：主要用于进行类，包切入点表达式的匹配
 
@@ -412,6 +439,7 @@ within(*..UserServiceImpl)
 ```
 
 4. @annotation
+
 ```java
 作用：@annotation表示标注了某个注解的所有方法
 
@@ -435,6 +463,7 @@ public class UserServiceImpl implements UserService{
 #### 3.1.6.3、切入点函数的逻辑运算
 
 1. and与操作
+
 ```java
 案例：login 同时 参数 两个字符串
 
@@ -445,6 +474,7 @@ execution(* login(..)) and args(String,String)
 ```
 
 2. or或操作
+
 ```java
 案例：register方法和login方法作为切入点
 
@@ -452,6 +482,8 @@ execution(* login(..)) or execution(* register(..))
 ```
 ## 3.2、AOP编程
 ### 3.2.1、基本概念
+
+
 ```java
 1. AOP：面向切面编程
    以切面为基本单位的程序开发，通过切面间彼此协同，相互调用，完成程序构建
@@ -464,14 +496,18 @@ execution(* login(..)) or execution(* register(..))
  
 ```
 12.2、切面名词解释
+
 > 切面 = 切入点 + 额外功能
 
 多个额外功能相同的方法所代表的点连起来就是一个面
 
-![aop切面.png](https://gitee.com/guoyancheng/note-img/raw/master/202307230811032.png)
+![aop切面](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230928946.png)
+
 
 ### 3.2.2、AOP底层实现原理
 #### 3.2.2.1、核心问题
+
+
 > 1. aop如何创建动态代理类（动态字节码技术）
 > 2. 如何实现通过原始对象的id值，获得的是代理对象
 
@@ -482,6 +518,7 @@ execution(* login(..)) or execution(* register(..))
 - Proxy.newProxyInstancec：
 
 - 编码实现
+
 ```java
 public class TestJDKProxy {
     /**
@@ -516,9 +553,11 @@ public class TestJDKProxy {
 #### 3.2.3.2、CGLib动态代理
 
 - CGlib 创建动态代理的原理：通过父子继承关系创建代理对象，原始类作为父类，代理类作为子类，这样既可以保证 2 者方法⼀致，同时在代理类中可以提供新的实现（额外功能+原始方法）
+
 > 在原始类没有实现接口的情况下cglib是一种很好的实现方式
 
 - cglib原理
+
 ```java
 public class TestCglib {
     public static void main(String[] args) {
@@ -570,6 +609,7 @@ Enhancer：通过继承父类创建的代理类
 包含原始功能和实现类等
 
 2. 额外功能+切入点+组装切面
+
 ```java
 /*
     1. 额外功能
@@ -662,6 +702,7 @@ AOP 底层实现 2 种代理创建方式：
 ## 4.1、spring与mybatis整合
 
 1. 引入依赖
+
 ```xml
 <dependency>
   <groupId>org.springframework</groupId>
@@ -695,6 +736,7 @@ AOP 底层实现 2 种代理创建方式：
 ```
 
 2. spring配置文件
+
 ```xml
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -728,6 +770,7 @@ AOP 底层实现 2 种代理创建方式：
 ```
 
 3. 测试
+
 ```java
 @Test
 public void test() {
@@ -787,6 +830,7 @@ spring是通过aop的方式进行事务开发
 **组装切面：**tx:annotation-driven transaction-manager="dataSourceTransactionManager"/> 自动扫描所有的@Transactional注解
 
 1. 搭建开发环境
+
 ```xml
 <dependency>
 	<groupId>org.springframework</groupId>
@@ -796,6 +840,7 @@ spring是通过aop的方式进行事务开发
 ```
 
 2. 编码
+
 ```xml
 <bean id="userService" class="com.yusael.service.UserServiceImpl">
 	<property name="userDAO" ref="userDAO"/>
@@ -864,6 +909,7 @@ public class UserServiceImpl implements UserService {
 // 隔离级别：序列化
 @Transaction(isolation=Isolation.SERIALIZABLE)
 ```
+
 > 本质：表锁（对数据库某个表加锁）
 
 ##### 4.3.3.1.2、安全与效率对比：
@@ -922,7 +968,8 @@ Spring 中**传播属性的默认值**是：REQUIRED
 Spring 事务处理过程中：
 
 - 默认对于 RuntimeException 及其子类，采用 **回滚** 的策略。
-- 默认对于 对于其他类型的异常，采用 **提交** 的策略（例如IO异常、网络异常等，可以在程序中使用try-catch块来处理这些异常，或者在方法签名中使用throws关键字将异常抛出给调用者处理。如果Spring默认采用回滚策略，会导致这些异常被回滚，可能会带来意想不到的后果，例如文件未能正确关闭、网络连接未能正确关闭等）。
+- 默认对于 对于其他类型的异常，采用 **提交** 的策略（例如IO异常、网络异常等，可以在程序中使用try-catch块来处理这些异常，或者在方法签名中使用throws关键字将异常抛出给调用者处理。如果Spring默认采用回滚策略，会导致这些异常被回滚，可能会带来意想不到的后果，例如文件未能正确关闭、网络连接未能正确关闭等）
+
 ```java
 @Transactional(rollbackFor = java.lang.Exception.class, xxx, xxx)
 
@@ -959,6 +1006,7 @@ Spring Boot框架采用了“约定优于配置”的设计理念，旨在简化
 - id 属性：在 @Component 中提供了默认的设置方式：首单词首字母小写（UserDAO --> userDAO）
 - class 属性：通过反射获得的 class 的内容
 2. 细节：如何显式指定工厂创建对象的 id 值
+
 ```java
 @Component("u")
 ```
@@ -1009,6 +1057,7 @@ DisposableBean
 
 1. @Autowired 注解 **基于类型进行注入** [推荐]：
 - 注入对象的类型，必须与目标成员变量类型相同或者是其子类（实现类）
+
 ```java
 @Autowired
 private UserDAO userDAO;
@@ -1016,6 +1065,7 @@ private UserDAO userDAO;
 
 2. @Autowired、@Qualifier 注解联合实现 **基于名字进行注入** [了解]
 - 注入对象的 id 值，必须与 @Qualifier 注解中设置的名字相同
+
 ```java
 @Autowired
 @Qualifier("userDAOImpl")
@@ -1027,6 +1077,7 @@ private UserDAO userDAO;
 - **直接放置在成员变量上**，Spring 通过反射直接对成员变量进行赋值
 
 4. JSR提供的@Resource注解
+
 > JavaEE 规范中类似功能的注解：
 > - JSR250 提供的 @Resource(name="xxx") **基于名字进行注入**
 等价于 @Autowired 与 @Qualifier 联合实现的效果
@@ -1035,6 +1086,7 @@ private UserDAO userDAO;
 #### 6.1.2.2、@value、@PropertySource（JDK 类型）
 
 1. @value 注解的基本使用（xml配置）：
+
 ```java
 1. 设置xxx.properties 
    id = 10
@@ -1047,6 +1099,7 @@ private UserDAO userDAO;
 ```
 
 2. 使用 @PropertySource 取代 xml配置
+
 ```java
 @Configuration
 @PropertySource("classpath:/init.properties")
@@ -1078,6 +1131,7 @@ Spring 提供新的配置形式 YAML(YML) (更多的用于SpringBoot中)
 
 1. Spring 在 3.x 提供的新的注解@Configuration，用于替换 XML 配置文件
 2. 使用了 @Configuration 后，用 AnnotationConfigApplicationContext 创建工厂：
+
 ```xml
 方法1: 指定配置bean的Class
 ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
