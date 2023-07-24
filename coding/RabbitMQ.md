@@ -85,9 +85,10 @@ MQ全称Message Queue（消息队列），是在消息传输过程中保存消�
 
 根据Routing Key(路由键)进行投递到不同队列。如果路由键不匹配，那么就不会发送到任何队列中去。
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661233986129-afce563d-98b7-4559-bc81-bffb856d29ef.png#averageHue=%23f7e1e1&clientId=u1f2092d6-850c-4&from=paste&height=144&id=u22753071&originHeight=144&originWidth=379&originalType=binary&ratio=1&rotation=0&showTitle=false&size=15620&status=done&style=none&taskId=uac52e483-773c-4871-81de-6ee3aac512d&title=&width=379)
+![直连交换机](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241551705.png)
 
-### 2.2.2、Fanout Exchange
+
+### 2.2.2、Fanout Exchange（广播交换机）
 该类型的交换机会将⼀条消息⼴播到绑定到该交换机的所有队列上，不论你设置的路由键是什么
 > 如果想让多个消费者消费到数据必须不指定queues，指定交换机
 
@@ -104,23 +105,29 @@ MQ全称Message Queue（消息队列），是在消息传输过程中保存消�
 ```
 ### 2.2.3、Topic Exchange（主题交换机）
 
-将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“*”匹配不多不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.*  ” 只会匹配到“abc.def”。
+将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“\*”匹配不多不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.\* ” 只会匹配到“abc.def”。
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661234502774-bcf2c312-eb4a-4b08-bdf4-04d1e00120c6.png#averageHue=%23f7e2e2&clientId=u1f2092d6-850c-4&from=paste&height=145&id=ufa6d9153&originHeight=145&originWidth=397&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16576&status=done&style=none&taskId=udb8c02a0-8915-45bc-94a0-57fc472954b&title=&width=397)
+![主题交换机](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241552123.png)
+
 
 ### 2.2.4、Headers Exchanges（头交换机）
 
-与routingKey无关，匹配机制是匹配消息头中的属性信息。在绑定消息队列与交换机之前声明一个map键值对，通过这个map对象实现消息队列和交换机的绑定。当消息发送到RabbitMQ时会取到该消息的headers与Exchange绑定时指定的键值对进行匹配；如果完全匹配则消息会路由到该队列，否则不会路由到该队列
+与routingKey无关，匹配机制是匹配消息头中的属性信息。在绑定消息队列与交换机之前声明一个map键值对，通过这个map对象实现消息队列和交换机的绑定。当消息发送到RabbitMQ时会取到该消息的headers与Exchange绑定时指定的键值对进行匹配；如果完全匹配则消息会路由到该队列，否则不会路由到该队列()
+
 > 匹配规则x-match有下列两种类型：
 x-match = all ：表示所有的键值对都匹配才能接受到消息
 x-match = any ：表示只要有键值对匹配就能接受到消息
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661235159094-3892f748-0b85-4434-ae94-8312b03666ee.png#averageHue=%23fcf3f2&clientId=u1f2092d6-850c-4&from=paste&id=ud65c1929&originHeight=225&originWidth=587&originalType=url&ratio=1&rotation=0&showTitle=false&size=25703&status=done&style=none&taskId=uc66d4e00-7f87-4157-b04d-eaf97a4ed47&title=)
+![image (6).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241557662.png)
+
 
 ## 2.3、工作模式
 ### 2.3.1、简单模式
-一个生产者对应一个消费者。这个模式下一个发生一个接收，不用考虑交换机。
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/2996398/1675751154663-d967a570-e70e-472e-9d91-b702900a369b.png#averageHue=%23f9dede&clientId=u1c130bb5-33d5-4&from=paste&height=123&id=uab8c94c4&originHeight=123&originWidth=357&originalType=binary&ratio=1&rotation=0&showTitle=false&size=8784&status=done&style=none&taskId=u600ec559-c0f1-42a0-a353-2a4db284d6f&title=&width=357)
+一个生产者将消息发送到一个队列中，一个消费者从这个队列中获取消息并进行处理。这种模式仅适用于单个生产者和单个消费者的场景
+
+![简单模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241557273.png)
+
+
 > P代表生产者，C代表消费者，红色代表消息队列。P将消息发送到消息队列，C对消息进行处理
 
 
@@ -159,11 +166,12 @@ public class Consumer {
 
 
 ### 2.3.2、工作队列模式
-一个生产者对应多个消费者，但是一条消息只能有一个消费者获得消息。谁先拿到谁消费
+一个生产者将消息发送到一个队列中，多个消费者从这个队列中获取消息并进行处理。这种模式可以提高消息的处理效率
+
 > 对于任务过重或任务较多情况使用工作队列可以提高任务处理的速度
 
+![工作队列模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241632591.png)
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/2996398/1675751171601-c5a2995a-018e-4f3e-9165-9af05c8ffaae.png#averageHue=%23f8dada&clientId=u1c130bb5-33d5-4&from=paste&height=146&id=u0cbbec5c&originHeight=146&originWidth=382&originalType=binary&ratio=1&rotation=0&showTitle=false&size=14008&status=done&style=none&taskId=u4a973303-a770-4b77-92bc-a9f98b94856&title=&width=382)
 
 **实现方式**
 多个消费者同时监听同一个队列,消息被消费，共同争抢当前的消息队列内容,谁先拿到谁负责消费消息
@@ -181,12 +189,15 @@ public class Consumer2 {
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661394067626-05e7a3e3-889c-4b32-aac4-b411287a4c20.png#averageHue=%2334322f&clientId=u1f2092d6-850c-4&from=paste&height=268&id=u834eba4b&originHeight=268&originWidth=276&originalType=binary&ratio=1&rotation=0&showTitle=false&size=7316&status=done&style=none&taskId=u30d0eca9-feeb-475a-8f5e-e2cbcd309fb&title=&width=276)
 
 ### 2.3.3、发布订阅模式
-生产者将消息发给broker，由交换机将消息转发到绑定此交换机的每个队列，每个绑定交换机的队列都将接收到消息。（这种方式实现同一个消息被多个消费者消费。工作模式是同一个消息只能有一个消费者）
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661236597993-e6418afb-21a5-4198-a6d8-1ac88d7f6e68.png#averageHue=%23f7dada&clientId=u1f2092d6-850c-4&from=paste&height=164&id=u0192e477&originHeight=164&originWidth=391&originalType=binary&ratio=1&rotation=0&showTitle=false&size=19951&status=done&style=none&taskId=u5b6e2e09-548b-4821-9ff3-67a9c2cace9&title=&width=391)
+一个生产者将消息发送到一个交换机中，交换机将消息广播到所有绑定的队列中，多个消费者可以分别从这些队列中获取消息并进行处理。这种模式适用于需要将消息广播到多个消费者的场景
+
+![发布订阅模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241633780.png)
+
 
 1. **实现方式**
 
-（1）创建两个队列和一个交换机，然后将队列绑定到交换机上
+（1）创建两个队列和一个交换机，然后将队列绑定到交换机上 
+
 ```java
 @Bean
 public Queue queue1() {
@@ -215,6 +226,7 @@ Binding bindingExchangeB(Queue queue2, FanoutExchange fanoutExchange1) {
 ```
 
 （2）生产者消费者
+
 ```java
 // 生产者：第二个参数是队列名，设置为空
 @RestController
@@ -251,11 +263,15 @@ public class Consumer2 {
 }
 ```
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661413378872-162ba357-f8e8-44ca-858c-884732faf8fd.png#averageHue=%23353230&clientId=u1f2092d6-850c-4&from=paste&height=258&id=ub5bb0f8d&originHeight=258&originWidth=339&originalType=binary&ratio=1&rotation=0&showTitle=false&size=32505&status=done&style=none&taskId=u45d190ce-12a2-4723-afca-16e723e524b&title=&width=339)
+
 ### 2.3.4、路由模式
-生产者发送的消息是以key-value的形式，当消息进入交换机，交换机根据key的不同，将其分配到不同的队列。消费者通过Channel声明一个队列时，需要绑定给队列绑定一个key和一个交换机。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661238576118-08d05cd0-ec41-4db8-922a-4eea1ae99e16.png#averageHue=%23f6e4e4&clientId=u1f2092d6-850c-4&from=paste&height=148&id=u15bd2eac&originHeight=148&originWidth=396&originalType=binary&ratio=1&rotation=0&showTitle=false&size=22813&status=done&style=none&taskId=uee97833f-f94d-46df-9cdb-0cb79ad29ea&title=&width=396)
+一个生产者将消息发送到一个交换机中，交换机根据消息的Routing Key将消息路由到对应的队列中，多个消费者可以从这些队列中获取消息并进行处理。这种模式适用于需要根据消息的路由键进行精确匹配的场景
+
+![路由模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241647936.png)
+
 **实现方式**
 （1）交换机和队列根据指定路由规则绑定
+
 ```java
 @Bean
 public Queue queue1() {
@@ -322,79 +338,8 @@ public class Producer {
 ```
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661473083570-947e0de2-9c97-47fb-8fba-4e568d152f28.png#averageHue=%23353330&clientId=u1f2092d6-850c-4&from=paste&height=129&id=u8c943953&originHeight=129&originWidth=335&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16674&status=done&style=none&taskId=uc8eec929-83ad-43c6-bda3-fb8dbe96e14&title=&width=335)
-### 2.3.5、主题模式
-主题模式从某种意义上也算是一种路由，只不过它可以匹配多种符合条件的队列。Topic类型Exchange可以让队列在绑定Routing key 的时候使用通配符
-> *可以代替一个单词，#代表没有和多个单词
-
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661239369166-9fb94bca-0467-4982-8b2e-4528148a35a6.png#averageHue=%23f6e5e1&clientId=u1f2092d6-850c-4&from=paste&height=185&id=udc9a98eb&originHeight=185&originWidth=561&originalType=binary&ratio=1&rotation=0&showTitle=false&size=65300&status=done&style=none&taskId=u289c5cfc-f051-4301-ae36-55835a1b2c3&title=&width=561)
-（1）交换器和队列通过通配符绑定
-```java
-@Bean
-public Queue queueA() {
-    return new Queue("queueA", true);
-}
-
-@Bean
-public Queue queueB() {
-    return new Queue("queueB", true);
-}
-
-@Bean
-public TopicExchange topicExchange() {
-    return new TopicExchange("topicExchange");
-}
 
 
-@Bean
-Binding bindingTopicExchange1(Queue queueA, TopicExchange topicExchange) {
-    return BindingBuilder.bind(queueA).to(topicExchange).with("topic.keyA");
-}
-
-
-@Bean
-Binding bindingTopicExchange2(Queue queueB, TopicExchange topicExchange) {
-    return BindingBuilder.bind(queueB).to(topicExchange).with("topic.#");
-}
-```
-
-（2）消费者和生产者
-```java
-// consumer1
-@Component
-public class Consumer1 {
-    @RabbitListener(queues = "queueA")
-    @RabbitHandler
-    public void getMsg(String msg, Channel channel, Message message) throws IOException {
-        System.out.println("queueA consumer1: "+msg);
-    }
-}
-// consumer2
-@Component
-public class Consumer2 {
-    @RabbitListener(queues = "queueB")
-    @RabbitHandler
-    public void getMsg(String msg, Channel channel, Message message) throws IOException {
-        System.out.println("queueB consumer2: "+msg);
-    }
-}
-// producer
-@RestController
-public class Producer {
-    @Autowired
-    AmqpTemplate amqpTemplate;
-
-    @RequestMapping("/send")
-    public String send() {
-        String content = "hello,rabbitmq";
-        for (int i=0;i<5;i++){
-            amqpTemplate.convertAndSend("topicExchange","topic.88888", content);
-        }
-        return content;
-    }
-}
-```
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661474563658-f0a1c8de-70fc-407f-913b-766d4e2ab78d.png#averageHue=%23353330&clientId=u1f2092d6-850c-4&from=paste&height=130&id=u99471809&originHeight=130&originWidth=337&originalType=binary&ratio=1&rotation=0&showTitle=false&size=17931&status=done&style=none&taskId=u7a96e277-23ac-4d60-86d0-e94c88ce880&title=&width=337)
- 
 
 ## 2.4、死信队列
 “死信”是RabbitMQ中的一种消息机制，当你在消费消息时，如果队列里的消息出现以下情况：
