@@ -341,179 +341,18 @@ public class Producer {
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1661473083570-947e0de2-9c97-47fb-8fba-4e568d152f28.png#averageHue=%23353330&clientId=u1f2092d6-850c-4&from=paste&height=129&id=u8c943953&originHeight=129&originWidth=335&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16674&status=done&style=none&taskId=uc8eec929-83ad-43c6-bda3-fb8dbe96e14&title=&width=335)
 
 
+# 3、高级特性
 
-## 2.4、死信队列
-“死信”是RabbitMQ中的一种消息机制，当你在消费消息时，如果队列里的消息出现以下情况：
-（1）消息被否定确认，使用 channel.basicNack 或 channel.basicReject ，并且此时requeue =false
-（2）消息在队列的存活时间超过设置的生存时间（TTL)时间。
-（3）消息队列的消息数量已经超过最大队列长度。那么该消息将成为“死信”
-“死信”消息会被RabbitMQ进行特殊处理，如果配置了死信队列信息，那么该消息将会被丢进死信队列中，如果没有配置，则该消息将会被丢弃
-
-```java
-@Configuration
-public class RabbitMQConfig {
-
-    @Bean
-    public Queue normalQueue() {
-        return new Queue("normal.queue");
-    }
-
-    @Bean
-    public Queue deadLetterQueue() {
-        return QueueBuilder.durable("dead.letter.queue")
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", "normal.queue")
-                .build();
-    }
-
-    @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange("exchange");
-    }
-
-    @Bean
-    public Binding binding() {
-        return BindingBuilder.bind(normalQueue()).to(exchange()).with("normal.queue");
-    }
-
-    @Bean
-    public Binding deadLetterBinding() {
-        return BindingBuilder.bind(deadLetterQueue()).to(exchange()).with("dead.letter.queue");
-    }
-
-}
-```
-### 2.4.1、实现方式
-
-1. 交换机，队列配置
-```java
-@Configuration
-public class RabbitConfig {
-	/**
-     * 声明死信交换机
-     */
-    @Bean
-    public DirectExchange dlxExchange() {
-        return new DirectExchange("dlxExchange");
-    }
-    /**
-     * 声明死信队列
-     */
-    @Bean
-    public Queue dlxQueue() {
-        return new Queue("dlxQueue");
-    }
-    /**
-     * 绑定死信队列到死信交换机
-     */
-    @Bean
-    public Binding binding() {
-        return BindingBuilder.bind(dlxQueue())
-                .to(dlxExchange())
-                .with("dlxRoutingKey");
-    }
-
-    /**
-     * 普通队列绑定死信即可
-     */
-    @Bean
-    Queue normalQueue(){
-        Map<String,Object> map = new HashMap<>();
-        map.put("x-dead-letter-exchange","dlxExchange");
-        map.put("x-dead-letter-routing-key", "dlxRoutingKey");
-        return new Queue("normalQueue",true,false,false,map);
-    }
-
-    @Bean
-    DirectExchange normalExchange(){
-        return new DirectExchange("normalExchange");
-    }
-
-    @Bean
-    Binding normalBindingExchange(){
-        return BindingBuilder.bind( normalQueue()).to(normalExchange()).with("normalRoutingKey");
-    }
-}
-```
-
-2. 生产者和消费者（过期进入死信队列）
-```java
-@RestController
-public class Producer {
-    @Autowired
-    AmqpTemplate amqpTemplate;
-
-    @RequestMapping("/send")
-    public String send() {
-        String content = "hello,rabbitmq";
-        // 设置消息过期时间为3s
-        amqpTemplate.convertAndSend("normalExchange", "normalRoutingKey", content,message -> {
-            message.getMessageProperties().setExpiration("3000");
-            return message;
-        });
-        return content;
-    }
-}
-
-@Component
-public class Consumer1 {
-    // 将正常消费者注掉，过期后进入死信队列
-//    @RabbitListener(queues = "normalQueue")
-//    public void getMsg(String msg, Channel channel, Message message) throws IOException {
-//        System.out.println("正常队列收到消息时间为:"+LocalDateTime.now()+",收到的消息内容为:"+ msg);
-//        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-//    }
-
-@RabbitListener(queues = "dlxQueue")
-public void myDealy(String msg, Message message, Channel channel) throws IOException {
-    System.out.println("死信收到消息时间为:"+LocalDateTime.now()+",收到的消息内容为:"+ msg);
-    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-}
-}
-```
-
-3. 方式2，手动拒绝进入死信队列
-```java
-// 生产者正常发消息
-@RestController
-public class Producer {
-    @Autowired
-    AmqpTemplate amqpTemplate;
-
-    @RequestMapping("/send")
-    public String send() {
-        String content = "hello,rabbitmq";
-        // 设置消息过期时间为3s
-        amqpTemplate.convertAndSend("normalExchange", "normalRoutingKey", content);
-        return content;
-    }
-}
-
-@Component
-public class Consumer1 {
-    // 正常队列拒绝消息basicNack，并且第三个参数requeue设置为false，禁止重新入队
-    @RabbitListener(queues = "normalQueue")
-    public void getMsg(String msg, Channel channel, Message message) throws IOException {
-        System.out.println("正常队列收到消息时间为:"+LocalDateTime.now()+",收到的消息内容为:"+ msg);
-        channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
-    }
-
-    @RabbitListener(queues = "dlxQueue")
-    public void myDealy(String msg, Message message, Channel channel) throws IOException {
-        System.out.println("死信收到消息时间为:"+LocalDateTime.now()+",收到的消息内容为:"+ msg);
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-    }
-}
-
-```
 ## 3.1、保证消息传递的可靠性
-RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消息确认。
+RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消息确认。1 
 投递可靠性：**confirm确认模式**（producer——>exchange）和**return退回模式**（exchange——>queue）
 消息确认：ack消费者确认，表示消费者收到消息后的确认方式
+
 ### 3.1.1、confirm确认模式
 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。(无论成功失败都有返回)
 
 1. 在配置文件中开启消息确认模式
+
 ```java
 # SIMPLE       禁用发布确认模式，是默认值
 # CORRELATED   发布消息成功到交换器或失败后 会触发回调方法
@@ -526,6 +365,7 @@ spring.rabbitmq.publisher-confirm-type=CORRELATED
 ```
 
 2.  通过实现 RabbitTemplate.ConfirmCallback 类来对消息发送结果进行处理
+
 ```java
 @Component
 public class RabbitConfirmConfig implements RabbitTemplate.ConfirmCallback {
@@ -543,6 +383,7 @@ public class RabbitConfirmConfig implements RabbitTemplate.ConfirmCallback {
 ```
 
 3. 对rabbitTemplate进行设置
+
 ```java
 @Configuration
 public class RabbitConfig {
@@ -559,11 +400,13 @@ public class RabbitConfig {
     }
 }
 ```
+
 ### 3.1.2、return退回模式
 
 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。（失败时才会有返回）
 
 1. 在配置文件中开启消息异常重新入队
+
 ```java
 # 确保消息发送失败后可以重新返回到队列中
 # 也可以通过 rabbitTemplate.setMandatory(true) 来设置
@@ -571,6 +414,7 @@ spring.rabbitmq.publisher-returns=true
 ```
 
 2. 通过实现 RabbitTemplate.ConfirmCallback 类来对消息发送结果进行处理
+
 ```java
 @Component
 public class RabbitReturnConfig implements RabbitTemplate.ReturnCallback {
@@ -585,6 +429,7 @@ public class RabbitReturnConfig implements RabbitTemplate.ReturnCallback {
 ```
 
 3. 对rabbitTemplate的 returnback 进行设置
+
 ```java
 @Configuration
 public class RabbitConfig {
