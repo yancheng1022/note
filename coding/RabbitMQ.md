@@ -348,25 +348,40 @@ public class Producer {
 （2）消息在队列的存活时间超过设置的生存时间（TTL)时间。
 （3）消息队列的消息数量已经超过最大队列长度。那么该消息将成为“死信”
 “死信”消息会被RabbitMQ进行特殊处理，如果配置了死信队列信息，那么该消息将会被丢进死信队列中，如果没有配置，则该消息将会被丢弃
-```java
-//  业务队列配置死信队列参数（声明业务队列A）
-    @Bean("businessQueueA")
-    public Queue businessQueueA(){
-        Map<String, Object> args = new HashMap<>(2);
-//       x-dead-letter-exchange    这里声明当前队列绑定的死信交换机
-        args.put("x-dead-letter-exchange", DEAD_LETTER_EXCHANGE);
-//       x-dead-letter-routing-key  这里声明当前队列的死信路由key
-        args.put("x-dead-letter-routing-key", DEAD_LETTER_QUEUEA_ROUTING_KEY);
-        return QueueBuilder.durable(BUSINESS_QUEUEA_NAME).withArguments(args).build();
-    }
-//  声明业务队列绑定关系
 
-    // 声明业务队列A绑定关系
+```java
+@Configuration
+public class RabbitMQConfig {
+
     @Bean
-    public Binding businessBindingA(@Qualifier("businessQueueA") Queue queue,
-                                    @Qualifier("businessExchange") FanoutExchange exchange){
-        return BindingBuilder.bind(queue).to(exchange);
+    public Queue normalQueue() {
+        return new Queue("normal.queue");
     }
+
+    @Bean
+    public Queue deadLetterQueue() {
+        return QueueBuilder.durable("dead.letter.queue")
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", "normal.queue")
+                .build();
+    }
+
+    @Bean
+    public DirectExchange exchange() {
+        return new DirectExchange("exchange");
+    }
+
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(normalQueue()).to(exchange()).with("normal.queue");
+    }
+
+    @Bean
+    public Binding deadLetterBinding() {
+        return BindingBuilder.bind(deadLetterQueue()).to(exchange()).with("dead.letter.queue");
+    }
+
+}
 ```
 ### 2.4.1、实现方式
 

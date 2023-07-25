@@ -13,11 +13,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/RabbitMQ.md",
                 "mode": "source",
                 "source": false
               }
-            }
+            },
+            "group": "e0f3f49c18dffc35"
+          }
+        ]
+      },
+      {
+        "id": "a456e77eccdbf4d6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3d572ef2b9f876a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "coding/RabbitMQ.md",
+                "mode": "preview",
+                "source": false
+              }
+            },
+            "group": "e0f3f49c18dffc35"
           }
         ]
       }
@@ -69,7 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 213.5
   },
   "right": {
     "id": "8ae727db9b69a191",
@@ -85,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/RabbitMQ.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "coding/JUC.md",
+                "file": "coding/RabbitMQ.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "coding/JUC.md"
+                "file": "coding/RabbitMQ.md"
               }
             }
           }
@@ -149,9 +169,9 @@
   },
   "active": "ce50db37a6619316",
   "lastOpenFiles": [
+    "coding/JUC.md",
     "coding/spring.md",
     "coding/RabbitMQ.md",
-    "coding/JUC.md",
     "coding/nginx.md",
     "思考",
     "img/Pasted image 20230722190135.png",
