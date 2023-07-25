@@ -6,6 +6,7 @@ categories:
 tags:
   - RabbitMQ
   - 消息队列
+  - 编程基础
 ---
 # 1、基本基础
 ## 1.1、mq概念

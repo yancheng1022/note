@@ -5,6 +5,7 @@ categories:
   - coding
 tags:
   - nginx
+  - 编程基础
 ---
 # 1、nginx简介
 ## 1.1、nginx概述
