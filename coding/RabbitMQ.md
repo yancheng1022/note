@@ -344,7 +344,7 @@ public class Producer {
 # 3、高级特性
 
 ## 3.1、保证消息传递的可靠性
-RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消息确认。1 
+RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消息确认。
 投递可靠性：**confirm确认模式**（producer——>exchange）和**return退回模式**（exchange——>queue）
 消息确认：ack消费者确认，表示消费者收到消息后的确认方式
 
