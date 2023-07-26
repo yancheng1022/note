@@ -372,12 +372,69 @@ spring.rabbitmq.publisher-confirm-type=CORRELATED
 
 **实现confirm callback和return callback：**
 
-1. 在配置文件中开启消息异常重新入队
+1. 配置文件开启相关配置
+
+```yml
+spring:
+  #配置rabbitMq 服务器
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: yancey
+    password: yancey
+ 
+    #确认消息已发送到交换机(Exchange) 
+    publisher-confirm-type: correlated
+ 
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true
+```
+
+2. 编写配置类
 
 ```java
-# 确保消息发送失败后可以重新返回到队列中
-# 也可以通过 rabbitTemplate.setMandatory(true) 来设置
-spring.rabbitmq.publisher-returns=true
+@Configuration
+public class RabbitConfig {
+ 
+    @Bean
+    public RabbitTemplate createRabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        rabbitTemplate.setConnectionFactory(connectionFactory);
+ 
+        //设置消息投递失败的策略，有两种策略：自动删除或返回到客户端。
+        //我们既然要做可靠性，当然是设置为返回到客户端(true是返回客户端，false是自动删除)
+        rabbitTemplate.setMandatory(true);
+ 
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                System.out.println();
+                System.out.println("相关数据：" + correlationData);
+                if (ack) {
+                    System.out.println("投递成功,确认情况：" + ack);
+                } else {
+                    System.out.println("投递失败,确认情况：" + ack);
+                    System.out.println("原因：" + cause);
+                }
+            }
+        });
+ 
+        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
+            @Override
+            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+                System.out.println();
+                System.out.println("ReturnCallback:     " + "消息：" + message);
+                System.out.println("ReturnCallback:     " + "回应码：" + replyCode);
+                System.out.println("ReturnCallback:     " + "回应信息：" + replyText);
+                System.out.println("ReturnCallback:     " + "交换机：" + exchange);
+                System.out.println("ReturnCallback:     " + "路由键：" + routingKey);
+                System.out.println();
+            }
+        });
+ 
+        return rabbitTemplate;
+    }
+}
 ```
 
 
