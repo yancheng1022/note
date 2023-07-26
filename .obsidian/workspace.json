@@ -6,6 +6,7 @@
       {
         "id": "5559028072dfdb4b",
         "type": "tabs",
+        "dimension": 50.470219435736674,
         "children": [
           {
             "id": "ce50db37a6619316",
@@ -18,16 +19,17 @@
                 "source": false
               }
             },
-            "group": "e0f3f49c18dffc35"
+            "group": "3c18a7e7acc1a3d5"
           }
         ]
       },
       {
-        "id": "a456e77eccdbf4d6",
+        "id": "9bf2f975113d6b3e",
         "type": "tabs",
+        "dimension": 49.52978056426332,
         "children": [
           {
-            "id": "3d572ef2b9f876a9",
+            "id": "fe005e60f49c5cf5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -37,7 +39,7 @@
                 "source": false
               }
             },
-            "group": "e0f3f49c18dffc35"
+            "group": "3c18a7e7acc1a3d5"
           }
         ]
       }
@@ -89,7 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 213.5
+    "width": 300
   },
   "right": {
     "id": "8ae727db9b69a191",
@@ -169,11 +171,10 @@
   },
   "active": "ce50db37a6619316",
   "lastOpenFiles": [
-    "coding/JUC.md",
     "coding/spring.md",
     "coding/RabbitMQ.md",
     "coding/nginx.md",
-    "思考",
+    "coding/JUC.md",
     "img/Pasted image 20230722190135.png",
     "img/Pasted image 20230722131755.png",
     "img/Pasted image 20230722174535.png",
