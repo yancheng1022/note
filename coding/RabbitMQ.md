@@ -498,6 +498,7 @@ public DirectExchange(String name, boolean durable, boolean autoDelete) {
 }
 
 ```
+
 ### 3.2.2、队列持久化
 申明队列时也有个参数：durable。当该参数为true，则对该queue做持久化，重启rabbitmq服务器，该queue不会消失。durable的默认值为true
 ```java
@@ -508,6 +509,7 @@ public Queue(String name, boolean durable, boolean exclusive, boolean autoDelete
         this(name, durable, exclusive, autoDelete, (Map)null);
 }
 ```
+
 ## 3.3、避免消息重复消费
 ### 3.3.1、消息重复发送的场景
 消息消费成功，事务已经提交，ack时，机器宕机，导致没有ack成功，Broker的消息重新由unack变为ready，并发送给其他消费者；相当于锁库存被消费了两遍，即库存扣了两遍；
