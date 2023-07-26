@@ -4,42 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "5559028072dfdb4b",
+        "id": "1a287f02279ece2c",
         "type": "tabs",
-        "dimension": 59.1692789968652,
         "children": [
           {
-            "id": "ce50db37a6619316",
+            "id": "5afaee65cd2f9459",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coding/RabbitMQ.md",
+                "file": "临时/权限系统.md",
                 "mode": "source",
                 "source": false
               }
-            },
-            "group": "3c18a7e7acc1a3d5"
-          }
-        ]
-      },
-      {
-        "id": "9bf2f975113d6b3e",
-        "type": "tabs",
-        "dimension": 40.8307210031348,
-        "children": [
-          {
-            "id": "fe005e60f49c5cf5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "coding/RabbitMQ.md",
-                "mode": "preview",
-                "source": false
-              }
-            },
-            "group": "3c18a7e7acc1a3d5"
+            }
           }
         ]
       }
@@ -107,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "coding/RabbitMQ.md",
+                "file": "临时/权限系统.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "coding/RabbitMQ.md",
+                "file": "临时/权限系统.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "coding/RabbitMQ.md"
+                "file": "临时/权限系统.md"
               }
             }
           }
@@ -169,12 +147,14 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "ce50db37a6619316",
+  "active": "5afaee65cd2f9459",
   "lastOpenFiles": [
-    "coding/spring.md",
-    "coding/RabbitMQ.md",
-    "coding/nginx.md",
     "coding/JUC.md",
+    "临时/权限系统.md",
+    "coding/RabbitMQ.md",
+    "临时",
+    "coding/spring.md",
+    "coding/nginx.md",
     "img/Pasted image 20230722190135.png",
     "img/Pasted image 20230722131755.png",
     "img/Pasted image 20230722174535.png",
