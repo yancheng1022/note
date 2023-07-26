@@ -364,42 +364,6 @@ RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消息
 spring.rabbitmq.publisher-confirm-type=CORRELATED
 ```
 
-2.  通过实现 RabbitTemplate.ConfirmCallback 类来对消息发送结果进行处理
-
-```java
-@Component
-public class RabbitConfirmConfig implements RabbitTemplate.ConfirmCallback {
-    @Override
-    public void confirm(CorrelationData correlationData, boolean ack, String cause) {
- 
-        if (!ack) {
-            # 根据具体的业务进行相应的处理
-            System.out.println("【交换机】 生产者消息确认失败了====" + cause);
-        } else {
-            System.out.println("【交换机】 生产者消息确认成功====");
-        }
-    }
-}
-```
-
-3. 对rabbitTemplate进行设置
-
-```java
-@Configuration
-public class RabbitConfig {
- 
-    @Autowired
-    private RabbitConfirmConfig rabbitConfirmConfig;
- 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
- 
-    @PostConstruct
-    public void initRabbitTemplate(){    
-        rabbitTemplate.setConfirmCallback(rabbitConfirmConfig);
-    }
-}
-```
 
 ### 3.1.2、return退回模式
 
@@ -413,39 +377,7 @@ public class RabbitConfig {
 spring.rabbitmq.publisher-returns=true
 ```
 
-2. 通过实现 RabbitTemplate.ConfirmCallback 类来对消息发送结果进行处理
 
-```java
-@Component
-public class RabbitReturnConfig implements RabbitTemplate.ReturnCallback {
-    @Override
-    public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-        // 根据具体的业务对异常进行处理，自行判断是否消息可以丢弃
-        if (AMQP.NO_ROUTE == replyCode){
-            System.out.println("【队列】 交换机路由到队列失败====" + message);
-        }
-    }
-}
-```
-
-3. 对rabbitTemplate的 returnback 进行设置
-
-```java
-@Configuration
-public class RabbitConfig {
-    @Autowired
-    RabbitReturnConfig rabbitReturnConfig;
-
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @PostConstruct
-    public void initRabbitTemplate(){
-        rabbitTemplate.setReturnCallback(rabbitReturnConfig);
-    }
-}
-
-```
 ### 3.1.3、消费者端ack机制
 消费者端消息接收确认采用的是ack模式。ACK机制是消费者从RabbitMQ收到消息并处理完成后，反馈给RabbitMQ，RabbitMQ收到反馈后才将此消息从队列中删除
 
