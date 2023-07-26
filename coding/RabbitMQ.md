@@ -370,13 +370,13 @@ spring:
     username: yancey
     password: yancey
  
-    #confirmCallback 确认模式
+    # confirmCallback 确认模式
     # SIMPLE       禁用发布确认模式，是默认值
 	# CORRELATED   发布消息成功到交换器或失败后 会触发回调方法
 	# NONE         有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用。rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回 发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果 返回false则会关闭channel，则接下来无法发送消息到broker;
     publisher-confirm-type: correlated
  
-    #投递确认(returnCallback 退回模式)
+    # returnCallback 退回模式
     publisher-returns: true
 ```
 
@@ -398,13 +398,12 @@ public class RabbitConfig {
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-                System.out.println();
-                System.out.println("相关数据：" + correlationData);
+                log.info("相关数据：" + correlationData);
                 if (ack) {
-                    System.out.println("投递成功,确认情况：" + ack);
+                    log.info("投递成功,确认情况：" + ack);
                 } else {
-                    System.out.println("投递失败,确认情况：" + ack);
-                    System.out.println("原因：" + cause);
+                    log.info("投递失败,确认情况：" + ack);
+                    log.info("原因：" + cause);
                 }
             }
         });
@@ -412,13 +411,11 @@ public class RabbitConfig {
         rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-                System.out.println();
-                System.out.println("ReturnCallback:     " + "消息：" + message);
-                System.out.println("ReturnCallback:     " + "回应码：" + replyCode);
-                System.out.println("ReturnCallback:     " + "回应信息：" + replyText);
-                System.out.println("ReturnCallback:     " + "交换机：" + exchange);
-                System.out.println("ReturnCallback:     " + "路由键：" + routingKey);
-                System.out.println();
+               log.info("ReturnCallback:     " + "消息：" + message);
+               log.info("ReturnCallback:     " + "回应码：" + replyCode);
+               log.info("ReturnCallback:     " + "回应信息：" + replyText);
+               log.info("ReturnCallback:     " + "交换机：" + exchange);
+               log.info("ReturnCallback:     " + "路由键：" + routingKey);
             }
         });
  
