@@ -352,23 +352,11 @@ RabbitMQ保证消息的可靠性主要分为三个部分：消息发送，消息
 ### 3.1.1、confirm确认模式
 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。(无论成功失败都有返回)
 
-1. 在配置文件中开启消息确认模式
-
-```java
-# SIMPLE       禁用发布确认模式，是默认值
-# CORRELATED   发布消息成功到交换器或失败后 会触发回调方法
-# NONE         有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用 
-               rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回 
-               发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果 
-               返回false则会关闭channel，则接下来无法发送消息到broker;
- 
-spring.rabbitmq.publisher-confirm-type=CORRELATED
-```
-
 
 ### 3.1.2、return退回模式
 
 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。（失败时才会有返回）
+
 
 **实现confirm callback和return callback：**
 
@@ -383,10 +371,13 @@ spring:
     username: yancey
     password: yancey
  
-    #确认消息已发送到交换机(Exchange) 
+    #发送确认(confirmCallback 确认模式) 
+    # SIMPLE       禁用发布确认模式，是默认值
+	# CORRELATED   发布消息成功到交换器或失败后 会触发回调方法
+	# NONE         有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用。rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回 发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果 返回false则会关闭channel，则接下来无法发送消息到broker;
     publisher-confirm-type: correlated
  
-    #确认消息已发送到队列(Queue)
+    #投递确认(returnCallback 退回模式)
     publisher-returns: true
 ```
 
