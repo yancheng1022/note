@@ -370,6 +370,8 @@ spring.rabbitmq.publisher-confirm-type=CORRELATED
 
 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。（失败时才会有返回）
 
+**实现confirm callback和return callback：**
+
 1. 在配置文件中开启消息异常重新入队
 
 ```java
