@@ -502,7 +502,7 @@ public DirectExchange(String name, boolean durable, boolean autoDelete) {
 申明队列时也有个参数：durable。当该参数为true，则对该queue做持久化，重启rabbitmq服务器，该queue不会消失。durable的默认值为true
 ```java
 // durable: 是否做队列持久化
-// exclusive: 是否排外。两个作用：（1）当连接关闭时connection.close()该队列是否会自动删除
+// exclusive: 是否排外。两个作用：（1）当连接关闭时connection.close()该队列是否会自动删除（2）对当前队列加锁，其他通道channel是不能访问的，用于一个队列只能有一个消费者来消费的场景
 // autoDelete:当所有消费客户端连接断开后，是否自动删除 
 public Queue(String name, boolean durable, boolean exclusive, boolean autoDelete) {
         this(name, durable, exclusive, autoDelete, (Map)null);
