@@ -458,30 +458,26 @@ public class Consumer {
             // （2）multiple：表示是否将delivery_tag之前的所有未确认消息都拒绝。如果multiple为true，则RabbitMQ将拒绝所有未确认的消息，如果为false，则只拒绝指定的消息
             // （3）requeue：表示是否将被拒绝的消息重新放回队列中。如果requeue为true，则消息将返回到队列中以便重新处理，如果为false，则消息将被丢弃
             channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
-			/*
+		
             if (message.getMessageProperties().getRedelivered()) {//判断是否已经重试过
                 log.error("消息已重复处理失败,拒绝再次接收...");
                 channel.basicReject(message.getMessageProperties().getDeliveryTag(), false); // 拒绝消息
+                // 重复消费失败的消息入库...
             } else {
                 log.error("消息即将再次返回队列处理...");
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             }
-			*/
+		
         }
     }
 }
 ```
-> 1、basicAck
-> void basicAck(long deliveryTag, boolean multiple) :表示成功确认，使用此回执方法后，消息会被rabbitmq broker 删除。
-> （1）deliveryTag：表示消息投递序号，每次消费消息或者消息重新投递后，deliveryTag都会增加。手动消息确认模式下，我们可以对指定deliveryTag的消息进行ack、nack、reject等操作。
-> （2）multiple：是否批量确认，值为 true 则会一次性 ack所有小于当前消息 deliveryTag 的消息。
-> (举个栗子： 假设我先发送三条消息deliveryTag分别是5、6、7，可它们都没有被确认，当我发第四条消息此时deliveryTag为8，multiple设置为 true，会将5、6、7、8的消息全部进行确认)
-> 
-> 2、basicNack
-> void basicNack(long deliveryTag, boolean multiple, boolean requeue)表示失败确认，一般在消费消息业务异常时用到此方法，可以将消息重新投递入队列
-> （1）deliveryTag：表示消息投递序号。
-> （2）multiple：是否批量确认。
-> （3）requeue：值为 true 消息将重新入队列。
+
+
+>requeue参数设置为true，可以将消息返回到队列中以便重新处理
+>但是这样可能导致无限循环地处理同一个错误消息
+>所以上面代码采用了折中方案：首次失败的消息通知队列重发，重复失败的消息落地进行后面的补偿机制
+
 
 
 ## 3.2、消息持久化机制
