@@ -453,7 +453,10 @@ public class Consumer {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }catch (Exception e){
             // 消费失败后ack
-            //注意：参数三若设置为true，会出现死循环
+            // 三个参数：
+            // （1）delivery_tag：表示消息的唯一标识符
+            // （2）multiple：表示是否将delivery_tag之前的所有未确认消息都拒绝。如果multiple为true，则RabbitMQ将拒绝所有未确认的消息，如果为false，则只拒绝指定的消息
+            // （3）requeue：表示是否将被拒绝的消息重新放回队列中。如果requeue为true，则消息将返回到队列中以便重新处理，如果为false，则消息将被丢弃
             channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
 			/*
             if (message.getMessageProperties().getRedelivered()) {//判断是否已经重试过
