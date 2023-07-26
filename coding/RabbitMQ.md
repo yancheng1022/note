@@ -393,7 +393,8 @@ spring.rabbitmq.publisher-returns=true
 ```java
 acknowledge-mode: manual # 设置消费端手动 ack
 ```
-	消费者类
+
+消费者类
 ```java
 @Component
 public class Consumer {
