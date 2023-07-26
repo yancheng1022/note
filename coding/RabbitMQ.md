@@ -344,10 +344,9 @@ public class Producer {
 # 3、高级特性
 
 ## 3.1、保证消息传递的可靠性
-RabbitMQ保证消息的可靠性主要分为三个部分：消息发送，消息投递和消费者消息确认
-（1）发送确认：**confirm确认模式**（producer——>exchange）
-（2）投递确认：**return退回模式**（exchange——>queue）
-（3）消费者确认：ACK消息签收机制，表示消费者收到消息后的确认方式
+RabbitMQ保证消息的可靠性主要分为两个部分：消息投递和消费者消息确认
+（1）投递确认：**confirm确认模式**（producer——>exchange），**return退回模式**（exchange——>queue）
+（2）消费者确认：ACK消息签收机制，表示消费者收到消息后的确认方式
 
 ### 3.1.1、confirm确认模式
 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。(无论成功失败都有返回)
@@ -371,7 +370,7 @@ spring:
     username: yancey
     password: yancey
  
-    #发送确认(confirmCallback 确认模式) 
+    #confirmCallback 确认模式
     # SIMPLE       禁用发布确认模式，是默认值
 	# CORRELATED   发布消息成功到交换器或失败后 会触发回调方法
 	# NONE         有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用。rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回 发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果 返回false则会关闭channel，则接下来无法发送消息到broker;
