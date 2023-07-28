@@ -85,7 +85,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "临时/开发任务.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +101,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "临时/开发任务.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +122,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "临时/开发任务.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -147,10 +143,11 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "5afaee65cd2f9459",
+  "active": "b7f713f372dcd6f5",
   "lastOpenFiles": [
-    "coding/nginx.md",
     "临时/开发任务.md",
+    "conflict-files-obsidian-git.md",
+    "coding/nginx.md",
     "coding/JUC.md",
     "coding/RabbitMQ.md",
     "临时",
