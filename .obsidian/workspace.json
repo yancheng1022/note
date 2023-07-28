@@ -17,7 +17,27 @@
                 "mode": "source",
                 "source": false
               }
-            }
+            },
+            "group": "5485bb50402312a9"
+          }
+        ]
+      },
+      {
+        "id": "d17175b5d77bbdea",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b6752e7b744f5bf8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "历史/夏.md",
+                "mode": "preview",
+                "source": false
+              }
+            },
+            "group": "5485bb50402312a9"
           }
         ]
       }
@@ -149,16 +169,16 @@
   },
   "active": "ce50db37a6619316",
   "lastOpenFiles": [
+    "历史/中国历史年表.md",
     "历史/历史.md",
     "历史/夏.md",
-    "历史/中国历史年表.md",
+    "coding/JUC.md",
+    "coding/RabbitMQ.md",
+    "coding/spring.md",
     "临时/权限系统.md",
     "历史",
     "临时/开发任务.md",
-    "coding/RabbitMQ.md",
-    "coding/spring.md",
     "临时",
-    "coding/JUC.md",
     "coding/nginx.md",
     "思考",
     "img/Pasted image 20230722190135.png",
