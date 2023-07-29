@@ -1,3 +1,12 @@
+---
+title: springCloud
+date: 2023/07/29
+categories:
+  - coding
+tags:
+  - springCloud
+  - 编程基础
+---
 #  1、微服务架构
 ## 1.1、基本概念
 微服务是一种架构，这种架构是将单个整体应用程序分割成更小的项目关联的独立服务。一个服务通常实现一组独立的特性或功能，包含自己的业务逻辑和适配器。各个微服务之间的关联通过暴露api来实现，这些独立的微服务
@@ -139,6 +148,7 @@ springcloud版本采用伦敦地铁站命名，根据首字母顺序排序 这�
 ## 3.4、eureka server开发
 搭建eureka server子项目
 ### 3.4.1、引入依赖
+
 ```xml
         <!--springBoot-->
         <dependency>
@@ -152,6 +162,7 @@ springcloud版本采用伦敦地铁站命名，根据首字母顺序排序 这�
         </dependency>
 ```
 ### 3.4.2、配置文件
+
 ```properties
 # eureka server端口号 （默认就是8761）
 server.port=8761
@@ -165,6 +176,7 @@ eureka.client.fetch-registry=false
 eureka.client.register-with-eureka=false
 ```
 ### 3.4.3、入口类加注解
+
 ```java
 @SpringBootApplication
 @EnableEurekaServer
@@ -177,6 +189,7 @@ public class EurekaServerApplication {
 ```
 ## 3.5、eureka client开发
 ### 3.5.1、引入依赖
+
 ```xml
 <dependencies>
   <!--eureka client依赖-->
@@ -193,6 +206,7 @@ public class EurekaServerApplication {
 
 ```
 ### 3.5.2、配置文件
+
 ```properties
 server.port=8989
 # 应用名称
@@ -210,6 +224,7 @@ public class EurekaClientApplication {
     }
 }
 ```
+
 ## 3.6、eureka自我保护机制 
 ### 3.6.1、自我保护机制
 默认情况下，如果eureka server在一定时间内（默认90秒）没有接收到某个微服务实例的心跳，eureka server将会移除掉该实例（eureka客户端每隔60秒会发送一次心跳包）
@@ -223,6 +238,7 @@ Eureka服务端会检查最近15分钟内所有Eureka 实例正常心跳占比�
 > （2）自我保护机制被禁用
 
 ### 3.6.2、如何关闭自我保护机制
+
 ```properties
 eureka:
   server:
@@ -233,7 +249,8 @@ eureka:
 ```
 ## 3.7、eureka server集群
 
-多个注册中心之间相互注册就可搭建eureka server集群![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1646113984344-a7cb2160-4eee-43f8-8aca-1a71517888ea.png#averageHue=%23f2f1ed&clientId=ude234c3a-8aa6-4&from=paste&height=241&id=u4e2a9b63&originHeight=241&originWidth=743&originalType=binary&ratio=1&rotation=0&showTitle=false&size=56435&status=done&style=none&taskId=u65448ff4-5677-4221-90e0-afae49c6dbf&title=&width=743)
+多个注册中心之间相互注册就可搭建eureka server集群
+
 > 服务端：eureka.client.service-url.defaultZone 配置其它的注册中心地址即可
 
 ```properties
@@ -259,6 +276,7 @@ eureka.client.fetch-registry=false
 # 让当前应用仅仅是服务注册中心
 eureka.client.register-with-eureka=false
 ```
+ 
 > 客户端：所有的注册中心地址都需要指明
 
 ```properties
@@ -286,6 +304,7 @@ consul agent -dev
 ## 4.3、consul client开发
 
 1. 引入依赖
+
 ```xml
 <dependencies>
         <!--springboot依赖-->
@@ -308,6 +327,7 @@ consul agent -dev
 ```
 
 2. 编写配置文件
+
 ```properties
 server.port=8082
 spring.application.name=CONSULCLIENT
@@ -319,6 +339,7 @@ spring.cloud.consul.discovery.service-name=CONSULCLIENT
 ```
 
 3. 启动类添加注解
+
 ```java
 @SpringBootApplication
 // 除了eureka，其它注册中心客户端都可以用该注解
@@ -331,7 +352,9 @@ public class ConsulClientApplication {
 
 ```
 ## 4.4、consul健康检查
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1646123575775-4256e5bc-6eca-4f13-8f34-f67ad0469d2e.png#averageHue=%23fefefd&clientId=ude234c3a-8aa6-4&from=paste&height=234&id=u1baf1ca6&originHeight=234&originWidth=1539&originalType=binary&ratio=1&rotation=0&showTitle=false&size=18124&status=done&style=none&taskId=u415aa37d-d55c-45d4-9b8c-80ae7622d5b&title=&width=1539)
+
+![image (10).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307291356805.png)
+
 
 1. 默认情况下consul监控健康是开启的，但必须依赖健康监控依赖才能正常响应客户端发来的心跳，否则界面会显示错误，引入健康依赖之后服务正常
 ```xml
@@ -341,6 +364,7 @@ public class ConsulClientApplication {
   <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
 ```
+
 # 5、openFeign（服务间通信）
 ## 5.1、基于RestTemplate实现调用
 ```java
@@ -362,10 +386,12 @@ public class ClientController {
     }
 }
 ```
+
 ## 5.2、基于RestTemplate+Ribbon实现负载均衡调用
 spring cloud ribbon是一个基于HTTP和TCP的客户端负载均衡工具，它基于netflix ribbon实现，通过spring cloud封装，可以让我们轻松的进行客户端负载均衡调用。Ribbon可从注册中心中获取服务提供者地址列表，并基于负载均衡算法，请求其中一个服务提供者实例
 
 1. **编码形式**
+
 ```java
 @RestController
 public class ClientController {
@@ -388,6 +414,7 @@ public class ClientController {
 ```
 
 2. **@LoadBalance注解实现负载均衡**
+
 ```java
 @Configuration
 public class BeanConfig {
@@ -412,6 +439,7 @@ public class ClientController {
 ```
 
 3. **Ribbon负载均衡策略**
+
 | 策略类 | 命名 | 描述 |
 | --- | --- | --- |
 | RoundRobinRule | 轮询策略 | 轮询选择，轮询index，选择index对应位置的Server |
@@ -424,6 +452,7 @@ public class ClientController {
 4. **负载均衡策略设置**
 
 （1）局部修改
+
 ```java
 # 负载均衡策略 provider为调用的服务的名称
 # 格式：服务应用名.ribbon.负载均衡策略名字
@@ -432,6 +461,7 @@ provider:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 ```
 （2）全局修改
+
 ```java
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -449,9 +479,12 @@ public class ConsulClientApplication {
 ```
 ## 5.3、基于openFeign实现调用
 ### 5.3.1、Feign
+
+
 > Feign是Spring Cloud组件中一个轻量级RESTful的HTTP服务客户端，Feign内置了Ribbon，用来做客户端负载均衡，去调用服务注册中心的服务。Feign的使用方式是：使用Feign的注解定义接口，调用接口，就可以调用服务注册中心的服务
 
 ### 5.3.2、openFeign
+
 > OpenFeign是Spring Cloud 在Feign的基础上支持了Spring MVC的注解，如@RequesMapping等等。
 > OpenFeign的@FeignClient可以解析SpringMVC的@RequestMapping注解下的接口，
 > 并通过动态代理的方式产生实现类，实现类中做负载均衡并调用其他服务
@@ -460,6 +493,7 @@ public class ConsulClientApplication {
 ### 5.3.3、openFeign调用
 #### 5.3.3.1、编码
 （1）引入依赖
+
 ```xml
 <!--openFeign-->
 <dependency>
@@ -468,6 +502,7 @@ public class ConsulClientApplication {
 </dependency>
 ```
 （2）启动类开启openFeign的调用
+
 ```java
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -479,6 +514,7 @@ public class ConsulClientApplication {
 }
 ```
 （3）创建业务层接口，添加@FeginClient注解声明需要调用的服务
+
 ```java
 @FeignClient("CONSULCLIENT2")
 public interface Client2 {
@@ -487,6 +523,7 @@ public interface Client2 {
 }
 ```
 （4）调用
+
 ```java
 @RestController
 public class ClientController {
@@ -510,12 +547,14 @@ public class ClientController {
 
 1. 默认超时时间：1s
 2. 修改某个服务的超时时间
+
 ```properties
 feign.client.config.PRODUCTS.connecTimeOut=5000 # 配置指定服务连接超时
 feign.client.config.PRODUCTS.readTimeOut=5000 # 配置指定服务等待超时
 ```
 
 3. 修改所有服务超时时间
+
 ```properties
 feign.client.config.default.connecTimeOut=5000 # 配置服务连接超时
 feign.client.config.default.readTimeOut=5000 # 配置服务等待超时
@@ -523,6 +562,7 @@ feign.client.config.default.readTimeOut=5000 # 配置服务等待超时
 # 6、Hystrix（服务熔断）
 ## 6.1、什么是服务雪崩？
 因“服务提供者的不可用”（原因）导致“服务调用者不可用”（结果），并将不可用逐渐放大的现象
+
 > （1）程序bug导致服务不可用，或者运行缓慢 
 > （2）缓存击穿，导致调用全部访问某服务，导致down掉 
 > （3）访问量的突然激增
@@ -546,6 +586,7 @@ Hystrix是处理分布式系统延迟和容错的开源库，在分布式系统�
 ## 6.4、编码
 
 1. 所有服务引入Hystrix依赖
+
 ```xml
 <!--hystrix-->
 <dependency>
@@ -557,6 +598,7 @@ Hystrix是处理分布式系统延迟和容错的开源库，在分布式系统�
 2. 服务提供者
 
 （直接调用服务提供者的方案，是一种服务降级的思想）
+
 ```java
 
 // 开启熔断功能
@@ -641,10 +683,12 @@ public class ClientController {
 ### 6.5.1、Hystrix断路器打开的条件
 a. 当满足一定阈值的时候（默认10秒内超过20个请求次数）
 b. 当失败率达到一定的时候（默认10秒内超过50%的请求失败）
+
 > 注意：一旦断路开启之后，所有到这个服务请求均不可用，只有在断路关闭之后才可用
 
 ### 6.5.2、Hystrix监控流程
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1647505290971-b50f9912-b3bb-459a-a2a6-b53721cce435.png#averageHue=%23fb9547&clientId=u42eacc48-257e-4&from=paste&height=256&id=u019b60b4&originHeight=256&originWidth=923&originalType=binary&ratio=1&rotation=0&showTitle=false&size=99522&status=done&style=none&taskId=u45780b2b-1b9c-4d15-a3ab-bff812f8918&title=&width=923)
+![Hystrix监控流程](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307291357597.png)
+
 当服务调用达到两个阈值，会自动开启断路器，在熔断器打开期间，任何到该接口的请求均不可用，同时在断路器打开5s后断路器会处于半开状态，此时断路器允许放行一个请求到该服务接口，如果执行成功，断路器彻底关闭，执行失败则重新打开
 
 ## 6.6、Hystrix Dashboard（仪表盘）
@@ -657,6 +701,7 @@ Hystrix Dashboard主要用来实时监控Hystrix的各项指标信息。通过Hy
 
 （1）新建一个 Hystrix Dashboard 工程
 （2）引入依赖
+
 ```xml
 <!-- Spring Cloud Hystrix Dashboard -->
 <dependency>
@@ -666,11 +711,13 @@ Hystrix Dashboard主要用来实时监控Hystrix的各项指标信息。通过Hy
 
 ```
 （3）启动类开启监控功能
+
 ```java
 /** 开启 Hystrix Dashboard 监控功能 */
 @EnableHystrixDashboard
 ```
 （4）访问仪表盘界面
+
 > [http://localhost:9000/hystrix](http://localhost:9000/hystrix)
 > 端口为项目的端口号
 
@@ -687,6 +734,7 @@ Zuul是 Netflix 开源的微服务网关，它可以和 Eureka、Ribbon、Hystri
 
 ## 7.2、路由规则配置
 ### 7.2.1、URL地址路由
+
 ```java
 # 路由规则
 zuul:
@@ -707,6 +755,7 @@ zuul:
 ### 7.2.2、服务名称路由
 微服务一般是由几十、上百个服务组成，对于 URL 地址路由的方式，如果对每个服务实例手动指定一个唯一访问地址，这样做显然是不合理的。
 Zuul 支持与 Eureka 整合开发，根据 serviceld 自动从注册中心获取服务地并转发清求，这样做的好处不仅可以通过单个端点来访问应用的所有服务，而目在添加或移除服务实例时不用修改 Zuul 的路由配置
+
 ```java
 路由规则
 Zuul
@@ -788,11 +837,13 @@ public class LoginFilter extends ZuulFilter{
 
 **漏桶算法**：漏桶是一个固定容量的桶，按照固定的速率流出，可以以任意的速率流入到漏桶中，超出了漏桶的容量就被丢弃
 
-**令牌桶算法：**（1）所有的请求在处理之前都需要拿到一个可用的令牌才会被处理;
+**令牌桶算法：**
+（1）所有的请求在处理之前都需要拿到一个可用的令牌才会被处理;
 （2）根据限流大小，设置按照一定的速率往桶里添加令牌;
 （3）桶设置最大的放置令牌限制，当桶满时、新添加的令牌就被丢弃或者拒绝;
 （4）请求到达后首先要获取令牌桶中的令牌，拿着令牌才可以进行其他的业务逻辑，处理完业务逻辑之后，将令牌直接删除:
 （5）令牌桶有最低限额，当桶中的令牌达到最低限额的时候，请求处理完之后将不会删除令牌，以此保证足够的限流。
+
 > 令牌桶算法是对漏桶算法的一种改进，漏桶算法能够限制请求调用的速率，而令牌桶算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。在令牌桶算法中，存在一个桶，用来存放回定数量的令牌
 
 ### 7.6.1、网关限流
