@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coding/springCloud.md",
-                "mode": "source",
+                "file": "历史/商.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "coding/springCloud.md",
+                "file": "历史/商.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "coding/springCloud.md",
+                "file": "历史/商.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "coding/springCloud.md"
+                "file": "历史/商.md"
               }
             }
           }
@@ -134,8 +134,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -149,16 +148,17 @@
       "markdown-table-editor:Open Markdown Table Editor": false
     }
   },
-  "active": "b7f713f372dcd6f5",
+  "active": "44e3a6e681b091af",
   "lastOpenFiles": [
-    "coding/spring.md",
-    "coding/springCloud.md",
     "历史/夏.md",
-    "历史/历史.md",
     "历史/中国历史年表.md",
+    "临时/开发任务.md",
+    "历史/商.md",
+    "历史/历史.md",
+    "coding/springCloud.md",
+    "coding/spring.md",
     "coding/JUC.md",
     "coding/RabbitMQ.md",
-    "临时/开发任务.md",
     "历史",
     "coding/nginx.md",
     "conflict-files-obsidian-git.md",
