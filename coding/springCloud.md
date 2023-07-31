@@ -247,6 +247,7 @@ eureka:
     # eureka客户端每隔多长时间发一次心跳（单位毫秒，默认是60*1000）即60秒
     eviction-interval-timer-in-ms: 60000
 ```
+
 ## 3.7、eureka server集群
 
 多个注册中心之间相互注册就可搭建eureka server集群
