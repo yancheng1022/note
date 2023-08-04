@@ -1,36 +1,52 @@
 # 1、基本概念
-Apache Dubbo是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。
+Apache Dubbo是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现
 
-![dubbo架构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308041505687.png)
+ >**dubbo可以是微服务的一部分，但不能以偏概全说dubbo就是微服务**，微服务涉及的面比较广，比如服务发现，服务治理，服务网关，服务监控，链路追踪等等，可以用到的组件也比较多，而dubbo最多只能说是专注于服务治理的组件，所以从这一点上来看，可替代它的技术也是相当之多的，比如一系列rpc框架都可以
+
+## 1.1、基本架构
+
+![dubbo架构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308041522327.png)
 
 
-1. 服务容器负责启动，加载，运行服务提供者。
+Provider 暴露服务的服务提供方
+Consumer 调用远程服务的服务消费方
+Registry 服务注册与发现的注册中心
+Monitor 统计服务的调用次数和调用时间的监控中心
+
+## 1.2、调用流程
+
+1. 服务启动，包括服务提供者和消费者的启动，封装服务调用链路。
 2. 服务提供者在启动时，向注册中心注册自己提供的服务。
 3. 服务消费者在启动时，向注册中心订阅自己所需的服务。
 4. 注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。
-5. 服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。
-6. 服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。
-
-> **dubbo可以是微服务的一部分，但不能以偏概全说dubbo就是微服务**，微服务涉及的面比较广，比如服务发现，服务治理，服务网关，服务监控，链路追踪等等，可以用到的组件也比较多，而dubbo最多只能说是专注于服务治理的组件，所以从这一点上来看，可替代它的技术也是相当之多的，比如一系列rpc框架都可以
+5. 服务消费者，从提供者地址列表中，基于服务路由信息、负载均衡规则，选一台提供者进行调用。
+6. 服务消费者和提供者，在内存中累计调用次数和调用时间，定时发送一次统计数据到监控中心。
+7. 服务提供方停止服务或者服务调用方关闭JVM的时候，会将provider及consumer进行销毁处理。
 
 
 # 2、Dubbo环境搭建
 ## 2.1、安装zookeeper
-| 1、下载zookeeper
-网址 [https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/](https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/)  |
-| --- |
-| 2、解压zookeeper
-解压运行zkServer.cmd ，初次运行会报错，没有zoo.cfg配置文件 |
-| 3、修改zoo.cfg配置文件
-将conf下的zoo_sample.cfg复制一份改名为zoo.cfg即可。
-注意几个重要位置：
+
+1. 下载zookeeper
+
+网址:
+[https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/](https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/)  
+
+2. 解压zookeeper
+解压运行zkServer.cmd ，初次运行会报错，没有zoo.cfg配置文件 
+
+3. 修改zoo.cfg配置文件
+将conf下的zoo_sample.cfg复制一份改名为zoo.cfg即可,修改完成后再次启动zookeeper 
+
+>注意几个重要位置:
 dataDir=./   临时数据存储的目录（可写相对路径）
 clientPort=2181   zookeeper的端口号
-修改完成后再次启动zookeeper |
-| 4、使用zkCli.cmd测试
-ls /：列出zookeeper根下保存的所有节点
+
+4. 使用zkCli.cmd/sh测试
+
+>ls /：列出zookeeper根下保存的所有节点
 create –e /kaka123：创建一个kaka节点，值为123
-get /kaka：获取/kaka节点的值 |
+get /kaka：获取/kaka节点的值 
 
 
 ## 2.2、安装监控中心
