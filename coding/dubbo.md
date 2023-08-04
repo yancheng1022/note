@@ -46,23 +46,34 @@ clientPort=2181   zookeeper的端口号
 
 >ls /：列出zookeeper根下保存的所有节点
 create –e /kaka123：创建一个kaka节点，值为123
-get /kaka：获取/kaka节点的值 
+get /kaka：获取/kaka节点的值
+>(dubbo注册后一个group是一个节点)
 
 
 ## 2.2、安装监控中心
 为了让用户更好的管理监控众多的dubbo服务，官方提供了一个可视化的监控程序，不过这个监控即使不装也不影响使用
 
-| 1、下载dubbo-admin
+1. 下载dubbo-admin
 [https://github.com/apache/incubator-dubbo-ops](https://github.com/apache/incubator-dubbo-ops) 
 （注意是master分支） |
-| --- |
-| 2、进入目录，修改dubbo-admin配置
-修改src\\main\\resources\\application.properties 指定zookeeper地址 |
-| 3、打包dubbo-admin
-mvn clean package |
-| 4、运行dubbo-admin
+
+
+2. 进入目录，修改dubbo-admin配置
+修改src\\main\\resources\\application.properties 指定zookeeper地址
+
+3. 打包dubbo-admin
+
+```shell
+mvn clean package
+```
+
+4. 运行dubbo-admin
+
+```shell
 java -jar dubbo-admin-0.0.1-SNAPSHOT.jar
-默认使用root/root 登陆 |
+```
+
+默认使用root/root 登陆
 
 ## 2.3、父工程
 创建依赖
@@ -158,15 +169,18 @@ java -jar dubbo-admin-0.0.1-SNAPSHOT.jar
 ```
 ## 2.4、api模块
 创建接口
+
 ```java
 public interface Api1 {
     public String test();
 }
 
 ```
+
 ## 2.5、服务提供者模块
 
 1. 引入依赖
+
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -219,6 +233,7 @@ public interface Api1 {
 ```
 
 2. 配置文件
+
 ```java
 server:
   # 服务端口
@@ -245,6 +260,7 @@ dubbo:
 ```
 
 3. 服务实现
+
 ```java
 @Service
 public class Service1 implements Api1 {
@@ -258,6 +274,7 @@ public class Service1 implements Api1 {
 ## 2.6、服务消费者
 
 1. 依赖
+
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -319,6 +336,7 @@ public class Service1 implements Api1 {
 ```
 
 2. 配置文件
+
 ```java
 server:
   port: 7000
@@ -334,6 +352,7 @@ dubbo:
 ```
 
 3. 消费者类
+
 ```java
 @RestController
 public class Consumer1 {
