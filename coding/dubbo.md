@@ -1,6 +1,8 @@
 # 1、基本概念
-Apache Dubbo (incubating) |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1662689559187-354524cc-4822-4faa-8b55-28bf07e329b8.png#averageHue=%23fefefe&clientId=u344d4b7b-a470-4&from=paste&height=374&id=u520e2d12&originHeight=374&originWidth=637&originalType=binary&ratio=1&rotation=0&showTitle=false&size=41502&status=done&style=none&taskId=ub3c0733a-cd06-4d6f-901e-c1f7f2003f5&title=&width=637)
+Apache Dubbo是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。
+
+![dubbo架构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308041505687.png)
+
 
 1. 服务容器负责启动，加载，运行服务提供者。
 2. 服务提供者在启动时，向注册中心注册自己提供的服务。
