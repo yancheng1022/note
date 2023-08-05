@@ -1,3 +1,13 @@
+---
+title: dubbo
+date: 2023/08/04
+categories:
+  - coding
+tags:
+  - dubbo
+  - 编程基础
+---
+
 # 1、基本概念
 Apache Dubbo是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现
 
