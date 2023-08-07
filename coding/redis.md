@@ -96,7 +96,8 @@ Hash结构可以将对象中的每个字段独立存储，可以针对单个字�
 
 ## 2.4、SET
 
-> Redis的Set结构与Java中的HashSet类似，可以看做是一个value为null的HashMap。因为也是一个hash表，因此具备与HashSet类似的特征
+> Redis的Set结构与Java中的HashSet类似，可以看做是一个value为null的HashMap。因为也是一个hash表，因此具备与HashSet类似的特征。数据结构的底层实现有两种方式：Intset 和 Hashtable。当集合中的所有元素都是整数，并且元素数量较少时，Redis 会使用 Intset 作为底层实现。当集合中的元素不仅限于整数，或者元素数量较多时，Redis 会使用 Hashtable 作为底层实现
+ 
 
 | **命令** | **描述** |
 | --- | --- |
