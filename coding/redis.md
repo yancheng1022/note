@@ -108,6 +108,7 @@ Hash结构可以将对象中的每个字段独立存储，可以针对单个字�
 | SUNION key1 key2 … | 求key1和key2的并集 |
 
 ## 2.5、SortedSet
+
 > Redis的SortedSet是一个可排序的set集合，与Java中的TreeSet有些类似，但底层数据结构却差别很大。SortedSet中的每一个元素都带有一个score属性，可以基于score属性对元素排序，底层的实现是一个跳表（SkipList）加 hash表。
 
 因为SortedSet的可排序特性，经常被用来实现排行榜这样的功能
