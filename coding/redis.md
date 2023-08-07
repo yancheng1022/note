@@ -860,7 +860,7 @@ Redis的内存淘汰策略是指在Redis的用于缓存的内存不足时，怎�
 
 即使使用哨兵，redis每个实例也是全量存储，每个redis存储的内容都是完整的数据。cluster是为了解决单机Redis容量有限的问题，将数据按一定的规则分配到多台机器，提高并发量
 
-## 4.4、redis发布订阅机制
+## 4.5、redis发布订阅机制
 
 Redis 发布订阅（Pus/Sub）是一种消息通信模式：发送者通过 PUBLISH发布消息，订阅者通过 SUBSCRIBE 订阅接收消息或通过UNSUBSCRIBE 取消订阅。
 发布者和订阅者属于客户端，Channel 是 Redis 服务端，发布者将消息发布到频道，订阅这个频道的订阅者则收到消息。从而实现消息的广播和实时通知
@@ -877,56 +877,23 @@ PUBLISH channel1 "Redis PUBLISH test"
 
 ```
 
+## 4.6、缓存穿透、击穿、雪崩
+###  4.6.1、缓存穿透
 
-## 4.5、redis处理大批量数据
-如果我们直接循环要插入的数据，每一条数据通过set方法插入数据库，这势必会消耗大量的网络连接和耗时
+某些不存在的数据，被大量的查询访问，缓存层中没有这些数据的缓存，请求就直达存储层，造成宕机
 
-> 就是把n个命令通过一个pipe（管道）发送到服务器端，服务器端处理完成以后再返回一个响应结果。而一条一条set需要n次请求n次处理n次响应，而管道只要一次请求n次处理一次响应
+> 解决方法：
+1.返回空对象，将该key的空值返回给缓存层，缓存层会直接返回空对象。
+2.布隆过滤器：将所有的key都存在过滤器中，在访问缓存层的时候会首先访问过滤器，如果过滤器中不存在这个值，那么直接返回空值
 
 
-1. 代码实现
+### 4.6.2、缓存击穿？
 
-```java
-Jedis jedis = jedisPool.getResource();
-Pipeline pip = jedis.pipelined();
-List<VehicleInfo> vehicleInfos  = vehicleInfoMapper.selectByParam(param);
-for (VehicleInfo vehicleInfo : vehicleInfos) {      
-    Map<String, String> keysmap = new HashMap<String, String>();
-    //组装数据 - xxx
-    keysmap.put("engineFaultsList", JSON.toJSONString(list1));
-    //批量插入
-    pip.hmset(vehicleInfo.getVehicleSeq()+"", keysmap);
-}
-pip.sync();//同步
-jedis.close();
-```
+一份热点数据，在它缓存失效期间，大量的请求直接命中存储层
 
-2. 脚本实现
-
-```bash
-#! /bin/bash/
-for((i=1;i<=1000000;i++))
-do
-echo "SET key${i} value${i}" >> redis.txt 
-done
-cat redis.txt | redis-cli --pipe -a password
-```
-
-## 4.6、缓存穿透
-###  4.6.1、什么是缓存穿透
-
-一般的缓存系统，都是按照key去缓存查询，如果不存在对应的value，就应该去后端系统查找（比如DB）。一些恶意的请求会故意查询不存在的key,请求量很大，就会对后端系统造成很大的压力。这就叫做缓存穿透。
-
-### 4.6.2、如何避免缓存穿透？
-
-1. 对查询结果为空的情况也进行缓存，缓存时间设置短一点，或者该key对应的数据insert了之后清理缓存。
-2. 对一定不存在的key进行过滤。
-3. 布隆过滤器
-
-> 它是一种类似哈希的数据结构，通过这个数据结构，可以快速的插入和查询，确定某个事件一定不存在或可能存在。特点是占用空间少，缺点是返回的结果是概率性
-
-当一个元素加入集合时，就通过K个hash函数将这个映射成一个位数组中的K个点，把它们置为1。当查询时，只要检查这些点是否全为1，就能判断集合中是否可能存在。
-如果k个点有任何一个0，则被检元素一定不在。如果都是1，则很可能存在，这个期望概率是可以设置
+> 解决方法：
+ 1.设置热点数据永不过期的策略。
+ 2.加互斥锁，在一个请求访问时另一个不能访问，这样，在这个请求访问过后，缓存重建，其他线程就可以访问了
 
 ## 4.7、缓存雪崩？
 ### 4.7.1、什么是缓存雪崩
