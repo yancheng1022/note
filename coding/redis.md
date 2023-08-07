@@ -858,47 +858,7 @@ Redis的内存淘汰策略是指在Redis的用于缓存的内存不足时，怎�
 
 ### 4.4.4、集群模式
 
-即使使用哨兵，redis每个实例也是全量存储，每个redis存储的内容都是完整的数据。Redis 将数据分片存储到多个节点上，并通过集群总线协调数据的路由和管理。这种模式提供了高可扩展性和高性能的数据存储和访问能力。集群模式适用于大规模的生产环境，可以支持海量数据和高并发访问
-
-
-
-### 4.3.3、哨兵模式
-**哨兵模式主要是在主从复制模式基础上，增加了自动化的故障恢复功能**。因为主从复制模式下，当master节点宕机后，虽然slave节点会升级成新的master节点，但其他的slave节点配置的master节点的ip也是需要变更的，在主从复制模式下，这种变更是需要人工手动去修改配置文件的。而哨兵模式则完美的解决了这一缺陷，实现了快速的自动恢复，不再需要人工修改
-
-1. 搭建
-
-（1）在服务器上搭建redis服务
-（2）在redis目录下，创建哨兵的配置文件，文件名只能是sentinel.conf
-（3）编辑sentinel.conf配置文件，设置哨兵的相关属性
-
-```java
-–后台运行
-daemonize yes
-–本机IP
-bind 192.168.11.1
-–sentinel端口号
-port 26372
-–指定pid文件
-pidfile “/var/run/redis-sentinel.pid”
-–指定log文件
-logfile “/home/redis/redis/sentinel.log”
-–指定工作目录
-dir “/home/redis/redis”
-–避免脚本重置，默认值yes
-sentinel deny-scripts-reconfig yes
-–监听节点，monitor 后面依次我需要监听的节点名、节点ip、节点端口、最后的2表示如果有两台服务器认定master已死，则宣传master死记。
-sentinel monitor mymaster 192.168.11.152 7001 2
-– 30秒连接不上mymaster 节点,则判断定mymaster 已死
-sentinel down-after-milliseconds mymaster 30000
-– 主备切换时，最多有多少个slave同时对新的master进行同步，这里设置为默认的1
-sentinel parallel-syncs mymaster 1
-– 3分钟同步没完成算超时
-sentinel failover-timeout mymaster 180000
-```
-（4）先启动master再启动slave，再启动哨兵
-
-### 4.3.4、集群模式
-即使使用哨兵，redis每个实例也是全量存储，每个redis存储的内容都是完整的数据，浪费内存且有木桶效应。为了最大化利用内存，可以采用集群，就是分布式存储。即每台redis存储不同的内容。cluster是为了解决单机Redis容量有限的问题，将数据按一定的规则分配到多台机器，提高并发量
+即使使用哨兵，redis每个实例也是全量存储，每个redis存储的内容都是完整的数据。cluster是为了解决单机Redis容量有限的问题，将数据按一定的规则分配到多台机器，提高并发量
 
 ## 4.4、redis发布订阅机制
 
