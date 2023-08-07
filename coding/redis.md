@@ -29,10 +29,12 @@ Redis诞生于2009年全称是Remote Dictionary Server，远程词典服务器�
 
 > Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样
 
+![redis数据类型](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308071403029.png)
 
 
 # 2、redis常见命令
 ## 2.1、String
+
 > String类型，也就是字符串类型，是Redis中最简单的存储类型。
 
 其value是字符串，不过根据字符串的格式不同，又可以分为3类：
@@ -58,6 +60,7 @@ Redis诞生于2009年全称是Remote Dictionary Server，远程词典服务器�
 项目名:业务名:类型:id
 ```
 ## 2.2、Hash
+
 > Hash类型，也叫散列，其value是一个无序字典，类似于Java中的HashMap结构。
 
 Hash结构可以将对象中的每个字段独立存储，可以针对单个字段做CRUD
