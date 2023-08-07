@@ -132,6 +132,7 @@ Hash结构可以将对象中的每个字段独立存储，可以针对单个字�
 # 3、java客户端
 ## 3.1、springboot整合redis
 ### 3.1.1、引入依赖
+
 ```xml
 <dependency>
   <groupId>org.springframework.boot</groupId>
@@ -139,12 +140,14 @@ Hash结构可以将对象中的每个字段独立存储，可以针对单个字�
 </dependency>
 ```
 ### 3.1.2、redis基本配置
+
 ```properties
 #redis基本配置
 spring.redis.host=127.0.0.1
 spring.redis.port=6379
 ```
 ### 3.1.3、redis固定配置
+
 ```java
 @Configuration
 public class RedisConfig {
@@ -180,10 +183,14 @@ public class RedisConfig {
     }
 }
 ```
+
+
 > redis使用JDK提供的序列化功能。 优点是反序列化时不需要提供类型信息(class)，但缺点是需要实现Serializable接口，还有序列化后的结果非常庞大，是JSON格式的5倍左右，这样就会消耗redis服务器的大量内存
 > 所以我们需要  使用Jackson库将对象序列化为JSON字符串。优点是速度快，序列化后的字符串短小精悍，易读
 
 ### 3.1.4、工具类
+
+
 ```java
 package com.kaka.redis;
 
@@ -730,6 +737,7 @@ public final class RedisUtils {
 ```
 
 5. 使用
+
 ```java
 @RestController
 public class Demo {
@@ -766,6 +774,7 @@ aof写数据策略：
 
 
 ### 4.1.3、对比
+
 |  | rdb | aof |
 | --- | --- | --- |
 | 占用存储空间 | 小（数据级） | 大（指令级） |
@@ -805,7 +814,8 @@ aof写数据策略：
 1. **搭建流程**
 
 （1）在多台服务器上搭建redis服务。
-（2）修改所有作为slave节点的服务器上Redis的配置文件，指定要同步的 Master 节点 IP 和端口。
+（2）修改所有作为slave节点的服务器上Redis的配置文件，指定要同步的 Master 节点 IP 和端口
+
 > replicaof 192.168.126.1 6379
 
 （3）启动所有服务
@@ -824,6 +834,7 @@ aof写数据策略：
 （1）在服务器上搭建redis服务
 （2）在redis目录下，创建哨兵的配置文件，文件名只能是sentinel.conf
 （3）编辑sentinel.conf配置文件，设置哨兵的相关属性
+
 ```java
 –后台运行
 daemonize yes
@@ -863,11 +874,13 @@ Redis 发布订阅（Pus/Sub）是一种消息通信模式：发送者通过 PU
 ### 4.4.1、实现
 
 1. 客户端1订阅频道channle1
+
 ```java
 SUBSCRIBE channel1
 ```
 
 2. 客户端2在channel1频道发布消息
+
 ```java
 PUBLISH channel1 "Redis PUBLISH test"
 ```
@@ -875,7 +888,8 @@ PUBLISH channel1 "Redis PUBLISH test"
 3. 客户端1就会收到该消息
 
 ## 4.5、redis处理大批量数据
-如果我们直接循环要插入的数据，每一条数据通过set方法插入数据库，这势必会消耗大量的网络连接和耗时。
+如果我们直接循环要插入的数据，每一条数据通过set方法插入数据库，这势必会消耗大量的网络连接和耗时
+
 > 就是把n个命令通过一个pipe（管道）发送到服务器端，服务器端处理完成以后再返回一个响应结果。而一条一条set需要n次请求n次处理n次响应，而管道只要一次请求n次处理一次响应
 
 
@@ -917,6 +931,7 @@ cat redis.txt | redis-cli --pipe -a password
 1. 对查询结果为空的情况也进行缓存，缓存时间设置短一点，或者该key对应的数据insert了之后清理缓存。
 2. 对一定不存在的key进行过滤。
 3. 布隆过滤器
+
 > 它是一种类似哈希的数据结构，通过这个数据结构，可以快速的插入和查询，确定某个事件一定不存在或可能存在。特点是占用空间少，缺点是返回的结果是概率性
 
 当一个元素加入集合时，就通过K个hash函数将这个映射成一个位数组中的K个点，把它们置为1。当查询时，只要检查这些点是否全为1，就能判断集合中是否可能存在。
