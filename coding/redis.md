@@ -868,22 +868,15 @@ Redis 发布订阅（Pus/Sub）是一种消息通信模式：发送者通过 PU
 
 > Redis 的发布订阅机制是一种简单的消息传递方式，并不提供消息持久化和消息队列的功能。如果需要更高级的消息队列功能，可以考虑rabbitmq，kafka等
 
-
-### 4.4.1、实现
-
-1. 客户端1订阅频道channle1
-
-```java
+```shell
+# A订阅频道
 SUBSCRIBE channel1
-```
 
-2. 客户端2在channel1频道发布消息
-
-```java
+# B向频道发送消息，A就可以收到消息
 PUBLISH channel1 "Redis PUBLISH test"
+
 ```
 
-3. 客户端1就会收到该消息
 
 ## 4.5、redis处理大批量数据
 如果我们直接循环要插入的数据，每一条数据通过set方法插入数据库，这势必会消耗大量的网络连接和耗时
