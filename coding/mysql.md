@@ -101,6 +101,7 @@ rename table emp to employee;
 alter table emp character set utf8;
 ```
 ## 2.2、DML数据操纵语言
+
 ```sql
 -- 插入全部字段
 insert into emp values(1,'张三','男','河南汤阴',39);
@@ -126,6 +127,7 @@ truncate emp;
 ```
 ## 2.3、DQL数据查询语言
 ### 2.3.1、基础查询
+
 ```sql
 -- 查询指定列
 select id,name,addr from emp;
@@ -168,12 +170,14 @@ FROM
 	student;
 
 ```
+
 | **通配符** | **说明** |
 | --- | --- |
 | % | 匹配零个或多个字符 |
 | _ | 匹配一个字符 |
 
 ### 2.3.2、排序
+
 ```sql
 -- 升序排列
 select * from student order by age asc;
@@ -186,6 +190,7 @@ select * from student where age > 22 order by age desc, math asc;
 ```
 
 ### 2.3.3、聚合函数
+
 | **SQL中的聚合函数** | **作用** |
 | --- | --- |
 | count | 统计个数，如果这一列有NULL，null不会参与统计 |
@@ -196,7 +201,9 @@ select * from student where age > 22 order by age desc, math asc;
 
 
 ### 2.3.4、分组
+
 分组一般搭配聚合函数一起使用
+
 ```sql
 -- 查询年龄大于23岁的人，按性别分组，统计每组的人数
 select sex, count(*) from student where age>23 group by sex;
@@ -206,6 +213,7 @@ SELECT sex, COUNT(*) FROM student WHERE age > 23 GROUP BY sex having COUNT(*) >2
 
 
 ```
+
 | **子名** | **作用** |
 | --- | --- |
 | where 子句 | 先过滤掉行上的一些数据，再进行分组操作。(先过滤再分组) |
@@ -213,43 +221,47 @@ SELECT sex, COUNT(*) FROM student WHERE age > 23 GROUP BY sex having COUNT(*) >2
 
 > **where子句后不能使用分组函数，having子句后可以使用聚合函数**
 
-
-
 ### 2.3.5、连接查询
 #### 2.3.5.1、表的关系
+
 | **表与表的关系** | **示例** | **关系的维护** |
 | --- | --- | --- |
 | 一对多 | 班级合学生 | 通过从表中外键来维护 |
 | 多对多 | 学生和课程。拆分成学生，选课，课程 | 通过中间表，将两个一对多加到一起变成了一个多对多 |
-| 一对一 | 在实际的开发中应用不多，因为一对一可以创建成一张表 | 1. 外键添加约束
-2. 从表的主键又是外键 可以简化成一张表 |
+| 一对一 | 在实际的开发中应用不多，因为一对一可以创建成一张表 | （1）外键添加约束 （2）从表的主键又是外键 可以简化成一张表 |
 
 #### 2.3.5.2、笛卡尔积
+
 简单的说就是两个集合相乘的结果。笛卡尔（Descartes）乘积又叫直积。假设集合A={a,b}，集合B={0,1,2}，则两个集合的笛卡尔积为{(a,0),(a,1),(a,2),(b,0),(b,1), (b,2)}
+
 ```sql
 -- 笛卡尔查询示例
 SELECT * FROM table1 , table2
 ```
+
 笛卡尔积产生，有两种情况：
 （1）表连接缺少关联条件，这个是必须要改的；
 （2）表连接有关联条件，但是数据库判断用笛卡尔积更快，也会出现笛卡尔积，这个时候要看实际执行速度；数据库这样判断，**一般是表比较小**，这个时候要特别检查表的数据量是不是真的很少，以免oracle因为统计信息错误而误判。
 
 #### 2.3.5.3、内连接
+
 用左边表的记录去匹配右边表的记录，如果符合条件的则显示
 
-1. **隐式内连接：**看不到join关键字，条件使用where指定
+1. 隐式内连接：看不到join关键字，条件使用where指定
 ```sql
 select * from dept,emp where dept.id=emp.dept_id;
 ```
 
-2. **显示内连接：**使用INNER JOIN ... ON语句, 可以省略INNER
+2. 显示内连接：**使用INNER JOIN ... ON语句, 可以省略INNER
 ```sql
-elect * from dept d inner join emp e on d.id = e.dept_id;
+select * from dept d inner join emp e on d.id = e.dept_id;
 ```
+
 > 隐式内连接只能使用where来进行表的关联；显示内连接可以使用on和where来关联，推荐使用on
 
 
 #### 2.3.5.4、左外连接
+
 左外连接：使用LEFT OUTER JOIN ... ON，OUTER可以省略(查询的数据以左表为准，即使在其他表中没有匹配的记录也会显示出来)
 ```sql
 -- 需要查询所有的部门和员工，无论这个部门下有没有员工
