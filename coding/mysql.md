@@ -31,6 +31,7 @@ tags:
 # 2、数据库基本操作
 ## 2.1、DDL数据定义语言
 ### 2.1.1、数据库相关
+
 ```sql
 -- 创建数据库并指定字符集
 create database db01 character set utf8;
@@ -52,7 +53,7 @@ drop database db01;
 
 ```
 ### 1.1.2、表相关
-` 是 MySQL 的[转义符](https://so.csdn.net/so/search?q=%E8%BD%AC%E4%B9%89%E7%AC%A6&spm=1001.2101.3001.7020)，避免和 mysql 的本身的关键字冲突，只要你不在列名、表名中使用 mysql 的保留字或中文，就不需要转义。
+
 ```sql
 -- 创建表
 create table emp (
@@ -60,7 +61,7 @@ create table emp (
   	-- ` 是 MySQL 的转义符，避免和 mysql 的本身的关键字冲突，只要你不在列名、表名中使用 mysql 的保留字或中文，就不需要转义。
     sex char(1),
     `name` varchar(20), 
-		address varchar(20)
+	address varchar(20)
 );
 
 -- 查看数据库所有表
