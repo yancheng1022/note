@@ -248,11 +248,13 @@ SELECT * FROM table1 , table2
 用左边表的记录去匹配右边表的记录，如果符合条件的则显示
 
 1. 隐式内连接：看不到join关键字，条件使用where指定
+
 ```sql
 select * from dept,emp where dept.id=emp.dept_id;
 ```
 
 2. 显示内连接：**使用INNER JOIN ... ON语句, 可以省略INNER
+
 ```sql
 select * from dept d inner join emp e on d.id = e.dept_id;
 ```
