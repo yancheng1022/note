@@ -142,13 +142,17 @@ System.out.println(i); // 2
 八进制：0-7 ，满 8 进 1. 以数字 0 开头表示。
 十六进制：0-9 及 A(10)-F(15)，满 16 进 1. 以 0x 或 0X 开头表示。此处的 A-F 不区分大小写
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659315798812-c73b8167-9d16-498e-862a-39be598bf419.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=233&id=ud716b4a6&originHeight=444&originWidth=658&originalType=binary&ratio=1&rotation=0&showTitle=false&size=87975&status=done&style=none&taskId=ud57fe773-8f3d-414e-9a12-9bd0e7c1399&title=&width=345)
+![进制转换](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231612057.png)
+
+
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659315826387-ed7e7bab-8366-4fd2-8353-b82acde62fa2.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=243&id=uc4b6c469&originHeight=470&originWidth=664&originalType=binary&ratio=1&rotation=0&showTitle=false&size=126331&status=done&style=none&taskId=u69461551-0d4d-415e-bdd3-fb02621b29f&title=&width=343)
+
 ### 4.6.1、其它进制转十进制
 
 1. 二进制转十进制
 
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以2的（位数-1）次方，然后求和
+
 > 案例：将ob1011转成十进制数
 > 1*(1^(1-1)) + 1*2 + 1*2^3 = 11
 
@@ -156,6 +160,7 @@ System.out.println(i); // 2
 2. 八进制转十进制
 
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以8的（位数-1）次方，然后求和
+
 > 案例：0234转成十进制
 > 4*1+3*8+2*64=156
 
@@ -163,6 +168,7 @@ System.out.println(i); // 2
 3. 十六进制转十进制
 
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以16的（位数-1）次方，然后求和
+
 > 案例：0x23A
 > 10*1+3*16+2*512=570
 
