@@ -223,11 +223,13 @@ System.out.println(i); // 2
 2. 十六进制转二进制
 
 规则：将十六进制数每1位。转成对应的一个4位的二进制数即可
+
 > 案例：请将0x23B转成二进制
-> ob001000111011
+> 0b001000111011
 
 ## 4.7、位运算符
 ### 4.6.1、原码反码补码
+
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659323103678-54e7f91d-10dc-4469-a59d-4b5a49691c2d.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=353&id=u79c4132a&originHeight=353&originWidth=1142&originalType=binary&ratio=1&rotation=0&showTitle=false&size=451292&status=done&style=none&taskId=u3a55cfcd-9b65-4df3-b0a7-f8ecf3fd606&title=&width=1142)
 
 ### 4.6.2、位运算符
