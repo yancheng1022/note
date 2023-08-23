@@ -89,7 +89,9 @@ public class AutoConvertDetail {
 # 3、运算符
 ## 4.1、算数运算符
 算数运算符是对数值变量进行运算的，在java程序种使用非常多
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659161390894-e2f6b518-0170-495c-a015-47b46f232de7.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=395&id=u1738d53f&originHeight=395&originWidth=748&originalType=binary&ratio=1&rotation=0&showTitle=false&size=233033&status=done&style=none&taskId=u9de369db-56b6-42a4-9c4a-6b4bb5c2d3d&title=&width=748)
+
+![java算数运算符](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231601761.png)
+
 
 ```java
 // 题目1
