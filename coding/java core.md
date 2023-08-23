@@ -68,10 +68,11 @@ public class AutoConvertDetail {
     short s3 = 100;
     int num200 = 1;
     float num300 = 1.1F;
-    double num500 = b4 + s3 + num200 + num300; //float -> double
+    float num500 = b4 + s3 + num200 + num300; 
 }
 ```
 ### 2.2.2、强制类型转换
+
 将容量大的数据类型转换为容量小的数据类型。使用时要加上强制转换符( )，但可能造成精度降低或溢出,格外要注意。
 
 ### 2.2.3、基本数据类型和String转换
