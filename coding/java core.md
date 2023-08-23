@@ -106,8 +106,11 @@ System.out.println(i); // 2
 
 ```
 ## 4.2、关系运算符
+
 关系运算符的结果都是boolean型，也就是要么是true，要么是false
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659163694872-413ae4a0-bb20-4b8f-908c-918597e1f1e8.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=417&id=uc013c710&originHeight=417&originWidth=855&originalType=binary&ratio=1&rotation=0&showTitle=false&size=188160&status=done&style=none&taskId=u976e0169-cb47-4ec7-ba18-9d8274275be&title=&width=855)
+
+![java关系运算符](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231605071.png)
+
 
 ## 4.3、逻辑运算符
 用于连接多个条件（多个关系表达式），最终的结果也是一个 boolean 值。
