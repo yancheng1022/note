@@ -113,8 +113,12 @@ System.out.println(i); // 2
 
 
 ## 4.3、逻辑运算符
-用于连接多个条件（多个关系表达式），最终的结果也是一个 boolean 值。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659163796789-c5605a68-9203-4418-92df-5389e1ae2b65.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=297&id=uf7f45a3c&originHeight=297&originWidth=807&originalType=binary&ratio=1&rotation=0&showTitle=false&size=154149&status=done&style=none&taskId=u31642d93-94e4-44d0-8b2a-c5f3a35c60a&title=&width=807)
+
+用于连接多个条件（多个关系表达式），最终的结果也是一个 boolean 值
+
+![逻辑运算符](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231608353.png)
+
+
 >   a^b: 叫逻辑异或  ：当 a 和 b 不同时，则结果为 true, 否则为 false  
 >   &&短路与：如果第一个条件为 false，则第二个条件不会判断，最终结果为 false，效率高
 >   & 逻辑与：不管第一个条件是否为 false，第二个条件都要判断，效率低  
