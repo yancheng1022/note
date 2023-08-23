@@ -154,7 +154,7 @@ System.out.println(i); // 2
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以2的（位数-1）次方，然后求和
 
 > 案例：将ob1011转成十进制数
-> 1*(1^(1-1)) + 1*2 + 1*2^3 = 11
+> 1+2+8=11
 
 
 2. 八进制转十进制
@@ -162,7 +162,7 @@ System.out.println(i); // 2
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以8的（位数-1）次方，然后求和
 
 > 案例：0234转成十进制
-> 4*1+3*8+2*64=156
+> 4\*1+3\*8+2\*64=156
 
 
 3. 十六进制转十进制
@@ -170,7 +170,7 @@ System.out.println(i); // 2
 规则：从最低位（右边）开始，将每个位上的数提取出来，乘以16的（位数-1）次方，然后求和
 
 > 案例：0x23A
-> 10*1+3*16+2*512=570
+> 10\*1+3\*16+2\*512=570
 
 
 ### 4.6.2、十进制转其他进制
@@ -178,15 +178,20 @@ System.out.println(i); // 2
 1. 十进制转二进制
 
 规则：将该数不断除以2.直到商为0为止，然后将每步余数倒过来，就是对应二进制
+
 > 案例：34转为对应二进制 = 0B00100010
-> ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659316668813-86265993-3c4b-4390-aa63-b784511dd082.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=193&id=u9255f122&originHeight=467&originWidth=770&originalType=binary&ratio=1&rotation=0&showTitle=false&size=259929&status=done&style=none&taskId=u31a92d9f-edcd-4832-9a85-1a96a7343f6&title=&width=319)
+
+![十进制转二进制](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231618617.png)
 
 
 2. 十进制转八进制
 
 规则：将该数不断除以8.直到商为0为止，然后将每步余数倒过来，就是对应二进制
+
 > 案例：131转为8进制
-> ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659316846013-114cc8d1-bf2e-4a80-b8cb-8cb4828dc04c.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=117&id=uf58d6ff4&originHeight=254&originWidth=697&originalType=binary&ratio=1&rotation=0&showTitle=false&size=151496&status=done&style=none&taskId=u7844d5da-dd54-41fb-9e48-355e06d77d4&title=&width=320)
+
+![十进制转八进制](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308231620590.png)
+
 
 
 ### 4.6.3、二进制转其它进制
@@ -194,6 +199,7 @@ System.out.println(i); // 2
 1. 二进制转八进制
 
 规则：从低位开始，将二进制数每三位一组，转成对应的八进制
+
 > 案例：ob11010101转成八进制
 > 0325
 
