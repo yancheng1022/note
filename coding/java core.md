@@ -124,7 +124,8 @@ System.out.println(i); // 2
 >   & 逻辑与：不管第一个条件是否为 false，第二个条件都要判断，效率低  
 
 ## 4.4、赋值运算符
-基本赋值运算符 = int a = 10; 
+
+基本赋值运算符 = （ int a = 10;） 
 复合赋值运算符 += ，-= ，*= ， /= ，%= 等
 
 ## 4.5、三元运算符
@@ -132,12 +133,15 @@ System.out.println(i); // 2
 
 1. 如果条件表达式为 true，运算后的结果是表达式 1；
 2. 如果条件表达式为 false，运算后的结果是表达式 2；
+
 ## 4.6、进制转换（为位运算准备）
+
 对于整数，有四种表示方式：
 二进制：0,1 ，满 2 进 1.以 0b 或 0B 开头。
 十进制：0-9 ，满 10 进 1。
 八进制：0-7 ，满 8 进 1. 以数字 0 开头表示。
 十六进制：0-9 及 A(10)-F(15)，满 16 进 1. 以 0x 或 0X 开头表示。此处的 A-F 不区分大小写
+
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659315798812-c73b8167-9d16-498e-862a-39be598bf419.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=233&id=ud716b4a6&originHeight=444&originWidth=658&originalType=binary&ratio=1&rotation=0&showTitle=false&size=87975&status=done&style=none&taskId=ud57fe773-8f3d-414e-9a12-9bd0e7c1399&title=&width=345)
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659315826387-ed7e7bab-8366-4fd2-8353-b82acde62fa2.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=243&id=uc4b6c469&originHeight=470&originWidth=664&originalType=binary&ratio=1&rotation=0&showTitle=false&size=126331&status=done&style=none&taskId=u69461551-0d4d-415e-bdd3-fb02621b29f&title=&width=343)
 ### 4.6.1、其它进制转十进制
