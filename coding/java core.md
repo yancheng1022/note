@@ -230,7 +230,13 @@ System.out.println(i); // 2
 ## 4.7、位运算符
 ### 4.6.1、原码反码补码
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659323103678-54e7f91d-10dc-4469-a59d-4b5a49691c2d.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=353&id=u79c4132a&originHeight=353&originWidth=1142&originalType=binary&ratio=1&rotation=0&showTitle=false&size=451292&status=done&style=none&taskId=u3a55cfcd-9b65-4df3-b0a7-f8ecf3fd606&title=&width=1142)
+1. 进制的最高位是符号位: 0表示正数1表示负数
+2. 正数的原码，反码，补码都一样
+3. 负数的反码=它的原码符号位不变，其它位取反.负数的补码=它的反码+1
+4. 0的反码，补码都是0
+5. 在计算机运算的时候，都是以补码的方式来运算的
+
+
 
 ### 4.6.2、位运算符
 java种有7个位运算&（按位与）,|（按位或）,^（按位异或）,~（按位取反）
