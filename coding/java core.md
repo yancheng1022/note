@@ -241,7 +241,15 @@ System.out.println(i); // 2
 
 ### 4.6.2、位运算
 
-java种有7个位运算&（按位与）,|（按位或）,^（按位异或）,~（按位取反）
+java种有7个位运算 &（按位与）,|（按位或）,^（按位异或）,~（按位取反），<<（左移），>>（带符号右移），>>>（无符号右移）
+
+1. & （按位与）：两位全为1，结果为1，否则为0
+
+```text
+2的补码=2的源码=00000000 00000000 00000000 00000010
+3的补码=3的源码=00000000 00000000 00000000 00000011
+运算后的补码 =  00000010 ，运算后的源码 = 00000010，所以结果为2
+```
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659323728862-ee90fd45-e29f-4ee8-82ae-26d2dd84c2fd.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=177&id=u1e86b5de&originHeight=177&originWidth=987&originalType=binary&ratio=1&rotation=0&showTitle=false&size=197673&status=done&style=none&taskId=u383d44c0-6638-48a3-a6e3-3341d41b828&title=&width=987)
 ```
