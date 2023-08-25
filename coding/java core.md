@@ -288,6 +288,8 @@ java种有7个位运算 &（按位与）,|（按位或）,^（按位异或）,~�
 补码表示：10000011 = 3
 ```
 
+#### 4.6.2.5、>>（算数右移）
+
 
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659331727407-4129a10d-1e9c-4cdd-960a-b10348fef629.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=175&id=u5f9f0b67&originHeight=175&originWidth=1018&originalType=binary&ratio=1&rotation=0&showTitle=false&size=222707&status=done&style=none&taskId=u2acf04d1-ddfe-4d38-adec-f7d7bba625d&title=&width=1018)
