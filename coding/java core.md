@@ -532,16 +532,20 @@ enum Season2 {//类
 ```
 # 6、注解
 
- 	注解(Annotation)也被称为元数据(Metadata)，用于修饰解释 包、类、方法、属性、构造器、局部变量等数据信息  。
- 和注释一样，注解不影响程序逻辑，但注解可以被编译或运行，相当于嵌入在代码中的补充信息  
+ 	注解(Annotation)也被称为元数据(Metadata)，用于修饰解释 包、类、方法、属性、构造器、局部变量等数据信息 。和注释一样，注解不影响程序逻辑，但注解可以被编译或运行，相当于嵌入在代码中的补充信息  
 ## 6.1、基本注解介绍
- 使用 Annotation 时要在其前面增加 @ 符号, 并把该 Annotation 当成一个修饰符使用。用于修饰它支持的程序元素 三个基本的 Annotation:  
+
+ 使用 Annotation 时要在其前面增加 @ 符号, 并把该 Annotation 当成一个修饰符使用。用于修饰它支持的程序元素 
+ 
+ 三个基本的 Annotation:  
+ 
 1) @Override: 限定某个方法，是重写父类方法, 该注解只能用于方法 
 2) @Deprecated: 用于表示某个程序元素(类, 方法等)已过时 
 3) @SuppressWarnings: 抑制编译器警告（当不希望看到某些警告使用该注解，都不想看到使用all）
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659515504574-a42ed829-be25-4e67-8a35-d965b0e01490.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=242&id=uc603ddec&originHeight=453&originWidth=943&originalType=binary&ratio=1&rotation=0&showTitle=false&size=192254&status=done&style=none&taskId=u41eb6d47-7557-4ebf-a8ba-131476b75a3&title=&width=503)
+
 
 ## 6.2、自定义注解
+
 修饰符：访问修饰符必须为public,不写默认为pubic；
 关键字：关键字为@interface；
 注解名称： 注解名称为自定义注解的名称，使用时还会用到；
@@ -554,24 +558,28 @@ public @interface Info {
 ```
 
 ## 6.3、元注解
-所谓元注解，其主要作用就是负责注解其他注解，为其他注解提供了相关的解释说明。Java中存在五个元注解，分别是 @Target、@Retention、@Documented、@Inherited、@Repeatable
 
-**Target**：描述了注解修饰的对象范围，取值在java.lang.annotation.ElementType定义，常用包括：
+所谓元注解，其主要作用就是负责注解其他注解，为其他注解提供了相关的解释说明。
+Java中存在五个元注解，分别是 @Target、@Retention、@Documented、@Inherited、@Repeatable
+
+1. **Target**：描述了注解修饰的对象范围，取值在java.lang.annotation.ElementType定义，常用包括：
+
 > METHOD：用于描述方法
 > PACKAGE：用于描述包
 > PARAMETER：用于描述方法变量
 > TYPE：用于描述类、接口或enum类型
 
 
-**Retention**：表述注解保留时间的长短，取值在java.lang.annotation.RetentionPolicy中，取值：
+2. **Retention**：表述注解保留时间的长短，取值在java.lang.annotation.RetentionPolicy中，取值：
+
 > SOURCE：在源文件中有效，编译过程中会被忽略
 > CLASS：随源文件一起编译在class文件中，运行时忽略
 > RUNTIME：在运行时有效(只有定义为RetentionPolicy.RUNTIME时，我们才能通过注解反射获取注解)
 
 
-**Document**：表明这个注解应该被 javadoc文档注释工具记录，正常情况下javadoc中不包含注解的，@Documented属于标志注解
+3. **Document**：表明这个注解应该被 javadoc文档注释工具记录，正常情况下javadoc中不包含注解的，@Documented属于标志注解
 
-**Inherited：**被该注解注解的元注解注解某个类时，子类继承该注解
+4. **Inherited**:被该注解注解的元注解注解某个类时，子类继承该注解
 ## 6.4、案例-反射获取注解
 
 1. 定义一个注解
