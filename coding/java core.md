@@ -359,14 +359,12 @@ public class OuterClass {
 
     public void outerMethod() {
         int localVar = 5;
-
         class LocalInnerClass {
             public void innerMethod() {
                 System.out.println("访问外部类数据：" + outerData);
                 System.out.println("访问局部变量：" + localVar);
             }
         }
-
         LocalInnerClass innerObj = new LocalInnerClass();
         innerObj.innerMethod();
     }
