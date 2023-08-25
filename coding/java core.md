@@ -853,6 +853,26 @@ public void write(byte[] b)：将 b.length字节从指定的字节数组写入�
 public void write(byte[] b, int off, int len) ：从指定的字节数组写入 len字节，从偏移量 off开始输出到此输出流。
 public abstract void write(int b) ：将指定的字节输出流。
 ```
+
+#### 10.2.1.1、FileOutputStream
+FileOutputStream是OutputStream中一个常用的子类，他可以关联一个文件，用于将数据写出到文件
+
+```java
+
+public class IOTest {
+    public static void main(String[] args) throws IOException {
+        // 使用文件名称创建流对象
+        FileOutputStream fos = new FileOutputStream("000.txt");
+        // 字符串转换为字节数组
+        byte[] b = "abcde".getBytes();
+        // 写出从索引2开始，2个字节。索引2是c，两个字节，也就是cd。
+        fos.write(b,2,2);
+        // 关闭资源
+        fos.close();
+    }
+}
+
+```
 # 11、反射
 ## 11.1、反射基本概念
 将类的各个组成部分封装为其他对象，这就是反射机制
