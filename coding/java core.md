@@ -908,6 +908,8 @@ public class IOTest {
 ### 10.3.1、字符输出流
 #### 10.3.1.1、FileWriter类
 
+java.io.FileWriter类是写出字符到文件的便利类。构造时使用系统默认的字符编码和默认字节缓冲区
+
 ```java
 public class Demo03_写出字符数组 {
     public static void main(String[] args) throws IOException {
@@ -926,6 +928,32 @@ public class Demo03_写出字符数组 {
 ```
 
 ### 10.3.2、字符输入流
+#### 10.3.2.1、FileReader类
+
+java.io.FileReader类是读取字符文件的便利类。构造时使用系统默认的字符编码和默认字节缓冲区
+
+> Windows系统的中文编码默认是GBK编码表。idea中默认是UTF-8
+
+```java
+public class IoTest {
+    public static void main(String[] args) throws IOException {
+        // 使用文件名称创建流对象
+        FileReader fr = new FileReader("001.txt");
+        // 定义变量，保存数据
+        int data;
+        // 循环读取
+        while ((data = fr.read()) != -1) {
+            // 以数值的方式输出
+//            System.out.println(b);
+            // 以字符的方式输出
+            System.out.println((char) data);
+        }
+        // 关闭资源
+        fr.close();
+    }
+}
+```
+
 
 # 11、反射
 ## 11.1、反射基本概念
