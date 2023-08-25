@@ -271,6 +271,10 @@ java种有7个位运算 &（按位与）,|（按位或）,^（按位异或）,~�
 ```
 
 
+4. 按位取反（~）：0->1, 1->0
+```asciidoc
+
+```
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659323728862-ee90fd45-e29f-4ee8-82ae-26d2dd84c2fd.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=177&id=u1e86b5de&originHeight=177&originWidth=987&originalType=binary&ratio=1&rotation=0&showTitle=false&size=197673&status=done&style=none&taskId=u383d44c0-6638-48a3-a6e3-3341d41b828&title=&width=987)
 ```
