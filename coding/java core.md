@@ -820,123 +820,22 @@ java的泛型称为伪泛型，因为Java的泛型只是编译期的泛型，一
 在不使用泛型时，我们需要将Object手动转型成特定类型，而在使用泛型后，我们不需要自己转型，但实际上我们get到的对象仍然是Object类型的，只不过编译器会自动帮我们加入这个转型动作
 
 # 10、IO
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659660621535-86633e46-8b7a-420d-b439-ca1960c52f75.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=378&id=u4631b452&originHeight=447&originWidth=635&originalType=binary&ratio=1&rotation=0&showTitle=false&size=168066&status=done&style=none&taskId=u05e1f801-4e70-4b5e-9068-c7a7cdf79e8&title=&width=537)
-## 10.1、文件
-### 10.1.1、文件流
-文件在程序中是以流的形式操作的
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659660759738-6f451a84-db18-4ca4-889d-8b75b4e8352f.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=121&id=u21d5ad8d&originHeight=160&originWidth=711&originalType=binary&ratio=1&rotation=0&showTitle=false&size=115341&status=done&style=none&taskId=u69d7bf57-e3ee-406d-a98a-9a7c037923f&title=&width=537)
-流：数据在数据源（文件）和程序（内存）之间经历的路径
-输入流：数据从数据源（文件）到程序（内存）的路径
-输出流：数据从程序（内存）到数据源（文件）的路径
 
-### 10.1.2、常用的文件操作
+## 10.1、概述
 
-1. **文件的创建**
+### 10.1.1、简介
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659661321097-ad59daa0-a683-4d4c-b623-37144997c982.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=130&id=ub8611803&originHeight=130&originWidth=1001&originalType=binary&ratio=1&rotation=0&showTitle=false&size=268930&status=done&style=none&taskId=ue0880e4b-8338-4a5e-a7b0-eb576813371&title=&width=1001)
-```java
-public class FileCreate {
+I（Input）O（Output）：中文翻译为输入输出，我们知道计算机的数据不管是软件、视频、音乐、游戏等最终都是存储在硬盘中的，当我们打开后，由CPU将硬盘中的数据读取到内存中来运行。这样一个过程就产生了I/O（输入/输出）
 
-    //方式1 new File(String pathname)
-    @Test
-    public void create01() {
-        String filePath = "e:\\news1.txt";
-        File file = new File(filePath);
+### 10.1。2、IO流的分类
 
-        try {
-            file.createNewFile();
-            System.out.println("文件创建成功");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    
-    //方式2 new File(File parent,String child) //根据父目录文件+子路径构建
-    @Test
-    public  void create02() {
-        File parentFile = new File("e:\\");
-        String fileName = "news2.txt";
-        //这里的file对象，在java程序中，只是一个对象
-        //只有执行了createNewFile 方法，才会真正的，在磁盘创建该文件
-        File file = new File(parentFile, fileName);
-
-        try {
-            file.createNewFile();
-            System.out.println("创建成功~");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //方式3 new File(String parent,String child) //根据父目录+子路径构建
-    @Test
-    public void create03() {
-        String parentPath = "e:\\";
-        String fileName = "news4.txt";
-        File file = new File(parentPath, fileName);
-
-        try {
-            file.createNewFile();
-            System.out.println("创建成功~");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-2. **获取文件的相关信息**
-```java
-public class FileInformation {
-    //获取文件的信息
-    @Test
-    public void info() {
-        //先创建文件对象
-        File file = new File("e:\\news1.txt");
-
-        //调用相应的方法，得到对应信息
-        System.out.println("文件名字=" + file.getName());
-        //getName、getAbsolutePath、getParent、length、exists、isFile、isDirectory
-        System.out.println("文件绝对路径=" + file.getAbsolutePath());
-        System.out.println("文件父级目录=" + file.getParent());
-        System.out.println("文件大小(字节)=" + file.length());
-        System.out.println("文件是否存在=" + file.exists());//T
-        System.out.println("是不是一个文件=" + file.isFile());//T
-        System.out.println("是不是一个目录=" + file.isDirectory());//F
-    }
-}
-
-```
-
-3. **目录的操作和文件删除**
-```java
-public class Directory_ {
-    //判断 d:\\news1.txt 是否存在，如果存在就删除
-    @Test
-    public void m1() {
-        String filePath = "e:\\news1.txt";
-        File file = new File(filePath);
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println(filePath + "删除成功");
-            } else {
-                System.out.println(filePath + "删除失败");
-            }
-        } else {
-            System.out.println("该文件不存在...");
-        }
-    }
-}
-
-```
-## 10.2、IO流
 ### 10.2.1、IO流分类
+
 按照操作数据单位不同分为：字节流（8bit）二进制文件，字符流（按字符）文本文件
 按数据流的流向不同分为：输入流，输出流
-按流的角色不同分为：节点流，处理流/包装流
+
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659662289021-93129478-8cc1-4d9c-82c9-932c15153a37.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=114&id=uf89be968&originHeight=167&originWidth=829&originalType=binary&ratio=1&rotation=0&showTitle=false&size=154323&status=done&style=none&taskId=u5d128cf6-4c3f-4321-a117-49823508580&title=&width=567)
+
 > java的IO流共涉及40多个类，都是从如上4个抽象基类派生
 
 
