@@ -932,7 +932,7 @@ public class Demo03_写出字符数组 {
 
 java.io.FileReader类是读取字符文件的便利类。构造时使用系统默认的字符编码和默认字节缓冲区
 
-> Windows系统的中文编码默认是GBK编码表。idea中默认是UTF-8
+> Windows系统的中文编码默认是GBK编码表。idea中默认是UTF-8 
 
 ```java
 public class IoTest {
