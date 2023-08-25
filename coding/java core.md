@@ -888,7 +888,25 @@ java.io.FileInputStream类是文件输入流，从文件中读取字节
 >FileInputStream(File file)： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的 File对象 file命名。
  FileInputStream(String name)： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的路径名 name命名。
 
-
+```java
+public class IOTest {
+    public static void main(String[] args) throws IOException {
+        // 使用文件名称创建流对象.
+        FileInputStream fis = new FileInputStream("abc.txt"); // 文件中为abcde
+        // 定义变量，作为有效个数
+        int len;
+        // 定义字节数组，作为装字节数据的容器
+        byte[] b = new byte[2];
+        // 循环读取
+        while ((len = fis.read(b)) != -1) {
+            // 每次读取后,把数组的有效字节部分，变成字符串打印
+            System.out.println(new String(b, 0, len));//  len 每次读取的有效字节个数
+        }
+        // 关闭资源
+        fis.close();
+    }
+}
+```
 # 11、反射
 ## 11.1、反射基本概念
 将类的各个组成部分封装为其他对象，这就是反射机制
