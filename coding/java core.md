@@ -846,14 +846,6 @@ I（Input）O（Output）：中文翻译为输入输出，我们知道计算机�
 
 OutputStream是所有字节输出的顶层父类，该父类提供如下公共方法：
 
-```java
-public void close() ：关闭此输出流并释放与此流相关联的任何系统资源。
-public void flush() ：刷新此输出流并强制任何缓冲的输出字节被写出。
-public void write(byte[] b)：将 b.length字节从指定的字节数组写入此输出流。
-public void write(byte[] b, int off, int len) ：从指定的字节数组写入 len字节，从偏移量 off开始输出到此输出流。
-public abstract void write(int b) ：将指定的字节输出流。
-```
-
 #### 10.2.1.1、FileOutputStream
 FileOutputStream是OutputStream中一个常用的子类，他可以关联一个文件，用于将数据写出到文件
 
@@ -913,6 +905,25 @@ public class IOTest {
 
 计算机都是按照字节进行存储的，我们之前学习过编码表，通过编码表可以将字节转换为对应的字符，但是世界上有非常多的编码表，不同的编码表规定的单个字符所占用的字节可能都不一样，例如在GBK编码表中一个中文占2个字节，UTF8编码表则占3个字节；且一个中文字符都是由多个字节组成的，为此我们不能再基于字节的操作单位来操作文本文件了，因为这样太过麻烦，我们希望基于字符来操作文件，一次操作读取一个“字符”而不是一个“字节”，这样在操作文本文件时非常便捷
 
+### 10.3.1、字符输出流
+#### 10.3.1.1、FileWriter类
+
+```java
+public class Demo03_写出字符数组 {
+    public static void main(String[] args) throws IOException {
+        // 使用文件名称创建流对象
+        FileWriter fw = new FileWriter("002.txt");
+        // 字符串转换为字节数组
+        char[] chars = "我是中国人".toCharArray();
+        // 写出字符数组
+        fw.write(chars); // 我是中国人
+        // 写出从索引2开始，2个字节。索引2是'中'，两个字节，也就是'中国'。
+        fw.write(chars,2,2); // 中国
+        // 关闭资源
+        fw.close();
+    }
+}
+```
 
 # 11、反射
 ## 11.1、反射基本概念
