@@ -744,11 +744,7 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 
 泛型有三种使用方式，分别为：泛型类、泛型接口和泛型方法。
 
-1. **泛型类**
 
->  注意事项：
-> （1）泛型类型必须是引用类型（非基本数据类型）
-> （2）参数类型规范
 > 	T：任意类型 type
 > 	E：集合中元素的类型 element
 > 	K：key-value形式 key
