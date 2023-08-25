@@ -786,27 +786,16 @@ public class Utils {
 3. **泛型通配符**
 
 Java泛型的通配符是用于解决泛型之间引用传递问题的特殊语法, 主要有以下三类:
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659602087157-c470c9ab-b41e-43ca-8ef7-84df415862b2.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=232&id=u5f915943&originHeight=351&originWidth=891&originalType=url&ratio=1&rotation=0&showTitle=false&size=34289&status=done&style=none&taskId=u2fa77ea9-b20d-4d76-9120-74d91bdedea&title=&width=588)
+
 ```java
 // 1：表示类型参数可以是任何类型
- 
 public class Apple<?>{} 
- 
 // 2：表示类型参数必须是A或者是A的子类
- 
 public class Apple<T extends A>{} 
- 
 // 3: 表示类型参数必须是A或者是A的超类型
- 
 public class Apple<T supers A>{}
 ```
 
-（1）无边界的通配符(Unbounded Wildcards), 就是, 比如List。无边界的通配符的主要作用就是让泛型能够接受未知类型的数据. 
-（2） 固定上边界的通配符(Upper Bounded Wildcards)，采用<? extends E>的形式 .使用固定上边界的通配符的泛型, 就能够接受**指定类及其子类类型**的数据。要声明使用该类通配符, 采用<? extends E>的形式, 这里的E就是该泛型的上边界。
-> 注意: 这里虽然用的是extends关键字, 却不仅限于继承了父类E的子类, 也可以代指显现了接口E的类
-
-（3）固定下边界的通配符(Lower Bounded Wildcards)，采用<? super E>的形式.使用固定下边界的通配符的泛型, 就能够接受**指定类及其父类类型的数据.**。要声明使用该类通配符, 采用<? super E>的形式, 这里的E就是该泛型的下边界.。
-> 注意: 你可以为一个泛型指定上边界或下边界, 但是不能同时指定上下边界。
 
 ## 9.3、实现原理
 原码：
