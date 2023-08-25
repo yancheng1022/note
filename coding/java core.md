@@ -740,59 +740,48 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 （1）保证类型安全：可以确保在编译时期检测到类型不匹配的错误，避免在运行时出现类型转换错误
 （2）消除强制转换：消除源代码中的许多强制类型转换，这使得代码更加可读，并且减少了出错机会
 
-## 9.2、使用泛型
+## 9.2、泛型使用方式
 
 泛型有三种使用方式，分别为：泛型类、泛型接口和泛型方法。
 
-
-> 	T：任意类型 type
-> 	E：集合中元素的类型 element
-> 	K：key-value形式 key
-> 	V：key-value形式 value
+> T是泛型中的类型参数声明，它表示一个占位符,通常用大写字母表示（例如 T、E、K、V 等），但实际上它只是一个占位符，可以根据需要自定义
+>
+>T：任意类型 type
+ E：集合中元素的类型 element
+ K：key-value形式 key
+ V：key-value形式 value
 
 
 ```java
-public class GenericClass<T> {
- 
-    private T value;
- 
-    public GenericClass(T value) {
- 
-        this.value = value;
+// 泛型类
+public class Box<T> {
+    private T item;
+
+    public void setItem(T item) {
+        this.item = item;
     }
- 
-    public T getValue() {
- 
-        return value;
- 
+
+    public T getItem() {
+        return item;
     }
- 
-    public void setValue(T value) {
- 
-        this.value = value;
- 
+}
+// 泛型接口
+public interface List<T> {
+    void add(T element);
+    T get(int index);
+    // ...
+}
+// 泛型方法
+public class Utils {
+    public static <T> T getFirstElement(List<T> list) {
+        if (list != null && !list.isEmpty()) {
+            return list.get(0);
+        }
+        return null;
     }
- 
 }
 ```
 
-2. **泛型接口**
-3. **泛型方法**
-> 泛型方法，是在调用方法的时候指明泛型的具体类型
-
-```java
-
-    public <T> T genercMethod(T t){
- 
-        System.out.println(t.getClass());
- 
-        System.out.println(t);
- 
-        return t;
- 
-    }
-
-```
 
 3. **泛型通配符**
 
