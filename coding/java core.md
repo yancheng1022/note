@@ -589,58 +589,60 @@ Java中存在五个元注解，分别是 @Target、@Retention、@Documented、@
     }
 ```
 
-## 6.4、案例-反射获取注解
+## 6.4、案例-自定义注解实现日志功能
 
 1. 定义一个注解
+
 ```java
-@Target(ElementType.FIELD)//只能定义在字段上
-@Retention(RetentionPolicy.RUNTIME)//在运行时有效
-public @interface MyAnnotation {
-    //字段描述
-    String description();
-    //字段长度
-    int length();
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Loggable {
 }
 ```
 
-2. 注解的使用
+2. 创建切面类，使用 @Before 注解和 @AfterReturning 注解分别标记了在方法执行前和方法执行后执行的通知方法
+
 ```java
-@Data
-public class User {
-    @MyAnnotation(length = 12,description = "用户名的长度只能为12位")
-    private String userName;
-}
-```
-
-3. 通过反射获取注解
-```java
-public void test1(){
-    User user = new User();
-    user.setUserName("张三");
-
-    //获取类模板
-    Class<User> userClass = User.class;
-
-    //获取所有字段
-    Field[] declaredFields = userClass.getDeclaredFields();
-    for (Field field : declaredFields) {
-        //判断该字段是否存在MyAnnotation注解
-        if(field.isAnnotationPresent(MyAnnotation.class)){
-            MyAnnotation myAnnotation = field.getAnnotation(MyAnnotation.class);
-            System.out.println("字段:["+field.getName()+"],描述:["+myAnnotation.description()+"],长度:["+myAnnotation.length()+"]");
-            }
-        }
+@Aspect
+public class LoggingAspect {
+    @Before("@annotation(Loggable)")
+    public void beforeMethodExecution(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println("Entering method: " + methodName);
     }
 
+    @AfterReturning("@annotation(Loggable)")
+    public void afterMethodExecution(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println("Exiting method: " + methodName);
+    }
+}
+```
+
+3. 在需要进行日志记录的方法上添加 @Loggable 注解即可
+
+```java
+public class MyClass {
+    @Loggable
+    public void doSomething() {
+        // ...
+    }
+
+    public void doAnotherThing() {
+        // ...
+    }
+}
 ```
 # 7、异常
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659576643717-f9446fd6-5496-49e6-83d6-f5af0b5c6ad2.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=264&id=u875445ff&originHeight=264&originWidth=683&originalType=binary&ratio=1&rotation=0&showTitle=false&size=55624&status=done&style=none&taskId=uda759f0d-e75d-44d5-ade6-64678af7dcf&title=&width=683)
 
-1. **Error（错误）**
+![异常分类](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202308251414029.png)
+
+
+## 7.1、**Error（错误）**
 
 程序本身不能处理的异常，只能靠外接干预 （常见的如**内存溢出**，j**vm虚拟机自身的非正常运行**等）
 
-2. **Exception（异常）**
+## 7.2、**Exception（异常）**
 
 是程序正常运行中，可以预料的意外情况。比如数据库连接中断，空指针，数组下标越界。异常出现可以导致程序非正常终止
 
