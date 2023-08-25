@@ -473,6 +473,7 @@ class Outer10 { //外部类
 1. 不需提供set方法，因为枚举对象值通常为只读
 2. 对枚举对象/属性使用final+static共同修饰，实现底层优化
 3. 枚举 对象名通常使用全部大写，常量的命名规范
+
 ```java
 class Season {//类
     private String name;
@@ -498,13 +499,15 @@ public class Enumeration02 {
 2. 如果使用无参构造器 创建 枚举对象，则实参列表和小括号都可以省略
 3. 当有多个枚举对象时，使用,间隔，最后有一个分号结尾
 4. 枚举对象必须放在枚举类的行首  
+
 ```java
 public class Enumeration03 {
     public static void main(String[] args) {
         System.out.println(Season2.AUTUMN);
         System.out.println(Season2.SUMMER);
-        }
+    }
 }
+
 //演示使用 enum 关键字来实现枚举类
 enum Season2 {//类
 
