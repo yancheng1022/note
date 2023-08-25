@@ -569,17 +569,26 @@ Java中存在五个元注解，分别是 @Target、@Retention、@Documented、@
 > PARAMETER：用于描述方法变量
 > TYPE：用于描述类、接口或enum类型
 
-
 2. **Retention**：表述注解保留时间的长短，取值在java.lang.annotation.RetentionPolicy中，取值：
 
 > SOURCE：在源文件中有效，编译过程中会被忽略
 > CLASS：随源文件一起编译在class文件中，运行时忽略
 > RUNTIME：在运行时有效(只有定义为RetentionPolicy.RUNTIME时，我们才能通过注解反射获取注解)
 
-
 3. **Document**：表明这个注解应该被 javadoc文档注释工具记录，正常情况下javadoc中不包含注解的，@Documented属于标志注解
 
 4. **Inherited**:被该注解注解的元注解注解某个类时，子类继承该注解
+
+5. @Repeatable 是 Java 8 引入的一个注解，用于在同一个元素上多次使用相同的注解。通过使用 @Repeatable 注解，可以使得某个注解可以重复应用于同一目标上，而无需使用容器注解或数组
+
+```java
+    @Color("Red")
+    @Color("Blue")
+    public void printColors() {
+        // ...
+    }
+```
+
 ## 6.4、案例-反射获取注解
 
 1. 定义一个注解
