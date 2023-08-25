@@ -358,7 +358,7 @@ public class OuterClass {
     private int outerData = 10;
 
     public void outerMethod() {
-        final int localVar = 5; // 局部变量（必须是 final 或 effectively final）
+        int localVar = 5;
 
         class LocalInnerClass {
             public void innerMethod() {
