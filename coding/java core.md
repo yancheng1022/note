@@ -741,16 +741,18 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 （2）消除强制转换：消除源代码中的许多强制类型转换，这使得代码更加可读，并且减少了出错机会
 
 ## 9.2、使用泛型
+
 泛型有三种使用方式，分别为：泛型类、泛型接口和泛型方法。
 
 1. **泛型类**
+
 >  注意事项：
 > （1）泛型类型必须是引用类型（非基本数据类型）
 > （2）参数类型规范
-> T：任意类型 type
-> E：集合中元素的类型 element
-> K：key-value形式 key
-> V：key-value形式 value
+> 	T：任意类型 type
+> 	E：集合中元素的类型 element
+> 	K：key-value形式 key
+> 	V：key-value形式 value
 
 
 ```java
