@@ -377,13 +377,14 @@ public class OuterClass {
 ```
 ### 4.2.2、匿名内部类
 
-定义在外部类的局部位置，比如方法中，没有名字（它同时还是一个对象）。如果类只是使用一次，后面再不使用，可以使用匿名内部类来简化开发
+匿名内部类是一种没有显式定义类名的内部类，定义在外部类的局部位置，比如方法中，它通常用于创建实现某个接口或继承某个类的匿名对象
 
 > 说明：
 > 1. 匿名内部类运行类型：外部类名称$1
 
 
 1. 基于接口的匿名内部类
+
 ```java
 interface IA{
     void cry();
@@ -401,6 +402,7 @@ class Outer {
 ```
 
 2. 基于类的匿名内部类
+
 ```java
 class Father {
     public void test(){}
@@ -417,20 +419,7 @@ class Outer{
 }
 ```
 
-3. 基于抽象类的匿名内部类
-```java
-Class Outer{
-    Animal animal = new Animal(){
-        @Override
-        void eat() {
-            System.out.println("小狗吃骨头...");
-        }
-    };
-}
-abstract class Animal { //抽象类
-    abstract void eat();
-}
-```
+
 ### 4.2.3、成员内部类
 成员内部类是定义再外部类的成员位置，并且没有static修饰
 > 说明：
