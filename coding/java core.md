@@ -658,6 +658,7 @@ public class MyClass {
 
 1. Date：精确到毫秒，代表特定瞬间
 2. SimpleDateFormat：格式化（日期-文本）和解析日期（文本-日期）的类
+
 ```java
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy 年 MM 月 dd 日 hh:mm:ss E");
@@ -670,7 +671,9 @@ Date parse = sdf.parse(s);
 ```
 
 ### 8.1.2、第二代日期类Calendar（JDK1.1）
+
 Calendar它是一种抽象类，相比Date它在操作日历的时候提供了一些方法来操作日历字段
+
 ```java
 // Calendar 是一个抽象类， 并且构造器是 private,可以通过 getInstance() 来获取实例
 // Calendar 没有提供对应的格式化的类，因此需要程序员自己组合来输出(灵活)
