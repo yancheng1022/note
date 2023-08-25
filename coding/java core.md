@@ -353,6 +353,30 @@ java种有7个位运算 &（按位与）,|（按位或）,^（按位异或）,~�
 > 3. 作用域：仅在定义它的方法或代码块中
 > 4. 局部内部类访问外部类的成员：直接访问。外部类访问局部内部类的成员，创建对象再访问
 
+```java
+public class OuterClass {
+    private int outerData = 10;
+
+    public void outerMethod() {
+        final int localVar = 5; // 局部变量（必须是 final 或 effectively final）
+
+        class LocalInnerClass {
+            public void innerMethod() {
+                System.out.println("访问外部类数据：" + outerData);
+                System.out.println("访问局部变量：" + localVar);
+            }
+        }
+
+        LocalInnerClass innerObj = new LocalInnerClass();
+        innerObj.innerMethod();
+    }
+
+    public static void main(String[] args) {
+        OuterClass outerObj = new OuterClass();
+        outerObj.outerMethod();
+    }
+}
+```
 ### 4.2.2、匿名内部类
 
 定义在外部类的局部位置，比如方法中，没有名字（它同时还是一个对象）。如果类只是使用一次，后面再不使用，可以使用匿名内部类来简化开发
