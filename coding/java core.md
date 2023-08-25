@@ -311,16 +311,24 @@ java种有7个位运算 &（按位与）,|（按位或）,^（按位异或）,~�
 
 ```asciidoc
 1 << 2
+0001 << 2 = 0100 = 4
 
+-1 << 3
+11111111 << 3 = 11111000
+原码结果为：10001000 = -8
 ```
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1659331727407-4129a10d-1e9c-4cdd-960a-b10348fef629.png#clientId=u6ef58dc1-b2c2-4&from=paste&height=175&id=u5f9f0b67&originHeight=175&originWidth=1018&originalType=binary&ratio=1&rotation=0&showTitle=false&size=222707&status=done&style=none&taskId=u2acf04d1-ddfe-4d38-adec-f7d7bba625d&title=&width=1018)
+#### 4.6.2.7、>>> （逻辑右移 或叫 无符号右移）
+
+低位溢出，高位补0
+
+```asciidoc
+-1 >>> 2
+-1的补码：11111111
+右移两位，并用符号位填充：11111111
+原码结果为：100000001 = -1
 ```
-1>>2 = 0
-00000001 -> 00000000(本质1/2/2=0)
-1<<2 = 4
-00000001 -> 00000100(本质1*2*2=4)
-```
+
 # 4、面向对象
 ## 4.1、面向对象三大特征
 ### 4.1.1、封装
