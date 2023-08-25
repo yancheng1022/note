@@ -857,8 +857,12 @@ public abstract void write(int b) ：将指定的字节输出流。
 #### 10.2.1.1、FileOutputStream
 FileOutputStream是OutputStream中一个常用的子类，他可以关联一个文件，用于将数据写出到文件
 
-```java
+>构造方法：
+>public FileOutputStream(File file)：创建文件输出流以写入由指定的 File对象表示的文件。
+ public FileOutputStream(String name)： 创建文件输出流以指定的名称写入文件。
 
+
+```java
 public class IOTest {
     public static void main(String[] args) throws IOException {
         // 使用文件名称创建流对象
@@ -877,6 +881,12 @@ public class IOTest {
 >需要注意的是，在UTF-8编码下，一个中文占用3个字节，GBK编码下一个中文占用2个字节，因此在使用字节流来精确操作字符数据时将会变得非常麻烦
 
 
+#### 10.2.1.2、FileInputStream
+java.io.FileInputStream类是文件输入流，从文件中读取字节
+
+>构造方法：
+>FileInputStream(File file)： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的 File对象 file命名。
+ FileInputStream(String name)： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的路径名 name命名。
 
 
 # 11、反射
