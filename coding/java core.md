@@ -963,6 +963,12 @@ Java反射是指在运行时动态地获取类的信息并操作类或对象的�
 
 ### 11.1.2、好处
 
+1. 运行时类信息：反射允许在运行时获取类的信息，包括类的名称、字段、方法、注解等。这使得可以动态地了解和操作类的结构，从而实现更加灵活和通用的代码设计。
+2. 动态创建对象：通过反射可以在运行时动态地实例化对象，而不需要在编译时明确知道类的类型。这对于根据配置文件或用户输入来创建对象非常有用，可以实现更大程度的灵活性和可配置性。
+3. 动态调用方法：反射可以在运行时动态地调用类的方法，包括公共方法、私有方法和静态方法。这对于实现插件机制、扩展性和动态逻辑非常有用，可以根据运行时条件来调用不同的方法。
+4. 访问私有成员：反射可以绕过访问权限限制，访问类的私有成员。这对于测试、调试和特定场景下的操作非常有用，但也需要小心使用，以遵循封装原则。
+5. 序列化和反序列化：反射在序列化和反序列化过程中起着重要的作用。通过反射可以分析对象的结构，并将其转换为字节流或从字节流中重建对象
+
 ## 11.2、 获取Class对象的方式
 
 1. Class.forName("全类名")：将字节码文件加载进内存，返回Class对象。多用于配置文件，将类名定义在配置文件中。读取文件，加载类
@@ -975,6 +981,7 @@ Java反射是指在运行时动态地获取类的信息并操作类或对象的�
 ## 11.3、Class对象功能
 
 1. 获取成员变量
+
 ```java
 Field[] getFields() ：获取所有public修饰的成员变量
 Field getField(String name)   获取指定名称的 public修饰的成员变量
@@ -983,6 +990,7 @@ Field getDeclaredField(String name)
 ```
 
 2. 获取构造方法
+
 ```java
 Constructor<?>[] getConstructors()  返回public修饰的构造方法
 Constructor<T> getConstructor(类<?>... parameterTypes)  
@@ -991,6 +999,7 @@ Constructor<?>[] getDeclaredConstructors()  返回所有的构造方法
 ```
 
 3. 获取成员方法
+
 ```java
 Method[] getMethods()  
 Method getMethod(String name, 类<?>... parameterTypes)  
@@ -999,10 +1008,12 @@ Method getDeclaredMethod(String name, 类<?>... parameterTypes)
 ```
 
 4. 获取全类名
+
 ```java
 String getName()  
 ```
 ## 11.4、Field 成员变量
+
 ```java
 1. 设置值
 	void set(Object obj, Object value)  
@@ -1012,12 +1023,14 @@ String getName()
 	setAccessible(true):暴力反射
 ```
 ## 11.5、Constructor 构造方法
+
 ```java
 T newInstance(Object... initargs)  
 如果使用空参数构造方法创建对象，操作可以简化：Class对象的newInstance方法
 ```
 
 ## 11.6、Method 方法对象
+
 ```java
 1. 执行方法：
 	Object invoke(Object obj, Object... args)  
