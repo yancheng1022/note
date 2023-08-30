@@ -1,4 +1,12 @@
-
+---
+title: java core
+date: 2023/08/22
+categories:
+  - coding
+tags:
+  - java core
+  - 编程基础
+---
 #  1、Java概述
 ## 1.1、java特点
 
