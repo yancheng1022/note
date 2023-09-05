@@ -8,11 +8,11 @@ tags:
   - 编程基础
 ---
 
-## 1. 简介
+# 1. 简介
 
 Thymeleaf 是一个服务器端 Java 模板引擎，能够处理 HTML、XML、CSS、JAVASCRIPT 等模板文件。Thymeleaf 模板可以直接当作静态原型来使用，它主要目标是为开发者的开发工作流程带来优雅的自然模板，也是 Java 服务器端 HTML5 开发的理想选择
 
-## 2. 创建模板文件
+# 2. 创建模板文件
 
 创建一个html模板文件：
 
@@ -37,7 +37,7 @@ Thymeleaf 是一个服务器端 Java 模板引擎，能够处理 HTML、XML、CS
 2. <html xmlns:th="[http://www.thymeleaf.org](http://www.thymeleaf.org)">: 引入 Thymeleaf 命名空间 (xmlns 属性规定文档的 xml 命名空间)
 
 
-## 3. 标准表达式语法
+# 3、标准表达式语法
 
 Thymeleaf 提供了非常丰富的标准表达式语法，总共有 8 大类：
 
@@ -51,7 +51,7 @@ Thymeleaf 提供了非常丰富的标准表达式语法，总共有 8 大类：
 -  条件运算 
 -  无操作符 
 
-### 3.1  简单表达式
+## 3.1  简单表达式
 
 | 语法 | 名称 | 描述 | 作用 |
 | --- | --- | --- | --- |
@@ -62,7 +62,7 @@ Thymeleaf 提供了非常丰富的标准表达式语法，总共有 8 大类：
 | ~{…} | Fragment Expressions | 片段表达式 | 引用一段公共的代码片段 |
 
 
-#### 3.1.1 ${...}   变量表达式
+### 3.1.1 ${...}   变量表达式
 
 ```java
 @GetMapping("/standard-expression-syntax/variables")
@@ -80,7 +80,7 @@ public String variables(ModelMap model, HttpSession session) {
 <p th:text="${message}"></p>
 ```
 
-#### 3.1.2  *{…}   选择表达式
+### 3.1.2  *{…}   选择表达式
 
 变量表达式`${}`是面向整个上下文的，而选择变量表达式`*{}`的上下文是父标签（`th:object`）所选择的对象
 
@@ -92,7 +92,7 @@ public String variables(ModelMap model, HttpSession session) {
 </div>
 ```
 
-#### 3.1.3  #{...}   消息表达式
+### 3.1.3  #{...}   消息表达式
 
 消息表达式可用于国际化文字信息.首先我们来了解一下 i18n 资源文件的命名规则：
 
