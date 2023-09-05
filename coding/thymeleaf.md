@@ -51,7 +51,7 @@ Thymeleaf 提供了非常丰富的标准表达式语法，总共有 8 大类：
 -  条件运算 
 -  无操作符 
 
-## 3.1  简单表达式
+## 3.1 简单表达式
 
 | 语法 | 名称 | 描述 | 作用 |
 | --- | --- | --- | --- |
@@ -133,7 +133,7 @@ spring.messages.basename:i18n/messages
 <p th:text="#{welcom.message}"></p>
 ```
 
-#### 3.1.4 @{...} 链接表达式
+### 3.1.4 @{...} 链接表达式
 
 链接表达式`@{}`是专门用来处理 URL 链接地址的
 
@@ -165,7 +165,7 @@ spring.messages.basename:i18n/messages
 <p th:text="@{~/image/upload}"></p>
 ```
 
-#### 3.1.5 ~{…} 片段表达式
+### 3.1.5 ~{…} 片段表达式
 
 片段表达式`~{}`可以用来引用一段公共的 HTML 代码片段
 
@@ -210,7 +210,8 @@ spring.messages.basename:i18n/messages
 <div th:insert="~{base :: #footer}"></div>
 ```
 
-#### 3.1.6  内置对象
+### 3.1.6  内置对象
+
 | 对象 | 描述 |
 | --- | --- |
 | #ctx | 上下文对象 |
@@ -243,7 +244,8 @@ spring.messages.basename:i18n/messages
 <p th:text="${#session.id}"></p>
 ```
 
-#### 3.1.7 工具类
+### 3.1.7 工具类
+
 | 对象 | 描述 |
 | --- | --- |
 | #message | 消息工具类，与 ＃{…} 作用相同 |
@@ -261,16 +263,17 @@ spring.messages.basename:i18n/messages
 | #maps | Map工具类 |
 
 
+
 ```html
 <p th:text="${#strings.isEmpty(message)}"></p>
 <p th:text="${#dates.format(now, 'yyyy-MM-dd HH:mm:ss')}"></p>
 ```
 
-### 3.2 字面值
+## 3.2 字面值
 
 所谓字面值，首先它不是一个变量，它是一个具体的确切的值，通常这些值是比较简单的，例如：`18`、`'welcome'`等，它们没有名称，以至于我们只能用值来称呼它们，因此我们称其为字面值。
 
-#### 3.2.1 文字字面值
+### 3.2.1 文字字面值
 
 文字字面值是用单引号引起来的任何字符内容，如果字符内容里面含有单引号，则需要进行转义：
 
@@ -281,7 +284,7 @@ spring.messages.basename:i18n/messages
 <p th:text="'\'Welcome to BeiJing!\''"></p>
 ```
 
-#### 3.2.2 数字字面量
+### 3.2.2 数字字面量
 
 ```html
 <!-- 2017 -->
@@ -290,7 +293,7 @@ spring.messages.basename:i18n/messages
 <p th:text="2017 + 1"></p>
 ```
 
-#### 3.2.3 布尔字面值
+### 3.2.3 布尔字面值
 
 ```html
 <!-- false -->
@@ -299,14 +302,14 @@ spring.messages.basename:i18n/messages
 <p th:text="1 > 2 ? '是' : '否'"></p>
 ```
 
-#### 3.2.4 空字面值
+### 3.2.4 空字面值
 
 ```html
 <!-- false -->
 <p th:text="${user == null}"></p>
 ```
 
-#### 3.2.5 字面令牌
+### 3.2.5 字面令牌
 
 字面令牌（Literal Tokens）的内容只能含有（不能含有空格、特殊符号等）：
 
@@ -325,18 +328,18 @@ spring.messages.basename:i18n/messages
 <p th:text="'Welcome to BeiJing!'"></p>
 ```
 
-### 3.3 文本操作
+## 3.3 文本操作
 
 我们可以对文本内容进行两种常用的操作，它们分别为字符串连接和字符串替换
 
-#### 3.3.1 字符串连接
+### 3.3.1 字符串连接
 
 ```html
 <!-- Welcome to BeiJing! -->
 <p th:text="'Welcome to ' + ${location} + '!'"></p>
 ```
 
-#### 3.3.2 字面值替换
+### 3.3.2 字面值替换
 
 符号`||`可以用来将字面值和表达式包裹起来，这样就能方便的替换变量的值，而不需要使用`+`连接符：
 
@@ -345,7 +348,7 @@ spring.messages.basename:i18n/messages
 <p th:text="|Welcome to ${location}!|"></p>
 ```
 
-### 3.4 算数运算
+## 3.4 算数运算
 
 支持`+`（加）、`-`（减）、`*`（乘）、`/`（除）、`%`（模）运算：
 
@@ -358,7 +361,7 @@ spring.messages.basename:i18n/messages
 <p th:text="${pagination.page} + 1"></p>
 ```
 
-### 3.5 布尔运算
+## 3.5 布尔运算
 
 支持`and`（且）、`or`（或）、`!`（非）、`not`（非）运算：
 
@@ -369,7 +372,7 @@ spring.messages.basename:i18n/messages
 <p th:text="${not user.online}"></p>
 ```
 
-### 3.6 比较和相等
+## 3.6 比较和相等
 
 支持`<`（`lt`）、`>`（`gt`）、`<=`（`le`）、`>=`（`ge`）、`==`（`eq`）、`！=`（`ne`）：
 
@@ -382,7 +385,7 @@ spring.messages.basename:i18n/messages
 <p th:text="${user.age != 18}"></p>
 ```
 
-### 3.7 条件运算
+## 3.7 条件运算
 
 三元运算符：`(if) ? (then) : (else)`
 
@@ -401,7 +404,7 @@ spring.messages.basename:i18n/messages
 <p th:text="${user.email} ?: '你还没有绑定邮箱'"></p>
 ```
 
-### 3.8 无操作符
+## 3.8 无操作符
 
 当模板运行在服务器端时，Thymeleaf 会解析`th:*`属性的具体值替换标签体的内容。无操作符（`_`）则允许你使用原型标签体的内容作为默认值：
 
@@ -410,11 +413,11 @@ spring.messages.basename:i18n/messages
 <p th:text="${token} ?: _">你还没有登录，请先登录</p>
 ```
 
-## 4. 使用文本
+# 4. 使用文本
 
 首先介绍两个最基础的`th:*`属`th:text`和`th:utext`，它们都是用于处理文本消息内容
 
-### 4.1 th:text
+## 4.1 th:text
 
 在标签体中展示表达式评估结果的文本内容：
 
@@ -432,7 +435,7 @@ spring.messages.basename:i18n/messages
 
 当它作为模板文件运行在服务器端时，`th:text`属性的具体值将会替换`<p>`标签体的文本内容。
 
-### 4.2 th:utext
+## 4.2 th:utext
 
 属性`th:utext`与`th:text`的区别在于：
 
@@ -457,11 +460,11 @@ spring.messages.basename:i18n/messages
 
 `th:utext`效果：**Welcome to BeiJing!**
 
-## 5. 设置属性值
+# 5. 设置属性值
 
 在 Thymeleaf 模板文件中，你可以使用`th:*`（或者使用`th:attr`属性）来设置任意的 HTML5 标签属性的值。不仅如此，你还可以`th:*-*`来同时为多个不同的标签属性设置相同的一个值，甚至你可以使用`th:attrappend`和`th:attrprepend`来追加新的值到现有的标签属性值中。
 
-### 5.1 th:attr
+## 5.1 th:attr
 
 这种方式是不被推荐的，了解一下就行。下面是用`th:attr="href=..."`来设置标签`href`属性的值：
 
@@ -469,7 +472,7 @@ spring.messages.basename:i18n/messages
 <a th:attr="href=@{https://www.google.com.hk}">谷歌一下你就知道</a>
 ```
 
-### 5.2 th:*
+## 5.2 th:*
 
 显然`th:attr="href=@{http://www.baidu.com}"`不够简洁，我们更推荐下面的这种语法：
 
@@ -484,7 +487,7 @@ spring.messages.basename:i18n/messages
 <div th:item-id="${user.id}">Welcome to BeiJing!</div>
 ```
 
-### 5.3 th:*-*
+## 5.3 th:*-*
 
 如果想要同时为标签的多个不同属性设置相同的一个值，可以使用`th:*-*`的语法：
 
@@ -498,7 +501,7 @@ spring.messages.basename:i18n/messages
 <img src="logo.png" th:alt="LOGO图片" th:title="LOGO图片">
 ```
 
-### 5.4 th:attrappend & th:attrprepend
+## 5.4 th:attrappend & th:attrprepend
 
 `th:attrappend`和`th:attrprepend`可以将表达式的结果分别追加到指定的属性值之后和之前。
 
@@ -518,7 +521,7 @@ spring.messages.basename:i18n/messages
 <button class="btn" th:classappend="${outOfStock} ? ' enable' : ' disable'">购买</button>
 ```
 
-### 5.5 布尔属性
+## 5.5 布尔属性
 
 在 HTML 中有些属性是布尔属性，布尔属性是指没有值的属性，如`readonly`、`checked`、`selected`等。它们若存在那就意味着值为 true
 
@@ -543,7 +546,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 
 如果表达式的结果为`true`，则自动勾选复选框，若为`false`，则不会自动勾选
 
-## 6. 遍历
+# 6. 遍历
 
 遍历（迭代）的语法`th:each="自定义的元素变量名称 : ${集合变量名称}"`：
 
@@ -592,11 +595,11 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 </div>
 ```
 
-## 7. 条件判断
+# 7. 条件判断
 
 条件判断语句有三种，分别是：th:if，th:unless，th:swith
 
-### 7.1 th:if
+## 7.1 th:if
 
 当表达式的评估结果为真时则显示内容，否则不显示
 
@@ -622,7 +625,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 
 但是，为了代码的可读性，我们并不建议这样使用
 
-### 7.2 th:unless
+## 7.2 th:unless
 
 `th:unless`与`th:if`判断恰好相反，当表达式的评估结果为假时则显示内容，否则不显示：
 
@@ -630,7 +633,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 <a th:href="@{/user/order(uid=${user.id})}" th:unless="${user == null}">我的订单</a>
 ```
 
-### 7.3 th:swith
+## 7.3 th:swith
 
 多路选择语句，它需要搭配th:case来使用：
 
@@ -641,7 +644,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 </div>
 ```
 
-## 8. 定义局部变量
+# 8. 定义局部变量
 
 使用th:with属性可以定义局部变量
 
@@ -659,19 +662,19 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 </p>
 ```
 
-## 9. 注释
+# 9. 注释
 
-### 9.1 标准注释
+## 9.1 标准注释
 
 语法：`<!-- ... --->`，注释的代码块会在文件源代码中显示出来。
 
-#### 9.1.1 单行注释
+### 9.1.1 单行注释
 
 ```html
 <!-- <span>${message}</span> --->
 ```
 
-#### 9.1.2 多行注释
+### 9.1.2 多行注释
 
 ```html
 <!--
@@ -682,17 +685,17 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 --->
 ```
 
-### 9.2 解析器级注释
+## 9.2 解析器级注释
 
 语法：`<!--/* ... */-->`，注释的代码块会在引擎解析的时候抹去
 
-#### 9.2.1 单行注释
+### 9.2.1 单行注释
 
 ```html
 <!--/* <span>${message}</span> */-->
 ```
 
-#### 9.2.2 多行注释
+### 9.2.2 多行注释
 
 ```html
 <!--/*-->
@@ -703,11 +706,11 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 <!--*/-->
 ```
 
-## 10. 内联表达式
+# 10. 内联表达式
 
 内联表达式允许我们直接在 HTML 文本中使用标准表达式，而不需要使用`th:*`标签属性
 
-### 10.1 [[...]]
+## 10.1 [[...]]
 
 [[]]相当于th:text，对含有HTML标签的内容自动进行字符转义
 
@@ -715,7 +718,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 <p>The message is : [[${htmlContent}]]</p>
 ```
 
-### 10.2 [(...)]
+## 10.2 [(...)]
 
 [()]相当于th:utext，对含有 HTML 标签的内容不进行字符转义
 
@@ -723,7 +726,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 <p>The message is : [(${htmlContent})]</p>
 ```
 
-### 10.3 th:inline
+## 10.3 th:inline
 
 我们已经了解到，使用`[[]]`和`[()]`语法可以直接在 HTML 文本中使用标准表达式，如果想要使用更多高级的功能，需要使用`th:inline`属性来激活，它的取值如下：
 
@@ -763,7 +766,7 @@ Thymeleaf 也允许我们通过`th:*`（这里的`*`表示任意的布尔属性�
 </style>
 ```
 
-#### 10.3.4 javascript
+### 10.3.4 javascript
 
 ```html
 <script th:inline="javascript">
