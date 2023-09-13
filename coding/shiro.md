@@ -39,4 +39,6 @@ Subject即主体，外部应用与subject进行交互，subject记录了当前�
 
 ## 2.2、安全管理器（Security Manager）
 
-安全管理器是 Shiro 的核心组件，负责协调和管理所有的安全操作。安全管理器充当了 Shiro 的顶级组件，提供了对认证、授权和会话管理等功能的集中管理。安全管理器协调着其他组件的工作，并提供对它们的访问和配置
+SecurityManager即安全管理器，对全部的subject进行安全管理，它是shiro的核心，负责对所有的subject进行安全管理。通过SecurityManager可以完成subject的认证、授权等，实质上SecurityManager是通过Authenticator进行认证，通过Authorizer进行授权，通过SessionManager进行会话管理等。
+SecurityManager是一个接口，继承了Authenticator, Authorizer, SessionManager这三个接口
+
