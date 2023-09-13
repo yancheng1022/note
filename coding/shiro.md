@@ -60,3 +60,6 @@ Realm即领域，相当于datasource数据源，securityManager进行安全认�
 
 会话管理器负责管理主体的会话，跟踪用户的登录状态和管理会话数据。
 在 Shiro 中，会话管理器可以基于 Web 容器的 HttpSession，也可以使用自己的非 Web 环境会话管理
+
+# 3、认证
+
