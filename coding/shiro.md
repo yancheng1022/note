@@ -42,3 +42,13 @@ Subject即主体，外部应用与subject进行交互，subject记录了当前�
 SecurityManager即安全管理器，对全部的subject进行安全管理，它是shiro的核心，负责对所有的subject进行安全管理。通过SecurityManager可以完成subject的认证、授权等，实质上SecurityManager是通过Authenticator进行认证，通过Authorizer进行授权，通过SessionManager进行会话管理等。
 SecurityManager是一个接口，继承了Authenticator, Authorizer, SessionManager这三个接口
 
+## 2.3、认证器（Authenticator）
+
+Authenticator即认证器，对用户身份进行认证，Authenticator是一个接口，shiro提供ModularRealmAuthenticator实现类，通过ModularRealmAuthenticator基本上可以满足大多数需求，也可以自定义认证器
+
+
+## 2.4、授权器（Authorizer）
+
+Authorizer即授权器，用户通过认证器认证通过，在访问功能时需要通过授权器判断用户是否有此功能的操作权限
+
+## 2.5、领域（Realm）
