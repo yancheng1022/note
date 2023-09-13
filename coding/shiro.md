@@ -73,4 +73,78 @@ Realm即领域，相当于datasource数据源，securityManager进行安全认�
 4. 认证器验证身份凭证：认证器对身份凭证进行验证，通常是通过比对凭证与存储在数据源中的用户信息进行匹配。认证器可以使用一个或多个 Realm 来获取用户信息并进行验证。Realm 对获取到的用户信息与提交的身份凭证进行比对验证，判断凭证是否有效
 5. 结果处理：如果身份验证成功，认证器将成功的身份信息存储在 Subject 对象中，以便后续使用
 
+## 3.2、认证实现
+### 3.2.1、自定义Realm
+```java
 
+/**
+ * 自定义Realm
+ */
+public class CustomerRealm extends AuthorizingRealm {
+    //授权
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("==================");
+        return null;
+    }
+
+    //认证
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        //在token中获取 用户名
+        String principal = (String) token.getPrincipal();
+        System.out.println(principal);
+
+        //实际开发中应当 根据身份信息使用jdbc mybatis查询相关数据库
+        //在这里只做简单的演示
+        //假设username,password是从数据库获得的信息
+        String username="zhangsan";
+        String password="123456";
+        if(username.equals(principal)){
+            //参数1:返回数据库中正确的用户名
+            //参数2:返回数据库中正确密码
+            //参数3:提供当前realm的名字 this.getName();
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(principal,password,this.getName());
+            return simpleAuthenticationInfo;
+        }
+        return null;
+    }
+}
+```
+
+### 3.2.2、用定义的Realm进行认证
+```java
+/**
+ * 测试自定义的Realm
+ */
+public class TestAuthenticatorCusttomerRealm {
+
+    public static void main(String[] args) {
+        //1.创建安全管理对象 securityManager
+        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+
+        //2.给安全管理器设置realm（设置为自定义realm获取认证数据）
+        defaultSecurityManager.setRealm(new CustomerRealm());
+        //IniRealm realm = new IniRealm("classpath:shiro.ini");
+
+        //3.给安装工具类中设置默认安全管理器
+        SecurityUtils.setSecurityManager(defaultSecurityManager);
+
+        //4.获取主体对象subject
+        Subject subject = SecurityUtils.getSubject();
+
+        //5.创建token令牌
+        UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "123");
+        try {
+            subject.login(token);//用户登录
+            System.out.println("登录成功~~");
+        } catch (UnknownAccountException e) {
+            e.printStackTrace();
+            System.out.println("用户名错误!!");
+        }catch (IncorrectCredentialsException e){
+            e.printStackTrace();
+            System.out.println("密码错误!!!");
+        }
+    }
+}
+```
