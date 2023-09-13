@@ -64,3 +64,16 @@ Realm即领域，相当于datasource数据源，securityManager进行安全认�
 # 3、认证
 
 在shiro中,用户需要提供principlas(身份)和credentials(证明)给shiro，从而应用能验证用户身份
+
+## 3.1、认证流程
+- Subject：主体
+
+访问系统的用户，主体可以是用户、程序等，进行认证的都称为主体；
+
+- Principal：身份信息
+
+是主体（subject）进行身份认证的标识，标识必须具有唯一性，如用户名、手机号、邮箱地址等，一个主体可以有多个身份，但是必须有一个主身份（Primary Principal）。
+
+- credential：凭证信息
+
+是只有主体自己知道的安全信息，如密码、证书等。
