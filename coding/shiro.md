@@ -52,3 +52,11 @@ Authenticator即认证器，对用户身份进行认证，Authenticator是一个
 Authorizer即授权器，用户通过认证器认证通过，在访问功能时需要通过授权器判断用户是否有此功能的操作权限
 
 ## 2.5、领域（Realm）
+Realm即领域，相当于datasource数据源，securityManager进行安全认证需要通过Realm获取用户权限数据，比如：如果用户身份数据在数据库那么realm就需要从数据库获取用户身份信息。
+
+> 注意：不要把realm理解成只是从数据源取数据，在realm中还有认证授权校验的相关的代码。
+
+## 2.6、会话管理器（SessionManager）
+
+会话管理器负责管理主体的会话，跟踪用户的登录状态和管理会话数据。
+在 Shiro 中，会话管理器可以基于 Web 容器的 HttpSession，也可以使用自己的非 Web 环境会话管理
