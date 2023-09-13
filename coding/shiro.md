@@ -27,3 +27,7 @@ shiro 提供了会话管理的功能，用于跟踪用户的登录状态和管�
 ## 1.4、加密
 
 对密码进行加密和解密操作，以保护用户的密码安全。Shiro 支持常用的加密算法，如MD5、SHA、AES等。你可以根据需求选择适当的加密算法进行使用
+
+# 2、shiro架构
+
+![shiro](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309131118959.jpg)
