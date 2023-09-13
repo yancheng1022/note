@@ -31,3 +31,7 @@ shiro 提供了会话管理的功能，用于跟踪用户的登录状态和管�
 # 2、shiro架构
 
 ![shiro](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309131118959.jpg)
+
+## 2.1、主体（Subject）
+
+主体代表当前与应用程序交互的用户，可以是一个人、设备或其他系统。主体可以执行身份验证、授权和会话管理等操作。在 Shiro 中，Subject 是与安全相关的操作的入口点，开发者通过 Subject 对象进行认证、授权和会话管理等操作
