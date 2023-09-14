@@ -312,11 +312,93 @@ public Realm getRealm(){
 
 # 6、springboot整合shiro
 ## 6.1、引入依赖
+
 ```xml
-<!--引入shiro整合Springboot依赖-->
-<dependency>
-  <groupId>org.apache.shiro</groupId>
-  <artifactId>shiro-spring-boot-starter</artifactId>
-  <version>1.5.3</version>
-</dependency>
+        <!--增加Shiro的配置-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <!--Thymeleaf模板引擎-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--在Thymeleaf中使用shiro标签-->
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+```
+
+## 6.2、配置文件
+
+```properties
+#开启Shiro配置，默认为true
+shiro.enabled=true
+#开启ShiroWeb配置，默认为true
+shiro.web.enabled=true
+#登录地址
+shiro.loginUrl=/login
+#登录成功地址
+shiro.successUrl=/index
+#未获授权默认跳转地址
+shiro.unauthorizedUrl=/unauthorized
+#允许通过URL参数实现会话跟踪，如果网站支持Cookie，可以关闭这个选项。默认为true
+shiro.sessionManager.sessionIdUrlRewritingEnabled=true
+#是否允许通过Cookie实现会话跟踪，默认为true
+shiro.sessionManager.sessionIdCookieEnabled=true
+
+```
+
+## 6.3、配置类
+
+```java
+@Configuration
+public class ShiroConfig {
+
+    /**
+     * 自定义Realm
+     * 直接配置了两个用户
+     * nihiu=123
+     * admin=123
+     * 角色分别对应user和admin两个角色
+     * @return
+     */
+    @Bean
+    public Realm realm(){
+        TextConfigurationRealm realm = new TextConfigurationRealm();
+        realm.setUserDefinitions("nihui=123,user
+ admin=123,admin");
+        realm.setRoleDefinitions("admin=read,write
+ user=read");
+        return realm;
+    }
+
+    /**
+     * ShiroFilterChainDefinition
+     * @return
+     */
+    @Bean
+    public ShiroFilterChainDefinition shiroFilterChainDefinition(){
+        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/login","anon");
+        chainDefinition.addPathDefinition("/doLogin","anon");
+        chainDefinition.addPathDefinition("logout","logout");
+        chainDefinition.addPathDefinition("/**","authc");
+        return chainDefinition;
+    }
+
+    /**
+     * 定义一个在Thymeleaf中支持Shiro标签。
+     * @return
+     */
+    @Bean
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
+    }
+}
 ```
