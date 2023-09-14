@@ -309,3 +309,14 @@ public Realm getRealm(){
     return customerRealm;
 }
 ```
+
+# 6、springboot整合shiro
+## 6.1、引入依赖
+```xml
+<!--引入shiro整合Springboot依赖-->
+<dependency>
+  <groupId>org.apache.shiro</groupId>
+  <artifactId>shiro-spring-boot-starter</artifactId>
+  <version>1.5.3</version>
+</dependency>
+```
