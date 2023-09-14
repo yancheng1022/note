@@ -402,3 +402,36 @@ public class ShiroConfig {
     }
 }
 ```
+
+## 6.4、登录接口控制类
+
+```java
+@Controller
+public class UserController {
+    @PostMapping("/doLogin")
+    public String doLogin(String username, String password, Model model){
+        //构造一个UsernamePasswordToken实例获取
+        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        //获取Subject对象访问login方法当有异常的时候抛出异常
+        Subject subject = SecurityUtils.getSubject();
+        try{
+            subject.login(token);
+        }catch (AuthenticationException e){
+            model.addAttribute("error","用户名密码输入错误");
+            return "login";
+        }
+        return "redirect:/index";
+    }
+    @RequiresRoles("admin")
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
+
+    @RequiresRoles(value = {"admin","user"},logical = Logical.OR)
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
+}
+```
