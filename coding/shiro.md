@@ -273,7 +273,7 @@ public class TestCustomerMd5RealmAuthenicator {
 
 ![shiro会话管理](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309141528819.png)
 
-## 5.1、shiro会话管理实现
+## 5.1、shiro会话管理实现(EhCache)
 
 ### 5.1.1、引入依赖
 
