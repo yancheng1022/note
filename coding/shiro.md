@@ -153,3 +153,13 @@ public class TestAuthenticatorCusttomerRealm {
 # 4、授权
 ## 4.1、授权流程
 认证成功后，Shiro会将用户的身份信息保存在Subject对象中。一旦用户通过认证，就可以进行授权操作。授权是基于用户的身份和角色进行的，用于确定用户是否有权进行特定的操作或访问特定的资源。Shiro提供了基于角色的访问控制（Role-Based Access Control）和基于权限的访问控制（Permission-Based Access Control）两种授权方式。授权的核心是Realm。Realm是用于获取安全数据的组件
+
+1. 用户发起访问请求。
+2. Shiro的Subject对象获取当前用户的身份信息，并创建相应的Principal对象。
+3. Subject将Principal对象传递给SecurityManager进行授权操作。
+4. SecurityManager委托Realm获取用户的角色和权限信息。
+5. Realm根据Principal对象从数据源（如数据库）中获取用户的角色和权限信息。
+6. Realm将获取的角色和权限信息返回给SecurityManager。
+7. SecurityManager根据获取的角色和权限信息进行授权判断，确定用户是否有权访问资源。
+8. 根据授权结果，SecurityManager返回授权成功或失败的结果给Subject对象。
+9. Subject根据授权结果执行相应的操作，允许或拒绝用户访问受限资源。
