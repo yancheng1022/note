@@ -34,4 +34,4 @@ tags:
 
 # 3、sharding-jdbc相关概念
 
-是一款轻量级的java框架，以jar包形式提供服务，是属于客户端产品不需要额外的部署，它相当于是个增强版的jdbc驱动
+Sharding-JDBC是ShardingSphere的第一个产品，也是ShardingSphere的前身。 它定位为轻量级Java框架，在Java的JDBC层提供的额外服务。它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架
