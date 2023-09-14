@@ -189,3 +189,82 @@ if(subject.isPermission("user:update:*")){  //资源类型
  用户修改实例001的权限：user:update:001
  用户实例001的所有权限：user:*：001
 
+
+## 4.3、授权实现
+
+### 4.3.1、定义Reaml
+
+```java
+/**
+ * 使用自定义realm
+ * 实现授权操作
+ */
+public class CustomerMd5Realm extends AuthorizingRealm {
+
+    //授权
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
+        String primaryPrincipal = (String)principals.getPrimaryPrincipal();
+        System.out.println("身份信息: "+primaryPrincipal); //用户名
+
+        //根据身份信息 用户名 获取当前用户的角色信息，以及权限信息
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //假设 admin,user 是从数据库查到的 角色信息
+        simpleAuthorizationInfo.addRole("admin");
+        simpleAuthorizationInfo.addRole("user");
+        //假设 ... 是从数据库查到的 权限信息赋值给权限对象
+        simpleAuthorizationInfo.addStringPermission("user:*:01");
+        simpleAuthorizationInfo.addStringPermission("prodect:*");//第三个参数为*省略
+
+        return simpleAuthorizationInfo;
+    }
+
+    //认证
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+
+    }
+}
+```
+
+### 4.3.2、授权
+
+```java
+public class TestCustomerMd5RealmAuthenicator {
+
+    public static void main(String[] args) {
+        //授权
+        if (subject.isAuthenticated()){
+
+            //基于角色权限控制
+            System.out.println(subject.hasRole("admin"));
+            //基于多角色的权限控制
+            System.out.println(subject.hasAllRoles(Arrays.asList("admin", "user")));//true
+            System.out.println(subject.hasAllRoles(Arrays.asList("admin", "manager")));//false
+            //是否具有其中一个角色
+            boolean[] booleans = subject.hasRoles(Arrays.asList("admin", "user", "manager"));
+            for (boolean aBoolean : booleans) {
+                System.out.println(aBoolean);
+            }
+
+            System.out.println("====这是一个分隔符====");
+
+            //基于权限字符串的访问控制  资源标识符：操作：资源类型
+            //用户具有的权限 user:*:01  prodect:*
+            System.out.println("权限:"+subject.isPermitted("user:update:01"));
+            System.out.println("权限:"+subject.isPermitted("prodect:update:02"));
+
+            //分别具有哪些权限
+            boolean[] permitted = subject.isPermitted("user:*:01", "user:update:02");
+            for (boolean b : permitted) {
+                System.out.println(b);
+            }
+
+            //同时具有哪些权限
+            boolean permittedAll = subject.isPermittedAll("prodect:*:01", "prodect:update:03");
+            System.out.println(permittedAll);
+        }
+    }
+}
+```
