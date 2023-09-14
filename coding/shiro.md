@@ -268,3 +268,8 @@ public class TestCustomerMd5RealmAuthenicator {
     }
 }
 ```
+
+# 5、会话管理（cacheManager）
+
+
+计算机内存中一段数据。作用: 用来减轻DB的访问压力,从而提高系统的查询效率
