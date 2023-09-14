@@ -163,3 +163,24 @@ public class TestAuthenticatorCusttomerRealm {
 7. SecurityManager根据获取的角色和权限信息进行授权判断，确定用户是否有权访问资源。
 8. 根据授权结果，SecurityManager返回授权成功或失败的结果给Subject对象。
 9. Subject根据授权结果执行相应的操作，允许或拒绝用户访问受限资源。
+
+
+## 4.2、授权方式
+### 4.2.1、基于角色的访问控制
+
+```java
+if(subject.hasRole("admin")){
+   //操作什么资源
+}
+```
+
+### 4.2.2、基于资源的访问控制
+```java
+if(subject.isPermission("user:update:01")){ //资源实例
+  //对资源01用户具有修改的权限
+}
+if(subject.isPermission("user:update:*")){  //资源类型
+  //对 所有的资源 用户具有更新的权限
+}
+```
+
