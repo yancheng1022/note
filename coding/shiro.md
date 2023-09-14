@@ -148,3 +148,7 @@ public class TestAuthenticatorCusttomerRealm {
     }
 }
 ```
+
+
+# 4、授权
+## 4.1、授权流程
