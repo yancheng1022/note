@@ -152,3 +152,4 @@ public class TestAuthenticatorCusttomerRealm {
 
 # 4、授权
 ## 4.1、授权流程
+认证成功后，Shiro会将用户的身份信息保存在Subject对象中。一旦用户通过认证，就可以进行授权操作。授权是基于用户的身份和角色进行的，用于确定用户是否有权进行特定的操作或访问特定的资源。Shiro提供了基于角色的访问控制（Role-Based Access Control）和基于权限的访问控制（Permission-Based Access Control）两种授权方式
