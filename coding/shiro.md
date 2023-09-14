@@ -271,5 +271,41 @@ public class TestCustomerMd5RealmAuthenicator {
 
 # 5、会话管理（cacheManager）
 
+![shiro会话管理](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309141528819.png)
 
-计算机内存中一段数据。作用: 用来减轻DB的访问压力,从而提高系统的查询效率
+## 5.1、shiro会话管理实现
+
+### 5.1.1、引入依赖
+
+```xml
+<!--引入shiro和ehcache-->
+<dependency>
+  <groupId>org.apache.shiro</groupId>
+  <artifactId>shiro-ehcache</artifactId>
+  <version>1.5.3</version>
+</dependency>
+```
+
+### 5.1.2、开启缓存
+
+```java
+//3.创建自定义realm
+@Bean
+public Realm getRealm(){
+    CustomerRealm customerRealm = new CustomerRealm();
+    //修改凭证校验匹配器
+    HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+    //设置加密算法为md5
+    credentialsMatcher.setHashAlgorithmName("MD5");
+    //设置散列次数
+    credentialsMatcher.setHashIterations(1024);
+    customerRealm.setCredentialsMatcher(credentialsMatcher);
+    
+    //开启缓存管理器
+    customerRealm.setCachingEnabled(true);
+    customerRealm.setAuthorizationCachingEnabled(true);
+    customerRealm.setAuthorizationCachingEnabled(true);
+    customerRealm.setCacheManager(new EhCacheManager());
+    return customerRealm;
+}
+```
