@@ -36,4 +36,46 @@ tags:
 
 Sharding-JDBC是ShardingSphere的第一个产品，也是ShardingSphere的前身。 它定位为轻量级Java框架，在Java的JDBC层提供的额外服务。它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架
 
+```yml
+sharding:  
+    # 配置绑定表,分片键一致，关联查询时不会笛卡尔  
+    binding-tables[0]: ims_test_result,ims_test_sample_fetch 
+    tables:  
+        ims_sample_base:  
+            actual-data-nodes: m1.ims_sample_base_202308,m1.ims_sample_base_202309 
+            key-generator:  
+                column: id  
+                type: SNOWFLAKE  
+            table-strategy:  
+                complex:  
+                    sharding-columns: submit_work_time,sample_uid  
+                    algorithm-class-name: com.chivd.common.algorithm.TableShardingSampleAlgorithm
+```
 ## 3.1、逻辑表
+未参与分片（不带后缀等信息）的表，实际数据库中并不存在。如ims_sample_base
+
+## 3.2、真实表
+在分片的数据库中真实存在的物理表。如ims_sample_base_202308
+
+## 3.3、数据节点
+数据分片的最小单元。由数据源名称和数据表组成。如m1.ims_sample_base_202309
+
+## 3.4、绑定表
+
+指分片规则一致的主表和子表。例如: t_order表和t_order_item表，均按照order_id分片，则此两张表互为绑定表关系。绑定表之间的多表关联查询不会出现笛卡尔积关联，关联查询效率将大大提升
+
+```sql
+SELECT i.* FROM t_order o JOIN t_order_item i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+
+在不配置绑定表关系时，假设分片键order_id将数值10路由至第0片，将数值11路第1片，那么路由后的SOL应该为4条，它们呈现为笛卡尔积:
+SELECT i.* FROM t_order_0 o JOIN t_order_item_0 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+SELECT i.* FROM t_order_0 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+SELECT i.* FROM t_order_1 o JOIN t_order_item_0 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+
+绑定表关系后，路由sql为两条：
+SELECT i.* FROM t_order_0 o JOIN t_order_item_0 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE o.order_id in (10, 11);
+
+其中t_order在FROM的最左侧，ShardingSphere将会以它作为整个绑定表的主表。 所有路由计算将会只使用主表的策略，那么t_order_item表的分片计算将会使用t_order的条件。故绑定表之间的分区键要完全相同
+```
