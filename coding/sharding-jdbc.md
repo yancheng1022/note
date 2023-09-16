@@ -110,3 +110,6 @@ shardingSphere提供灵活的配置分布式主键生成策略方式的主键生
 有两种，一种是local，一种是XA（基于Atomikas来实现），还有一种未实现的柔性事务。其中如果不跨库，则选择local，否则则选择XA
 
 ![sharding-jdbc事务处理](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309161714644.png)
+
+
+# 3、基本原理
