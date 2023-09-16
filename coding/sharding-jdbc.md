@@ -126,4 +126,11 @@ SELECT id, name FROM t_user WHERE status = 'ACTIVE' AND age > 18
 ```
 
 解析之后的为抽象语法树见下图：
-![1694856013069.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309161720895.jpg)
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309161722674.png)
+
+
+为了便于理解，抽象语法树中的关键字的Token用绿色表示，变量的Token用红色表示，灰色表示需要进一步拆分
+
+## 3.2、sql路由
+SQL路由就是把针对逻辑表的数据操作映射到对数据结点操作的过程。根据解析上下文匹配数据库和表的分片策略，并生成路由路径
