@@ -100,4 +100,4 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 5. hint分片策略
 
-对应HintShardingStrategy。通过Hint而非SQL解析的方式分片的策略》对于分片字段非SQL决定，而由其他外置条件决定的场景，可使用SQL Hint灵活的注入分片字段。例:内部系统，按照员工登录主键分库，而数据库中并无此字段。SQL Hint支持通过JavaAPI和SQL注释(待实现)两种方式使用。
+对应HintShardingStrategy。通过Hint而非SQL解析的方式分片的策略。对于分片字段非SQL决定，而由其他外置条件决定的场景，可使用SQL Hint灵活的注入分片字段。例:内部系统，按照员工登录主键分库，而数据库中并无此字段。SQL Hint支持通过JavaAPI和SQL注释(待实现)两种方式使用。
