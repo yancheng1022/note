@@ -113,3 +113,17 @@ shardingSphere提供灵活的配置分布式主键生成策略方式的主键生
 
 
 # 3、基本原理
+
+当Sharding-JDBC接受到一条SQL语句时，会陆续执行 SQL解析 => 查询优化 => SQL路由 => SQL改写 => SQL执行 => 结果归并 ，最终返回执行结果
+
+## 3.1、sql解析
+
+SQL解析过程分为**词法解析**和**语法解析**。 
+词法解析器用于将SQL拆解为不可再分的原子符号，称为Token。并根据不同数据库方言所提供的字典，将其归类为关键字，表达式，字面量和操作符。 再使用语法解析器将SQL转换为抽象语法树。
+例如，以下SQL：
+```sql
+SELECT id, name FROM t_user WHERE status = 'ACTIVE' AND age > 18
+```
+
+解析之后的为抽象语法树见下图：
+![1694856013069.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309161720895.jpg)
