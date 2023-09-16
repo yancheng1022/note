@@ -105,3 +105,8 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 ## 2.6、主键生成策略
 
 shardingSphere提供灵活的配置分布式主键生成策略方式的主键生成策略，默认使用雪花算法 (snowflake) 生成64bit的长整型数据。当前提供了SNOWFLAKE、UUID 两种可用方式。
+
+## 2.7、事务处理
+有两种，一种是local，一种是XA（基于Atomikas来实现），还有一种未实现的柔性事务。其中如果不跨库，则选择local，否则则选择XA
+
+![sharding-jdbc事务处理](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202309161714644.png)
