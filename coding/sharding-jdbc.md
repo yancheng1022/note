@@ -96,4 +96,8 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 4. complex复合分片策略
 
-对应ComplexShardingStrategy。复合分片策略提供对SQL语句中的=,IN和BETWEEN AND的分片操作支持。ComplexShardingStrategy支持多分片键，由于多分片键之间的关系复杂，因此并未进行过多的封装，而是直接将分片键值组合以及分片操作符透传至分片算法，完全由应用开发者实现，提供最大的灵活度。
+对应ComplexShardingStrategy。复合分片策略提供对SQL语句中的=,IN和BETWEEN AND的分片操作支持。ComplexShardingStrategy支持多分片键，由于多分片键之间的关系复杂，因此并未进行过多的封装，而是直接将分片键值组合以及分片操作符透传至分片算法，完全由应用开发者实现，提供最大的灵活度
+
+5. hint分片策略
+
+对应HintShardingStrategy。通过Hint而非SQL解析的方式分片的策略》对于分片字段非SQL决定，而由其他外置条件决定的场景，可使用SQL Hint灵活的注入分片字段。例:内部系统，按照员工登录主键分库，而数据库中并无此字段。SQL Hint支持通过JavaAPI和SQL注释(待实现)两种方式使用。
