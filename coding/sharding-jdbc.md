@@ -83,4 +83,17 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 ## 2.5、五种分片策略
 
 1. none：不分片策略。对应NoneShardingStrategy ，不分片策略,SQL会被发给所有节点去执行,这个规则没有子项目可以配置。、
-2. inline：行表达式分片策略。对应InlineShardingStrategy。使用Groovy的表达式，提供对SQL语句中的=和IN的分片操作支持.只支持单分片键。对于简单的分片算法，可以通过简单的配置使用，从而避免繁琐的Java代码开发，如: t_user_$->{u_id % 8}表示t_user表根据u_id模8，而分成8张表，表名称为t_user_0到t_user_7。
+2. inline：行表达式分片策略。对应InlineShardingStrategy。使用Groovy的表达式，提供对SQL语句中的=和IN的分片操作支持.只支持单分片键。对于简单的分片算法，可以通过简单的配置使用，从而避免繁琐的Java代码开发，如: t_user_$->{u_id % 8}表示t_user表根据u_id模8，而分成8张表，表名称为t_user_0到t_user_7
+
+> 行表达式语法：
+> ${begin..end}表示范围区间
+> ${[unit1,unit2,unit3]}表示枚举值
+> 行表达式中如果出现连续多个$ { expression }或$->{expression}表达式，整个表达式最终结果将根据每个子表达式结果进行笛卡尔组合
+
+3. standard 标准分片策略
+
+对应StandardShardingStrategy。提供对SQL语句中的=,IN和BETWEENAND的分片操作支持。StandardShardingStrategy只支持单分片键，提供PreciseShardingAlgorithm和RangeShardingAlgorithm两个分片算法。PreciseShardingAlgorithm是必选的，用于处理=和IN的分片。RangeShardingAlgorithm是可选的，用于处理BETWEEN AND分片，如果不配置RangeShardingAlgorithm,SQL中的BETWEENAND将按照全库路由处理
+
+4. complex复合分片策略
+
+对应ComplexShardingStrategy。复合分片策略提供对SQL语句中的=,IN和BETWEEN AND的分片操作支持。ComplexShardingStrategy支持多分片键，由于多分片键之间的关系复杂，因此并未进行过多的封装，而是直接将分片键值组合以及分片操作符透传至分片算法，完全由应用开发者实现，提供最大的灵活度。
