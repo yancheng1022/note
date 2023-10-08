@@ -474,3 +474,6 @@ public static List<PBRTQCLineVO> MQ(Integer N, Double X, List<PbrtqcWashed> list
 ```
 
 
+# 4、效果图
+
+![PBRTQC](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310081549987.png)
