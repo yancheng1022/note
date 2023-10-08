@@ -191,3 +191,244 @@ public AjaxResult pbrtqcLineData(PbrtqcDTO dto) {
     return AjaxResult.success(response);  
 }
 ```
+
+
+## 3.2、控制线计算流程
+
+```java
+private ControlLineData calculateControlLine(PbrtqcDTO dto, List<PbrtqcWashed> list, Integer transFlag, Integer alarmFlag, Integer index) {  
+//        List<PbrtqcWashed> list = saveDataList(originlist);  
+        int size = list.size();  
+        Integer offset = dto.getLimitOffset();  
+        Integer n = dto.getN();  
+        Double limitQuantile = dto.getLimitQuantile();  
+        ControlLineData controlLineData = new ControlLineData();  
+        // 第二次计算控制线用第一次的截断转换数据  
+        if(index > 0){  
+            // 计算控制线  
+            ControlLineData controlLine =  calculateCurrentControlLine(dto.getTransDataList(), dto);  
+            Double ucl = controlLine.getUcl();  
+            Double lcl = controlLine.getLcl();  
+            Double originLcl = controlLine.getOriginLcl();  
+            Double originUcl = controlLine.getOriginUcl();  
+            // 新增控制线判断条件Moving-Slope  
+            boolean msFlag = true;  
+            if (dto.getMinSlope() != null && dto.getMaxSlope() != null){  
+                msFlag = movingSlope(dto, dto.getStatisticList2());  
+            }  
+            // 判断合理性  
+            if ((originUcl - originLcl) / (originLcl + originUcl) <= limitQuantile / 100 && msFlag) {  
+                dto.setFindControlLine(1);  
+                controlLineData.setLcl(lcl);  
+                controlLineData.setUcl(ucl);  
+                controlLineData.setOriginUcl(originUcl);  
+                controlLineData.setOriginLcl(originLcl);  
+                dto.setBestMean2(dto.getUseMean2());  
+                dto.setBestSD2(dto.getUseSD2());  
+                return controlLineData;  
+            }  
+        }  
+        for (int i = 0; i < size - offset; i++) {  
+            // 偏移次数超过100次，说明偏差限制选择的不合理，直接跳出  
+            if (i > 100) {  
+                break;  
+            }  
+            List<PbrtqcWashed> subList = list.stream().skip(offset * i).limit(n).collect(Collectors.toList());  
+            subList = saveDataList(subList);  
+            if (subList.size() < n) {  
+                return controlLineData;  
+            }  
+            QuantileData quantileData = new QuantileData();  
+            if (dto.getCutType() != 0) {  
+                // 计算LTL（下截断限值）和UTL（上截断限值）  
+                quantileData = calculateQuantile(subList, dto);  
+                // 训练数据集截断后数据  
+                subList = cutData(dto, quantileData, subList);  
+            }  
+            // 数据转换(0-Box-Cox变换、1-对数变换、2-倒数变换、3-平方根变换)  
+            List<PbrtqcWashed> transDatas = dataTrans(dto, subList, transFlag);  
+            // 暂存N转换后的数据，用来计算加权失控0.5N，2N  
+            List<PbrtqcWashed> tempTransDataList = new ArrayList<>();  
+            if (dto.getAlarmMode() == 2 || dto.getAlarmMode() == 3) {  
+                tempTransDataList = saveDataList(transDatas);  
+            }  
+            // 计算本次控制线  
+            ControlLineData currentControlLine =  calculateCurrentControlLine(transDatas, dto);  
+            // 计算合理性  
+            Double ucl = currentControlLine.getUcl();  
+            Double lcl = currentControlLine.getLcl();  
+            Double originLcl = currentControlLine.getOriginLcl();  
+            Double originUcl = currentControlLine.getOriginUcl();  
+            // 新增控制线判断条件Moving-Slope  
+            boolean msFlag = true;  
+            if (dto.getMinSlope() != null && dto.getMaxSlope() != null){  
+                msFlag = movingSlope(dto, dto.getStatisticList());  
+            }  
+            if ((originUcl - originLcl) / (originLcl + originUcl) <= limitQuantile / 100 && msFlag) {  
+                if (index == 0){  
+                    // 记录截断限，用于第二次全量数据的截断  
+                    dto.setLtl(quantileData.getLtl());  
+                    dto.setUtl(quantileData.getUtl());  
+                    // 记录该次转换后的数据,用于第二次统计量的计算  
+                    dto.setTransDataList(transDatas);  
+                    dto.setBestMean(dto.getUseMean());  
+                    dto.setBestSD(dto.getUseSD());  
+                }  
+                controlLineData.setLcl(lcl);  
+                controlLineData.setUcl(ucl);  
+                controlLineData.setOriginUcl(originUcl);  
+                controlLineData.setOriginLcl(originLcl);  
+                // N转换后的数据，用于加权失控计算  
+                dto.setTransDataN(tempTransDataList);  
+                break;            }  
+        }  
+        return controlLineData;  
+    }
+```
+
+
+## 3.3、数据转换box-cox转换
+
+```java
+private ControlLineData calculateControlLine(PbrtqcDTO dto, List<PbrtqcWashed> list, Integer transFlag, Integer alarmFlag, Integer index) {  
+//        List<PbrtqcWashed> list = saveDataList(originlist);  
+        int size = list.size();  
+        Integer offset = dto.getLimitOffset();  
+        Integer n = dto.getN();  
+        Double limitQuantile = dto.getLimitQuantile();  
+        ControlLineData controlLineData = new ControlLineData();  
+        // 第二次计算控制线用第一次的截断转换数据  
+        if(index > 0){  
+            // 计算控制线  
+            ControlLineData controlLine =  calculateCurrentControlLine(dto.getTransDataList(), dto);  
+            Double ucl = controlLine.getUcl();  
+            Double lcl = controlLine.getLcl();  
+            Double originLcl = controlLine.getOriginLcl();  
+            Double originUcl = controlLine.getOriginUcl();  
+            // 新增控制线判断条件Moving-Slope  
+            boolean msFlag = true;  
+            if (dto.getMinSlope() != null && dto.getMaxSlope() != null){  
+                msFlag = movingSlope(dto, dto.getStatisticList2());  
+            }  
+            // 判断合理性  
+            if ((originUcl - originLcl) / (originLcl + originUcl) <= limitQuantile / 100 && msFlag) {  
+                dto.setFindControlLine(1);  
+                controlLineData.setLcl(lcl);  
+                controlLineData.setUcl(ucl);  
+                controlLineData.setOriginUcl(originUcl);  
+                controlLineData.setOriginLcl(originLcl);  
+                dto.setBestMean2(dto.getUseMean2());  
+                dto.setBestSD2(dto.getUseSD2());  
+                return controlLineData;  
+            }  
+        }  
+        for (int i = 0; i < size - offset; i++) {  
+            // 偏移次数超过100次，说明偏差限制选择的不合理，直接跳出  
+            if (i > 100) {  
+                break;  
+            }  
+            List<PbrtqcWashed> subList = list.stream().skip(offset * i).limit(n).collect(Collectors.toList());  
+            subList = saveDataList(subList);  
+            if (subList.size() < n) {  
+                return controlLineData;  
+            }  
+            QuantileData quantileData = new QuantileData();  
+            if (dto.getCutType() != 0) {  
+                // 计算LTL（下截断限值）和UTL（上截断限值）  
+                quantileData = calculateQuantile(subList, dto);  
+                // 训练数据集截断后数据  
+                subList = cutData(dto, quantileData, subList);  
+            }  
+            // 数据转换(0-Box-Cox变换、1-对数变换、2-倒数变换、3-平方根变换)  
+            List<PbrtqcWashed> transDatas = dataTrans(dto, subList, transFlag);  
+            // 暂存N转换后的数据，用来计算加权失控0.5N，2N  
+            List<PbrtqcWashed> tempTransDataList = new ArrayList<>();  
+            if (dto.getAlarmMode() == 2 || dto.getAlarmMode() == 3) {  
+                tempTransDataList = saveDataList(transDatas);  
+            }  
+            // 计算本次控制线  
+            ControlLineData currentControlLine =  calculateCurrentControlLine(transDatas, dto);  
+            // 计算合理性  
+            Double ucl = currentControlLine.getUcl();  
+            Double lcl = currentControlLine.getLcl();  
+            Double originLcl = currentControlLine.getOriginLcl();  
+            Double originUcl = currentControlLine.getOriginUcl();  
+            // 新增控制线判断条件Moving-Slope  
+            boolean msFlag = true;  
+            if (dto.getMinSlope() != null && dto.getMaxSlope() != null){  
+                msFlag = movingSlope(dto, dto.getStatisticList());  
+            }  
+            if ((originUcl - originLcl) / (originLcl + originUcl) <= limitQuantile / 100 && msFlag) {  
+                if (index == 0){  
+                    // 记录截断限，用于第二次全量数据的截断  
+                    dto.setLtl(quantileData.getLtl());  
+                    dto.setUtl(quantileData.getUtl());  
+                    // 记录该次转换后的数据,用于第二次统计量的计算  
+                    dto.setTransDataList(transDatas);  
+                    dto.setBestMean(dto.getUseMean());  
+                    dto.setBestSD(dto.getUseSD());  
+                }  
+                controlLineData.setLcl(lcl);  
+                controlLineData.setUcl(ucl);  
+                controlLineData.setOriginUcl(originUcl);  
+                controlLineData.setOriginLcl(originLcl);  
+                // N转换后的数据，用于加权失控计算  
+                dto.setTransDataN(tempTransDataList);  
+                break;            }  
+        }  
+        return controlLineData;  
+    }
+
+/**  
+ * 计算最优的lambda值  
+ *  
+ * @param data 数据  
+ * @return 最优的lambda值  
+ */  
+public static double findBestLambda(double[] data) {  
+    // 定义lambda的范围和步长  
+    double lambdaStart = -5.0;  
+    double lambdaEnd = 5.0;  
+    double lambdaStep = 0.01;  
+  
+    // 计算原始数据的几何均值G  
+    double G = 1.0;  
+    for (double x : data) {  
+        G *= Math.pow(x, 1.0 / data.length);  
+    }  
+  
+    // 计算最优lambda  
+    double minSD = Double.MAX_VALUE;  
+    double minLambda = -5;  
+    for (double lambda = lambdaStart; lambda <= lambdaEnd; lambda += lambdaStep) {  
+        double[] transformedData = boxCoxTransform(data, lambda, G);  
+        double avg = calculateAverage(transformedData);  
+        double sd = calculateStandardDeviation(transformedData, avg);  
+        if (sd < minSD) {  
+            minSD = sd;  
+            minLambda = lambda;  
+        }  
+    }  
+    return minLambda;  
+}
+
+/**  
+ * 计算Box-Cox变换后的数据  
+ * @param data   数据  
+ * @param lambda lambda值  
+ * @return Box-Cox变换后的数据  
+ */  
+public static double[] boxCoxTransform(double[] data, double lambda, double G) {  
+    double[] transformedData = new double[data.length];  
+    if (lambda == 0) {  
+        for (int i = 0; i < data.length; i++) {  
+            transformedData[i] = G * Math.log(data[i]);  
+        }  
+    } else {  
+        for (int i = 0; i < data.length; i++) {  
+            transformedData[i] = (Math.pow(data[i], lambda) - 1) / (lambda * Math.pow(G, lambda - 1));  
+        }  
+    }  
+    return transformedData;  
+}
+```
