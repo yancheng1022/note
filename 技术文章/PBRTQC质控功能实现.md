@@ -26,7 +26,7 @@ tags:
 2. 误差检出前平均患者样本数（ANPed）：误差出现时至模型检测出误差所经历的患者样本例数，表征模型的灵敏度，例数越少，模型灵敏度越高
 3. 二者关系：二者之间存在矛盾关系，FAR越低，ANPed越大，实际应用中应综合考虑，能满足当前项目的需求即可
 
-# 2、代码实现简要流程
+# 2、实现简要流程
 
 1. 数据类型位信号量，函数模型修改为mq，mq分位数设置为50,转换方式修改为不转换
 2. 根据条件查询数据集合(仪器+批号+项目+时间)
@@ -56,3 +56,138 @@ tags:
 26. 失控报警：失控点计算(0-单点失控,1-连续X点失控,2-加权失控，3-加权连续失控)
 27. 找到所有定标线
 28. 响应封装
+
+# 3、代码实现
+
+## 3.1、基本流程框架
+
+```java
+public AjaxResult pbrtqcLineData(PbrtqcDTO dto) {  
+    PBRTQCResultVO response = new PBRTQCResultVO();  
+    // 请求转换  
+    if (dto.getDataType() == 1) {  
+        // 数据类型位信号量，函数模型修改为mq，mq分位数设置为50,转换方式修改为不转换  
+        dto.setFuncModel(1);  
+        dto.setMqQuantile(50.0);  
+        dto.setTransType(null);  
+    }  
+    // 根据条件查询数据集合(仪器+批号+项目+时间)  
+    List<PbrtqcWashed> allDataList = iPbrtqcWashedService.selectLineData(dto);  
+    // 定量项目&定性项目过滤  
+    if (dto.getProjectType() == 0){  
+        allDataList = allDataList.stream().filter(item -> !"S/CO".equals(item.getUnit())).collect(Collectors.toList());  
+    }else {  
+        allDataList = allDataList.stream().filter(item -> "C".equals(item.getLiquidType()) || "S/CO".equals(item.getUnit())).collect(Collectors.toList());  
+    }  
+    // cut-off过滤(不包括校准点数据)  
+    if (1 == dto.getCutOffCondition()){  
+        allDataList = allDataList.stream().filter(item -> "C".equals(item.getLiquidType()) ||  item.getValue() < dto.getCutOffValue()).collect(Collectors.toList());  
+    }else if (2 == dto.getCutOffCondition()){  
+        allDataList = allDataList.stream().filter(item -> "C".equals(item.getLiquidType()) ||  BigDecimal.valueOf(item.getValue()).compareTo(BigDecimal.valueOf(dto.getCutOffValue())) >= 0).collect(Collectors.toList());  
+    }  
+    // 不包含液体类型为C的数据 根据washStatus判断是否需要排除修改前后信号值不一致的数据，排除时不对C（校准点）排除  
+    if (dto.getWashStatus() == 0){  
+        allDataList = allDataList.stream().filter(item -> "C".equals(item.getLiquidType()) || item.getModifiedSignal().equals(item.getOriginalSignal())).collect(Collectors.toList());  
+    }  
+    List<PbrtqcWashed> list = allDataList.stream().filter(item -> !"C".equals(item.getLiquidType())).collect(Collectors.toList());  
+    // 数据为空  
+    if (CollectionUtils.isEmpty(list)) {  
+        return AjaxResult.error("查询数据为空");  
+    }  
+    // 数据量过大不进行计算  
+    if (list.size() > 20000) {  
+        return AjaxResult.error("数据量过大（超过20000条），请调整查询条件");  
+    }  
+    // 训练数据集样本大于集合数量，调整数量  
+    if (dto.getN() > list.size()) {  
+        return AjaxResult.error("总数据量为：" + list.size() + ",小于训练数据集样本N，请调整N大小!");  
+    }  
+    // 寻找定标线  
+    List<CalibrationPoint> calibrationDetailList = findCalibrationLine(allDataList); // 定标点集合  
+    // 暂存全量数据list  
+    List<PbrtqcWashed> tempList = saveDataList(list);  
+    // 单位记录  
+    String unit = list.get(0).getUnit();  
+    List<PBRTQCData> pbrtqcDataList = new ArrayList<>();  
+    List<Integer> funcModels = Arrays.stream(dto.getFuncModels().split(",")).map(Integer::parseInt).collect(Collectors.toList());  
+    // 把movsd放到集合最后一个元素  
+    for (int i=0; i< funcModels.size(); i++){  
+        if (funcModels.get(i) == 3){  
+            funcModels.remove(i);  
+            funcModels.add(3);  
+        }  
+    }  
+    // 序号  
+    dto.setIndex(0);  
+    for (Integer funcModel : funcModels) {  
+        List<PbrtqcWashed> modelDataList = saveDataList(list);  
+        // 函数模型  
+        dto.setFuncModel(funcModel);  
+        // 控制限偏差设置  
+        if (funcModel == 3) {  
+            dto.setLimitQuantile(dto.getSdLimitQuantile());  
+        } else {  
+            dto.setLimitQuantile(dto.getMqLimitQuantile());  
+        }  
+        // 计算N控制限  
+        ControlLineData controlLine = calculateControlLine(dto, tempList, 1, 0, dto.getIndex());  
+        // 控制限判断  
+        if ((dto.getIndex() ==  0 && controlLine.getUcl() == null) || (dto.getIndex() > 0 && dto.getFindControlLine() == null)){  
+            return AjaxResult.error("未找到合适的控制线,请设置合理的控制限偏差");  
+        }  
+        List<PbrtqcWashed> cutDataList = modelDataList;  
+        if (dto.getCutType() != 0) {  
+            // LTL（下截断限值）和UTL（上截断限值）  
+            QuantileData quantileData = new QuantileData(dto.getLtl(),dto.getUtl());  
+            // 根据截断方式截断数据  
+            cutDataList = cutData(dto, quantileData, modelDataList);  
+        }  
+        // 数据转换(0-Box-Cox变换、1-对数变换、2-倒数变换、3-平方根变换)  
+        dataTrans(dto, cutDataList, 0);  
+        // 暂存转换后的数据,用作失控报警中的加权失控计算  
+        List<PbrtqcWashed> transData = new ArrayList<>();  
+        if (dto.getAlarmMode() == 2 || dto.getAlarmMode() == 3){  
+            transData = saveDataList(cutDataList);  
+        }  
+        // 统计值计算(0-MA、1-MQ、2-EWMA、3-MovSD、4-MR)  
+        List<PBRTQCLineVO> dataList = funcModelCalculate(dto, cutDataList,1);  
+        // Moving-Slope计算系统误差失控点  
+        List<PBRTQCLineVO> systemErrorDataList = systemErrorPoint(dto, dataList);  
+        // 失控报警  
+        List<PBRTQCLineVO> alarmDataList = outOfControlAlarm(dto, tempList, dataList, controlLine, transData);  
+        // 批号计算  
+        List<String> lots = dataList.stream().map(PBRTQCLineVO::getName).distinct().collect(Collectors.toList());  
+        lots.add(0, "失控点");  
+        lots.add(1, "系统误差点");  
+        // 设置失控点  
+        alarmDataList.forEach(item -> dataList.get(item.getId()).setName("失控点"));  
+        // 找到所有的定标线  
+        List<PBRTQCLineVO> calibrationPointList = dataList.stream().filter(item ->  
+                item.getIsCalibration() != null && item.getIsCalibration().equals(1)).collect(Collectors.toList());  
+        List<Integer> calibrationList = calibrationPointList.stream().map(PBRTQCLineVO::getId).collect(Collectors.toList());  
+        // 寻找失控点中的所有系统误差点  
+        List<PBRTQCLineVO> systemErrorData = alarmDataList.stream().filter(item -> systemErrorDataList.stream().anyMatch(obj -> obj.getId().equals(item.getId()))).collect(Collectors.toList());  
+        systemErrorData.forEach(item -> dataList.get(item.getId()).setName("系统误差点"));  
+        // 响应封装  
+        PBRTQCData data = new PBRTQCData();  
+        data.setList(dataList);  
+        data.setLots(lots);  
+        data.setUnit(unit);  
+        data.setMethodName(DictUtils.getDictLabel("ims_pbrtqc_func_model", dto.getFuncModel().toString()));  
+        data.setAlarmList(alarmDataList);  
+        data.setSystemErrorList(systemErrorData);  
+        data.setLcl(controlLine.getLcl());  
+        data.setUcl(controlLine.getUcl());  
+        data.setOriginLcl(controlLine.getOriginLcl());  
+        data.setOriginUcl(controlLine.getOriginUcl());  
+        data.setCalibrationList(calibrationList);  
+        pbrtqcDataList.add(data);  
+        dto.setIndex(dto.getIndex() + 1);  
+    }  
+    response.setList(pbrtqcDataList);  
+    response.setLtl(dto.getLtl());  
+    response.setUtl(dto.getUtl());  
+    response.setCalibrationPointList(calibrationDetailList);  
+    return AjaxResult.success(response);  
+}
+```
