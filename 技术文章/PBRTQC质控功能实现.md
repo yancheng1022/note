@@ -432,3 +432,45 @@ public static double[] boxCoxTransform(double[] data, double lambda, double G) {
     return transformedData;  
 }
 ```
+
+## 3.4、统计值计算之mq
+
+```java
+/**  
+ * 移动分位数（MQ）  
+ * @param N 窗口大小  
+ * @param X mq分位数  
+ * @param list  
+ * @return  
+ */  
+public static List<PBRTQCLineVO> MQ(Integer N, Double X, List<PbrtqcWashed> list) {  
+    List<PBRTQCLineVO> result = new ArrayList<>();  
+    for (int i = 0; i < list.size() -N + 1; i++) {  
+        double val1 = (N + 1) * X / 100;  
+        // 整数部分  
+        int j = (int) val1;  
+        // 小数部分  
+        double g = val1 - j;  
+        List<Integer> subIndex = new ArrayList<>();  
+        double calValue;  
+        // list从小到大排序  
+        List<PbrtqcWashed> subList = list.stream().skip(i).limit(N).collect(Collectors.toList());  
+        List<PbrtqcWashed> collect = subList.stream().sorted(Comparator.comparing(PbrtqcWashed::getValue)).collect(Collectors.toList());  
+        if (g == 0) {  
+            calValue = collect.get(j - 1).getValue();  
+        } else {  
+            calValue = (1 - g) * collect.get(j - 1).getValue() + g * collect.get(j).getValue();  
+        }  
+        PBRTQCLineVO vo = new PBRTQCLineVO();  
+        vo.setId(i);  
+        vo.setName(list.get(i+N-1).getReagentBatch());  
+        vo.setValue(calValue);  
+        vo.setIsCalibration(list.get(i+N-1).getIsCalibration());  
+        vo.setReadyTime(list.get(i+N-1).getReadyTime());  
+        result.add(vo);  
+    }  
+    return result;  
+}
+```
+
+
