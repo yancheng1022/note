@@ -7,3 +7,18 @@
 # 2、功能实现
 
 ## 2.1、添加依赖
+```xml
+<dependency>
+    <groupId>org.apache.shardingsphere</groupId>
+    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+    <version>4.0.0-RC1</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.shardingsphere</groupId>
+    <artifactId>sharding-jdbc-spring-namespace</artifactId>
+    <version>4.0.0-RC1</version>
+</dependency>
+```
+
+
+## 2.2、yml配置
