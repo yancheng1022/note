@@ -42,6 +42,7 @@ sharding:
 ```
 
 ## 2.3、具体分片算法
+
 ```java
 public class TableShardingSampleAlgorithm implements ComplexKeysShardingAlgorithm<String> {  
   
