@@ -6,6 +6,7 @@ categories:
 tags:
   - sharding-jdbc
   - 分库分表
+  - 技术文章
 ---
 
 # 1、基本需求
