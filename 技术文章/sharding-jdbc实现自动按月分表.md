@@ -22,21 +22,34 @@
 
 
 ## 2.2、yml配置
+
 ```yml
 sharding:  
     # 配置绑定表  
     binding-tables[0]: ims_test_result,ims_test_sample_fetch,ims_test_sample_diluent,ims_test_reagent_add,ims_test_ls_add,ims_test_incubate,ims_test_read  
     tables:  
-        # 仪器温度记录表  
-        ims_instrument_temperature:  
-            actual-data-nodes: m1.sharding_data_nodes_2022  
-            key-generator:  
-                column: id # 注意：这里配置了主键,插入sql中就不要再显示写,否则这里配置的主键生成策略失效  
-                type: SNOWFLAKE  
-                props:  
-                    worker.id: ${workerId}  
-            table-strategy:  
-                standard:  
-                    sharding-column: monitor_time_format  
-                    precise-algorithm-class-name: com.chivd.common.algorithm.TableShardingDateAlgorithm  
+		ims_sample_base:  
+		    actual-data-nodes: m1.sharding_data_nodes_2022  
+		    key-generator:  
+		        column: id  
+		        type: SNOWFLAKE  
+		        props:  
+		            worker.id: ${workerId}  
+		    table-strategy:  
+		        complex:  
+		            sharding-columns: submit_work_time,sample_uid  
+			            algorithm-class-name: com.chivd.common.algorithm.TableShardingSampleAlgorithm
+```
+
+## 2.3、创建配置表，标识需要分表的表
+
+```sql
+CREATE TABLE `ims_sharding_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `table_name` varchar(100) DEFAULT NULL COMMENT '表名',
+  `start_year_month` varchar(20) DEFAULT NULL COMMENT '分表开始年月',
+  `comment` varchar(100) DEFAULT NULL COMMENT '备注',
+  `is_deleted` tinyint(4) DEFAULT '0' COMMENT '(0-未删除 1-删除)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 ```
