@@ -56,27 +56,34 @@ Java Virtual Machine，JAVA程序的**运行环境**（JAVA二进制字节码的
 1. 查询占用cpu过高程序pid（top）
 2. 查询该进程下各线程的CPU占用情况  （ ps H -eo pid,tid,%cpu|grep 27598）
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658199446537-1bbb03ef-8232-4a25-90c0-7b98da7cdb86.png#clientId=u8459d95d-cf1d-4&from=paste&height=192&id=u2e042fb9&originHeight=192&originWidth=406&originalType=binary&ratio=1&rotation=0&showTitle=false&size=6479&status=done&style=none&taskId=u794ee46d-1604-4843-af0f-422f7158082&title=&width=406)
+![image (17).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222235151.png)
+
 
 3. 找到cpu占用最高的线程id，转为16进制
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658130736015-89b381b0-b3ed-47f7-b2fd-c7649ef695bb.png#clientId=u85e3077c-c012-4&from=paste&height=202&id=u79a84284&originHeight=202&originWidth=630&originalType=binary&ratio=1&rotation=0&showTitle=false&size=10280&status=done&style=none&taskId=uee9f391e-805e-4579-ba40-f5cb56f3bbd&title=&width=630)
+![image (18).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222235572.png)
+
 
 4. 打印堆栈 （jstack pid）
 
 jstack 27598 | grep -A 100 6bdf
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658130770205-d04bc280-386d-4a7a-9fc1-3c8bbf666cb3.png#clientId=u85e3077c-c012-4&from=paste&height=68&id=u8c5f2709&originHeight=68&originWidth=644&originalType=binary&ratio=1&rotation=0&showTitle=false&size=6633&status=done&style=none&taskId=u420ceb32-d929-4f65-a97d-55dbabae57a&title=&width=644)
+
+![image (19).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222236269.png)
+
 
 ## 2.3、本地方法栈
+
 一些带有**native关键字**的方法就是需要JAVA去调用本地的C或者C++方法，因为JAVA有时候没法直接和操作系统底层交互，所以需要用到本地方法
 ## 2.4、堆
 ### 2.4.1、定义
 Java堆的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存（特例：栈上分配策略）
+
 > 1. 从内存回收的角度看，由于现在收集器基本都采用分代收集算法，所以Java堆可以细分为：新生代、老生代。新生代又可分为Eden和Suvivor区
 > 2. 新生代 ( Young ) 与老年代 ( Old ) 的比例的值为 1:2  通过参数 –XX:NewRatio 来指定
 > 3. 最大物理内存大小不超过192兆字节（MB）时默认最大堆大小是物理内存的一半，否则占用物理内存的四分之一
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658370651913-e6e4ef9d-612c-41a4-af57-77a33cf0631b.png#clientId=u2849290d-6927-4&from=paste&height=708&id=u22520493&originHeight=708&originWidth=1855&originalType=binary&ratio=1&rotation=0&showTitle=false&size=235586&status=done&style=none&taskId=uf5240f52-ba48-42cb-944c-35bff8e3493&title=&width=1855)
+![image (20).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222237526.png)
+
 ### 2.4.4、堆内存诊断
 jps：查看java进程
 jmap：查看堆内存占用情况 jmap -heap 进程id
@@ -103,27 +110,35 @@ jvisualvm：和jconsole功能类似，但功能更强。可以抓取和导入堆
 ### 2.5.1、结构
 方法区是java虚拟机的一个模型规范，具体实现是永久代和元空间。方法区存储了每个类的信息（包括类的名称、方法信息、字段信息）、静态变量、常量以及编译器编译后的代码等
 方法区在程序启动时被创建，方法区是一个概念。具体实现有永久代（1.8前）和元空间（1.8）永久代用的是堆内存，元空间用的是本地内存（也就是操作系统的内存）
+
 > 方法区如果内存不足，也会抛出**OutofMemoryError** 的异常
 
 
 ### 2.5.2、class常量池
 Java 文件被编译成 Class 文件，Class 文件中除了包含类的版本、字段、方法、接口等描述信息外，还有一项就是 Class 常量池，**Class 常量池是当 Class 文件被 Java 虚拟机加载进来后存放各种字面量和符号引用**
+
 > 类的加载过程中的链接部分的解析步骤就是把符号引用替换为直接引用，即把那些描述符（名字）替换为能直接定位到字段、方法的引用或句柄（地址）
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211875203-756b81bb-59ac-440a-aed3-5d7cba1c1057.png#clientId=u2849290d-6927-4&from=paste&id=ue5c62d07&originHeight=859&originWidth=1657&originalType=url&ratio=1&rotation=0&showTitle=false&size=129386&status=done&style=none&taskId=uc12a8677-06fa-4afe-9b82-26c70f5e8e0&title=)
+![image (21).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222238635.png)
+
 System.out.println("hello")经过反编译后的内容如下：
 ```java
 javap -v F:\Thread_study\src\com\nyima\JVM\day01\Main.class
 ```
-![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211416324-889af0a4-71d2-427a-a605-e6934da3c389.png#clientId=u2849290d-6927-4&from=paste&id=u7e6047a0&originHeight=539&originWidth=1120&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u147a2515-bfe1-4af0-b63f-57685ccf8b5&title=)
+
+![class常量池](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222239362.png)
+
 ![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211741107-6e92db9f-e7b1-4fe3-9b54-0f608dad19b6.png#clientId=u2849290d-6927-4&from=paste&id=u0f35b784&originHeight=410&originWidth=1118&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u3e3cb8ec-7f59-44f8-b925-f1bce7b280b&title=)
 ![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211750067-5a5fe357-17ac-4ed5-8463-862b32649804.png#clientId=u2849290d-6927-4&from=paste&id=u52353eda&originHeight=236&originWidth=1122&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ue01b07e2-503e-45f1-b6a7-3479b81cc26&title=)
+
 虚拟机中执行编译的方法（框内的是真正编译执行的内容，**#号的内容需要在常量池中查找**）
 
 ### 2.5.3、运行时常量池
+
 运行时常量池是方法区的一部分。运行时常量池是当 Class 文件被加载到内存后，Java虚拟机会将 Class 文件常量池里的内容转移到运行时常量池里，**并且把里面的符号地址变为真实地址**
 
 ### 2.5.4、字符串常量池
+
 JVM为了提高性能，减少内存开销，维护的一个存放字符串常量的内存区域，里面的字符串不允许重复，有长度限制，最大为65535字节
 
 1. **两种创建字符串对象不同方式的比较**
@@ -159,11 +174,10 @@ public class Str {
 // false
 ```
 
+
 > 采用 new 关键字新建一个字符串对象时，JVM 首先在字符串常量池中查找有没有 "aaa" 这个字符串对象，如果有，则不在池中再去创建 "aaa" 这个对象了，直接在堆中创建一个 "aaa" 字符串对象，然后将堆中的这个"aaa"对象的地址返回赋给引用 str1，这样，str1 就指向了堆中创建的这个 "aaa" 字符串对象；如果没有，则首先在字符串常量池池中创建一个 "aaa" 字符串对象，然后再在堆中创建一个 "aaa" 字符串对象，然后将堆中这个 "aaa" 字符串对象的地址返回赋给 str1 引用，这样，str1 指向了堆中创建的这个 "aaa" 字符串对象。
 
 > 对于上述的例子：因为，采用new关键字创建对象时，每次new出来的都是一个新的对象，也即是说引用str1和str2指向的是两个不同的对象，因此语句System.out.println(str1 == str2)输出：false
-
-
 
 - 使用**拼接字符串常量**的方法来创建新的字符串时，因为**内容是常量，javac在编译期会进行优化，结果已在编译期确定为ab**，而创建ab的时候已经在串池中放入了“ab”，所以ab3直接从串池中获取值，所以进行的操作和 ab = “ab” 一致。
 - 使用**拼接字符串变量**的方法来创建新的字符串时，因为内容是变量，只能**在运行期确定它的值，所以需要使用StringBuilder来创建**
@@ -174,6 +188,7 @@ public class Str {
 2. **字符串拼接问题**
 
 （1）字符串变量拼接
+
 ```java
 public class StringTableStudy {
 	public static void main(String[] args) {
@@ -186,10 +201,13 @@ public class StringTableStudy {
 	}
 }
 ```
+
+
 > 通过变量拼接的方式来创建字符串的**过程**是：StringBuilder().append(“a”).append(“b”).toString()
 > 最后的toString方法的返回值是一个**新的字符串**，但字符串的**值**和拼接的字符串一致，但是两个不同的字符串，**一个存在于串池之中，一个存在于堆内存之中**
 
 （2）字符串拼接
+
 ```java
 public class StringTableStudy {
 	public static void main(String[] args) {
@@ -202,12 +220,15 @@ public class StringTableStudy {
 	}
 }
 ```
+
+
 > 使用**拼接字符串常量**的方法来创建新的字符串时，因为**内容是常量，javac在编译期会进行优化，结果已在编译期确定为ab**，而创建ab的时候已经在串池中放入了“ab”，所以ab3直接引用串池中的地址，所以进行的操作和 ab = “ab” 一致。
 
 
 3. i**ntern方法**
 
 jdk1.8调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中，如果有则不会放入
+
 > jdk1.6调用字符串对象的intern方法，会将该字符串对象复制一份放入到串池中，如果有则不会放入
 
 ```java
@@ -227,7 +248,7 @@ public class Main {
 }
 ```
 
-4. **面试题**
+4. 思考
 
 （1）String str = new String(“abc”);创建了几个对象，常量池有abc字段是1个，常量池没有"abc"字段则是2个。
 （2）String str=“abc”;创建了几个对象（如果常量池里面已经有对象了就是0个。如果没有就是1个）;
@@ -239,12 +260,14 @@ public class Main {
 1. 引用计数法
 
 每个对象关联一个引用计数器属性，任何一个对象引用了A，引用计数器的值加1.当引用失效时，引用计数器就减1.当引用计数器的值为0时，表示对象不再被使用，可进行回收
+
 > 缺点：（1）需要单独的字段存储计数器，这样增加了存储空间的开销 （2）每次赋值都要更新计数器值，增加了时间开销 （3）存在循环引用的问题（所以jvm不用）
 
 
 2. 可达性分析法
 
 设立若干根对象（GC Root Object），当任何一个根对象到某一个对象均不可达时，认为这个对象可以被回收
+
 > 哪些对象可以被作为根对象？
 > - 虚拟机栈(栈帧中的本地变量表)中引用的对象。就是在方法中new的对象
 > - 方法区中静态属性引用的对象用static修饰的全局的静态的对象
@@ -255,13 +278,17 @@ public class Main {
 > GC Root 需要确保引用所指的对象都是活着的,而当前线程栈帧中的对象，在这一时刻是存活的。
 
 ## 3.2、五种引用
-![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658279926570-f05996cc-4c57-4115-af47-f8de2c253c96.png#clientId=u2849290d-6927-4&from=paste&id=ud0c1ee3c&originHeight=604&originWidth=1212&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u1849d9a0-4967-4996-885b-ff577b59364&title=)
 
-1. **强引用**：强引用是使用最普遍的引用。如果一个对象具有强引用，那垃圾回收器绝不会回收它。
+![五种引用](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222241216.png)
+
+
+1. **强引用**：强引用是使用最普遍的引用。如果一个对象具有强引用，那垃圾回收器绝不会回收它
+
 > 在java程序中，一般由Object object = new Object();定义的object就是一个强引用
 > 如上图B、C对象都不引用A1对象时，A1对象才会被回收
 
 2. **软引用**：当GC Root指向软引用对象时，在内存不足时，会回收软引用所引用的对象
+
 > 如上图如果B对象不再引用A2对象且内存不足时，软引用所引用的A2对象就会被回收
 > 作用：软引用是用来描述一些有用但并不是必需的对象，JVM 内存空间充足的时候将数据缓存在内存中，如果空间不足了就将其回收掉
 
@@ -273,6 +300,7 @@ public class Main {
 ```
 
 3. **弱引用**：有弱引用引用该对象时，在垃圾回收时，**无论内存是否充足**，都会回收弱引用所引用的对象
+
 > 如上图如果B对象不再引用A3对象，则A3对象会被回收
 
 ```java
@@ -282,6 +310,7 @@ eakReference<String> sr = new WeakReference<String>(new String("hello"));
 4. **虚引用**：  虚引用主要用来跟踪对象被垃圾回收器回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列
 
 当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之 关联的引用队列中。你声明虚引用的时候是要传入一个queue的。当你的虚引用所引用的对象已经执行完finalize函数的时候，就会把对象加到queue里面。你可以通过判断queue里面是不是有对象来判断你的对象是不是要被回收了
+
 > 如上图，B对象不再引用ByteBuffer对象，ByteBuffer就会被回收。但是直接内存中的内存还未被回收。这时需要将虚引用对象Cleaner放入引用队列中，然后调用它的clean方法来释放直接内存
 
 ```java
@@ -312,6 +341,7 @@ PhantomReference<String> abcWeakRef = new PhantomReference<String>(abc, referenc
 3. 缺点：浪费内存空间，始终要有一个空闲的survivor
 
 ## 3.4、FULL GC原因
+
 > Full GC为一次特殊GC行为的描述，这次GC会回收整个堆的内存，包含老年代，新生代，元空间等。是说在这次GC的全过程中所有用户线程都是处于暂停的状态（stop the world）
 
 
@@ -328,31 +358,36 @@ PhantomReference<String> abcWeakRef = new PhantomReference<String>(abc, referenc
 ### 4.1.1、Serial（串行）收集器
 
 1. **概念**：Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JDK1.3.1之前）是虚拟机新生代收集的唯一选择。它是一种单线程收集器，不仅仅意味着它只会使用一个CPU或者一条收集线程去完成垃圾收集工作，更重要的是其在进行垃圾收集的时候需要暂停其他线程
+
 > 优点：简单高效，拥有很高的单线程收集效率
-缺点：收集过程需要暂停所有线程
-算法：复制算法应用
+  缺点：收集过程需要暂停所有线程
+  算法：复制算法应用
 
 2. **收集过程**
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658304978350-857c0834-4d26-4a29-a0f3-e7f97bc4aa11.png#clientId=u2849290d-6927-4&from=paste&height=178&id=u2b841463&originHeight=138&originWidth=432&originalType=url&ratio=1&rotation=0&showTitle=false&size=51717&status=done&style=none&taskId=ue28eac5a-96de-4227-beca-ac9aa4a0da6&title=&width=558)
+![image (23).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222242409.png)
+
 
 ### 4.1.2、ParNew 收集器
 
-1. **概念：**可以把这个收集器理解为Serial收集器的多线程版本。
+1. **概念：**可以把这个收集器理解为Serial收集器的多线程版本
+
 > 优点：在多CPU时，比Serial效率高。
-缺点：收集过程暂停所有应用程序线程，单CPU时比Serial效率差。
-算法：复制算法
+  缺点：收集过程暂停所有应用程序线程，单CPU时比Serial效率差。
+  算法：复制算法
 
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658305100186-0bde5c76-2982-4cb8-ad74-68ee802f5b7e.png#clientId=u2849290d-6927-4&from=paste&height=201&id=u8ae84494&originHeight=190&originWidth=545&originalType=url&ratio=1&rotation=0&showTitle=false&size=135050&status=done&style=none&taskId=ueb9468c3-a920-4451-8f7b-731114b9979&title=&width=577)
+![image (24).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222242011.png)
+
 
 ### 4.1.3、Parallel Scavenge 收集器
 
 1. **概念**：Parallel Scavenge收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器，看上去和ParNew一样，但是Parallel Scanvenge更关注系统的吞吐量 。
-2. **可设置参数**：-XX:MaxGCPauseMillis控制最大的垃圾收集停顿时间， -XX:GC Time Ratio直接设置吞吐量的大小。
+2. **可设置参数**：-XX:MaxGCPauseMillis控制最大的垃圾收集停顿时间， -XX:GC Time Ratio直接设置吞吐量的大小
+
 > 吞吐量 = 运行用户代码的时间 / (运行用户代码的时间 + 垃圾收集时间)
-比如虚拟机总共运行了120秒，垃圾收集时间用了1秒，吞吐量=(120-1)/120=99.167%。
-若吞吐量越大，意味着垃圾收集的时间越短，则用户代码可以充分利用CPU资源，尽快完成程序的运算任务。
+  比如虚拟机总共运行了120秒，垃圾收集时间用了1秒，吞吐量=(120-1)/120=99.167%。
+  若吞吐量越大，意味着垃圾收集的时间越短，则用户代码可以充分利用CPU资源，尽快完成程序的运算任务。
 
 
 ## 4.2、老年代收集器
@@ -371,15 +406,16 @@ Parallel Old收集器是Parallel Scavenge收集器的老年代版本，使用多
 1. **特点：**最短回收停顿时间，
 2. **回收算法：**标记-清除
 3. **回收步骤：**
-   1. 初始标记：标记GC Roots直接关联的对象，速度快
-   2. 并发标记：GC Roots Tracing过程，耗时长，与用户进程并发工作
-   3. 重新标记：修正并发标记期间用户进程运行而产生变化的标记，好事比初始标记长，但是远远小于并发标记
-   4. 并发清除：清除标记的对象
-4. **缺点**：
+   （1）初始标记：标记GC Roots直接关联的对象，速度快
+   （2）并发标记：GC Roots Tracing过程，耗时长，与用户进程并发工作
+   （3）重新标记：修正并发标记期间用户进程运行而产生变化的标记，好事比初始标记长，但是远远小于并发标记
+   （4）并发清除：清除标记的对象
+1. **缺点**：
 
 对CPU资源非常敏感，CPU少于4个时，CMS岁用户程序的影响可能变得很大，由此虚拟机提供了“增量式并发收集器”；无法回收浮动垃圾；采用标记清除算法会产生内存碎片，不过可以通过参数开启内存碎片的合并整理。
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658305602785-8661cce7-3b84-4837-992a-f8957b2bb262.png#clientId=u2849290d-6927-4&from=paste&height=216&id=n9ugc&originHeight=182&originWidth=526&originalType=url&ratio=1&rotation=0&showTitle=false&size=139023&status=done&style=none&taskId=u0da4e2bc-acd3-4c80-99bd-dec9c487986&title=&width=625)
+![image (25).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222243378.png)
+
 
 ## 4.3、整堆收集器
 ### 4.3.1、G1
@@ -389,15 +425,17 @@ Parallel Old收集器是Parallel Scavenge收集器的老年代版本，使用多
 G1将整个JVM堆划分成多个大小相等的独立区域regin，跟踪各个regin里面的垃圾堆积的价值大小，在后台维护一个优先列表，每次根据允许的收集时间，优先回收最大的regin，当然还保留有新生代和老年代的概念，但新生代和老年代不在是物理隔离了，他们都是一部分regin集合。内存“化整为零”的思路：在GC根节点的枚举范围汇总加入remembered set 即可保证不对全堆扫面也不会遗漏。
 
 2. **回收步骤**：
-   1. 初始标记：标记GC Roots直接关联的对象
-   2. 并发标记：对堆中对象进行可达性分析，找出存活对象，耗时长，与用户进程并发工作
-   3. 重新标记：修正并发标记期间用户进程继续运行而产生变化的标记
-   4. 筛选回收：对各个regin的回收价值进行排序，然后根据期望的GC停顿时间制定回收计划
+   （1）初始标记：标记GC Roots直接关联的对象
+   （2）并发标记：对堆中对象进行可达性分析，找出存活对象，耗时长，与用户进程并发工作
+   （3）重新标记：修正并发标记期间用户进程继续运行而产生变化的标记
+   （4）筛选回收：对各个regin的回收价值进行排序，然后根据期望的GC停顿时间制定回收计划
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658306681886-fc61615b-bdef-4aa3-8e20-ac665bb7efe2.png#clientId=u2849290d-6927-4&from=paste&height=228&id=uf00383d9&originHeight=182&originWidth=513&originalType=url&ratio=1&rotation=0&showTitle=false&size=134928&status=done&style=none&taskId=ue0144a83-d464-4741-8445-3c795397403&title=&width=643)
+![G1垃圾收集器](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222244637.png)
+
 
  
 ### 4.3.2、ZGC
+
 ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为首要目标的一款垃圾收集器。
 在JDK 11新加入，还在实验阶段，主要特点是：回收TB级内存（最大4T），停顿时间不超过10ms。
 **优点**：低停顿，高吞吐量，ZGC收集过程中额外耗费的内存小
@@ -405,22 +443,26 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 目前使用的非常少，真正普及还是需要写时间的。
 
 ## 4.4、垃圾收集器的选择？
+
 jdk1.8 前默认垃圾收集器Parallel Scavenge（新生代）+Parallel Old（老年代）
 jdk1.9 默认垃圾收集器G1
 
-1. 如果你的应用运行在单核的机器上，或者你的虚拟机核数只有单核，选择串行收集器依然是合适的，这时候启用一些并行收集器没有任何收益。
+1. 如果你的应用运行在单核的机器上，或者你的虚拟机核数只有单核，选择串行收集器依然是合适的，这时候启用一些并行收集器没有任何收益
+
 ```java
 参数：-XX:+UseSerialGC。
 ```
 
 
-2. 如果你的应用是“吞吐量”优先的，并且对较长时间的停顿没有什么特别的要求。选择并行收集器是比较好的。
+2. 如果你的应用是“吞吐量”优先的，并且对较长时间的停顿没有什么特别的要求。选择并行收集器是比较好的
+
 ```java
 参数：-XX:+UseParallelGC。
 ```
 
 
-3. 如果你的应用对响应时间要求较高，想要较少的停顿。甚至 1 秒的停顿都会引起大量的请求失败，那么选择G1、ZGC、CMS都是合理的。虽然这些收集器的 GC 停顿通常都比较短，但它需要一些额外的资源去处理这些工作，通常吞吐量会低一些。
+3. 如果你的应用对响应时间要求较高，想要较少的停顿。甚至 1 秒的停顿都会引起大量的请求失败，那么选择G1、ZGC、CMS都是合理的。虽然这些收集器的 GC 停顿通常都比较短，但它需要一些额外的资源去处理这些工作，通常吞吐量会低一些
+
 ```java
 参数：
 -XX:+UseConcMarkSweepGC、
@@ -429,6 +471,7 @@ jdk1.9 默认垃圾收集器G1
 ```
 
 # 5、类加载机制
+
 虚拟机把类的数据从Class文件加载到内存，并对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型的过程就是虚拟机的类加载机制
 
 ## 5.1、类加载过程
@@ -438,6 +481,7 @@ jdk1.9 默认垃圾收集器G1
 
 ### 5.1.2、链接阶段
 （1）**验证**： 确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全
+
 > **文件格式验证**：验证字节流是否符合Class文件格式的规范，如：是否以模数0xCAFEBABE开头、主次版本号是否在当前虚拟机处理范围内等等。
 **元数据验证**：对字节码描述的信息进行语义分析，以保证其描述的信息符合Java语言规范的要求；如：这个类是否有父类，是否实现了父类的抽象方法，是否重写了父类的final方法，是否继承了被final修饰的类等等。
 **符号引用验证**：确保解析动作能正确执行；如：通过符合引用能找到对应的类和方法，符号引用中类、属性、方法的访问性是否能被当前类访问等等
@@ -445,14 +489,16 @@ jdk1.9 默认垃圾收集器G1
 
 
 （2）**准备**：为类的静态变量分配内存，并将其赋默认值
+
 > 为类变量分配内存并设置类变量初始值，这些内存都将在方法区中分配。对于该阶段有以下几点需要注意：
 只对**static**修饰的静态变量进行内存分配、赋默认值（如0、0L、null、false等）。
 对**final**的静态字面值常量直接赋初值（赋初值不是赋默认值，如果不是字面值静态常量，那么会和静态变量一样赋默认值）
 
 
 （3）**解析**：将常量池中的符号引用替换为直接引用（内存地址）的过程
+
 > 符号引用：就是一组符号来描述目标，可以是任何字面量。属于编译原理方面的概念如：包括类和接口的全限定名、字段的名称和描述符、方法的名称和描述符（eg:java.lang.String）。
-直接引用：就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄。如指向方法区某个类的一个指针
+  直接引用：就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄。如指向方法区某个类的一个指针
 
 
 ### 5.1.3、初始化阶段
@@ -461,7 +507,7 @@ jdk1.9 默认垃圾收集器G1
 > 赋初值两种方式：
 （1）定义静态变量时指定初始值。如 private static String x="123";
 （2）在静态代码块里为静态变量赋值。如 static{ x="123"; }
-注意：只有对类的主动使用才会导致类的初始化。
+ 注意：只有对类的主动使用才会导致类的初始化。
 
 
 **初始化顺序：**
@@ -482,6 +528,7 @@ java编写，父加载器为启动类加载器，从jre/lib/ext下加载类库
 
 负责加载用户类路径（classpath）上的指定类库
 ## 5.3、双亲委派机制
+
 当某个类加载器需要加载某个.class文件时，它首先把这个任务委托给他的上级类加载器，递归这个操作，如果上级的类加载器没有加载，自己才会去加载这个类
 
 **好处：**
@@ -489,16 +536,16 @@ java编写，父加载器为启动类加载器，从jre/lib/ext下加载类库
 1. 避免重复加载，通过委托去向上面问一问，加载过了，就不用再加载一遍
 2. 保证核心api定义的类型不会被随意篡改，比如自己定义一个java.lang.String，顶级加载器系统类加载器加载时会加载核心包下的String类而不是自定义的。保证了核心类的安全
 
-![双亲委派机制](https://weiguang-001.oss-cn-beijing.aliyuncs.com/weiguang/interview/image20210720151544458#height=319&id=XTcgI&originHeight=704&originWidth=860&originalType=binary&ratio=1&rotation=0&showTitle=true&status=done&style=none&title=%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6&width=390 "双亲委派机制")
-
 # 6、逃逸分析
+
 我们都知道，java里面绝大多数对象都是存放在堆里面的，然后当对象没用的时候就会靠垃圾回收器去回收对象。那么什么是栈上分配呢？
 ## 6.1、逃逸方式
 
-1. 方法逃逸：在一个方法体内，定义一个局部变量，而它可能被外部方法引用，比如作为调用参数传递给方法，或作为对象直接返回。或者，可以理解成对象跳出了方法。
-2. 线程逃逸：这个对象被其他线程访问到，比如赋值给了实例变量，并被其他线程访问到了。对象逃出了当前线程。
+1. 方法逃逸：在一个方法体内，定义一个局部变量，而它可能被外部方法引用，比如作为调用参数传递给方法，或作为对象直接返回。或者，可以理解成对象跳出了方法
+2. 线程逃逸：这个对象被其他线程访问到，比如赋值给了实例变量，并被其他线程访问到了。对象逃出了当前线程
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658198728250-11a0b17a-e63d-4c38-b65f-6506f8abd9f3.png#clientId=u8459d95d-cf1d-4&from=paste&height=322&id=CCK4B&originHeight=602&originWidth=580&originalType=binary&ratio=1&rotation=0&showTitle=false&size=180781&status=done&style=none&taskId=u88bfd915-4a42-4a2e-8d71-bdbb4d5e582&title=&width=310)
+![逃逸分析](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222246915.png)
+
 ## 6.2、逃逸结果
 
 1. 栈上分配
