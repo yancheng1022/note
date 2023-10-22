@@ -18,7 +18,7 @@ Java Virtual Machine，JAVA程序的**运行环境**（JAVA二进制字节码的
 - 数组下标越界检查
 
 ## 1.3、jvm jre jdk的区别
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658194566547-c569bb84-889f-4e94-a235-271422773233.png#clientId=u8459d95d-cf1d-4&from=paste&height=300&id=u3c76f606&originHeight=530&originWidth=865&originalType=binary&ratio=1&rotation=0&showTitle=false&size=182433&status=done&style=none&taskId=u2cb64a51-7e32-423f-a2b7-f83225391ee&title=&width=489)
+
 
 # 2、内存结构
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658213664722-068d4214-ac5b-4412-986a-6ff38b7a0955.png#clientId=u2849290d-6927-4&from=paste&id=u64481c69&originHeight=430&originWidth=755&originalType=url&ratio=1&rotation=0&showTitle=false&size=171867&status=done&style=none&taskId=u5c5e8388-9c13-4993-9a77-945a764f92f&title=)
