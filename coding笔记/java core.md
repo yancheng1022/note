@@ -402,13 +402,15 @@ interface IA{
 }
 
 class Outer {
-    // 编译类型为IA，运行类型为匿名内部类Outer$1
-    // jdk 底层在创建匿名内部类 Outer$1,立即马上就创建了 Outer$1 实例，并且把地址返回给 tiger
-    IA tiger = new IA() {
-        @Override public void cry() { 
-            System.out.println("老虎叫..."); 
-        } 
-    };
+	public void sayHello() {
+		// 编译类型为IA，运行类型为匿名内部类Outer$1
+       // jdk 底层在创建匿名内部类 Outer$1,立即马上就创建了 Outer$1 实例，并且把地址返回给 tiger
+	    IA tiger = new IA() {
+	        @Override public void cry() { 
+	            System.out.println("老虎叫..."); 
+	        } 
+	    };
+	}
 }
 ```
 
@@ -420,13 +422,16 @@ class Father {
 }
 
 class Outer{
-    // father 编译类型 Father, father 运行类型 Outer$1
-    Father father = new Father("jack"){
-        @Override
-        public void test() {
-            System.out.println("匿名内部类重写了 test 方法");
-        }
-    };
+	public void sayHello() {
+		// father 编译类型 Father, father 运行类型 Outer$1
+	    Father father = new Father("jack"){
+	        @Override
+	        public void test() {
+	            System.out.println("匿名内部类重写了 test 方法");
+	        }
+	    };
+	}
+    
 }
 ```
 
