@@ -87,6 +87,10 @@ public class AutoConvertDetail {
     float num500 = b4 + s3 + num200 + num300; 
 }
 ```
+
+>floatf=3.4;是否正确？
+不正确。3.4是双精度数，将双精度型（double）赋值给浮点型（float）属于下转型（down-casting，也称为窄化）会造成精度损失，因此需要强制类型转换floatf=(float)3.4;或者写成floatf=3.4F;
+
 ### 2.2.2、强制类型转换
 
 将容量大的数据类型转换为容量小的数据类型。使用时要加上强制转换符( )，但可能造成精度降低或溢出,格外要注意。
