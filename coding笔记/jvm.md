@@ -8,14 +8,17 @@ tags:
   - jvm
 ---
 # 1、jvm概念
-## 1.1、定义
-Java Virtual Machine，JAVA程序的**运行环境**（JAVA二进制字节码的运行环境）
+## 1.1、JVM JRE JDK区别
+![JVM JRE JDK关系](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310250949549.png)
 
-## 1.2、好处
+JVM：就是一个虚拟的用于执行bytecode字节码的”虚拟计算机”。一般与OS操作系统打交道
 
-- 跨平台，一次编写，到处运行
-- 自动内存管理，垃圾回收机制
-- 数组下标越界检查
+JRE：java运行环境，包含Java虚拟机、库函数、运行Java应用程序所必须的文件
+>javaw(windos java启动器，不显示黑窗口),libraries（外部类库）,rt_jar（核心库）
+
+JDK：java开发工具,包含JRE,以及增加编译器和调试器等用于程序开发的文件
+>javac(编译器),debugging（调试器）,tools,javap（反编译工具）
+
 
 ## 1.3、jvm jre jdk的区别
 
