@@ -815,6 +815,11 @@ LocalDateTime localDateTime2 = ldt.minusMinutes(3456);
 System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDateTime2));
 ```
 
+
+## 8.2、容器
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310301540735.png)
+
 # 9、泛型
 ## 9.1、基本概念
 
