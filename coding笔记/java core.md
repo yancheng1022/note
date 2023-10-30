@@ -1141,3 +1141,15 @@ T newInstance(Object... initargs)
 2. 获取方法名称：
 	String getName:获取方法名
 ```
+
+
+# 12、异常
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310301636988.png)
+
+
+Error：错误，无法被处理的
+
+Exception：异常，能够被程序本身处理的，可以通过try…catch语句捕捉异常，或者是throws抛出异常。分为运行时异常和非运行时异常
+- 运行时异常：就是RuntimeException，编译时不会检查出错误的。一般是由于逻辑错误引起的，程序员可以手动去解决的，比如判空等。
+- 非运行时异常：也叫编译异常，就是Exception下除了RuntimeException以外的异常。是必须进行处理的异常，编译器会进行异常提醒的。如果不进行处理，程序编译不通过。
