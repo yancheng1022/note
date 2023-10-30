@@ -833,6 +833,7 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 |LinkedHashMap|同hashmap|线程不安全|不主动扩容|可以存null|
 |HashTable|数组+链表|线程安全|首次创建时长度为11，扩容为2n+1|不能为null|
 |TreeMap|红黑树|线程不安全|TreeMap由红黑树实现，容量方面没有限制|不能为null 可以实现自然排序和定制排序 |
+
 # 9、泛型
 ## 9.1、基本概念
 
