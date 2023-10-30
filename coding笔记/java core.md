@@ -826,14 +826,13 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 |ArrayList|数组|线程不安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
 |Vector|数组|线程安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
 |LinkedList|双向链表|线程不安全|不主动扩容|增删快，查找慢|
-|HashSet|HashMap|线程不安全|首次创建长度为10，扩为1.5倍||
-|LinkedHashSet|LinkedHashMap|线程不安全|首次创建长度为10，扩为1.5倍||
-
-名称	底层	线程安全性	优点	扩容机制
-ArrayList	数组	线程不安全	查找快，增删慢	首次创建长度为10，扩为1.5倍
-Vector	数组	线程同步线程安全	查找快，增删慢	首次创建长度为10，*2
-LinkedList	双向链表(JDK1.6 之前为循环链表，JDK1.7 取消了循环)	线程不安全	增删快，查找慢	不主动扩容
-
+|HashSet|HashMap|线程不安全|||
+|LinkedHashSet|LinkedHashMap|线程不安全|||
+|TreeSet|TreeMap|线程不安全|||
+|HashMap|数组+链表（jdk7） 数组+链表+红黑树 （jdk8）|线程不安全|首次创建长度16，扩容2倍,负载因子0.75||
+|LinkedHashMap|同hashmap|线程不安全||比hashmap多了指向前驱和后继的两个指针|
+|HashTable|数组+链表|线程安全|首次创建时长度为11，扩容为2n+1||
+|TreeMap|红黑树|线程不安全||可以实现自然排序和定制排序|
 # 9、泛型
 ## 9.1、基本概念
 
