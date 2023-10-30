@@ -821,6 +821,14 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310301540735.png)
 
 
+|名称|底层|线程安全性|扩容机制|备注|
+|--|--|--|--|--|
+|ArrayList|数组|线程不安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
+|Vector|数组|线程安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
+|LinkedList|双向链表|线程不安全|不主动扩容|增删快，查找慢|
+|HashSet|HashMap|线程不安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
+|LinkedHashSet|数组|线程不安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
+
 名称	底层	线程安全性	优点	扩容机制
 ArrayList	数组	线程不安全	查找快，增删慢	首次创建长度为10，扩为1.5倍
 Vector	数组	线程同步线程安全	查找快，增删慢	首次创建长度为10，*2
