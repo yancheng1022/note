@@ -505,6 +505,9 @@ class Outer10 { //外部类
 5. getclass（）：获取该对象的字节码文件（该对象运行时的类）Class
 6. wait（）notify（）notifyAll（）：wait（）让当前线程进入等待状态。直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法
 
+> void notify()：唤醒一个正在等待该对象的线程。
+  void notifyAll()：唤醒所有正在等待该对象的线程
+
 > 1. equals()没有被重写的情况下等同于 ==
   Object的equals()方法源码：
     public boolean equals(Object obj) {
@@ -512,6 +515,30 @@ class Outer10 { //外部类
     }
   这用情况= =和equals（）都是引用比较 
   2. string重写了Object的equals（）方法这种情况equals（）是值比较
+
+## 4.6、深拷贝和浅拷贝
+**浅拷贝**：基本数据类型复制值，引用数据类型复制地址，即拷贝出来的对象与被拷贝出来的对象中的引用的对象是同一个（java默认）：clone方法
+**深拷贝**：基本数据类型复制值，引用数据类型，创建一个新的对象，并复制其内容
+
+```java
+// 使用对象序列化来实现克隆
+public class Room implements Serializable {
+    Desk desk;
+ 
+    public Room deepClone() throws Exception{
+        //序列化
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(this);
+        //反序列化
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        Room roomClone = (Room)objectInputStream.readObject();
+        return roomClone;
+        
+    }
+}
+```
 
 # 5、枚举
 ## 5.1、实现方式
