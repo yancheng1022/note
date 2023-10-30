@@ -826,9 +826,9 @@ System.out.println("3456 分钟前 日期=" + dateTimeFormatter.format(localDate
 |ArrayList|数组|线程不安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
 |Vector|数组|线程安全|首次创建长度为10，扩为1.5倍|查找快，增删慢|
 |LinkedList|双向链表|线程不安全|不主动扩容|增删快，查找慢|
-|HashSet|HashMap|线程不安全|||
-|LinkedHashSet|LinkedHashMap|线程不安全|||
-|TreeSet|TreeMap|线程不安全|||
+|HashSet|HashMap|线程不安全||可以存null|
+|LinkedHashSet|LinkedHashMap|线程不安全||可以存null|
+|TreeSet|TreeMap|线程不安全||不允许存null|
 |HashMap|数组+链表（jdk7） 数组+链表+红黑树 （jdk8）|线程不安全|首次创建长度16，扩容2倍,负载因子0.75||
 |LinkedHashMap|同hashmap|线程不安全||比hashmap多了指向前驱和后继的两个指针|
 |HashTable|数组+链表|线程安全|首次创建时长度为11，扩容为2n+1||
