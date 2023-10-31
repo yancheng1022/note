@@ -863,6 +863,25 @@ hashmap数据结构是数组+链表+红黑树，HashMap的主干是一个Entry�
 
 ## 8.3、String
 
+不可变性的理解：
+
+```java
+String s = "abc";    //(1)
+System.out.println("s = " + s);
+ 
+s = "123";    //(2)
+System.out.println("s = " + s);
+```
+
+![b6f0e64b3015ee2ebe2bd49b02c2a68.jpg|275](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310270955924.jpg)
+
+s只是一个String对象的引用，并不是String对象本身。
+当执行(1)处这行代码之后，会先在方法区的运行时常量池创建一个String对象"abc"，然后在Java栈中创建一个String对象的引用s，并让s指向"abc"
+当执行完(2)处这行代码之后，会在方法区的运行时常量池创建一个新的String对象"123"，然后让引用s重新指向这个新的对象，而原来的对象"abc"还在内存中，并没有改变
+
+为什么这样设计？
+(1)、字符串常量池中的对象可能被很多对象引用，如果一个修改会导致所有对象的内容都变
+(2)、hashmap中key的hash方法只会调用一次然后缓存起来，如果key可变会导致缓存的结果和真实的计算结果不一致
 
 # 9、泛型
 ## 9.1、基本概念
