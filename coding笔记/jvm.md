@@ -174,7 +174,7 @@ public class Str {
 > 对于上述的例子：这是因为，创建字符串对象 str2 时，字符串池中已经存在 “aaa” 这个对象，直接把对象 “aaa” 的引用地址返回给 str2，这样 str2 指向了池中 “aaa” 这个对象，也就是说 str1 和 str2 指向了同一个对象，因此语句 System.out.println(str1== str2) 输出：true。
 
 
-2）采用 new 关键字新建一个字符串对象
+（2）采用 new 关键字新建一个字符串对象
 ```java
 public class Str {
     public static void main(String[] args) {
