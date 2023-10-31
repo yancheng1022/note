@@ -861,6 +861,9 @@ hashmap数据结构是数组+链表+红黑树，HashMap的主干是一个Entry�
 > 如果数组长度不足64，优先会进行扩容
 
 
+## 8.3、String
+
+
 # 9、泛型
 ## 9.1、基本概念
 
@@ -1184,3 +1187,17 @@ Exception：异常，能够被程序本身处理的，可以通过try…catch语
 
 
 # 13、日志
+## 13.1、基本概念
+
+![image (26).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310270851142.png)
+
+> 常用的组合使用方式是Slf4j与Logback组合使用，Commons Logging与Log4j组合使用。
+
+## 13.2、java日志演化历史
+
+（1）最开始出现的是 log4j，也是应用最广泛的日志系统，作者是 Ceki Gülcü，开始时，一切都是美好的。
+（2）但 java 的开发主体 Sun 公司认为自己才是正统，为了干掉 log4j，在 jdk1.4 中增加了 jul（因为在 java.util.logging 包下）日志的实现，造成了目前开发者的混乱，迄今为止仍饱受诟病。
+（3）各个日志系统互相没有关联，替换和统一变的非常麻烦。A 项目用 log4j 作为日志系统，但同时引了 B 项目，而 B 项目用 jul 作为日志系统，那么你的应用就得使用两个日志系统。
+（4）为了搞定这个坑爹的问题，开源社区 apache 提供了一个日志框架作为日志的抽象，叫 commons-logging，也被称为 jcl（java common logging），jcl 对各种日志接口进行抽象，抽象出一个接口层，对每个日志实现都适配或者桥接，这样这些提供给别人的库都直接使用抽象层即可，较好的解决了上述问题。
+（5）当年 Apache 说服 log4j 以及其他的日志来按照 commons-logging 的标准编写，但是由于 commons-logging 的类加载有点问题，实现起来也不友好，作为元老级日志 log4j 的作者再度出山，搞出了一个更加牛逼的新的日志框架 slf4j（这个也是抽象层），同时针对 slf4j 的接口实现了一套日志系统，即传说中的 logback。
+（6）同时这个作者心情一好，又把 log4j 进行了改造，就是所谓的 log4j2，同时支持 jcl 以及 slf4j。
