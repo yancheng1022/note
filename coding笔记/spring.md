@@ -170,42 +170,31 @@ log4j.appender.console.Target = System.out
 log4j.appender.console.layout = org.apache.log4j.PatternLayout
 log4j.appender.console.layout.ConversionPattern =  %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
 ```
-## 2.3、注入
-### 2.3.1、什么是注入？
-通过spring工厂及配置文件，为所创建对象的成员变量赋值
+## 2.3、注入方式
 
-### 2.3.2、为什么需要注入？
-之前我们为成员变量赋值是通过set方法，但这种方式会产生耦合
+1. 属性注入
 
-### 2.3.3、如何进行注入？
-#### 2.3.3.1、属性（field ）注入
-所谓基于 field 注入，就是在bean的变量上使用注解进行依赖注入。本质上是通过反射的方式直接注入到field。这是我平常开发中看的最多也是最熟悉的一种方式，同时，也正是 Spring 团队所不推荐的方式（容易违背了单一职责原则：使用这种基于 field 注入的方式，添加依赖是很简单的，就算你的类中有十几个依赖你可能都觉得没有什么问题，普通的开发者很可能会无意识地给一个类添加很多的依赖）
-
+这里是使用 @Autowired 注解注入。另外也有 @Resource 以及 @Inject 等注解，都可以实现注入
 ```java
-@Autowired
-private Svc svc;
-```
-
-#### 2.3.3.2、setter注入
-通过对应变量的`setXXX()`方法以及在方法上面使用注解，来完成依赖注入。比如：
-```java
-private Helper helper;
-
-@Autowired
-public void setHelper(Helper helper) {
-    this.helper = helper;
+@Service
+public class BService {
+	@autowired
+	Aservice aService;
+	// ...
 }
-```
-#### 2.3.3.3、构造方法注入
-将各个必需的依赖全部放在带有注解构造方法的参数中，并在构造方法中完成对应变量的初始化，这种方式，就是基于构造方法的注入。比如：
-```java
-private final Svc svc;
 
-@Autowired
-public HelpService(@Qualifier("svcB") Svc svc) {
-    this.svc = svc;
-}
 ```
+
+2. 构造方法注入
+
+如果类只有一个构造方法，那么 @Autowired 注解可以省略；如果类中有多个构造方法，那么需要添加上 @Autowired 来明确指定到底使用哪个构造方法
+![](https://cdn.nlark.com/yuque/0/2023/webp/2996398/1674952714725-48d6f682-03ac-4a07-913c-4e9cfc5abcaf.webp#averageHue=%23292d36&clientId=ud4b36693-cbbf-4&from=paste&id=u28c488c2&originHeight=303&originWidth=696&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ub5ea652b-f051-4132-b1d8-aa419b45726&title=)
+
+3. set方法注入
+
+set 方法注入太过于臃肿，实际上很少使用
+![](https://cdn.nlark.com/yuque/0/2023/webp/2996398/1674952878239-42017dc4-dc63-4aa7-a94f-320cb420d6f1.webp#averageHue=%23292d35&clientId=ud4b36693-cbbf-4&from=paste&height=310&id=u2b6bf561&originHeight=317&originWidth=709&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u056464db-8a1b-43d0-b763-fe643205de7&title=&width=694)
+
 
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
