@@ -135,7 +135,7 @@ class常量池：每个class文件都包含有一个class常量池，包含符�
 
 运行时常量池：运行时常量池是方法区的一部分。运行时常量池是当 Class 文件被加载到内存后，Java虚拟机会将 Class 文件常量池里的内容转移到运行时常量池里，**并且把里面的符号地址变为真实地址，数值型字面量存放在运行时常量池，字符型字面量存放到字符串常量池****
 
-![image (28).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311011512926.png)
+![运行时常量池](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311011512926.png)
 
 
 ### 2.5.4、字符串常量池
