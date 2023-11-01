@@ -423,7 +423,7 @@ Parallel Old收集器是Parallel Scavenge收集器的老年代版本，使用多
 
 对CPU资源非常敏感，CPU少于4个时，CMS岁用户程序的影响可能变得很大，由此虚拟机提供了“增量式并发收集器”；无法回收浮动垃圾；采用标记清除算法会产生内存碎片，不过可以通过参数开启内存碎片的合并整理。
 
-![image (25).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222243378.png)
+![cms垃圾收集器](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222243378.png)
 
 
 ## 4.3、整堆收集器
