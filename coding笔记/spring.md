@@ -378,7 +378,6 @@ public class Around  implements MethodInterceptor {
 ### 3.1.6、切入点详解
 #### 3.1.6.1、切入点表达式
 
-
 ```java
 <aop:pointcut id="pc" expression="execution(* *(..))"/>
 
