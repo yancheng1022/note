@@ -365,6 +365,12 @@ PhantomReference<String> abcWeakRef = new PhantomReference<String>(abc, referenc
 
 > 解决办法：使用finally块关闭资源；关闭资源的代码，不应该有异常；jdk1.7后，可以使用try-with-resource块
 
+## 3.6、jvm对象何时会进入老年代
+
+1. 达到晋升年龄：新生代对象在经历每次GC的时候，如果没有被回收，则对象的年龄+1。当年龄超过阈值的时候，便会进入老年代。默认情况下，阈值为15（为什么15？对象头年龄为4bit）
+2. 大对象直接进入老年代。比如 -XX:PretenureSizeThreshold =1024，那么就表示超过1kb大小的对象在垃圾回收时直接进入到老年代（大对象：很长的字符串或数组）
+
+
 # 4、垃圾回收器
 ## 4.1、新生代垃圾收集器
 ### 4.1.1、Serial（串行）收集器
