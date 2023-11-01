@@ -595,3 +595,45 @@ public class EscapeExample {
 (2)标量替换　　
 Java虚拟机中的原始数据类型（int，long等数值类型以及reference类型等）都不能再进一步分解，它们可以称为标量。相对的，如果一个数据可以继续分解，那它称为聚合量，Java中最典型的聚合量是对象。如果逃逸分析证明一个对象不会被外部访问，并且这个对象是可分解的，那程序真正执行的时候将不创建这个对象，而改为直接创建它的若干个被这个方法使用到的成员变量来代替。拆散后的变量便可以被单独分析与优化，可以各自分别在栈帧或寄存器上分配空间，原本的对象就无需整体分配空间了。
 
+```java
+// 标量替换举例
+//如果逃逸分析确定`createPoint()`方法中创建的`Point`对象不会逃逸出该方法，就可以进行标量替换优化。即将`Point`对象拆分为其两个字段的独立局部变量，而不是作为一个对象分配在堆上.在优化后的代码中，`Point`对象被替换为两个独立的局部变量`x`和`y`，并直接在栈上分配。这样可以避免了对象的内存分配和字段访问的开销，从而提高了程序的性能。
+public class ScalarReplacementExample {
+    private static class Point {
+        private int x;
+        private int y;
+    }
+
+    public static void main(String[] args) {
+        Point point = createPoint(10, 20);
+        int sum = calculateSum(point);
+        System.out.println("Sum: " + sum);
+    }
+
+    private static Point createPoint(int x, int y) {
+        Point point = new Point();
+        point.x = x;
+        point.y = y;
+        return point;
+    }
+
+    private static int calculateSum(Point point) {
+        return point.x + point.y;
+    }
+}
+
+
+public class ScalarReplacementExample {
+    public static void main(String[] args) {
+        int x = 10;
+        int y = 20;
+        int sum = calculateSum(x, y);
+        System.out.println("Sum: " + sum);
+    }
+
+    private static int calculateSum(int x, int y) {
+        return x + y;
+    }
+}
+
+```
