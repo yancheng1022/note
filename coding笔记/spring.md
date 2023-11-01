@@ -352,6 +352,7 @@ spring框架在运行时，通过动态字节码技术，在JVM创建的，运�
 通过第三方动态字节码框架（ASM, Javassist, cglib）直接在JVM生成字节码，进而创建对象，当虚拟机结束，动态字节码跟着消失
 ```
 ### 3.1.5、额外功能详解
+
 MethodBeforeAdvice接口实现的的方法只能运行在目标方法执行之前
 MethodInterceptor 前，后，抛出异常 都可以运行
 所以我们实战中用到的更多的还是MethodInterceptor 
