@@ -126,25 +126,10 @@ jvisualvm：和jconsole功能类似，但功能更强。可以抓取和导入堆
   jdk1.7：字符串常量池被移到堆内存（1.7前在方法区）
   jdk8：废除了永久代。类的元信息会被放入本地内存（元空间）。将类的静态变量和字符串常量池放入到java堆
 
-### 2.5.2、class常量池
+### 2.5.2、class常量池，运行时常量池
 
 Java 文件被编译成 Class 文件，Class 文件中除了包含类的版本、字段、方法、接口等描述信息外，还有一项就是 Class 常量池，**Class 常量池是当 Class 文件被 Java 虚拟机加载进来后存放各种字面量和符号引用**
 
-> 类的加载过程中的链接部分的解析步骤就是把符号引用替换为直接引用，即把那些描述符（名字）替换为能直接定位到字段、方法的引用或句柄（地址）
-
-![image (21).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222238635.png)
-
-System.out.println("hello")经过反编译后的内容如下：
-```java
-javap -v F:\Thread_study\src\com\nyima\JVM\day01\Main.class
-```
-
-![class常量池](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222239362.png)
-
-![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211741107-6e92db9f-e7b1-4fe3-9b54-0f608dad19b6.png#clientId=u2849290d-6927-4&from=paste&id=u0f35b784&originHeight=410&originWidth=1118&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u3e3cb8ec-7f59-44f8-b925-f1bce7b280b&title=)
-![](https://cdn.nlark.com/yuque/0/2022/png/2996398/1658211750067-5a5fe357-17ac-4ed5-8463-862b32649804.png#clientId=u2849290d-6927-4&from=paste&id=u52353eda&originHeight=236&originWidth=1122&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ue01b07e2-503e-45f1-b6a7-3479b81cc26&title=)
-
-虚拟机中执行编译的方法（框内的是真正编译执行的内容，**#号的内容需要在常量池中查找**）
 
 ### 2.5.3、运行时常量池
 
