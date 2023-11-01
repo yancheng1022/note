@@ -1002,14 +1002,11 @@ Spring Boot框架采用了“约定优于配置”的设计理念，旨在简化
 ### 6.1.1、对象创建相关
 #### 6.1.1.1、@Component
 
-1. 作用：替换原有Spring配置文件中的 <bean> 标签
-- id 属性：在 @Component 中提供了默认的设置方式：首单词首字母小写（UserDAO --> userDAO）
-- class 属性：通过反射获得的 class 的内容
-2. 细节：如何显式指定工厂创建对象的 id 值
+作用：替换原有Spring配置文件中的bean标签
+id 属性：在 @Component 中提供了默认的设置方式：首单词首字母小写（UserDAO --> userDAO）
+class 属性：通过反射获得的 class 的内容
+细节：如何显式指定工厂创建对象的 id 值
 
-```java
-@Component("u")
-```
 #### 6.1.1.2、@Repository、@Service、@Contoller
 @Repository、@Service、@Controller 都是 @Component 的 **衍生注解**。
 本质上这些衍生注解就是 @Component，通过源码可以看见他们都使用了 @Component；
@@ -1171,6 +1168,7 @@ public class AppConfig{
   }
 }
 ```
+
 ### 6.2.3、@ComponentScan
 @ComponentScan 注解在配置 bean 中进行使用，等同于 XML 配置文件中的 <context:component-scan> 标签
 目的：进行相关注解的扫描（@Component、@Value、@Autowired …)
