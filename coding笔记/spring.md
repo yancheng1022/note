@@ -204,7 +204,16 @@ public class Aservice {
 3. set方法注入
 
 set 方法注入太过于臃肿，实际上很少使用
-![](https://cdn.nlark.com/yuque/0/2023/webp/2996398/1674952878239-42017dc4-dc63-4aa7-a94f-320cb420d6f1.webp#averageHue=%23292d35&clientId=ud4b36693-cbbf-4&from=paste&height=310&id=u2b6bf561&originHeight=317&originWidth=709&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u056464db-8a1b-43d0-b763-fe643205de7&title=&width=694)
+```java
+@Service
+public class Bservice {
+	Aservice aService;
+	@Autowired
+	public void setaService(Aservice aService){
+		this.aService = aService;
+	}
+}
+```
 
 
 ## 2.4、spring对象的生命周期
