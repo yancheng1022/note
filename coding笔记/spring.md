@@ -138,9 +138,10 @@ spring与日志框架整合，日志框架就可以在控制台中，输出sprin
 - spring如何整合日志框架？
 
 > spring 1,2,3 早期都是jcl
-spring4.x开始使用slf4j，默认整合的日志框架logback 或 log4j2
+  spring4.x开始使用slf4j，默认整合的日志框架logback 或 log4j2
 
 当然spring5中我们也可以不采用默认，而去整合我们熟悉的log4j
+
 1. pom
 
 ```xml
