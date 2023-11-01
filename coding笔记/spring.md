@@ -188,7 +188,18 @@ public class BService {
 2. 构造方法注入
 
 如果类只有一个构造方法，那么 @Autowired 注解可以省略；如果类中有多个构造方法，那么需要添加上 @Autowired 来明确指定到底使用哪个构造方法
-![](https://cdn.nlark.com/yuque/0/2023/webp/2996398/1674952714725-48d6f682-03ac-4a07-913c-4e9cfc5abcaf.webp#averageHue=%23292d36&clientId=ud4b36693-cbbf-4&from=paste&id=u28c488c2&originHeight=303&originWidth=696&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ub5ea652b-f051-4132-b1d8-aa419b45726&title=)
+```java
+@Service
+public class Aservice {
+	Bservice bService;
+	@autowired
+	public Aservice(BService bService){
+		this.bService = bService;
+	}
+}
+
+```
+
 
 3. set方法注入
 
