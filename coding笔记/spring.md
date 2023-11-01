@@ -215,7 +215,7 @@ public class Bservice {
 }
 ```
 
-
+> spring官方不建议第一种属性注入的方式。
 ## 2.4、spring对象的生命周期
 ### 2.4.1、spring bean的生命周期
 
