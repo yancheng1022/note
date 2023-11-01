@@ -821,26 +821,6 @@ public void test() {
 ## 4.3、spring事务处理
 ### 4.3.1、事务基本概念
 
-1. 什么是事务？
-
-事务时保证业务操作完整性的一种**数据库机制**
-
-2. 事务的四大特性？
-
-A 原子性	C 一致性 I 隔离性	D 持久性
-
-3. 如何控制事务？
-
-**JDBC：**
-Connection.setAutoCommit(false);
-Connection.commit();
-Connection.rollback();
-**Mybatis：**
-Mybatis 自动开启事务
-sqlSession.commit();，底层还是调用的 Connection
-sqlSession.rollback();，底层还是调用的 Connection
-> 结论：控制事务的底层，都是通过 Connection 对象完成的
-
 ### 4.3.2、spring控制事务的开发
 spring是通过aop的方式进行事务开发
 **增强功能：**原理也是在方法执行前关闭自动提交，spring帮我们封装成datasourcetransactionmanager，不需要自己去写增强方法
