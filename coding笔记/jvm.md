@@ -228,7 +228,6 @@ public class StringTableStudy {
 
 jdk1.8调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中，如果有则不会放入
 
-> jdk1.6调用字符串对象的intern方法，会将该字符串对象复制一份放入到串池中，如果有则不会放入
 
 ```java
 public class Main {
