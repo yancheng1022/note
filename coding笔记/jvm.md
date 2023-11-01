@@ -287,7 +287,6 @@ public class Main {
 > GC Root 需要确保引用所指的对象都是活着的,而当前线程栈帧中的对象和方法区中的对象，在这一时刻是存活的。
 
 ## 3.2、五种引用
-
 ![五种引用](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222241216.png)
 
 
