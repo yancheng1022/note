@@ -560,11 +560,36 @@ java编写，父加载器为启动类加载器，从jre/lib/ext下加载类库
 逃逸分析还可以帮助编译器进行性能优化。例如，如果一个对象被确定为不逃逸的，编译器可以进行标量替换，将对象的字段拆分为独立的局部变量，从而提高访问效率（标量替换）
 ## 6.1、逃逸方式
 
-1. 方法逃逸：在一个方法体内，定义一个局部变量，而它可能被外部方法引用，比如作为调用参数传递给方法，或作为对象直接返回。或者，可以理解成对象跳出了方法
-2. 线程逃逸：这个对象被其他线程访问到，比如赋值给了实例变量，并被其他线程访问到了。对象逃出了当前线程
+方法逃逸（Method Escape）：对象在方法中创建后被返回，逃逸到方法的调用者中
 
-![逃逸分析](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222246915.png)
+```java
+public class EscapeExample {
+    public static List<Integer> createList() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        return list;  // 对象在方法中创建后逃逸到方法的调用者
+    }
+}
+```
 
+线程逃逸（Thread Escape）：对象在一个线程中创建后，被其他线程所引用
+
+```java
+public class EscapeExample {
+    private static List<Integer> list;
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(() -> {
+            list = new ArrayList<>();  // 对象在一个线程中创建后逃逸到其他线程
+            list.add(1);
+            list.add(2);
+        });
+        thread.start();
+        // 在这里访问list...
+    }
+}
+```
 ## 6.2、逃逸结果
 
 1. 栈上分配
