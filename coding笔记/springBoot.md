@@ -386,6 +386,17 @@ Spring 事务管理分为**编码式和声明式**的两种方式
 |**propagation**|该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)`|
 |**isolation**|该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置|
 |timeout|该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒|
+
+### 5.2.2、事务传播行为
+
+Spring在TransactionDefinition接口中规定了7种类型的事务传播行为。Propagation枚举则引用了这些类型，开发过程中我们一般直接用Propagation枚举。例如@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)，常用的三项已经加粗
+
+
+|**事务传播行为类型**|**说明**|
+|---|---|
+|**PROPAGATION_REQUIRED**|需要事务（**默认**）。若当前无事务，新建一个事务；若当前有事务，加入此事务中|
+|PROPAGATION_SUPPORTS|支持事务。若当前没有事务以非事务方式执行；若当前有事务，加入此事务中|
+|PROPAGATION_MANDATORY|强制使用事务。若当前有事务，就使用当前事务；若当前没有事务，抛出IllegalTransactionStateException异常|
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
