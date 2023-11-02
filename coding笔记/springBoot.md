@@ -365,8 +365,11 @@ mvn clean package -Pdev -DskipTests
 
 # 5、事务实现
 
+Spring 事务管理分为**编码式和声明式**的两种方式
 
+编程式事务管理： 编程式事务管理使用 TransactionTemplate 或者直接使用底层的 PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate
 
+声明式事务管理： 建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务
 
 
 
