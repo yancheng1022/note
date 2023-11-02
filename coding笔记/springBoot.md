@@ -28,6 +28,8 @@ tags:
 
 ## 1.2、springBoot热部署
 
+### 1.2.1、实现方式
+
 通过引入spring-bootdevtools插件，可以实现不重启服务器情况下，对项目进行即时编译。引入热部署插件的步骤如下：
 
 1.添加依赖
@@ -49,7 +51,9 @@ tags:
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020902140.png)
 
 
+### 1.2.2、基本原理
 
+基本原理就是我们在编辑器上启动项目，然后改动相关的代码，然后编辑器自动触发编译，替换掉历史的.class文件后，项目检测到有文件变更后会重启srpring-boot项目。内部主要是通过引入的插件对我们的classpath资源变化进行监听，当classpath有变化，才会触发重启。
 
 
 
