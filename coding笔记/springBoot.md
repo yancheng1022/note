@@ -383,10 +383,9 @@ Spring 事务管理分为**编码式和声明式**的两种方式
 |---|---|
 |readOnly|该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)`|
 |rollbackFor|rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class})|
-
-
-
-
+|**propagation**|该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)`|
+|**isolation**|该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置|
+|timeout|该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒|
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
