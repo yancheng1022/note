@@ -320,6 +320,42 @@ Maven 也提供了对多环境的支持，不仅仅支持 Spring Boot 项目，�
 ```properties
 spring.profiles.active=@profile.active@
 ```
+
+profile.active 实际上就是一个变量，在 maven 打包的时候指定的 -P dev 传入的就是值。
+
+### 4.2.3、pom文件中定义profiles
+```xml
+<!--定义三种开发环境-->
+<profiles>
+    <profile>
+        <!--不同环境的唯一id-->
+        <id>dev</id>
+        <activation>
+            <!--默认激活开发环境-->
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <!--profile.active对应application.yml中的@profile.active@-->
+            <profile.active>dev</profile.active>
+        </properties>
+    </profile>
+    <!--测试环境-->
+    <profile>
+        <id>test</id>
+        <properties>
+            <profile.active>test</profile.active>
+        </properties>
+    </profile>
+    <!--生产环境-->
+    <profile>
+        <id>prod</id>
+        <properties>
+            <profile.active>prod</profile.active>
+        </properties>
+    </profile>
+</profiles>
+
+```
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
