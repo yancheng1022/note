@@ -207,15 +207,21 @@ Spring Boot 默认已经使用了 SLF4J + LogBack . 所以我们在不进行任�
 |**warn**|警告信息，潜在的问题信息，在生产日志中，作为给程序员的一种提醒而使用|
 |**error**|打印错误日志，但是不会影响程序继续运行|
 
-1.日志配置
-  可以指定指定包下的日志级别
+## 3.1、application配置文件
+
+可以指定指定包下的日志级别
 ```yml
 # 日志配置  
 logging:  
   level:  
-    com.baidu: debug  
+    com.baidu: debug  # 可以指定包下面的日志级别
     org.springframework: warn
 ```
+
+## 3.2、logback配置
+
+SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找logback-test.xml或logback.xml ，如果这两个都不存在，则会调用BasicConfigurator，创建一个最小化的基本配置。最小化配置由一个关联到根logger的ConsoleAppender组成，默认输出模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n，root logger级别为DEBUG，所以并不会生成日志文件，只会输出到控制台
+
 
 # 1、前置内容
 ## 1.1、EJB的问题
