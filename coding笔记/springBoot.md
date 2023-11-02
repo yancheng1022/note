@@ -214,7 +214,7 @@ Spring Boot 默认已经使用了 SLF4J + LogBack . 所以我们在不进行任�
 # 日志配置  
 logging:  
   level:  
-    com.baidu: debug  # 可以指定包下面的日志级别
+    com.baidu: debug  # 设置指定路径下的日志输出级别
     org.springframework: warn
 ```
 
