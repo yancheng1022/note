@@ -223,6 +223,7 @@ logging:
 SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找logback-test.xml或logback.xml ，如果这两个都不存在，则会调用BasicConfigurator，创建一个最小化的基本配置。最小化配置由一个关联到根logger的ConsoleAppender组成，默认输出模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n，root logger级别为DEBUG，所以并不会生成日志文件，只会输出到控制台
 
 
+
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
