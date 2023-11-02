@@ -94,6 +94,8 @@ public class JdbcConfiguration {
 
 ```
 
+### 2.1.2、@ConfigurationProperties批量注入
+
 ## 2.2、依赖注入
 依赖注入是通过在类中声明依赖关系，并由Spring容器负责在运行时将相应的依赖注入到类中。这种方式通常用于注入其他类的实例
 
