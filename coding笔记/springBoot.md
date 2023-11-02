@@ -199,7 +199,23 @@ public class Bservice {
 日志的基本概念参考java core文章中的第13节
 Spring Boot 默认已经使用了 SLF4J + LogBack . 所以我们在不进行任何额外操作的情况下就可以使用 SLF4J + Logback 进行日志输出。SLF4J 日志级别从小到大trace,debug,info,warn,error，默认是info级别。
 
+|日志级别|描述|
+|---|---|
+|**trace**|较低的日志级别，通常不会被使用，日志的输出很详细|
+|**debug**|程序员调式代码的时候使用，开发过程中打印一些运行信息|
+|**info**|记录运维（程序运行）过程的数据|
+|**warn**|警告信息，潜在的问题信息，在生产日志中，作为给程序员的一种提醒而使用|
+|**error**|打印错误日志，但是不会影响程序继续运行|
 
+1.日志配置
+  可以指定指定包下的日志级别
+```yml
+# 日志配置  
+logging:  
+  level:  
+    com.baidu: debug  
+    org.springframework: warn
+```
 
 # 1、前置内容
 ## 1.1、EJB的问题
