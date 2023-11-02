@@ -313,7 +313,9 @@ java -jar xxx.jar --spring.profiles.active=dev
 
 ## 4.2、maven多环境配置
 Maven 也提供了对多环境的支持，不仅仅支持 Spring Boot 项目，只要是基于 Maven 的项目都可以配置。Maven 对于多环境的支持在功能方面更加强大，支持 JDK 版本、资源文件、操作系统等等
-
+### 4.2.1、创建不同环境配置文件
+同4.1.1
+###
 
 # 1、前置内容
 ## 1.1、EJB的问题
