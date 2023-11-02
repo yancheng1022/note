@@ -402,6 +402,11 @@ Spring在TransactionDefinition接口中规定了7种类型的事务传播行为�
 |**PROPAGATION_REQUIRES_NEW**|新建事务。无论当前是否有事务，都新建事务运行|
 |**PROPAGATION_NESTED**|嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作|
 
+### 5.2.3、事务隔离级别
+|**隔离级别**|**含义**|
+|---|---|
+|DEFAULT|这是一个**PlatfromTransactionManager**默认的隔离级别，使用数据库默认的事务隔离级别另外四个与JDBC的隔离级别相对应|
+|READ_UNCOMMITTED|读未提交，最低的隔离级别。事实上我们不应该称其为隔离级别，因为在事务完成前，其他事务可以看到该事务所修改的数据。而在其他事务提交前，该事务也可以看到其他事务所做的修改。可能导致脏，幻，不可重复读|
 
 
 # 1、前置内容
