@@ -59,8 +59,58 @@ tags:
 
 
 
+## 2、注入
+
+## 2.1、属性注入
 
 
+## 2.2、依赖注入
+
+1.属性注入
+
+这里是使用 @Autowired 注解注入。另外也有 @Resource 以及 @Inject 等注解，都可以实现注入
+```java
+@Service
+public class BService {
+	@autowired
+	Aservice aService;
+	// ...
+}
+
+```
+
+2.构造方法注入
+
+如果类只有一个构造方法，那么 @Autowired 注解可以省略；如果类中有多个构造方法，那么需要添加上 @Autowired 来明确指定到底使用哪个构造方法
+```java
+@Service
+public class Aservice {
+	Bservice bService;
+	@autowired
+	public Aservice(BService bService){
+		this.bService = bService;
+	}
+}
+```
+
+
+3.set方法注入
+
+set 方法注入太过于臃肿，实际上很少使用
+```java
+@Service
+public class Bservice {
+	Aservice aService;
+	@Autowired
+	public void setaService(Aservice aService){
+		this.aService = aService;
+	}
+}
+```
+
+> spring官方不建议第一种属性注入的方式。推荐使用构造方法注入的方式。
+> （1）属性注入无法注入一个不可变的对象（final 修饰的对象）在 Java 中 final 对象（不可变）要么直接赋值，要么在构造方法中赋值，所以当使用属性注入 final 对象时，它不符合 Java 中 final 的使用规范，所以就不能注入成功了
+> （2）更容易违背单一设计原则。使用属性注入是比较简单的,我们可以很容易的在一个类中注入多个对象,但是这些对象可能会违背原则,因为很多对象没有必要去注入
 
 
 
