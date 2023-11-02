@@ -30,6 +30,17 @@ tags:
 
 通过引入spring-bootdevtools插件，可以实现不重启服务器情况下，对项目进行即时编译。引入热部署插件的步骤如下：
 
+1.添加依赖
+
+```xml
+<dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-devtools</artifactId>  
+    <scope>runtime</scope>  
+</dependency>
+```
+
+2.设置开启自动编译
 
 
 
