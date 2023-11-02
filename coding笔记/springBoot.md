@@ -356,6 +356,26 @@ profile.active 实际上就是一个变量，在 maven 打包的时候指定的 
 </profiles>
 
 ```
+
+### 4.2.4、打包时指定环境
+```
+mvn clean package -Pdev -DskipTests
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
