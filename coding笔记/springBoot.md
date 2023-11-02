@@ -42,7 +42,11 @@ tags:
 
 2.设置开启自动编译
 
+![idea自动编译|850](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020900514.png)
 
+3.在项目任意页面中使用组合快捷键“Ctrl+Shift+Alt+/”打开Maintenance选项框，选中并打开Registry页面，列表中找到“compiler.automake.allow.when.app.running”，将该选项后的Value值勾选，用于指定IDEA工具在程序运行过程中自动编译
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020902140.png)
 
 
 
