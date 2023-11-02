@@ -95,6 +95,8 @@ public class JdbcConfiguration {
 ```
 
 ### 2.1.2、@ConfigurationProperties批量注入
+1.注入到该类
+
 ```java
 @Data
 @Component
@@ -117,6 +119,30 @@ person.map.k1=v1
 person.map.k2=v2
 person.pet.type=dog
 person.pet.name=旺财
+
+```
+
+2.第三方配置
+
+除了 @ConfigurationProperties 用于注释类之外，您还可以在公共 @Bean 方法上使用它。当要将属 性绑定到控件之外的第三方组件时，这样做特别有用
+```java
+@Data
+public class AnotherComponent {
+    private boolean enabled;
+    private InetAddress remoteAddress;
+}
+
+@Configuration
+public class MyService {
+    @ConfigurationProperties("another")
+    @Bean
+    public AnotherComponent anotherComponent(){
+        return new AnotherComponent();
+    }
+}
+
+another.enabled=true
+another.remoteAddress=192.168.10.11
 
 ```
 
