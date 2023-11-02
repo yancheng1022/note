@@ -382,7 +382,7 @@ Spring 事务管理分为**编码式和声明式**的两种方式
 |**参 数 名 称**|**功 能 描 述**|
 |---|---|
 |readOnly|该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)`|
-
+|rollbackFor|rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class})|
 
 
 
