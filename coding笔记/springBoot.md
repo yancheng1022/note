@@ -1,12 +1,428 @@
 ---
-title: spring
+title: springBoot
 date: 2023/07/22
 categories:
   - coding
 tags:
   - spring
   - 编程基础
+  - springBoot
 ---
+# 1、Spring Boot基础应用
+
+## 1.1、springBoot特征
+
+**概念：**
+
+约定优于配置，简单来说就是你所期待的配置与约定的配置一致，那么就可以不做任何配置，约定不符合期待时才需要对约定进行替换配置。
+
+**特征：**
+
+1.SpringBoot Starter：他将常用的依赖分组进行了整合，将其合并到一个依赖中，这样就可以一次性添加到项目的Maven或Gradle构建中。
+
+2.使编码变得简单，SpringBoot采用 JavaConfig的方式对Spring进行配置，并且提供了大量的注解，极大的提高了工作效率，比如@Configuration和@bean注解结合，基于@Configuration完成类扫描，基于@bean注解把返回值注入IOC容器。
+
+3.自动配置：SpringBoot的自动配置特性利用了Spring对条件化配置的支持，合理地推测应用所需的bean并自动化配置他们。
+
+4.使部署变得简单，SpringBoot内置了三种Servlet容器，Tomcat，Jetty,undertow.我们只需要一个Java的运行环境就可以跑SpringBoot的项目了，SpringBoot的项目可以打成一个jar包
+
+## 1.2、springBoot热部署
+
+### 1.2.1、实现方式
+
+通过引入spring-bootdevtools插件，可以实现不重启服务器情况下，对项目进行即时编译。引入热部署插件的步骤如下：
+
+1.添加依赖
+
+```xml
+<dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-devtools</artifactId>  
+    <scope>runtime</scope>  
+</dependency>
+```
+
+2.设置开启自动编译
+
+![idea自动编译|850](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020900514.png)
+
+3.在项目任意页面中使用组合快捷键“Ctrl+Shift+Alt+/”打开Maintenance选项框，选中并打开Registry页面，列表中找到“compiler.automake.allow.when.app.running”，将该选项后的Value值勾选，用于指定IDEA工具在程序运行过程中自动编译
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020902140.png)
+
+
+### 1.2.2、基本原理
+
+基本原理就是我们在编辑器上启动项目，然后改动相关的代码，然后编辑器自动触发编译，替换掉历史的.class文件后，项目检测到有文件变更后会重启srpring-boot项目。内部主要是通过引入的插件对我们的classpath资源变化进行监听，当classpath有变化，才会触发重启。
+
+从官方文档可以得知，其实这里对类加载采用了两种类加载器，对于第三方jar包采用baseclassloader来加载，对于开发人员自己开发的代码则使用restartClassLoader来进行加载，这使得比停掉服务重启要快的多，因为使用插件只是重启开发人员编写的代码部分。
+
+# 2、注入
+
+## 2.1、属性注入
+属性注入是通过在类中声明属性，并使用注解将属性值直接注入到相应的属性中。这种方式通常用于注入简单的值，如配置文件中的属性值或常量值
+### 2.1.1、@Value值注入
+
+参数值在application.properties配置文件中编写，并利用@Value注解注入
+
+```java
+@Configuration
+public class JdbcConfiguration {
+
+    @Value("${jdbc.url}")
+    String url;
+    @Value("${jdbc.driverClassName}")
+    String driverClassName;
+    @Value("${jdbc.username}")
+    String username;
+    @Value("${jdbc.password}")
+    String password;
+
+
+    @Bean   //用bean注解将返回值添加到容器中
+    public DataSource dataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(url);
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+}
+
+```
+
+### 2.1.2、@ConfigurationProperties批量注入
+1.注入到该类
+
+```java
+@Data
+@Component
+@ConfigurationProperties(prefix = "person") //将配置文件中以person开头的属性注入到该类
+public class Person {
+
+    private int id; //id
+    private String name;    //名称
+    private List hobby;     // 爱好
+    private String[] family;    // 家庭
+    private Map map;
+    private Pet pet;    // 宠物
+}
+
+person.id=1
+person.name=tom
+person.hobby=音乐,篮球,阅读
+person.family=father,mother
+person.map.k1=v1
+person.map.k2=v2
+person.pet.type=dog
+person.pet.name=旺财
+
+```
+
+2.第三方配置
+
+除了 @ConfigurationProperties 用于注释类之外，您还可以在公共 @Bean 方法上使用它。当要将属 性绑定到控件之外的第三方组件时，这样做特别有用
+```java
+@Data
+public class AnotherComponent {
+    private boolean enabled;
+    private InetAddress remoteAddress;
+}
+
+@Configuration
+public class MyService {
+    @ConfigurationProperties("another")
+    @Bean
+    public AnotherComponent anotherComponent(){
+        return new AnotherComponent();
+    }
+}
+
+another.enabled=true
+another.remoteAddress=192.168.10.11
+
+```
+
+## 2.2、依赖注入
+依赖注入是通过在类中声明依赖关系，并由Spring容器负责在运行时将相应的依赖注入到类中。这种方式通常用于注入其他类的实例
+
+### 2.2.1、属性注入
+
+这里是使用 @Autowired 注解注入。另外也有 @Resource 以及 @Inject 等注解，都可以实现注入
+```java
+@Service
+public class BService {
+	@autowired
+	Aservice aService;
+	// ...
+}
+
+```
+
+### 2.2.2、构造方法注入
+
+如果类只有一个构造方法，那么 @Autowired 注解可以省略；如果类中有多个构造方法，那么需要添加上 @Autowired 来明确指定到底使用哪个构造方法
+```java
+@Service
+public class Aservice {
+	Bservice bService;
+	@autowired
+	public Aservice(BService bService){
+		this.bService = bService;
+	}
+}
+```
+
+
+### 2.2.3、set方法注入
+
+set 方法注入太过于臃肿，实际上很少使用
+```java
+@Service
+public class Bservice {
+	Aservice aService;
+	@Autowired
+	public void setaService(Aservice aService){
+		this.aService = aService;
+	}
+}
+```
+
+> spring官方不建议第一种属性注入的方式。推荐使用构造方法注入的方式。
+> （1）属性注入无法注入一个不可变的对象（final 修饰的对象）在 Java 中 final 对象（不可变）要么直接赋值，要么在构造方法中赋值，所以当使用属性注入 final 对象时，它不符合 Java 中 final 的使用规范，所以就不能注入成功了
+> （2）更容易违背单一设计原则。使用属性注入是比较简单的,我们可以很容易的在一个类中注入多个对象,但是这些对象可能会违背原则,因为很多对象没有必要去注入
+
+
+# 3、日志框架
+
+日志的基本概念参考java core文章中的第13节
+Spring Boot 默认已经使用了 SLF4J + LogBack . 所以我们在不进行任何额外操作的情况下就可以使用 SLF4J + Logback 进行日志输出。SLF4J 日志级别从小到大trace,debug,info,warn,error，默认是info级别。
+
+|日志级别|描述|
+|---|---|
+|**trace**|较低的日志级别，通常不会被使用，日志的输出很详细|
+|**debug**|程序员调式代码的时候使用，开发过程中打印一些运行信息|
+|**info**|记录运维（程序运行）过程的数据|
+|**warn**|警告信息，潜在的问题信息，在生产日志中，作为给程序员的一种提醒而使用|
+|**error**|打印错误日志，但是不会影响程序继续运行|
+
+## 3.1、application配置文件
+
+可以指定指定包下的日志级别
+```yml
+# 日志配置  
+logging:  
+  level:  
+    com.baidu: debug  # 设置指定路径下的日志输出级别
+    org.springframework: warn
+```
+
+## 3.2、logback配置
+
+SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找logback-test.xml或logback.xml ，如果这两个都不存在，则会调用BasicConfigurator，创建一个最小化的基本配置。最小化配置由一个关联到根logger的ConsoleAppender组成，默认输出模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n，root logger级别为DEBUG，所以并不会生成日志文件，只会输出到控制台
+
+通过自定义`logback.xml`配置文件来控制日志输出情况，通常我们会配置三个日志组件：
+
+- 控制台输出
+- 输出info级别日志文件
+- 输出error级别日志文件
+
+```xml
+<!-- Logback configuration. See http:<span class="hljs-comment">//logback.qos.ch/manual/index.html --></span>
+<configuration scan=<span class="hljs-string">"true"</span> scanPeriod=<span class="hljs-string">"2 seconds"</span>>
+    <!--定义日志文件的存储地址-->
+    <property name=<span class="hljs-string">"LOG_PATH"</span> value=<span class="hljs-string">"./logs"</span> />
+    <!-- 控制台输出 -->
+    <appender name=<span class="hljs-string">"STDOUT"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.ConsoleAppender"</span>>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <!--格式化输出：%d表示日期，%-<span class="hljs-number">5l</span>evel：级别从左显示<span class="hljs-number">5</span>个字符宽度，%t表示线程名，%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info级别日志文件输出 -->
+    <appender name=<span class="hljs-string">"INFO_FILE"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>>
+        <!-- 日志文件输出的文件名 -->
+        <File>${LOG_PATH}/info.log</File>
+        <rollingPolicy <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"</span>>
+            <!-- 每日生成日志文件或日志文件大小超出限制后输出的文件名模板 -->
+            <fileNamePattern>${LOG_PATH}/info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 日志文件保留天数 -->
+            <maxHistory><span class="hljs-number">30</span></maxHistory>
+            <!-- 日志文件最大大小：<span class="hljs-number">100</span>MB -->
+            <maxFileSize><span class="hljs-number">100</span>MB</maxFileSize>
+        </rollingPolicy>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- error级别日志文件输出 -->
+    <appender name=<span class="hljs-string">"ERROR_FILE"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>>
+        <!-- 日志输出级别，优先级 > <span class="hljs-string">'<root level>'</span> -->
+        <filter <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>>
+            <level>ERROR</level>
+        </filter>
+        <File>${LOG_PATH}/error.log</File>
+        <rollingPolicy <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"</span>>
+            <fileNamePattern>${LOG_PATH}/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory><span class="hljs-number">30</span></maxHistory>
+            <maxFileSize><span class="hljs-number">100</span>MB</maxFileSize>
+        </rollingPolicy>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 默认日志输出级别 -->
+    <root level=<span class="hljs-string">"INFO"</span>>
+        <appender-ref ref=<span class="hljs-string">"STDOUT"</span> />
+        <appender-ref ref=<span class="hljs-string">"INFO_FILE"</span> />
+        <appender-ref ref=<span class="hljs-string">"ERROR_FILE"</span> />
+    </root>
+
+</configuration>
+```
+
+# 4、多环境配置
+
+Spring Boot 自己本身带的有多环境配置，对多环境整合已经有了很好的支持，能够在打包，运行期间自由切换环境
+
+## 4.1、springBoot多环境配置
+### 4.1.1、创建不同环境配置文件
+
+不同环境的配置文件需要进行分开，按照项目运行环境启用加载。新建 application-dev.yml, application-test.yml, application-prod.yml。加上 application.yml 一共有四个配置文件。注意：配置文件名称一定要是 application-name.yml 格式，name可以自定义
+
+### 4.1.2、指定不同环境配置文件
+在 application.yml 文件中指定启用哪个环境的配置文件
+```yml
+# 指定启用环境为 开发环境 dev
+spring:
+  profiles:
+    active: dev
+```
+
+> 如果没有指定运行的环境，Spring Boot 会默认加载 application.yml 配置文件
+### 4.1.3、运行jar时指定配置文件
+
+```
+java -jar xxx.jar --spring.profiles.active=dev
+```
+
+
+## 4.2、maven多环境配置
+Maven 也提供了对多环境的支持，不仅仅支持 Spring Boot 项目，只要是基于 Maven 的项目都可以配置。Maven 对于多环境的支持在功能方面更加强大，支持 JDK 版本、资源文件、操作系统等等
+### 4.2.1、创建不同环境配置文件
+同4.1.1
+### 4.2.2、定义激活的变量
+需要将 Maven 激活的环境作用于 Spring Boot，实际还是利用了 spring.profiles.active 这个属性，只是现在这个属性的取值将是取值于 Maven，配置如下:
+```properties
+spring.profiles.active=@profile.active@
+```
+
+profile.active 实际上就是一个变量，在 maven 打包的时候指定的 -P dev 传入的就是值。
+
+### 4.2.3、pom文件中定义profiles
+```xml
+<!--定义三种开发环境-->
+<profiles>
+    <profile>
+        <!--不同环境的唯一id-->
+        <id>dev</id>
+        <activation>
+            <!--默认激活开发环境-->
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <!--profile.active对应application.yml中的@profile.active@-->
+            <profile.active>dev</profile.active>
+        </properties>
+    </profile>
+    <!--测试环境-->
+    <profile>
+        <id>test</id>
+        <properties>
+            <profile.active>test</profile.active>
+        </properties>
+    </profile>
+    <!--生产环境-->
+    <profile>
+        <id>prod</id>
+        <properties>
+            <profile.active>prod</profile.active>
+        </properties>
+    </profile>
+</profiles>
+
+```
+
+### 4.2.4、打包时指定环境
+```
+mvn clean package -Pdev -DskipTests
+```
+
+
+# 5、事务实现
+
+## 5.1、事务实现方案
+
+Spring 事务管理分为**编码式和声明式**的两种方式
+
+编程式事务管理： 利用TransactionTemplate模板通过编程的方式实现事务管理,而无需关注资源获取、复用、释放、事务同步及异常处理等操作
+
+声明式事务管理： 建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务（使用**isolation**属性声明事务的隔离级别,使用**propagation**属性声明事务的传播机制）
+
+> 声明式事务管理不需要入侵代码，更快捷而且简单，推荐使用
+
+## 5.2、@Transactional详解
+
+### 5.2.1、常用参数
+
+|**参 数 名 称**|**功 能 描 述**|
+|---|---|
+|readOnly|该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)`|
+|rollbackFor|rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class})|
+|**propagation**|该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)`|
+|**isolation**|该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置|
+|timeout|该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒|
+
+### 5.2.2、事务传播行为
+
+Spring在TransactionDefinition接口中规定了7种类型的事务传播行为。Propagation枚举则引用了这些类型，开发过程中我们一般直接用Propagation枚举。例如@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)，常用的三项已经加粗
+
+
+|**事务传播行为类型**|**说明**|
+|---|---|
+|PROPAGATION_SUPPORTS|支持事务。若当前没有事务以非事务方式执行；若当前有事务，加入此事务中|
+|PROPAGATION_NOT_SUPPORTED|不支持事务。若当前存在事务，把当前事务挂起，然后运行方法|
+|PROPAGATION_NEVER|不使用事务。若当前方法存在事务，则抛出IllegalTransactionStateException异常，否则继续使用无事务机制运行|
+|PROPAGATION_MANDATORY|强制使用事务。若当前有事务，就使用当前事务；若当前没有事务，抛出IllegalTransactionStateException异常|
+|**PROPAGATION_REQUIRED**|需要事务（**默认**）。若当前无事务，新建一个事务；若当前有事务，加入此事务中|
+|**PROPAGATION_REQUIRES_NEW**|新建事务。无论当前是否有事务，都新建事务运行|
+|**PROPAGATION_NESTED**|嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作|
+
+### 5.2.3、事务隔离级别
+@Transactional(isolation = Isolation.DEFAULT)，默认的隔离级别，使用数据库默认的事务隔离级别，下面四个与JDBC的隔离级别相对应
+
+| **级别** | **名字** | **隔离级别** | **脏读** | **不可重复读** | **幻读** | **数据库默认隔离级别** | 解释 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 读未提交 | read uncommitted | 是 | 是 | 是 |  | 事务A可以读取到事务B未提交的数据 |
+| 2 | 读已提交 | read committed | 否 | 是 | 是 | Oracle和SQL Server | 事务A只能读取其它事务已提交的数据（避免了脏读） |
+| 3 | 可重复读 | repeatable read | 否 | 否 | 是 | MySQL | 保证在同一个事务中多次读取同样数据的结果是一样的 |
+| 4 | 串行化 | serializable | 否 | 否 | 否 |  | 事务串行化顺序执行 |
+
+## 5.3、事务使用事项
+
+1.@Transactional 注解应该只被应用在 public 修饰的方法上(注意)。 如果在 protected、private 或者 package-visible 的方法上使用 该注解，它也不会报错(IDEA会有提示)， 但事务并没有生效
+
+2.@Transactional是基于动态代理的(注意)，需要一个类调用另一个类，类内调用会失效
+> 当在类的内部调用被@Transactional注解修饰的方法时，实际上是通过类的实例直接调用方法，而不是通过代理对象。这样做会绕过代理对象，从而导致@Transactional注解失效
+
+3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
+
+
+
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
