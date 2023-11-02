@@ -285,7 +285,7 @@ SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找
 </configuration>
 ```
 
-# 4、多环境切换
+# 4、多环境配置
 
 Spring Boot 自己本身带的有多环境配置，对多环境整合已经有了很好的支持，能够在打包，运行期间自由切换环境
 
