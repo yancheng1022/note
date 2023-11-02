@@ -222,7 +222,68 @@ logging:
 
 SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找logback-test.xml或logback.xml ，如果这两个都不存在，则会调用BasicConfigurator，创建一个最小化的基本配置。最小化配置由一个关联到根logger的ConsoleAppender组成，默认输出模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n，root logger级别为DEBUG，所以并不会生成日志文件，只会输出到控制台
 
+通过自定义`logback.xml`配置文件来控制日志输出情况，通常我们会配置三个日志组件：
 
+- 控制台输出
+- 输出info级别日志文件
+- 输出error级别日志文件
+
+```xml
+<!-- Logback configuration. See http:<span class="hljs-comment">//logback.qos.ch/manual/index.html --></span>
+<configuration scan=<span class="hljs-string">"true"</span> scanPeriod=<span class="hljs-string">"2 seconds"</span>>
+    <!--定义日志文件的存储地址-->
+    <property name=<span class="hljs-string">"LOG_PATH"</span> value=<span class="hljs-string">"./logs"</span> />
+    <!-- 控制台输出 -->
+    <appender name=<span class="hljs-string">"STDOUT"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.ConsoleAppender"</span>>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <!--格式化输出：%d表示日期，%-<span class="hljs-number">5l</span>evel：级别从左显示<span class="hljs-number">5</span>个字符宽度，%t表示线程名，%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info级别日志文件输出 -->
+    <appender name=<span class="hljs-string">"INFO_FILE"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>>
+        <!-- 日志文件输出的文件名 -->
+        <File>${LOG_PATH}/info.log</File>
+        <rollingPolicy <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"</span>>
+            <!-- 每日生成日志文件或日志文件大小超出限制后输出的文件名模板 -->
+            <fileNamePattern>${LOG_PATH}/info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 日志文件保留天数 -->
+            <maxHistory><span class="hljs-number">30</span></maxHistory>
+            <!-- 日志文件最大大小：<span class="hljs-number">100</span>MB -->
+            <maxFileSize><span class="hljs-number">100</span>MB</maxFileSize>
+        </rollingPolicy>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- error级别日志文件输出 -->
+    <appender name=<span class="hljs-string">"ERROR_FILE"</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>>
+        <!-- 日志输出级别，优先级 > <span class="hljs-string">'<root level>'</span> -->
+        <filter <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>>
+            <level>ERROR</level>
+        </filter>
+        <File>${LOG_PATH}/error.log</File>
+        <rollingPolicy <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"</span>>
+            <fileNamePattern>${LOG_PATH}/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory><span class="hljs-number">30</span></maxHistory>
+            <maxFileSize><span class="hljs-number">100</span>MB</maxFileSize>
+        </rollingPolicy>
+        <encoder <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ch.qos.logback.classic.encoder.PatternLayoutEncoder"</span>>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-<span class="hljs-number">5l</span>evel ${PID:-} --- [%t] %logger{<span class="hljs-number">50</span>} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 默认日志输出级别 -->
+    <root level=<span class="hljs-string">"INFO"</span>>
+        <appender-ref ref=<span class="hljs-string">"STDOUT"</span> />
+        <appender-ref ref=<span class="hljs-string">"INFO_FILE"</span> />
+        <appender-ref ref=<span class="hljs-string">"ERROR_FILE"</span> />
+    </root>
+
+</configuration>
+```
 
 # 1、前置内容
 ## 1.1、EJB的问题
