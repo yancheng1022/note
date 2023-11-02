@@ -95,6 +95,30 @@ public class JdbcConfiguration {
 ```
 
 ### 2.1.2、@ConfigurationProperties批量注入
+```java
+@Data
+@Component
+@ConfigurationProperties(prefix = "person") //将配置文件中以person开头的属性注入到该类
+public class Person {
+
+    private int id; //id
+    private String name;    //名称
+    private List hobby;     // 爱好
+    private String[] family;    // 家庭
+    private Map map;
+    private Pet pet;    // 宠物
+}
+
+person.id=1
+person.name=tom
+person.hobby=音乐,篮球,阅读
+person.family=father,mother
+person.map.k1=v1
+person.map.k2=v2
+person.pet.type=dog
+person.pet.name=旺财
+
+```
 
 ## 2.2、依赖注入
 依赖注入是通过在类中声明依赖关系，并由Spring容器负责在运行时将相应的依赖注入到类中。这种方式通常用于注入其他类的实例
