@@ -403,10 +403,21 @@ Spring在TransactionDefinition接口中规定了7种类型的事务传播行为�
 |**PROPAGATION_NESTED**|嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作|
 
 ### 5.2.3、事务隔离级别
-|**隔离级别**|**含义**|
-|---|---|
-|DEFAULT|这是一个**PlatfromTransactionManager**默认的隔离级别，使用数据库默认的事务隔离级别另外四个与JDBC的隔离级别相对应|
-|READ_UNCOMMITTED|读未提交，最低的隔离级别。事实上我们不应该称其为隔离级别，因为在事务完成前，其他事务可以看到该事务所修改的数据。而在其他事务提交前，该事务也可以看到其他事务所做的修改。可能导致脏，幻，不可重复读|
+@Transactional(isolation = Isolation.DEFAULT)，默认的隔离级别，使用数据库默认的事务隔离级别，下面四个与JDBC的隔离级别相对应
+
+| **级别** | **名字** | **隔离级别** | **脏读** | **不可重复读** | **幻读** | **数据库默认隔离级别** | 解释 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 读未提交 | read uncommitted | 是 | 是 | 是 |  | 事务A可以读取到事务B未提交的数据 |
+| 2 | 读已提交 | read committed | 否 | 是 | 是 | Oracle和SQL Server | 事务A只能读取其它事务已提交的数据（避免了脏读） |
+| 3 | 可重复读 | repeatable read | 否 | 否 | 是 | MySQL | 保证在同一个事务中多次读取同样数据的结果是一样的 |
+| 4 | 串行化 | serializable | 否 | 否 | 否 |  | 事务串行化顺序执行 |
+
+## 5.3、事务使用事项
+
+1.@Transactional 注解应该只被应用在 public 修饰的方法上(注意)。 如果在 protected、private 或者 package-visible 的方法上使用 该注解，它也不会报错(IDEA会有提示)， 但事务并没有生效
+2.@Transactional是基于动态代理的(注意)，需要一个类调用另一个类，类内调用会失效
+
+
 
 
 # 1、前置内容
