@@ -62,9 +62,40 @@ tags:
 ## 2、注入
 
 ## 2.1、属性注入
+属性注入是通过在类中声明属性，并使用注解将属性值直接注入到相应的属性中。这种方式通常用于注入简单的值，如配置文件中的属性值或常量值
 ### 2.1.1、### @Value值注入
 
+参数值在application.properties配置文件中编写，并利用@Value注解注入
+
+```java
+@Configuration
+public class JdbcConfiguration {
+
+    @Value("${jdbc.url}")
+    String url;
+    @Value("${jdbc.driverClassName}")
+    String driverClassName;
+    @Value("${jdbc.username}")
+    String username;
+    @Value("${jdbc.password}")
+    String password;
+
+
+    @Bean   //用bean注解将返回值添加到容器中
+    public DataSource dataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(url);
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+}
+
+```
+
 ## 2.2、依赖注入
+依赖注入是通过在类中声明依赖关系，并由Spring容器负责在运行时将相应的依赖注入到类中。这种方式通常用于注入其他类的实例
 
 ### 2.2.1、属性注入
 
