@@ -1,11 +1,12 @@
 ---
-title: spring
+title: springBoot
 date: 2023/07/22
 categories:
   - coding
 tags:
   - spring
   - 编程基础
+  - springBoot
 ---
 # 1、前置内容
 ## 1.1、EJB的问题
