@@ -285,6 +285,15 @@ SpringBoot项目默认使用logback，首先SpringBoot会从resource包下查找
 </configuration>
 ```
 
+# 4、多环境切换
+
+Spring Boot 自己本身带的有多环境配置，对多环境整合已经有了很好的支持，能够在打包，运行期间自由切换环境
+
+1.创建不同环境配置文件
+
+不同环境的配置文件需要进行分开，按照项目运行环境启用加载。新建 application-dev.yml, application-test.yml, application-prod.yml。加上 application.yml 一共有四个配置文件。注意：配置文件名称一定要是 application-name.yml 格式，name可以自定义
+
+2.
 # 1、前置内容
 ## 1.1、EJB的问题
 它是一个重量级的框架，体现在：
