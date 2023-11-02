@@ -26,6 +26,10 @@ tags:
 
 4.使部署变得简单，SpringBoot内置了三种Servlet容器，Tomcat，Jetty,undertow.我们只需要一个Java的运行环境就可以跑SpringBoot的项目了，SpringBoot的项目可以打成一个jar包
 
+## 1.2、springBoot热部署
+
+通过引入spring-bootdevtools插件，可以实现不重启服务器情况下，对项目进行即时编译。引入热部署插件的步骤如下：
+
 
 
 
