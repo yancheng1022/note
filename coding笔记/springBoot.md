@@ -436,6 +436,11 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 ## 6.1、起步依赖
 起步依赖，其实就是将具备某种功能的坐标打包到一起，可以简化依赖导入的过程。例如，我们导入spring-boot-starter-web这个starter，则和web开发相关的jar包都一起导入到项目中了。如下图所示：
 
+![起步依赖](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311031115469.png)
+
+## 6.2、自动配置
+
+
 
 # 6、自动配置原理
 
