@@ -453,11 +453,11 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 
 SpringBoot中的starter是一种非常重要的机制，能够抛弃以前繁杂的配置，将其统一集成进starter，应用者只需要在maven中引入starter依赖，Spring Boot就能自动扫描各个jar包下classpath路径的spring.factories文件，加载自动配置类信息，加载相应的bean信息并启动相应的`默认配置`
 
-1. 创建starter项目
+### 6.3.1、创建starter项目
 
 > 新建项目后，要删除main启动类
 
-2. 添加依赖
+### 6.3.2、添加依赖
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -508,6 +508,105 @@ SpringBoot中的starter是一种非常重要的机制，能够抛弃以前繁杂
 </project>
 复制代码
 ```
+
+### 6.3.3、编写属性类和业务类
+```java
+@ConfigurationProperties(prefix = "gyc.config")
+public class HelloProperties {
+ 
+    private String name = "hello 默认值！";
+ 
+    private int age = 8;
+ 
+    public int getAge() {
+        return age;
+    }
+ 
+    public void setAge(int age) {
+        this.age = age;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+public class HelloService {
+ 
+    private String name;
+ 
+    private int age;
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public int getAge() {
+        return age;
+    }
+ 
+    public void setAge(int age) {
+        this.age = age;
+    }
+ 
+    public String hello() {
+        return "HelloService{" +
+                "name='" + name + ''' +
+                ", age=" + age +
+                '}';
+    }
+}
+
+```
+
+### 6.3.4、编写自动配置类
+```java
+@Configuration(proxyBeanMethods = false)
+// 当存在某个类时，此自动配置类才会生效
+@ConditionalOnClass(value = {HelloService.class})
+// 导入我们自定义的配置类,供当前类使用
+@EnableConfigurationProperties(value = HelloProperties.class)
+// 只有非web应用程序时此自动配置类才会生效
+@ConditionalOnWebApplication
+//判断ljw.config.flag的值是否为“true”， matchIfMissing = true：没有该配置属性时也会正常加载
+@ConditionalOnProperty(prefix = "ljw.config", name = "flag", havingValue = "true", matchIfMissing = true)
+public class HelloAutoConfiguration {
+ 
+    /**
+     * @param helloProperties 直接方法签名入参注入HelloProperties,也可以使用属性注入
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(HelloService.class)
+    //@ConditionalOnProperty(prefix = "ljw.config", name = "flag", havingValue = "true", matchIfMissing = true)
+    public HelloService helloService(HelloProperties helloProperties) {
+        HelloService helloService = new HelloService();
+        //把获取的信息注入
+        helloService.setName(helloProperties.getName());
+        helloService.setAge(helloProperties.getAge());
+        return helloService;
+    }
+ 
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 
 # 1、前置内容
 ## 1.1、EJB的问题
