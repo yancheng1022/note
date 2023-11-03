@@ -576,7 +576,7 @@ public class HelloService {
 // 只有非web应用程序时此自动配置类才会生效
 @ConditionalOnWebApplication
 //判断ljw.config.flag的值是否为“true”， matchIfMissing = true：没有该配置属性时也会正常加载
-@ConditionalOnProperty(prefix = "ljw.config", name = "flag", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "gyc.config", name = "flag", havingValue = "true", matchIfMissing = true)
 public class HelloAutoConfiguration {
  
     /**
@@ -585,7 +585,7 @@ public class HelloAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(HelloService.class)
-    //@ConditionalOnProperty(prefix = "ljw.config", name = "flag", havingValue = "true", matchIfMissing = true)
+    //@ConditionalOnProperty(prefix = "gyc.config", name = "flag", havingValue = "true", matchIfMissing = true)
     public HelloService helloService(HelloProperties helloProperties) {
         HelloService helloService = new HelloService();
         //把获取的信息注入
