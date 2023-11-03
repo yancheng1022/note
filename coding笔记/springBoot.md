@@ -510,7 +510,24 @@ mvn clean install
 ```
 
 ### 6.3.7、测试
+
 ```java
+<dependency>
+	<groupId>com.blue</groupId>
+	<artifactId>mybean-spring-boot-starter</artifactId>
+	<version>1.0-SNAPSHOT</version>
+</dependency>
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = TestApplication.class)
+class TestApplicationTests {
+	@Autowiredprivate 
+	MyBean ba;
+	
+	@Testvoid contextLoads() {
+		System.out.println(ba.getName());
+	}
+}
 ```
 
 
