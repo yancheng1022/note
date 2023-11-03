@@ -52,6 +52,8 @@ tags:
 
 4.项目配置中开启自动更新
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311030924388.png)
+
 
 ### 1.2.2、基本原理
 
