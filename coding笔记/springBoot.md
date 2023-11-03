@@ -426,6 +426,7 @@ Spring在TransactionDefinition接口中规定了7种类型的事务传播行为�
 3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
 
 
+# 6、自动配置原理
 
 
 
