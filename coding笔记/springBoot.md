@@ -444,8 +444,7 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 
 在启动类上我们一般会加入SpringBootApplication注解，它是一个复合注解，它下面的@EnableAutoConfiguration这个注解，这个注解也是一个复合注解。@EnableAutoConfiguration注解导入AutoConfigurationImportSelector类，这个类中有一个selectImports()方法，扫描了所有包含META-INF/spring.factories的jar包，这些jar包实际上就是我们引入的starter中的依赖。而自动配置的类的全类名就在这个文件中，然后就可以通过反射加载这些类
 
-这些配置类@Configuration和@Bean这两个注解一起使用就可以创建一个基于java代码的配置类
-
+这些配置类@Configuration和@Bean这两个注解一起使用就可以创建一个基于java代码的配置类.比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
 
 # 6、自动配置原理
 
