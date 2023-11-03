@@ -449,7 +449,7 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311031446904.png)
 
 
-# 6、自动配置原理
+## 6、自动配置原理
 
 SpringBoot自动装配就是自动帮我们把第三方的组件装配到IOC容器，不需要再手动的去写Bean相关的配置，因为大多数配置SpringBoot已经帮我们约定好了，也就是**约定大于配置**的理念
 
