@@ -473,61 +473,14 @@ SpringBoot官方命名方式
 </dependency>
 ```
 
-### 6.3.3、编写属性类和业务类
+### 6.3.3、编写bean
 ```java
-@ConfigurationProperties(prefix = "gyc.config")
-public class HelloProperties {
- 
-    private String name = "hello 默认值！";
- 
-    private int age = 8;
- 
-    public int getAge() {
-        return age;
-    }
- 
-    public void setAge(int age) {
-        this.age = age;
-    }
- 
-    public String getName() {
-        return name;
-    }
- 
-    public void setName(String name) {
-        this.name = name;
-    }
+//@Component
+@EnableConfigurationProperties(MyBean .class)
+@ConfigurationProperties(prefix = "mybean")
+public class MyBean {
+	private int id;private String name;//省略setter和getter
 }
-public class HelloService {
- 
-    private String name;
- 
-    private int age;
- 
-    public String getName() {
-        return name;
-    }
- 
-    public void setName(String name) {
-        this.name = name;
-    }
- 
-    public int getAge() {
-        return age;
-    }
- 
-    public void setAge(int age) {
-        this.age = age;
-    }
- 
-    public String hello() {
-        return "HelloService{" +
-                "name='" + name + ''' +
-                ", age=" + age +
-                '}';
-    }
-}
-
 ```
 
 ### 6.3.4、编写自动配置类
