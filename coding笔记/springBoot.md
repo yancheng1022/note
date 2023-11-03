@@ -441,7 +441,7 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 ## 6.2、自动配置
 ## 6.2.1、bean的发现
 
-spring boot默认扫描启动类所在的包下的主类与子类的所有组件，但并没有包括依赖包中的类，那么依赖包中的bean是如何被发现和加载的？我们需要从Spring Boot项目的启动类开始跟踪，在启动类上我们一般会加入SpringBootApplication注解
+spring boot默认扫描启动类所在的包下的主类与子类的所有组件，但并没有包括依赖包中的类，那么依赖包中的bean是如何被发现和加载的？我们需要从Spring Boot项目的启动类开始跟踪，在启动类上我们一般会加入SpringBootApplication注解，它是一个复合注解，
 
 
 # 6、自动配置原理
