@@ -455,58 +455,24 @@ SpringBoot中的starter是一种非常重要的机制，能够抛弃以前繁杂
 
 ### 6.3.1、创建starter项目
 
-> 新建项目后，要删除main启动类
+SpringBoot官方命名方式
+格式：spring-boot-starter-{模块名}
+举例：spring-boot-starter-web
+自定义命名方式
+格式：{模块名}-spring-boot-starter
+举例：mystarter-spring-boot-starter
+
 
 ### 6.3.2、添加依赖
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.1</version>
-        <relativePath/> 
-    </parent>
- 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.gyc</groupId>
-    <artifactId>gyc-spring-boot-starter</artifactId>
-    <version>1.0</version>
-    
-   <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
- 
- 
-    <dependencies>
- 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
- 
-        <!--  包含自动配置的代码-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
- 
-        <!--  配置文件点击可以跳转实体-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
- 
-    </dependencies>
- 
-</project>
-复制代码
+<!--表示两个项目之间依赖不传递；不设置optional或者optional是false，表示传递依赖-->
+<!--例如：project1依赖a.jar(optional=true),project2依赖project1,则project2不依赖a.jar-->
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-configuration-processor</artifactId>
+   <optional>true</optional>
+</dependency>
 ```
 
 ### 6.3.3、编写属性类和业务类
