@@ -428,6 +428,7 @@ Spring在TransactionDefinition接口中规定了7种类型的事务传播行为�
 
 # 6、自动配置原理
 
+SpringBoot自动装配就是自动帮我们把第三方的组件装配到IOC容器，不需要再手动的去写Bean相关的配置，因为大多数配置SpringBoot已经帮我们约定好了，也就是**约定大于配置**的理念
 
 
 
