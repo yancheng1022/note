@@ -530,7 +530,37 @@ class TestApplicationTests {
 }
 ```
 
+### 6.3.8、实现热插拔
+```java
+// 1. 新增标记类
+public class ConfigMarker {
+}
 
+// 2.定义@EnableMyBean注解
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ConfigMarker.class})
+public @interface EnableMyBean{}
+
+// 3.改造配置类
+@Configuration
+@ConditionalOnBean(ConfigMarker.class)
+public class MyBeanAutoConfiguration {
+	@Beanpublic 
+	MyBean myBean(){
+		return new MyBean();
+	}
+}
+
+// 在测试启动类上开启MyBean功能
+@EnableMyBean
+@SpringBootApplication
+public class TestApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(TestApplication.class, args);
+	}
+}
+```
 
 # 1、前置内容
 ## 1.1、EJB的问题
