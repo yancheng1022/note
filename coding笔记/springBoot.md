@@ -484,44 +484,34 @@ public class MyBean {
 ```
 
 ### 6.3.4、编写自动配置类
+
 ```java
-@Configuration(proxyBeanMethods = false)
-// 当存在某个类时，此自动配置类才会生效
-@ConditionalOnClass(value = {HelloService.class})
-// 导入我们自定义的配置类,供当前类使用
-@EnableConfigurationProperties(value = HelloProperties.class)
-// 只有非web应用程序时此自动配置类才会生效
-@ConditionalOnWebApplication
-//判断gyc.config.flag的值是否为“true”， matchIfMissing = true：没有该配置属性时也会正常加载
-@ConditionalOnProperty(prefix = "gyc.config", name = "flag", havingValue = "true", matchIfMissing = true)
-public class HelloAutoConfiguration {
- 
-    /**
-     * @param helloProperties 直接方法签名入参注入HelloProperties,也可以使用属性注入
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(HelloService.class)
-    //@ConditionalOnProperty(prefix = "gyc.config", name = "flag", havingValue = "true", matchIfMissing = true)
-    public HelloService helloService(HelloProperties helloProperties) {
-        HelloService helloService = new HelloService();
-        //把获取的信息注入
-        helloService.setName(helloProperties.getName());
-        helloService.setAge(helloProperties.getAge());
-        return helloService;
-    }
- 
+@Configuration
+public class MyBeanAutoConfiguration {
+	@Bean
+	public MyBean myBean(){
+		return new MyBean();
+	}
 }
 ```
 
 
+### 6.3.5、编写spring.factories
+
+```txt
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\ com.blue.config.MyBeanAutoConfiguration
+```
 
 
+### 6.3.6、打包
 
+```txt
+mvn clean install
+```
 
-
-
-
+### 6.3.7、测试
+```java
+```
 
 
 
