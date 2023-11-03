@@ -446,6 +446,9 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 
 这些配置类@Configuration和@Bean这两个注解一起使用就可以创建一个基于java代码的配置类.比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311031446904.png)
+
+
 # 6、自动配置原理
 
 SpringBoot自动装配就是自动帮我们把第三方的组件装配到IOC容器，不需要再手动的去写Bean相关的配置，因为大多数配置SpringBoot已经帮我们约定好了，也就是**约定大于配置**的理念
