@@ -50,6 +50,8 @@ tags:
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311020902140.png)
 
+4.项目配置中开启自动更新
+
 
 ### 1.2.2、基本原理
 
