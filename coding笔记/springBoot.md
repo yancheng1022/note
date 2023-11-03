@@ -451,7 +451,7 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 
 ## 6.3、自定义starter
 
-SpringBoot自动装配就是自动帮我们把第三方的组件装配到IOC容器，不需要再手动的去写Bean相关的配置，因为大多数配置SpringBoot已经帮我们约定好了，也就是**约定大于配置**的理念
+SpringBoot中的starter是一种非常重要的机制，能够抛弃以前繁杂的配置，将其统一集成进starter，应用者只需要在maven中引入starter依赖，Spring Boot就能自动扫描各个jar包下classpath路径的spring.factories文件，加载自动配置类信息，加载相应的bean信息并启动相应的`默认配置`
 
 
 
