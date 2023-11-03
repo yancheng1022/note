@@ -466,12 +466,10 @@ SpringBoot官方命名方式
 ### 6.3.2、添加依赖
 
 ```xml
-<!--表示两个项目之间依赖不传递；不设置optional或者optional是false，表示传递依赖-->
-<!--例如：project1依赖a.jar(optional=true),project2依赖project1,则project2不依赖a.jar-->
 <dependency>
    <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-configuration-processor</artifactId>
-   <optional>true</optional>
+   <artifactId>spring-boot-autoconfigure</artifactId>
+   <optional>2.2.9.RELEASE</optional>
 </dependency>
 ```
 
