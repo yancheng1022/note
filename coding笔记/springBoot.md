@@ -575,7 +575,7 @@ public class HelloService {
 @EnableConfigurationProperties(value = HelloProperties.class)
 // 只有非web应用程序时此自动配置类才会生效
 @ConditionalOnWebApplication
-//判断ljw.config.flag的值是否为“true”， matchIfMissing = true：没有该配置属性时也会正常加载
+//判断gyc.config.flag的值是否为“true”， matchIfMissing = true：没有该配置属性时也会正常加载
 @ConditionalOnProperty(prefix = "gyc.config", name = "flag", havingValue = "true", matchIfMissing = true)
 public class HelloAutoConfiguration {
  
