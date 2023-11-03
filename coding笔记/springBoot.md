@@ -453,7 +453,61 @@ spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-
 
 SpringBoot中的starter是一种非常重要的机制，能够抛弃以前繁杂的配置，将其统一集成进starter，应用者只需要在maven中引入starter依赖，Spring Boot就能自动扫描各个jar包下classpath路径的spring.factories文件，加载自动配置类信息，加载相应的bean信息并启动相应的`默认配置`
 
+1. 创建starter项目
 
+> 新建项目后，要删除main启动类
+
+2. 添加依赖
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.1</version>
+        <relativePath/> 
+    </parent>
+ 
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.gyc</groupId>
+    <artifactId>gyc-spring-boot-starter</artifactId>
+    <version>1.0</version>
+    
+   <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+ 
+ 
+    <dependencies>
+ 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+ 
+        <!--  包含自动配置的代码-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+ 
+        <!--  配置文件点击可以跳转实体-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+ 
+    </dependencies>
+ 
+</project>
+复制代码
+```
 
 # 1、前置内容
 ## 1.1、EJB的问题
