@@ -576,8 +576,25 @@ spring:
 		web-application-type: SERVLET
 	servlet:
 		container: org.eclipse.jetty.server.Server
-// 2.
-
+// 2.maven配置文件
+<dependencies>
+    <!-- Jetty容器 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${jetty.version}</version>
+    </dependency>
+</dependencies>
 ```
 
 
