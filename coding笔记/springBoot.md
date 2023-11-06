@@ -619,12 +619,18 @@ spring:
 
 # 8、拦截器和过滤器
 
-当使用Spring Boot时，我们可以通过拦截器（Interceptor）和监听器（Listener）来实现对请求和响应的处理。拦截器和监听器提供了一种可插拔的机制，用于在请求处理过程中进行自定义操作，例如记录日志、身份验证、权限检查等
-
-## 8.1、拦截器
-
-拦截器（Interceptor）：是一种动态拦截方法调用的机制，在SpringMVC中动态拦截控制器方法的执行
+在构建 Web 应用时，我们经常需要对请求进行拦截和处理，以实现诸如身份验证、授权、日志记录等功能。在 Spring Boot 中，为我们提供了两种强大的工具来实现这些功能：过滤器（Filter）和拦截器（Interceptor）
 
 >拦截器与过滤器的区别
  归属不同：Filter属于Servlet技术，Interceptor属于SpringMVC技术
  拦截器内容不同：Filter对所有访问进行增强（在Tomcat服务器进行配置），Interceptor仅针对SpringMVC的访问进行增强
+## 8.1、拦截器
+
+在Spring Boot中，拦截器分为两类：  
+一种是对请求进来的url进行拦截，HandlerInterceptor接口
+一种是对发送出去的请求进行拦截，ClientHttpRequestInterceptor
+
+1、HandlerInterceptor接口
+
+
+
