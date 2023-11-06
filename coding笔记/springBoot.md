@@ -565,9 +565,23 @@ public class TestApplication {
 
 ## 6.4、springBoot内置tomcat原理
 
-1. springboot启动时会自动加载spring-boot-starter-web依赖中的配置类：servletWebServerFactoryAutoConfiguration  
-2. 该自动配置类通过@Import导入了可用的web容器工厂（默认tomcat，通过@ConditionalOnClass判断决定使用哪个）
-3. springboot启动时，在加载ioc容器的OnRefersh创建内嵌的tomcat并启动
+1、springboot启动时会自动加载spring-boot-starter-web依赖中的配置类：servletWebServerFactoryAutoConfiguration  
+2、该自动配置类通过@Import导入了可用的web容器工厂（默认tomcat，通过@ConditionalOnClass判断决定使用哪个）
+
+```java
+// 不使用默认tomcat，使用jetty容器时的配置
+// 1. application配置文件
+spring:
+	main:
+		web-application-type: SERVLET
+	servlet:
+		container: org.eclipse.jetty.server.Server
+// 2.
+
+```
+
+
+3、springboot启动时，在加载ioc容器的OnRefersh创建内嵌的tomcat并启动
 
 
 
