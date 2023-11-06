@@ -706,3 +706,13 @@ public class AdminWebConfig implements WebMvcConfigurer {
 ### 8.1.2、ClientHttpRequestInterceptor接口
 对于服务间调用，你可以使用ClientHttpRequestInterceptor接口来拦截和处理发送出去的请求。
 这通常用于处理微服务之间的通信，例如添加认证信息、自定义请求头等
+
+1、创建一个类，实现org.springframework.http.client.ClientHttpRequestInterceptor接口
+
+```java
+public class CustomHeaderInterceptor implements ClientHttpRequestInterceptor {    
+	@Override    
+	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)  throws IOException {                       request.getHeaders().set("Custom-Header", "CustomHeaderValue");        
+		return execution.execute(request, body);   
+	}}
+```
