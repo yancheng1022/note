@@ -789,6 +789,10 @@ class FilterConfig {
 
 ## 8.3、两者之间的关系
 
-
+| 特征   | 过滤器                 | 拦截器                             |
+|:-----|:--------------------|:--------------------------------|
+| 处理层级 | servlet容器级别         | spring mvc层级                    |
+| 使用场景 | 通用功能，如身份验证，授权，日志记录等 | 与spring框架相关的功能，如身份验证，请求参数处理     |
+| 优势   | 处理任何web应用请求，更大的控制范围 | 集成于springmvc，可以访问spring上下文和其它组件 |  
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311061524568.png)
