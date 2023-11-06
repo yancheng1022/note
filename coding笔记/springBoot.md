@@ -617,10 +617,14 @@ spring:
 5、使用（In Use）：在初始化完成之后，Bean就可以被使用了。
 6、销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
 
-# 8、拦截器和监听器
+# 8、拦截器、监听器
 
 当使用Spring Boot时，我们可以通过拦截器（Interceptor）和监听器（Listener）来实现对请求和响应的处理。拦截器和监听器提供了一种可插拔的机制，用于在请求处理过程中进行自定义操作，例如记录日志、身份验证、权限检查等
 
 ## 8.1、拦截器
 
 拦截器（Interceptor）：是一种动态拦截方法调用的机制，在SpringMVC中动态拦截控制器方法的执行
+
+>拦截器与过滤器的区别
+ 归属不同：Filter属于Servlet技术，Interceptor属于SpringMVC技术
+ 拦截器内容不同：Filter对所有访问进行增强（在Tomcat服务器进行配置），Interceptor仅针对SpringMVC的访问进行增强
