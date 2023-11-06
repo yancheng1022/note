@@ -771,3 +771,18 @@ public class RequestTimingFilter implements Filter {
 	
 	}
 ```
+
+2、要将此过滤器添加到 Spring Boot 应用中，请将其注册为 Bean
+
+```java
+@Configurationpublic 
+class FilterConfig {    
+	@Bean    
+	public FilterRegistrationBean<RequestTimingFilter> requestTimingFilter() {        
+		FilterRegistrationBean<RequestTimingFilter> registrationBean = new FilterRegistrationBean<>();        
+		registrationBean.setFilter(new RequestTimingFilter());        
+		registrationBean.addUrlPatterns("/*");        
+		return registrationBean;    
+	}
+}
+```
