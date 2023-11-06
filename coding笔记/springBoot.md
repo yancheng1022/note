@@ -716,3 +716,5 @@ public class CustomHeaderInterceptor implements ClientHttpRequestInterceptor {
 		return execution.execute(request, body);   
 	}}
 ```
+
+2、创建一个配置类，将拦截器添加到RestTemplate或WebClient中。这两个类都是Spring框架中用于发起HTTP请求的客户端
