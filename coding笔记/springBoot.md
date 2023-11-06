@@ -601,6 +601,7 @@ spring:
 3、在调用run()方法的时候完成Tomcat对象的创建，环境设置和启动，从而实现Tomcat容器的自动化处理
 
 # 7、spring Bean的生命周期
+## 7.1、spring bean声明周期
 
 ![spring bean生命周期](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230927436.png)
 
@@ -615,3 +616,7 @@ spring:
 4、初始化（Initialization）：分别调用（1）BeanPostProcessor的前置处理器，（2）InitialzingBean的afterPropertiesSet（）方法，（3）调用init初始化方法（4）调用BeanPostProcessor的后置处理器
 5、使用（In Use）：在初始化完成之后，Bean就可以被使用了。
 6、销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
+
+# 8、拦截器和监听器
+
+当使用Spring Boot时，我们可以通过拦截器（Interceptor）和监听器（Listener）来实现对请求和响应的处理。拦截器和监听器提供了一种可插拔的机制，用于在请求处理过程中进行自定义操作，例如记录日志、身份验证、权限检查等
