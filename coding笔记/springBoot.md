@@ -598,9 +598,7 @@ spring:
 ```
 
 
-3、容器启动会执行祖先类AbstractApplicationContext的refresh方法，该方法被ServletWebServerApplicationContext重写了，内置Tomcat就在onRefresh方法中被启动了
-
-
+3、在调用run()方法的时候完成Tomcat对象的创建，环境设置和启动，从而实现Tomcat容器的自动化处理
 
 # 1、前置内容
 ## 1.1、EJB的问题
