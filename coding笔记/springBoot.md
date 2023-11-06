@@ -425,7 +425,7 @@ Spring在TransactionDefinition接口中规定了7种类型的事务传播行为�
 
 3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
 
-# 6、springboot starter
+# 6、starter （自动配置原理）
 
 spring boot 在配置上相比spring要简单许多, 其核心在于spring-boot-starter, 在使用spring boot来搭建一个项目时, 只需要引入官方提供的starter, 就可以直接使用, 免去了各种配置。starter简单来讲就是做了起步依赖和自动配置
 
@@ -561,6 +561,13 @@ public class TestApplication {
 	}
 }
 ```
+
+
+## 6.4、springBoot内置tomcat原理
+
+当依赖Spring-booi-starter-web农顺时会在SprinBoo中深: ServetWebServerFactorvAutoConfiquration seve溶跟自动配类该自动配置类通过@lmport号入了可用(通过@ConditionalOnClass判新决定使用哪一个的一个Web容器工厂(认Tomcat)在内谈Tomcatv中配当了个TocatServletlebServerFacioregBean (webs它会在SpringBoot启动时 加载ioc容器(refresh) OnRefersh 创建内家的Tommcat#启动
+
+
 
 # 1、前置内容
 ## 1.1、EJB的问题
