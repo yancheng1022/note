@@ -598,7 +598,7 @@ spring:
 ```
 
 
-3、springboot启动时，在加载ioc容器的OnRefersh创建内嵌的tomcat并启动
+3、容器启动会执行祖先类AbstractApplicationContext的refresh方法，该方法被ServletWebServerApplicationContext重写了，内置Tomcat就在onRefresh方法中被启动了
 
 
 
