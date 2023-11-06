@@ -733,3 +733,17 @@ class RestTemplateConfig {
 ```
 
 ### 8.1.3、两者区别
+
+| 特征      | HandlerInterceptor                   | ClientHttpRequestInterceptor        |
+|:--------|:-------------------------------------|:------------------------------------|
+| 作用范围    | 拦截收到的Http请求                          | 拦截使用RestTemplate或WebClient发送的HTTP请求 |
+| 使用场景    | 身份验证，授权，日志记录                         | 添加认证信息，自定义请求头                       |
+| 需要实现的方法 | preHandle、postHandle、afterCompletion | intercept                           |  
+
+
+## 8.2、过滤器
+在 Spring Boot 中，过滤器（Filter）是用于在 Servlet 容器级别拦截和处理 HTTP 请求的组件。它们通常用于实现诸如身份验证、授权、日志记录、请求和响应的数据转换等功能。过滤器位于整个请求处理链的最前端，因此在请求到达 Spring 应用的任何其他组件之前，都会先经过过滤器处理
+
+1、注册过滤器
+
+注册过滤器：将过滤器作为一个 Bean 注册到 Spring 应用中。以下是一个简单的过滤器示例，用于记录每个请求的处理时间
