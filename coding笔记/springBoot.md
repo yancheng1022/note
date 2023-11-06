@@ -731,3 +731,5 @@ class RestTemplateConfig {
 	}
 }
 ```
+
+### 8.1.3、两者区别
