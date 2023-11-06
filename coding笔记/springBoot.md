@@ -755,7 +755,7 @@ public class RequestTimingFilter implements Filter {
 	public void init(FilterConfig filterConfig) {}    
 	
 	@Override    
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)            throws IOException, ServletException {             long startTime = System.currentTimeMillis();        
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)  throws IOException, ServletException {                       long startTime = System.currentTimeMillis();        
 		try {            
 			chain.doFilter(request, response);        
 		} finally {            
