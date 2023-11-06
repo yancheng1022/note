@@ -747,3 +747,27 @@ class RestTemplateConfig {
 1、注册过滤器
 
 注册过滤器：将过滤器作为一个 Bean 注册到 Spring 应用中。以下是一个简单的过滤器示例，用于记录每个请求的处理时间
+```java
+@WebFilter(urlPatterns = "/*")
+public class RequestTimingFilter implements Filter {
+
+	@Override    
+	public void init(FilterConfig filterConfig) {}    
+	
+	@Override    
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)            throws IOException, ServletException {             long startTime = System.currentTimeMillis();        
+		try {            
+			chain.doFilter(request, response);        
+		} finally {            
+			long endTime = System.currentTimeMillis();            
+			long duration = endTime - startTime;            
+			HttpServletRequest httpRequest = (HttpServletRequest) request;            
+			System.out.println(String.format("%s %s took %d ms", httpRequest.getMethod(), httpRequest.getRequestURI(), duration));        
+		}   
+	}    
+	
+	@Override    
+	public void destroy() {}
+	
+	}
+```
