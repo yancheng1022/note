@@ -630,7 +630,75 @@ spring:
 一种是对请求进来的url进行拦截，HandlerInterceptor接口
 一种是对发送出去的请求进行拦截，ClientHttpRequestInterceptor
 
-1、HandlerInterceptor接口
+### 8.1.1、HandlerInterceptor接口
 
+1、创建一个类，实现org.springframework.web.servlet.HandlerInterceptor接口
 
+```java
+/**
+ * 登录检查
+ * 1.配置到拦截器要拦截哪些请求
+ * 2.把这些配置放在容器中
+ */
+public class LoginInterceptor implements HandlerInterceptor {
+    /**
+     * 目标方法执行之前
+     * 登录检查写在这里，如果没有登录，就不执行目标方法
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 获取进过拦截器的路径
+        String requestURI = request.getRequestURI();
+        // 登录检查逻辑
+        HttpSession session = request.getSession();
+        Object loginUser = session.getAttribute("loginUser");
+        if(loginUser !=null){
+            // 放行
+            return true;
+        }
+        // 拦截   就是未登录,自动跳转到登录页面，然后写拦截住的逻辑
+        return false;
+    }
+ 
+    /**
+     * 目标方法执行完成以后
+     */
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+    }
+ 
+    /**
+     * 页面渲染以后
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+    }
+}
+```
 
+2、将拦截器添加到容器当中
+
+```java
+@Configuration
+//定制SpringMVC的一些功能都使用WebMvcConfigurer
+public class AdminWebConfig implements WebMvcConfigurer {
+ 
+    /**
+     * 配置拦截器
+     * @param registry 相当于拦截器的注册中心
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+		// 下面这句代码相当于添加一个拦截器   添加的拦截器就是我们刚刚创建的
+         registry.addInterceptor(new LoginInterceptor())
+				//  addPathPatterns()配置我们要拦截哪些路径 addPathPatterns("/**")表示拦截所有请求，包括我们的静态资源
+                 .addPathPatterns()
+				// excludePathPatterns()表示我们要放行哪些（表示不用经过拦截器）
+				// excludePathPatterns("/","/login")表示放行“/”与“/login”请求
+				// 如果有静态资源的时候可以在这个地方放行
+                 .excludePathPatterns("/","/login");
+    }
+}
+```
