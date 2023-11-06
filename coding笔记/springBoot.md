@@ -565,7 +565,9 @@ public class TestApplication {
 
 ## 6.4、springBoot内置tomcat原理
 
-当依赖Spring-booi-starter-web农顺时会在SprinBoo中深: ServetWebServerFactorvAutoConfiquration seve溶跟自动配类该自动配置类通过@lmport号入了可用(通过@ConditionalOnClass判新决定使用哪一个的一个Web容器工厂(认Tomcat)在内谈Tomcatv中配当了个TocatServletlebServerFacioregBean (webs它会在SpringBoot启动时 加载ioc容器(refresh) OnRefersh 创建内家的Tommcat#启动
+1. springboot启动时会自动加载spring-boot-starter-web依赖中的配置类：servletWebServerFactoryAutoConfiguration  
+2. 该自动配置类通过@Import导入了可用的web容器工厂（默认tomcat，通过@ConditionalOnClass判断决定使用哪个）
+3. springboot启动时，在加载ioc容器的OnRefersh创建内嵌的tomcat并启动
 
 
 
