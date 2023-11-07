@@ -817,7 +817,7 @@ Spring的监听器也可以说是一种观察者模式，它能实现事件与�
 - @EventListener：除了实现ApplicationListener接口注册监听器，也可以使用注解的方式
 - ApplicationEventPublisher：发布事件；
 
-## 9.2、事件监听四种方式
+## 9.2、事件监听方式
 
 ### 9.2.1、实现ApplicationListener接口
 
