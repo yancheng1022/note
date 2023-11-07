@@ -840,3 +840,18 @@ public class LisenterApplication{
 }
 
 ```
+
+
+### 9.2.2、使用@component注解装载入spring容器
+
+```java
+@Component
+public class MyListener2 implements ApplicationListener<MyEvent>{
+	Logger logger = Logger.getLogger(MyListener2.class);
+	
+	public void onApplicationEvent(MyEvent event){
+		logger.info(String.format("%s监听到事件源：%s.", MyListener2.class.getName(), event.getSource()));
+	}
+}
+
+```
