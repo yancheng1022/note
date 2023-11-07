@@ -810,9 +810,4 @@ SpringBoot 的监听器多用于监听Web应用中某些对象，信息的创建
 
 ## 9.1、监听器分类
 
-应用启动监听器，会话监听器，请求监听器
-
->常用监听器所继承的类：
-	ServletContextListener 应⽤启动监听  
-	HttpSessionLisener 会话监听  
-	ServletRequestListener 请求监听
+监听器是一种组件，它可以监听应用程序中发生的各种事件，并在某个事件触发时执行代码。在 Spring Boot 中，我们可以通过实现 ApplicationListener 接口或者使用 @EventListener 注解来编写监听器。常用的事件包括应用程序启动、上下文创建、上下文刷新、上下文关闭等。
