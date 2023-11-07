@@ -832,3 +832,18 @@ public class MyListener2 implements ApplicationListener<MyEvent>{
 }
 
 ```
+
+### 9.2.2、通过@EventListener注解实现事件监听
+
+```java
+@Component
+public class MyListener4{
+	Logger logger = Logger.getLogger(MyListener4.class);
+	
+  // @EventListener 注解支持根据Event参数类型进行匹配
+	@EventListener
+	public void listener(MyEvent event){
+		logger.info(String.format("%s监听到事件源：%s.", MyListener4.class.getName(), event.getSource()));
+	}
+}
+```
