@@ -818,31 +818,8 @@ Spring的监听器也可以说是一种观察者模式，它能实现事件与�
 - ApplicationEventPublisher：发布事件；
 
 ## 9.2、事件监听四种方式
-### 9.2.1、手工向AplicationContext添加监听器
 
-```java
-public class MyListener1 implements ApplicationListener<MyEvent>{
-	Logger logger = Logger.getLogger(MyListener1.class);
-	
-	public void onApplicationEvent(MyEvent event){
-		logger.info(String.format("%s监听到事件源：%s.", MyListener1.class.getName(), event.getSource()));
-	}
-}
-
-// 然后在springboot应用启动类中获取ConfigurableApplicationContext上下文，装载监听
-@SpringBootApplication
-public class LisenterApplication{
-	public static void main(String[] args){
-		ConfigurableApplicationContext context = SpringApplication.run(LisenterApplication.class, args);
-		//装载监听
-		context.addApplicationListener(new MyListener1());
-	}
-}
-
-```
-
-
-### 9.2.2、使用@component注解装载入spring容器
+### 9.2.1、实现ApplicationListener接口
 
 ```java
 @Component
