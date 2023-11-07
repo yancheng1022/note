@@ -810,4 +810,9 @@ SpringBoot 的监听器多用于监听Web应用中某些对象，信息的创建
 
 ## 9.1、监听器分类
 
-监听器是一种组件，它可以监听应用程序中发生的各种事件，并在某个事件触发时执行代码。在 Spring Boot 中，我们可以通过实现 ApplicationListener 接口或者使用 @EventListener 注解来编写监听器。常用的事件包括应用程序启动、上下文创建、上下文刷新、上下文关闭等。
+Spring的监听器也可以说是一种观察者模式，它能实现事件与事件监听者直接的解耦，在Spring中监听器的实现主要有一下重要组件：
+
+- ApplicationListener：事件监听者，观察者；
+- ApplicationEvent：Spring 事件，记录事件源、事件内容、时间等数据；
+- @EventListener：除了实现ApplicationListener接口注册监听器，也可以使用注解的方式
+- ApplicationEventPublisher：发布事件；
