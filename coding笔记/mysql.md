@@ -1196,6 +1196,7 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 4. type：连接类型，访问类型，表示MySQL在访问表时所采取的方式
 
 性能：性能： null > system/const > eq_ref > ref > ref_or_null   >  range > index >  all 
+
 > null：优化过程中就已得到结果，不用再访问表或索引
 > const：在整个查询过程中这个表最多只会有一条匹配的行，比如主键 id=1 就肯定只有一行
 > eq_ref：使用有唯一性 索引查找（主键或唯一性索引）
