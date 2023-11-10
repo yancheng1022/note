@@ -1183,10 +1183,12 @@ EXPLAIN 命令用于SQL语句的**查询执行计划**
 ```java
 EXPLAIN select * from person where dept_id =(select did from dept where dname ='python');
 ```
+
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/2996398/1679319789341-8cecd090-7731-4223-9b27-ab9a3b605275.png#averageHue=%23f9f7f5&clientId=u65a23804-8145-4&from=paste&height=82&id=u45062470&originHeight=82&originWidth=816&originalType=binary&ratio=1&rotation=0&showTitle=false&size=7645&status=done&style=none&taskId=u746f8984-6a64-4768-842a-e3ec65c59d5&title=&width=816)
 
 1. id（查询序列号）：从 2 个表中查询，对应输出 2 行，每行对应一个表， id 列表示执行顺序，id 越大，越先执行，id 相同时，由上至下执行
 2. select_type（查询类型）：最常见的值包括SIMPLE、PRIMARY、DERIVED 和UNION
+
 > simple：简单查询，没有union和子查询
 > primary ：最外层查询 (在存在子查询的语句中，最外面的select查询就是primary)
 > derived  ：子查询(在FROM列表中包含的子查询)  EXPLAIN SELECT *FROM (SELECT* FROM person LIMIT 5) AS s
@@ -1223,12 +1225,14 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 它的实现依赖于三个概念：版本链和快照读和ReadView
 
 1. 版本链：多个事务并行操作某一行数据时，不同事务对该行数据的修改会产生多个版本，然后通过回滚指针（roll_pointer），连成一个链表，这个链表就称为版本链(最新记录+undo-log)
+
 > undo log，**回滚日志**，用于记录数据被修改前的信息。在表记录修改之前，会先把数据拷贝到undo log里，如果事务回滚，即可以通过undo log来还原数据. 可以这样认为，当delete一条记录时，undo log 中会记录一条对应的insert记录
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101605938.png)
 
 
 2. 快照读：读取的是记录数据的可见版本，不加锁，普通的select语句都是快照读
+
 > 当前读：读取的是记录数据的最新版本，显式加锁的都是当前读。如update，delete，select..for update
 > 【注意】：只有快照读才会使用MVCC，当前读使用行锁+间隙锁（临键锁Next-Key Locks）实现
 
