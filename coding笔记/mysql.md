@@ -1209,8 +1209,8 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 5. possible_keys：可能使用的索引
 6. key：实际使用的索引，表示MySQL在执行查询时所使用的索引
 7. rows：扫描行数，表示MySQL在执行查询时所扫描的行数。
-8. extra：重要的额外信息
-> [https://blog.csdn.net/li1325169021/article/details/113925826](https://blog.csdn.net/li1325169021/article/details/113925826)
+8. extra：重要的额外信息（[https://blog.csdn.net/li1325169021/article/details/113925826](https://blog.csdn.net/li1325169021/article/details/113925826)）
+
 > （1）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
 > （2）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
 > （3）Using index：select操作中使用了覆盖索引(Covering Index)，避免访问了表的数据行，效率不错
@@ -1224,7 +1224,8 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 1. 版本链：多个事务并行操作某一行数据时，不同事务对该行数据的修改会产生多个版本，然后通过回滚指针（roll_pointer），连成一个链表，这个链表就称为版本链(最新记录+undo-log)
 > undo log，**回滚日志**，用于记录数据被修改前的信息。在表记录修改之前，会先把数据拷贝到undo log里，如果事务回滚，即可以通过undo log来还原数据. 可以这样认为，当delete一条记录时，undo log 中会记录一条对应的insert记录
 
-![](https://cdn.nlark.com/yuque/0/2023/webp/2996398/1681138643616-8b04d0cd-73e4-448e-a9e0-e5215c9002cb.webp#averageHue=%23f4e0c2&clientId=uc1c07bc1-f4f4-4&from=paste&id=uadf71abd&originHeight=425&originWidth=1080&originalType=url&ratio=2&rotation=0&showTitle=false&status=done&style=none&taskId=u48ebeeb9-a1eb-48c5-a8f5-dbad6781c5b&title=)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101605938.png)
+
 
 2. 快照读：读取的是记录数据的可见版本，不加锁，普通的select语句都是快照读
 > 当前读：读取的是记录数据的最新版本，显式加锁的都是当前读。如update，delete，select..for update
@@ -1232,11 +1233,14 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 
 3. RedaView：读视图，其实就是一个数据结构，包含四个属性：当前活跃事务编号集合，最小活跃事务编号，预分配事务编号（当前最大事务编号+1），创建者事务编号
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/2996398/1681140694687-3c414557-8d4c-4e14-a88f-96e340d0a32e.png#averageHue=%23e7e7e7&clientId=uc1c07bc1-f4f4-4&from=paste&height=287&id=uad569d64&originHeight=573&originWidth=1499&originalType=binary&ratio=2&rotation=0&showTitle=false&size=330922&status=done&style=none&taskId=u8727bc1e-4613-4196-ba34-a2a1011a67b&title=&width=749.5)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101605005.png)
+
+
 > 读已提交：在每次执行快照读的时候生成ReadView
 > 可重复读：（同一事务）只在第一次使用快照读的时候生成ReadView，后续复用（解决不可重复读）,（但两次快照读之间存在当前读，也会重新生成，所以存在幻读的问题）
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/2996398/1681139612857-20ef580c-3b5b-4a1c-b0ee-04919f0358b6.png#averageHue=%23f9f9f9&clientId=uc1c07bc1-f4f4-4&from=paste&height=474&id=uf353c004&originHeight=948&originWidth=2393&originalType=binary&ratio=2&rotation=0&showTitle=false&size=310540&status=done&style=none&taskId=ue3200b4f-53ac-46b5-8107-a368dc19cc4&title=&width=1196.5)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101606136.png)
+
 
 > 流程：
 > 1. 在执行查询操作时生成一个ReadView（注意在读已提交下，每次快照读都生成一个ReadView）
@@ -1249,6 +1253,7 @@ innoDB通过给索引记录加锁的方式实现行级锁，具体来说实现�
 **记录锁**：锁定单个行记录的锁（RC,RR都支持）
 **间隙锁**：锁定索引记录的间隙，确保索引记录的间隙不变（RR支持）
 **next-key锁**：记录锁和间隙锁的组合，同时锁住数据和数据前后范围（RR支持）
+
 > 在RR隔离级别，InnoDB对于记录加锁都是线采用next-key锁，sql中含有唯一索引时，会采用记录锁，仅锁住索引本身而非范围
 
 各种操作加锁的特点：
