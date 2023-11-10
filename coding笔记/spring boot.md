@@ -847,3 +847,15 @@ public class MyListener4{
 	}
 }
 ```
+
+
+# 10、springmvc执行流程
+
+1.客户端发送请求到DispatcherServlet。
+2.DispatcherServlet根据请求的URL找到对应的HandlerMapping。
+3.HandlerMapping返回对应的HandlerExecutionChain，其中包含处理请求的Controller以及拦截器。
+4.DispatcherServlet根据返回的HandlerExecutionChain取出对应的Controller，并调用其处理方法。
+5.Controller处理请求，并返回一个ModelAndView对象。
+6.DispatcherServlet根据返回的ModelAndView对象，调用对应的ViewResolver进行视图解析。
+7.ViewResolver返回对应的View对象。DispatcherServlet将Model传递给View，View对Model进行渲染。
+8.DispatcherServlet将渲染后的视图返回给客户端
