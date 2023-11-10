@@ -919,7 +919,7 @@ rs = ps.executeQuery();
 ```
 ### 10.2.2、CallableStatement 
 
-allableStatement是PreparedStatement的子类，主要是调用数据库中的存储过程/存储函数。并通过CallableStatement对象可以获取存储过程/存储函数的执行结果；
+callableStatement是PreparedStatement的子类，主要是调用数据库中的存储过程/存储函数。并通过CallableStatement对象可以获取存储过程/存储函数的执行结果；
 
 ```java
 	// 定义存储过程
