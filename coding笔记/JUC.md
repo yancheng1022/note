@@ -313,7 +313,7 @@ Monitor 被翻译为**监视器**或**管程**
 
 1.对象头
 
-包括：对象头：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
+包括：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
 
 ![java对象头](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930015.jpg)
 
