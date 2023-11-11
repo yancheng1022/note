@@ -214,7 +214,7 @@ java.lang.InterruptedException: sleep interrupted
 ```
 ### 2.7.2、打断正常运行的线程
 
-打断正常运行的线程, 不会清空打断运行（此时我们需要通过打断状态来中止）
+当使用interrupt()方法去打断正在运行线程时，被打断的线程会继续运行，但是该线程的打断标记会更新，更新为true，因此可以根据打断标记来作为判断条件使得线程停止
 
 ```java
 private static void test2() throws InterruptedException {
