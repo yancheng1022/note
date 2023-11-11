@@ -182,9 +182,11 @@ private static void test1() throws InterruptedException {
 
 
 ## 2.7、interrupt
+
+interrupt虽然是打断线程的方法，但不会立即结束线程运行，而是将线程的打断状态设置为true，在线程的isInterrupted方法来查看打断状态。
 ### 2.7.1、打断阻塞状态的线程
 
-sleep，wait，join 的线程 这几个方法都会让线程进入阻塞状态 ，打断 这几个状态 的线程, 会中断
+sleep，wait，join 的线程 这几个方法都会让线程进入阻塞状态 ，当使用interrupt()方法去打断处于阻塞状态的线程时，会以异常的方式打印，而不会更新打断标记，因此，虽然被打断，但是打断标记依然为false。此时就需要在try catch异常捕获处再次调用interrupt()方法，就会使打断状态为true，优雅结束线程运行
 
 ```java
 private static void test1() throws InterruptedException {
