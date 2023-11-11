@@ -313,9 +313,9 @@ Monitor 被翻译为**监视器**或**管程**
 
 1.对象头
 
-包括：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
+包括：Mark Word（标记字段）、Class Pointer（类型指针，它主要指向类的数据，也就是指向方法区中的位置）,数组长度（如果是数组）
 
-![java对象头](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930015.jpg)
+![markdown](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930015.jpg)
 
 
 2. **实例数据**
@@ -327,10 +327,12 @@ Monitor 被翻译为**监视器**或**管程**
 对齐填充：由于虚拟机要求 对象起始地址必须是8字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐。
 ## 3.3、synchronized升级
 ### 3.3.1、偏向锁
+
 > 使用场景：如果只有一个线程，就不需要每次的申请释放锁
 
 只有第一次使用 CAS 将线程 ID 设置到对象的 Mark Word 头，之后发现这个线程 ID 是自己的就表示没有竞争，不用重新 CAS。以后只要不发生竞争，这个对象就归该线程所有 
 ### 3.3.2、轻量级锁
+
 > 使用场景：如果一个对象虽然有多线程要加锁，但加锁的时间是错开的（也就是没有竞争），那么可以使用轻量级锁来优化
 
 ![轻量级锁](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930202.jpg)
