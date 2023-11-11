@@ -274,6 +274,7 @@ log.debug("运行结束...");
 
 
 ## 2.9、线程状态
+
 | 状态   | 说明 |
 | --- | --- |
 | NEW | 初始状态:线程被创建，但还没有调用start()方法 |
@@ -287,18 +288,21 @@ log.debug("运行结束...");
 
 
 # 3、共享模型之管程
+
 管程（monitor），管理共享变量以及对其的操作过程，让这个类是线程安全的
 ## 3.1、monitor
 Monitor 被翻译为**监视器**或**管程**
 每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的Mark Word 中就被设置指向 Monitor 对象的指针
 
 ### 3.1.1、Monitor结构
+
 **结构**：owner  entryList  waitSet
 
 ![monitor结构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930118.jpg)
 
 
 ### 3.1.2、Monitor原理
+
 （1）刚开始monitor中owner为null 
 （2）当某个线程t1执行同步方法synchronized时，会将owner置为该线程 
 （3）t1持有锁过程中，t2，t3来了就会进入entryList中阻塞 
@@ -307,7 +311,7 @@ Monitor 被翻译为**监视器**或**管程**
 
 ## 3.2、java对象结构
 
-1. **对象头**
+1.对象头
 
 包括：对象头：Mark Word（标记字段）、Class Pointer（类型指针）,数组长度（如果是数组）
 
