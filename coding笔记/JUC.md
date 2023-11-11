@@ -357,19 +357,8 @@ Monitor 被翻译为**监视器**或**管程**
 ![重量级锁](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230931871.jpg)
 
 
-1. 当 Thread-1 进行轻量级加锁时，Thread-0 已经对该对象加了轻量级锁
-2. 这时 Thread-1 加轻量级锁失败，进入锁膨胀流程 
 
-（1）为 Object 对象申请 Monitor 锁，让 Object 指向重量级锁地址 
-（2）然后自己进入 Monitor 的 EntryList阻塞队列
-
-3. 当 Thread-0 退出同步块解锁时，使用 cas 将 Mark Word 的值恢复给对象头，失败。这时会进入重量级解锁流程，即按照 Monitor 地址找到 Monitor 对象，设置 Owner 为 null，唤醒 EntryList 中阻塞线程（不公平）
-
-> 调用wait方法，会将此线程放入到wait set中，然后放弃锁。直到有其它线程调用notify（），才会重新进入entrylist中，重新争夺锁的拥有权
-
-### 3.3.4、自旋锁
-重量级锁竞争的时候，还可以使用自旋(循环尝试获取重量级锁)来进行优化，如果当前线程自旋成功（即这时候持锁线程已经退出了同步块，释放了锁），这时当前线程就可以避免阻塞。 (进入阻塞再恢复,会发生上下文切换,比较耗费性能)
-
+### 
 ## 3.4、wait/notify
 Owner 线程发现条件不满足，调用 wait 方法，即可进入 WaitSet 变为 WAITING 状态 。BLOCKED 和 WAITING 的线程都处于阻塞状态，不占用 CPU 时间片 。BLOCKED 线程会在 Owner 线程释放锁时唤醒 。WAITING 线程会在 Owner 线程调用 notify 或 notifyAll 时唤醒，但唤醒后并不意味者立刻获得锁，仍需进入EntryList 重新竞争
 
