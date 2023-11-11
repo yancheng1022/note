@@ -21,6 +21,7 @@ tags:
 - 一个进程之内可以分为一到多个线程。 
 - 一个线程就是一个指令流，将指令流中的一条条指令以一定的顺序交给 CPU 执行 
 - **Java 中，线程作为最小调度单位，进程作为资源分配的最小单位。 在 windows 中进程是不活动的，只是作为线程的容器**
+
 ## 1.2、并发和并行
 并发：线程轮流使用CPU
 并行：多核cpu下，多个核同时调度运行线程
@@ -30,6 +31,7 @@ tags:
 比如在项目中，视频文件需要转换格式等操作比较费时，这时开一个新线程处理视频转换，避免阻塞主线程 
 ### 1.3.2、提升效率
 充分利用多核 cpu 的优势，提高运行效率。想象下面的场景，执行 3 个计算，最后将计算结果汇总。
+
 ```java
 计算 1 花费 10 ms
 计算 2 花费 11 ms
@@ -45,6 +47,7 @@ tags:
 # 2、java线程
 ## 2.1、线程的创建
 ### 2.1.1、直接使用Thread
+
 ```java
 // 创建线程对象
 Thread t = new Thread() {
@@ -56,6 +59,7 @@ Thread t = new Thread() {
 t.start();
 ```
 ### 2.1.2、使用 Runnable 配合 Thread 
+
 ```java
 Runnable runnable = new Runnable() {
     public void run(){
@@ -67,7 +71,9 @@ Thread t = new Thread( runnable );
 // 启动线程
 t.start();
 ```
+
 java8可用lambda精简
+
 ```java
 // 创建任务对象
 Runnable task2 = () -> log.debug("hello");
@@ -96,31 +102,32 @@ log.debug("结果是:{}", result);
 ## 2.2、查看进程线程
 ### 2.2.1、windows
 
-1. tasklist 查看进程 
-2. taskkill 杀死进程 
-3. netstat -ano|findstr 8080 根据端口查看进程
+1.tasklist 查看进程 
+2.taskkill 杀死进程 
+3.netstat -ano|findstr 8080 根据端口查看进程
 ### 2.2.2、linux
 
-1. ps -fe 查看所有进程 
-2. kill 杀死进程
-3.  top -Hp <PID> 查看某个进程（PID）的所有线程 
-4. netstat -nlp|grep 8080 根据端口查看进程
+1.ps -fe 查看所有进程 
+2.kill 杀死进程
+3.top -Hp PID 查看某个进程（PID）的所有线程 
+4.netstat -nlp|grep 8080 根据端口查看进程
+
 ### 2.2.3、JDK
 
-1. jps 命令查看所有 Java 进程
-2.  jstack <PID> 查看某个 Java 进程（PID）的所有线程状态
-3.  jconsole 来查看某个 Java 进程中线程的运行情况（图形界面）
+1.jps 命令查看所有 Java 进程
+2.jstack PID 查看某个 Java 进程（PID）的所有线程状态
+3.jconsole 来查看某个 Java 进程中线程的运行情况（图形界面）
 
 ## 2.3、线程运行原理
 
-1. **线程创建**
+1.**线程创建**
 
-每个线程启动后，虚拟机就会为其分配一块栈内存。 每个栈由多个栈帧（Frame）组成
-，栈帧对应着每次方法调用所占内存
+每个线程启动后，虚拟机就会为其分配一块栈内存。 每个栈由多个栈帧（Frame）组成，栈帧对应着每次方法调用所占内存
 
-2. **上下文切换**
+2.**上下文切换**
 
 因为以下一些原因导致 cpu 不再执行当前的线程，转而执行另一个线程的代码 
+
 > 线程的 cpu 时间片用完 
 > 垃圾回收 
 > 有更高优先级的线程需要运行 
@@ -135,18 +142,22 @@ log.debug("结果是:{}", result);
 
 ## 2.5、sleep 与 yield 
 
-1. **sleep**
+1.**sleep**
+
 - 1. 调用 sleep 会让当前线程从 _Running_进入 _Timed Waiting _状态（阻塞） 
 - 2. 其它线程可以使用 interrupt 方法打断正在睡眠的线程，这时 sleep 方法会抛出 InterruptedException 
 - 3. 睡眠结束后的线程未必会立刻得到执行 
 
-2. **yield**
+2.**yield**
+
 - 1. 调用 yield 会让当前线程从 _Running _进入 _Runnable_就绪状态，然后调度执行其它线程 
 - 2. 具体的实现依赖于操作系统的任务调度器 
 
 ## 2.6、join
+
 join：t1调用t2的join方法，会先执行t2，然后执行t1
 如果调用的是无参join方法，则等待thread执行完毕，如果调用的是指定了时间参数的join方法，则等待一定的时间
+
 ```java
 static int r = 0;
 public static void main(String[] args) throws InterruptedException {
@@ -172,7 +183,9 @@ private static void test1() throws InterruptedException {
 
 ## 2.7、interrupt
 ### 2.7.1、打断阻塞状态的线程
+
 sleep，wait，join 的线程 这几个方法都会让线程进入阻塞状态 ，打断 这几个状态 的线程, 会中断
+
 ```java
 private static void test1() throws InterruptedException {
     Thread t1 = new Thread(()->{
@@ -184,7 +197,9 @@ private static void test1() throws InterruptedException {
     log.debug(" 打断状态: {}", t1.isInterrupted());
 }
 ```
+
 输出
+
 ```java
 java.lang.InterruptedException: sleep interrupted
      at java.lang.Thread.sleep(Native Method)
@@ -196,7 +211,9 @@ java.lang.InterruptedException: sleep interrupted
 21:18:10.374 [main] c.TestInterrupt - 打断状态: false
 ```
 ### 2.7.2、打断正常运行的线程
+
 打断正常运行的线程, 不会清空打断运行（此时我们需要通过打断状态来中止）
+
 ```java
 private static void test2() throws InterruptedException {
     Thread t2 = new Thread(()->{
@@ -214,15 +231,19 @@ private static void test2() throws InterruptedException {
     t2.interrupt();
 }
 ```
+
 输出
+
 ```java
 20:57:37.964 [t2] c.TestInterrupt - 打断状态: true 
 ```
 
 ## 2.8、主线程与守护线程
+
 默认情况下，Java 进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其它非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束。 
 
 例
+
 ```java
 log.debug("开始运行...");
 Thread t1 = new Thread(() -> {
@@ -238,13 +259,14 @@ sleep(1);
 log.debug("运行结束...");
 ```
 输出
+
 ```java
 08:26:38.123 [main] c.TestDaemon - 开始运行... 
 08:26:38.213 [daemon] c.TestDaemon - 开始运行... 
 08:26:39.215 [main] c.TestDaemon - 运行结束...
 ```
 
-> **注意 **
+> **注意**
 > - 垃圾回收器线程就是一种守护线程 
 > - Tomcat 中的 Acceptor 和 Poller 线程都是守护线程，所以 Tomcat 接收到 shutdown 命令后，不会等待它们处理完当前请求 
 
