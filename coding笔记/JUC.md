@@ -602,6 +602,7 @@ write(写入)：将store入主内存的变量,放入到主内存的变量中
 
 1. 线程池可以有效地管理线程：它可以管理线程的数量,做到线程的服用，可以避免无节制的创建线程,导致超出系统负荷直至崩溃
 2. 构造方法的重要参数：corePoolSize（核心线程数）、workQueue（等待队列）、maxinumPoolSize（最大线程数）、handler（拒绝策略）、keepAliveTime（空闲线程存活时间）
+
 ### 6.1.1、**ThreadPoolExecutor**
 
 1. **构造方法**
@@ -628,6 +629,7 @@ write(写入)：将store入主内存的变量,放入到主内存的变量中
 如果线程池中的线程数量大于 corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止，直至线程池中的线程数目不大于corePoolSize；
 如果当前线程池中的线程数目达到maximumPoolSize，则会采取任务拒绝策略进行处理
 ### 6.1.2、Executors类中提供的工厂方法
+
 根据上面的ThreadPoolExecutor这个构造方法，JDK Executors类中提供了众多工厂方法来创建各种用途的线程池
 
 1. **newFixedThreadPool**
@@ -697,6 +699,15 @@ public static ExecutorService newSingleThreadExecutor() {
 CPU 不总是处于繁忙状态，例如，当你执行业务计算时，这时候会使用 CPU 资源，但当你执行 I/O 操作时、远程 RPC 调用时，包括进行数据库操作时，这时候 CPU 就闲下来了，你可以利用多线程提高它的利用率。 
 经验公式如下 ：
 `线程数 = 核数 * 期望 CPU 利用率 * 总时间(CPU计算时间+等待时间) / CPU 计算时间` 
+
+### 6.1.4、线程池状态
+
+1. RUNNING状态：线程池创建后，初始状态为RUNNING。
+2. SHUTDOWN状态：当调用线程池的shutdown()方法时，线程池进入SHUTDOWN状态。此时线程池不再接受新的任务，但会执行已经提交的任务。当所有任务都执行完毕后，线程池会转换到TIDYING状态。
+3. STOP状态：当调用线程池的shutdownNow()方法时，线程池进入STOP状态。此时线程池不再接受新的任务，并且会中断正在执行的任务。当所有任务都执行完毕后，线程池会转换到TIDYING状态。
+4. TIDYING状态：当线程池处于SHUTDOWN或STOP状态时，所有任务都执行完毕后，线程池会进入TIDYING状态。在此状态下，线程池会进行清理工作，如关闭线程池中的所有线程等。当清理工作完成后，线程池会转换到TERMINATED状态。
+5. TERMINATED状态：线程池处于TERMINATED状态时，表示线程池已经完全终止，所有任务已经执行完毕并且清理工作也已经完成。此时线程池不再能接受新的任务。
+
 
 ## 6.2、锁
 ### 6.2.1、AQS
@@ -773,6 +784,33 @@ ReadLock和WriteLock是ReentrantReadWriteLock的两个内部类，Lock的上锁�
 3. **锁降级是怎么降级的？**
 
 在获取读锁的时候，如果当前线程持有写锁，是可以获取读锁的。这块就是指锁降级，比如线程 A 获取到了写锁，当线程 A 执行完毕时，它需要获取当前数据，假设不支持锁降级，就会导致 A 释放写锁，然后再次请求读锁。而在这中间是有可能被其他阻塞的线程获取到写锁的。从而导致线程 A 在一次执行过程中数据不一致（脏读）
+
+### 6.2.4、锁分类
+
+1. **可重入锁和不可重入锁**
+
+Java中提供的synchronized，ReentrantLock，ReentrantReadWriteLock都是可重入
+重入：当前线程获取到A锁，在获取之后尝试再次获取A锁是可以直接拿到的。
+不可重入：当前线程获取到A锁，在获取之后尝试再次获取A锁，无法获取到的，因为A锁被当前线程占用着，需要等待自己释放锁再获取锁
+
+2. **乐观锁和悲观锁**
+
+Java中提供的synchronized，ReentrantLock，ReentrantReadWriteLock都是悲观锁
+Java中提供的CAS操作，就是乐观锁的一种实现
+悲观锁：获取不到锁资源时，会将当前线程挂起 (进入BLOCKED、WAITING)，线程挂起会涉及到用户态和内核态的切换，而这种切换是比较消耗资源的。
+乐观锁：获取不到锁，再让CPU调度，重新尝试获取锁资源。Automic原子类中，就是基于CAS乐观锁实现的
+
+3. **公平锁和非公平锁**
+
+synchronized是非公平锁
+ReentrantLock和ReentrantReadWriteLock可以实现公平锁和非公平锁
+
+4. **互斥锁和共享锁**
+
+Synchronized，ReentrantLock是互斥锁
+ReentrantReadWriteLock有互斥锁也有共享锁（写互斥读共享）
+互斥锁：同一时间，只有一个线程持有当前互斥锁
+共享锁：同一时间点，多个线程可以共同持有
 
 ## 6.3、工具
 ### 6.3.1、Semaphore
