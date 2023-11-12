@@ -240,6 +240,28 @@ private static void test2() throws InterruptedException {
 20:57:37.964 [t2] c.TestInterrupt - 打断状态: true 
 ```
 
+### 2.7.3、除了interrupt外的别的方法（设置标志位）
+
+设置标志位：设置标志位是用到了共享变量的方式，我们了解线程对于变量的操作都是操作的变量副本，而一旦使用volatile关键字修饰后，因为其可见性，变量变更始将终从主存中获取最新值,因此主线程修改变量对新线程可见，在判断共享变量为fasle时，手动抛出异常可中止该线程
+
+```java
+public class ThreadDemo3 extends Thread{
+    /**共享变量**/
+    volatile Boolean heartbeat = true;
+    @Override
+    public void run() {
+        while (true){
+           /**判断标志是否为true**/
+            if (heartbeat){
+                
+            }else{
+                Throw new RuntimeException()
+            }
+        }
+    }
+}
+
+
 ## 2.8、主线程与守护线程
 
 默认情况下，Java 进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其它非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束。 
