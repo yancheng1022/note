@@ -389,6 +389,7 @@ Owner 线程发现条件不满足，调用 wait 方法，即可进入 WaitSet �
 2.  sleep 不需要强制和 synchronized 配合使用，但 wait 需要和 synchronized 一起用 
 3.  sleep 在睡眠的同时，不会释放对象锁的，但 wait 在等待的时候会释放对象锁 
 
+> wait()为什么只能在同步方法中调用？因为wait操作的是monitor
 ## 3.5、park/unpark
 它们是 LockSupport 类中的方法
 ```java
@@ -774,6 +775,7 @@ ReadLock和WriteLock是ReentrantReadWriteLock的两个内部类，Lock的上锁�
 1. **概念**
 
 Semaphore（信号量）是用来控制同时访问特定资源的线程数量，它通过协调各个线程，以保证合理的使用公共资源（Semaphore可以用于做流量控制，特别是公用资源有限的应用场景，比如数据库连接）
+
 ```java
 public class DataSourcePool {
  
