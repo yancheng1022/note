@@ -33,6 +33,15 @@ Monitor 统计服务的调用次数和调用时间的监控中心
 6. 服务消费者和提供者，在内存中累计调用次数和调用时间，定时发送一次统计数据到监控中心。
 7. 服务提供方停止服务或者服务调用方关闭JVM的时候，会将provider及consumer进行销毁处理。
 
+## 1.3、dubbo和springCloud区别
+两者都是现在主流的分布式框架，但却存在不少差异：
+
+- **生态环境不同：** SpringCloud定位为微服务架构下的一站式解决方案（网关，分布式配置，服务跟踪）；Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用和治理
+- **调用方式：** SpringCloud是采用Http协议做远程调用；Dubbo是基于RPC调用
+- **组件差异比较多**，例如SpringCloud注册中心一般用Eureka，而Dubbo用的是Zookeeper
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141619063.png)
+
 
 # 2、Dubbo环境搭建
 ## 2.1、安装zookeeper
