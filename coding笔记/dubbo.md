@@ -43,6 +43,63 @@ Monitor 统计服务的调用次数和调用时间的监控中心
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141619063.png)
 
 
+
+## 1.4、dubbo支持协议
+
+**1、dubbo 默认协议：**
+
+- 单一 TCP 长连接，Hessian 二进制序列化和 NIO 异步通讯
+- 不适合传送大数据包的服务
+
+**2、rmi 协议：**
+
+- 采用 JDK 标准的 java.rmi.* 实现，采用阻塞式短连接和 JDK 标准序列化方式
+- 对传输数据包不限，消费者和传输者个数相当
+
+**3、hessian 协议：**
+
+- 底层 Http 通讯，Servlet 暴露服务，Dubbo 缺省内嵌 Jetty 作为服务器实现
+- 通讯效率高于 WebService 和 Java 自带的序列化
+- 适用于传输数据包较大，提供者比消费者个数多，提供者压力较大
+
+**4、http 协议：**
+
+- 基于 http 表单的远程调用协议，短连接，json 序列化
+- 对传输数据包不限，不支持传文件
+
+**5、webservice 协议：**
+
+- 基于 Apache CXF 的 frontend-simple 和 transports-http 实现，短连接，SOAP文本序列化
+- 可与原生 WebService 服务互操作
+- 适用于系统集成、跨语言调用
+
+**6、thrift 协议：**
+
+- 对 thrift 原生协议的扩展添加了额外的头信息
+- 使用较少，不支持传 null 值
+
+**7、基于 Redis实现的 RPC 协议**
+**8、基于 Memcached 实现的 RPC 协议**
+
+
+## 1.5、dubbo负载均衡策略
+
+```java
+dubbo:
+  provider:
+    loadbalance: roundrobin
+```
+
+
+> 也可以在注解上进行配置
+> @Service(version = "${product.service.version}",loadbalance="roundrobin")
+
+1. RandomLoadBalance:随机负载均衡。随机的选择一个。是Dubbo的**默认**负载均衡策略。
+2. RoundRobinLoadBalance:轮询负载均衡。轮询选择一个。
+3. LeastActiveLoadBalance: 最小活跃数负载均衡，活跃数也就是dubbo的连接数，每当收到一个请求活跃数+1，结束请求活跃数-1，假设如果多台机器的连接数是相同的，如果一台机器性能比较好，处理请求比较快那么活跃数减少的就快，活跃数就少。所以活跃数少的就会获取到的请求会变多，这样就可以合理的使用性能不同的机器了
+4. ConsistentHashLoadBalance:一致性哈希负载均衡。相同参数的请求总是落在同一台机器上。
+
+
 # 2、Dubbo环境搭建
 ## 2.1、安装zookeeper
 
