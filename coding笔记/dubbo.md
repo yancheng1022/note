@@ -23,6 +23,14 @@ Consumer 调用远程服务的服务消费方
 Registry 服务注册与发现的注册中心
 Monitor 统计服务的调用次数和调用时间的监控中心
 
+调用过程:
+
+(1) 服务容器 Container 负责启动加载运行服务提供者 Provider。根据配置中的 Registry 地址连接 Registry，在 Registry 注册自己提供的服务。
+(2) Consumer 在启动时，根据配置文件中的服务引用信息，连接到 Registry，向 Registry 订阅自己所需的服务。
+(3) Registry 根据服务订阅关系，返回 Provider 地址列表给 Consumer。如果有变更，Registry 会基于长连接推送最新的服务地址信息给 Consumer。
+(4) Consumer 调用远程服务时，基于负载均衡算法，从缓存的 Provider 地址列表中选择一台进行跨进程调用服务
+(5) 服务 Provider 和 Consumer，会在内存中记录调用次数和调用时间，每分钟发送一次统计数据到 Monitor。
+
 ## 1.2、调用流程
 
 1. 服务启动，包括服务提供者和消费者的启动，封装服务调用链路。
