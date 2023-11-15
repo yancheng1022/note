@@ -895,3 +895,6 @@ Spring cloud sleuth 提供了以下功能:
 ## 8.3、专业术语
 ### 8.3.1、span
 基本工作单位，一次单独的调用链可以称为一个 Span，Dapper 记录的是 Span 的名称，以及每个 Span 的 ID 和父ID，以重建在一次追踪过程中不同 Span 之间的关系
+
+
+## 9、高级
