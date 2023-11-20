@@ -268,7 +268,6 @@ public class ThreadDemo3 extends Thread{
 
 例
 
-```java
 log.debug("开始运行...");
 Thread t1 = new Thread(() -> {
     log.debug("开始运行...");
@@ -281,7 +280,7 @@ t1.start();
 
 sleep(1);
 log.debug("运行结束...");
-```
+
 输出
 
 ```java
