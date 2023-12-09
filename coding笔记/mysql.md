@@ -1143,7 +1143,7 @@ eg: 首先使用联合索引（name，age），现在有这样一个查询语句
 
 > Extra中 Using index condition代表使用了索引下推
 
-## 4.12、mysql结构
+## 11.3、mysql结构
 
 ![image (31).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101520772.png)
 
@@ -1157,14 +1157,14 @@ MySQL整体的逻辑结构可以分为4层,客户层、服务层、存储引擎�
 **数据层**
 数据层系主要包括MySQL中存储数据的底层文件，与上层的存储引擎进行交互，是文件的物理存储层。其存储的文件主要有：日志文件、数据文件、配置文件、MySQL的进行pid文件和socket文件等。
 
-## 4.13、数据库查询流程
+## 11.4、数据库查询流程
 
 1. 当客户端的查询语句为select查询语句的时候，如若再查询缓存里面已经查询到了结果，就会直接把查询结果返回给客户端
 2. 在查询缓存并没有查询到结果之后，就会走到解析器，在解析器这儿，解析sql，判断是否有语法错误
 3. 语法没有问题，走到执行器，执行器先会预处理（检测用户对表的权限，和相应字段有没有），优化器（对sql执行顺序，使用索引等进行优化）
 4. 执行器使用引擎提供的接口与存储引擎层进行交互，执行SQL语句，并将结果返回个客户端
 
-## 4.14、sql优化的方案有哪些？
+## 11.5、sql优化的方案有哪些？
 
 1. 优化表结构
 
@@ -1179,7 +1179,7 @@ MySQL整体的逻辑结构可以分为4层,客户层、服务层、存储引擎�
 
 3. explain 等工具来分析 SQL 查询语句，找出执行计划，确定是否存在性能瓶颈
 
-## 4.15、mysql的explain的详解
+## 11.6、mysql的explain的详解
 EXPLAIN 命令用于SQL语句的**查询执行计划**
 ```java
 EXPLAIN select * from person where dept_id =(select did from dept where dname ='python');
@@ -1221,7 +1221,7 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 > （4）Using join buffer：表明使用了连接缓存，给驱动表建立索引可解决此问题
 
 
-## 4.16、MVCC
+## 11.7、MVCC
 多版本并发控制，数据库隔离级别读已提交、可重复读 都是基于MVCC实现的，相对于加锁简单粗暴的方式，它用更好的方式去处理读写冲突，能有效提高数据库并发性能。【注意】：只有快照读才会使用MVCC，当前读使用行锁+间隙锁（临键锁Next-Key Locks）实现
 它的实现依赖于三个概念：版本链和快照读和ReadView
 
@@ -1254,7 +1254,7 @@ EXPLAIN select * from person where dept_id =(select did from dept where dname ='
 > 3. 返回符合规则的数据
 
 
-## 4.17、行级锁
+## 11.8、行级锁
 innoDB通过给索引记录加锁的方式实现行级锁，具体来说实现了三种行锁算法：
 **记录锁**：锁定单个行记录的锁（RC,RR都支持）
 **间隙锁**：锁定索引记录的间隙，确保索引记录的间隙不变（RR支持）
