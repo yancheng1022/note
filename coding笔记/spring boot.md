@@ -877,5 +877,3 @@ public class MyListener4{
 5. B完成属性填充，执行初始化方法，将自己放入第1级缓存singletonObjects中（此时B是一个完整的对象），同时从第3级缓存singletonFactories和第2级缓存earlySingletonObjects中删除。
 6. A得到“对象B的完整实例”，将B注入到A中。
 7. A完成属性填充，执行初始化方法，并放入到第1级缓存singletonObjects中。
-
-## 10.3、ioc和aop的理解
