@@ -23,3 +23,6 @@ type 连接类型，访问类型，表示MySQL在访问表时所采取的方式
 性能：性能： null > system/const > eq_ref > ref > ref_or_null   >  range > index >  all 
 index：使用的索引
 exart：额外信息  using fileSort
+
+
+# 3、网络
