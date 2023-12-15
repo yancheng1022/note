@@ -4,5 +4,6 @@
   "readableLineLength": false,
   "showFrontmatter": true,
   "useMarkdownLinks": true,
-  "promptDelete": false
+  "promptDelete": false,
+  "focusNewTab": true
 }
