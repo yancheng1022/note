@@ -14,7 +14,7 @@
 # 2、数据库
 ## 2.1、数据库优化方案
 
-[mysql](coding笔记/mysql.md) 4.14
+[mysql](coding笔记/mysql.md) 11.4
 
 1.表结构优化。对经常使用的查询条件加索引
 2.查询语句优化。使用explain分析工具
@@ -26,3 +26,4 @@ exart：额外信息  using fileSort
 
 
 # 3、网络
+3.1、三次握手四次挥手？为什么？
