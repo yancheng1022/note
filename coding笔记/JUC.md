@@ -384,6 +384,8 @@ Monitor 被翻译为**监视器**或**管程**
 
 ### 3.3.2、synchronized使用
 
+![image.png|725](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312211615519.png)
+
 
 
 ## 3.4、wait/notify
