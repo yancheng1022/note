@@ -979,18 +979,5 @@ public class RedisLock {
 
 
 ## 4.8、redis和数据库的双写一致性
-更新数据库和更新redis不是一个原子操作。所以根据业务场景有两种方案：
 
-1.保证最终一致性（可以接受数据短期不一致）
-
-先更新数据库，再更新redis。第二步更新redis失败的请求异步写入mq消息队列，利用mq的重试机制进行更新
-
-![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141021779.png)
-
-
-2.强一致性保证
-
-使用读写锁，在数据更新的时候，其它任何请求都无法访问缓存中的数据
-
-![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141022655.png)
-
+1. 延迟双删
