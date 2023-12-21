@@ -982,6 +982,9 @@ public class RedisLock {
 
 1. 延迟双删
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312211801651.png)
+
+
 先删除redis，再更新数据库，延迟N秒后再删除一次redis
 
 上述中（延迟N秒）的时间**一定要大于请求将数据库旧数据写入redis的时间**，这个时间短则几百毫秒，长则几秒，具体根据自己的业务而定
