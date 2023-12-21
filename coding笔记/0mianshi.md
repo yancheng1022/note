@@ -55,3 +55,4 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 
 
 # 5、JUC
+# 5.1、synchronized使用
