@@ -27,3 +27,12 @@ exart：额外信息  using fileSort
 
 # 3、网络
 3.1、三次握手四次挥手？为什么？
+
+
+# 4、ssm
+
+## 4.1、项目中怎么使用线程池
+
+在Spring Boot中，可以使用Java的ThreadPoolExecutor类或Spring框架提供的ThreadPoolTaskExecutor类来创建和管理线程池。我们的项目使用的是spring框架的ThreadPoolTaskExecutor类
+1. ThreadPoolTaskExecutor 配置类中配置参数
+2. 
