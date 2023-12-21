@@ -51,3 +51,7 @@ exart：额外信息  using fileSort
 
 ## 4.4、中止一个运行中的线程
 
+interrupt虽然是打断线程的方法，但不会立即结束线程运行，而是将线程的打断状态设置为true，在线程的isInterrupted方法来查看打断状态
+
+
+# 5、JUC
