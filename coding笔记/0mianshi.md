@@ -35,4 +35,4 @@ exart：额外信息  using fileSort
 
 在Spring Boot中，可以使用Java的ThreadPoolExecutor类或Spring框架提供的ThreadPoolTaskExecutor类来创建和管理线程池。我们的项目使用的是spring框架的ThreadPoolTaskExecutor类
 1. ThreadPoolTaskExecutor 配置类中配置参数
-2. 
+2. 使用@Async注解将doSomething()方法标记为异步执行的方法。Spring会自动使用注入的ThreadPoolTaskExecutor来执行带有@Async注解的方法
