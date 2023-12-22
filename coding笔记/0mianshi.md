@@ -75,3 +75,5 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 而只有父类加载器自己无法完成加载请求时，子类才会自己加载。
 这样用户自定义的String类的加载请求就会最终达到顶层的BootStrap ClassLoader启动类加载器，
 启动类加载器加载的是系统中的String对象，而用户编写的java.lang.String不会被加载。
+
+![image.png|425](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312221514055.png)
