@@ -14,6 +14,11 @@ tags:
 2. Java 语言是健壮的。Java 的强类型机制、异常处理、垃圾的自动收集等是 Java 程序健壮性的重要保证
 3. Java 语言是跨平台性的。[即: 一个编译好的.class 文件可以在多个系统下运行，这种特性称为跨平台]
 4. java是一种半编译，半解释型语言。 . Java-->. class是由 Javac 编译，这个过程符合编译型语言的特点。而. class-->对应平台机器码 的这一过程 是由Java解释执行 
+
+## 1.2、访问修饰符
+
+![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312221054095.png)
+
 # 2、变量
 ## 2.1、java基本数据类型
 java基本数据类型 - 四类八种
