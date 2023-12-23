@@ -91,5 +91,9 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 
 
 1. mq server中的交换机到队列：肯能代码或配置方面的问题导致失败
-2. mq server中存储的消息丢失：mq server宕机，但没有持久化消息
-3. 消费端异常：消费者宕机或故障
+
+>消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。（失败时才会有返回）
+
+
+1. mq server中存储的消息丢失：mq server宕机，但没有持久化消息
+2. 消费端异常：消费者宕机或故障
