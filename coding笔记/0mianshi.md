@@ -81,3 +81,15 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 
 # 7、mq
 
+## 7.1、rabbitmq如何保证可靠性
+
+消息丢失的场景：
+1. 生产者到mq server：可能网络，无法收到消息
+
+> 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。(无论成功失败都有返回)
+> 在回调函数中处理失败的业务
+
+
+1. mq server中的交换机到队列：肯能代码或配置方面的问题导致失败
+2. mq server中存储的消息丢失：mq server宕机，但没有持久化消息
+3. 消费端异常：消费者宕机或故障
