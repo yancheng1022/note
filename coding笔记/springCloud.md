@@ -1,8 +1,7 @@
 ---
 title: springCloud
 date: 2023/07/29
-categories:
-  - coding
+categories: []
 tags:
   - springCloud
   - 编程基础
