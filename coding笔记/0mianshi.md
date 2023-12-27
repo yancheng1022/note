@@ -126,3 +126,16 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 
 # 8、jvm
 
+## 8.1、常用jvm启动参数
+
+```
+# 设置堆内存
+-Xms4g  -Xmx4g  最小值和最大值
+# 指定gc算法
+-xx:+UseG1GC -xx:MaxGCPauseMillis=50 最大暂停时间50毫秒
+# 打印GC日志
+-XX:+PrintGCDetails 
+# 指定元空间最大值
+-XX:MaxMetaspaceSize=2g
+
+```
