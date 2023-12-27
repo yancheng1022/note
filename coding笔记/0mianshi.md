@@ -137,5 +137,7 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 -XX:+PrintGCDetails 
 # 指定元空间最大值
 -XX:MaxMetaspaceSize=2g
-
+# 堆内存溢出时自动dump
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/usr/local
 ```
