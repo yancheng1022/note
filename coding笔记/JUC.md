@@ -765,6 +765,11 @@ Condition 是一个多线程协调通信的工具类，作用类似于synchroniz
 ### 6.2.3、**ReentrantReadWriteLock**
 #### 4.2.3.1、ReentrantReadWriteLock基本概念
 ReadLock和WriteLock是ReentrantReadWriteLock的两个内部类，Lock的上锁和释放锁都是通过一个AQS同步器sync来实现的。将 state 的 高 16 位和低 16 位拆开表示读写锁。其中高 16 位表示读锁，低 16 位表示写锁。读锁，允许共享；写锁，是独占锁。适合在读多写少的场景中使用
+
+ReadWriteLock也是一个接口，提供了readLock和writeLock两种锁的操作机制，一个资源可以被多个线程同时读，或者被一个线程写，但是不能同时存在读和写线程。
+读锁：共享锁 readLock
+写锁：独占锁 writeLock
+读写锁 ： 一个资源可以被多个读的线程进行访问 ，或者可以被一个写的线程访问，但是不能同时存在读和写进程 ，读写互斥，读读共享。
 #### 4.2.3.2、锁获取过程
 
 1. 获取读锁
