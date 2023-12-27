@@ -141,3 +141,10 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:HeapDumpPath=/usr/local
 ```
+
+
+## 8.2、CPU飙升怎么排查
+
+1.先通过top命令找到消耗cpu很高的进程id
+
+
