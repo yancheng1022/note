@@ -131,8 +131,7 @@ foo(sb); // sb 没有被改变，还是 "iphone"。
 ## 2.9、String 和 StringBuilder、StringBuffer 的区别？
 
 1. 可变性
-String类中使用字符数组保存字符串private final charr value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自
-AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[] value，这两种对象都是可变的
+String类中使用字符数组保存字符串private final charr value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[] value，这两种对象都是可变的
 
 
 
