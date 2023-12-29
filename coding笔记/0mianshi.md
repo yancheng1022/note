@@ -137,7 +137,7 @@ String类中使用字符数组保存字符串private final charr value[]，所�
 String是不可变的，可以理解为常量，所以线程安全。StringBuffer加同步锁，所以线程安全，stringBuilder没加，线程不安全
 
 3. 性能
-
+每次对String改变都会生成一个新的String对象。StringBuffer和StringBuilder对对象本身操作。性能 StringBuilder > StringBuffer > String
 
 
 
