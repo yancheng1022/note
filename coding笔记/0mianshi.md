@@ -112,13 +112,20 @@ public static void main(String[] args) {
 
 ## 2.8、java是值传递还是引用传递
 
+在Java中，传递参数时使用的是值传递（pass-by-value）机制。这意味着方法接收的是实际参数值的副本，而不是原始参数的引用。
 
 
+对于基本数据类型（如int、float、boolean等），传递的是该值的副本，方法内对参数的修改不会影响原始变量的值。
 
+对于引用类型（如对象、数组等），传递的是引用的副本，即对象的内存地址。这里需要注意的是，虽然传递的是引用的副本，但实际上还是按值传递。在方法内部，通过传递的引用副本，可以访问和修改原始对象的内容，但如果方法内部对引用本身进行修改（重新指向另一个对象），则不会影响原始引用
 
-
-
-
+```java
+StringBuilder sb = new StringBuilder("iphone"); 
+void foo(StringBuilder builder) { 
+builder = new StringBuilder("ipad"); 
+} 
+foo(sb); // sb 没有被改变，还是 "iphone"。
+```
 
 
 
