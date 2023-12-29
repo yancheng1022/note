@@ -200,7 +200,18 @@ class B extends A{
 		System.out.print("b");
 	}
 }
+
+public class Hello {
+	public static void main(String[] args) {
+		A ab = new B();
+		ab = new B();
+	}
+}
 ```
+
+结果：1a2b2b
+初始化顺序：静态成员 - 父类构造器 - 非静态成员 - 子类构造器
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
