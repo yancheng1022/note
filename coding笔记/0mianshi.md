@@ -48,7 +48,13 @@ shiro
 
 下转型（down-casting，也称为窄化）会造成精度损失，因此需要强制类型转换
 
-float f =(float)3.4; 或者写成 float f =3.4F;。
+float f =(float)3.4; 或者写成 float f =3.4F;
+
+## 2.4、int和Integer区别
+
+Java 是一个近乎纯洁的面向对象编程语言，但是为了编程的方便还是引入了基本数据类型，但是为了能够将这些基本数据类型当成对象操作，Java 为每一个基本数据类型都引入了对应的包装类型（wrapper class），int 的包装类就是 Integer，
+
+从 Java 5 开始引入了自动装箱/拆箱机制，使得二者可以相互转换。
 
 
 
