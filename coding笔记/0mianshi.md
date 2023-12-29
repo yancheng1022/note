@@ -230,10 +230,46 @@ Exception：异常，能够被程序本身处理的，可以通过try…catch语
 反转控制，将创建Bean及其依赖对象的工作交给IOC容器管理，业务代码只需要getBean就行了。在容器初始化（或@lazy实现懒加载）通过反射机制创建好对象，在使用时直接从容器中获取。
 
 
+## 3.2、spring依赖注入方式
 
+1. 构造方法注入
 
+```java
+@Service
+public class AService {
+    BService bService;
+    
+    @Autowired
+    public AService(BService bService) {
+        this.bService = bService;
+    }
+}
+```
 
+2. set方法注入
 
+```java
+@Service
+public class BService {
+    AService aService;
+
+    @Autowired
+    public void setaService(AService aService) {
+        this.aService = aService;
+    }
+}
+```
+
+3. 属性注入
+
+```java
+@Service  
+public class BService {  
+	@Autowired  
+	AService aService;  
+	//...  
+}
+```
 # 2、数据库
 ## 2.1、数据库优化方案
 
