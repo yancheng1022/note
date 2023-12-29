@@ -227,7 +227,7 @@ Exception：异常，能够被程序本身处理的，可以通过try…catch语
 # 3、spring
 ## 3.1、ioc
 
-
+反转控制，将对象间的依赖关系交给 Spring 管理
 
 
 
