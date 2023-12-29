@@ -139,7 +139,13 @@ String是不可变的，可以理解为常量，所以线程安全。StringBuffe
 3. 性能
 每次对String改变都会生成一个新的String对象。StringBuffer和StringBuilder对对象本身操作。性能 StringBuilder > StringBuffer > String
 
+## 2.10、
 
+char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Unicode（不选择
+
+任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一
+
+个 char 类型占 2 个字节（16 比特），所以放一个中文是没问题的
 
 # 2、数据库
 ## 2.1、数据库优化方案
