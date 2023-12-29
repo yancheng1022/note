@@ -69,7 +69,7 @@ class AutoUnboxingTest {
 		System.out.println(a == b);// false 两个引用没有引用同一对象
 		System.out.println(a == c);// true a 自动拆箱成 int 类型再和 c比较
 	}
-
+	// 如果整型字面量的值在-128 到 127 之间，那么不会 new 新的 Integer对象，而是直接引用常量池中的 Integer 对象，所以上面的面试题中 f3f4 的结果是 false
 	public static void main(String[] args) {
 		Integer f1 = 100, f2 = 100, f3 = 150, f4 = 150;
 		System.out.println(f1 == f2); // true
