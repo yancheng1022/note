@@ -128,6 +128,7 @@ foo(sb); // sb 没有被改变，还是 "iphone"。
 ```
 
 
+## 2.9、String 和 StringBuilder、StringBuffer 的区别？
 
 
 
