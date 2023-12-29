@@ -167,8 +167,7 @@ public class MyUtil {
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(bout);
 		oos.writeObject(obj);
-		ByteArrayInputStream bin = new
-		ByteArrayInputStream(bout.toByteArray());
+		ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
 		ObjectInputStream ois = new ObjectInputStream(bin);
 		return (T) ois.readObject();
 		// 说明：调用 ByteArrayInputStream 或 ByteArrayOutputStream对象的 close 方法没有任何意义
