@@ -156,23 +156,22 @@ char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Un
 
 ```java
 
-public class MyUtil {
-
-	private MyUtil() {
-		throw new AssertionError();
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable> T clone(T obj) throws Exception {
-		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bout);
-		oos.writeObject(obj);
-		ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
-		ObjectInputStream ois = new ObjectInputStream(bin);
-		return (T) ois.readObject();
-		// 说明：调用 ByteArrayInputStream 或 ByteArrayOutputStream对象的 close 方法没有任何意义
-		// 这两个基于内存的流只要垃圾回收器清理对象就能够释放资源，这一点不同于对外部资源（如文件流）的释放
-	}
+// 使用对象序列化来实现克隆
+public class Room implements Serializable {
+    Desk desk;
+ 
+    public Room deepClone() throws Exception{
+        //序列化
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(this);
+        //反序列化
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        Room roomClone = (Room)objectInputStream.readObject();
+        return roomClone;
+        
+    }
 }
 
 ```
@@ -211,6 +210,18 @@ public class Hello {
 
 结果：1a2b2b
 初始化顺序：静态成员 - 父类构造器 - 非静态成员 - 子类构造器
+
+## 2.14、异常体系
+
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310301636988.png)
+
+
+Error：错误，无法被处理的
+
+Exception：异常，能够被程序本身处理的，可以通过try…catch语句捕捉异常，或者是throws抛出异常。分为运行时异常和非运行时异常
+- 运行时异常：就是RuntimeException，编译时不会检查出错误的。一般是由于逻辑错误引起的，程序员可以手动去解决的，比如判空等。
+- 非运行时异常：也叫编译异常，就是Exception下除了RuntimeException以外的异常。是必须进行处理的异常，编译器会进行异常提醒的。如果不进行处理，程序编译不通过
 
 
 # 2、数据库
