@@ -59,7 +59,18 @@ Java 是一个近乎纯洁的面向对象编程语言，但是为了编程的方
 > 自动拆箱：在Java 1.4及以前的版本中，我们必须手动调用包装类型的intValue()、doubleValue()等方法才能将其转换为基本数据类型。而在Java 1.5及以后的版本中，我们可以直接将包装类型赋值给基本数据类型变量，Java编译器会自动将包装类型转换为对应的基本数据类型
 > 自动装箱：Java自动装箱（Autoboxing）是指Java编译器在需要的时候，会自动将原始数据类型转换为对应的包装类类型（Integer b = 3）
 
-
+```java
+class AutoUnboxingTest {
+	public static void main(String[] args) {
+		Integer a = new Integer(3);
+		Integer b = 3;
+		// 将 3 自动装箱成 Integer 类型
+		int c = 3;
+		System.out.println(a == b);// false 两个引用没有引用同一对象
+		System.out.println(a == c);// true a 自动拆箱成 int 类型再和 c比较
+	}
+}
+```
 
 # 2、数据库
 ## 2.1、数据库优化方案
