@@ -273,7 +273,10 @@ public class BService {
 
 ## 3.3、bean Factory和applicationContext
 
-BeanFactory它定义了IOC的基本功能，主要定义了getBean方法，它的功能是返回特定的名称的Bean，是IOC容器获取bean对象和引发依赖注入的起点
+BeanFactory它定义了IOC的基本功能，主要定义了getBean方法，它的功能是返回特定的名称的Bean
+ApplicationContext由BeanFactory派生而来，提供了更多面向实际应用的功能。（1）MessageSource, 提供国际化的消息访问 （2）资源访问，如URL和文件  
+（3）事件传播特性，即支持aop特性（4）载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层
+
 
 
 # 2、数据库
