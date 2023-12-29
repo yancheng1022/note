@@ -133,6 +133,12 @@ foo(sb); // sb 没有被改变，还是 "iphone"。
 1. 可变性
 String类中使用字符数组保存字符串private final charr value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[] value，这两种对象都是可变的
 
+2. 线程安全性
+String是不可变的，可以理解为常量，所以线程安全。StringBuffer加同步锁，所以线程安全，stringBuilder没加，线程不安全
+
+3. 性能
+
+
 
 
 # 2、数据库
