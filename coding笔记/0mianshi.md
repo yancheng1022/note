@@ -277,6 +277,9 @@ BeanFactory它定义了IOC的基本功能，主要定义了getBean方法，它�
 ApplicationContext由BeanFactory派生而来，提供了更多面向实际应用的功能。（1）MessageSource, 提供国际化的消息访问 （2）资源访问，如URL和文件  
 （3）事件传播特性，即支持aop特性（4）载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层
 
+1. BeanFactroy采用延迟加载形式来注入Bean，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样就不能发现一些存在的Spring的配置问题。而ApplicationContext则采用立即加载，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误
+2. BeanFacotry延迟加载,如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常；而ApplicationContext则在初始化自身时检验，这样有利于检查所依赖属性是否注入；所以通常情况下我们选择使用 ApplicationContext
+
 
 
 # 2、数据库
