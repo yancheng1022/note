@@ -38,12 +38,17 @@ shiro
 
 多态：父类的引用指向子类的对象。它的意义是可以让我们不用关心某个对象到底是什么具体类型，就可以使用该对象的某些方法，多态就是提供父类调用子类代码的一个手段而已。java实现多态三个必要条件：继承，重写，向上转型（父类引用指向子类对象）
 
+## 2.2、public,private,protected,default区别？
 
+![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312221054095.png)
 
+## 2.3、float f=3.4;是否正确？
 
+不正确。3.4 是双精度数，将双精度型（double）赋值给浮点型（float）属于
 
+下转型（down-casting，也称为窄化）会造成精度损失，因此需要强制类型转换
 
-
+float f =(float)3.4; 或者写成 float f =3.4F;。
 
 
 
