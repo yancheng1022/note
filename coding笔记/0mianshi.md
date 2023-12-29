@@ -106,7 +106,7 @@ public static void main(String[] args) {
 ```
 
 
-## 2.7、两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，这句话对不对？
+## 2.7、hashcode和equals？
 
 不对，如果两个对象 x 和 y 满足 x.equals(y) == true，它们的哈希码（hash code）应当相同。Java 对于 eqauls 方法和 hashCode 方法是这样规定的：(1)如果两个对象相同（equals 方法返回 true），那么它们的 hashCode 值一定要相同；(2)如果两个对象的 hashCode 相同，它们并不一定相同。当然，你未必要按照要求去做，但是如果你违背了上述原则就会发现在使用容器时，相同的对象可以出现在 Set 集合中
 
@@ -225,6 +225,7 @@ Exception：异常，能够被程序本身处理的，可以通过try…catch语
 
 
 # 3、spring
+## 3.1、ioc
 
 
 
