@@ -177,6 +177,31 @@ public class MyUtil {
 
 ```
 
+## 2.13、类初始化顺序
+
+```java
+class A {
+	static {
+		System.out.print("1");
+	}
+	
+	public A() {
+		System.out.print("2");
+	}
+	
+}
+	
+class B extends A{
+	static {
+		System.out.print("a");
+	}
+	
+	public B() {
+		System.out.print("b");
+	}
+}
+```
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
