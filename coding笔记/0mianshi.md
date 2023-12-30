@@ -388,8 +388,6 @@ public class AuthAspect {
 
 ## 3.9、spring bean的作用域
 
-
-
 singleton : bean 在每个 Spring ioc 容器中只有一个实例。
 
 prototype：一个 bean 的定义可以有多个实例。
