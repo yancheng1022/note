@@ -386,6 +386,20 @@ public class AuthAspect {
 7. ViewResolver返回对应的View对象。DispatcherServlet将Model传递给View，View对Model进行渲染。
 8. DispatcherServlet将渲染后的视图返回给客户端
 
+## 3.9、spring bean的作用域
+
+
+
+singleton : bean 在每个 Spring ioc 容器中只有一个实例。
+
+prototype：一个 bean 的定义可以有多个实例。
+
+request：每次 http 请求都会创建一个 bean
+
+session：在一个 HTTP Session 中，一个 bean 定义对应一个实例
+
+global-session：在一个全局的 HTTP Session 中，一个 bean 定义对应一个实例
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
