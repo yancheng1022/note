@@ -305,11 +305,66 @@ public class BService {
 
 ## 3.6、spring aop
 
-spring aop是基于代理模式实现的，它通过动态代理技术，在运行时生成代理对象，从而实现对目标方法的拦截和增强。便于降低代码的耦合度，有利于未来的扩展和维护性
+spring aop是基于代理模式实现的，它通过动态代理技术，在运行时生成代理对象，从而实现对目标方法的拦截和增强。便于降低代码的耦合度，有利于未来的扩展和维护性.具体使用场景：接口日志，接口权限，事务管理
 
 如果代理对象实现了某个接口，spring会使用jdk动态代理创建对象。反之使用CGLib动态代理生成一个被代理对象的子类作为代理
 
 > 代理对象是在bean初始化后的一个BeanPostProcessor后置处理器进行判断，是否进行了aop配置，如果有，返回代理对象
+
+
+```java
+@Aspect
+@Component
+public class AuthAspect {
+    /**
+     * 定义了一个切点
+     * 这里的路径填自定义注解的全路径
+     */
+    @Pointcut("@annotation(com.zz.business.annotations.Auth)")
+    public void authCut() {
+
+    }
+	
+    @Before("authCut()")
+    public void cutProcess(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        System.out.println("注解方式AOP开始拦截, 当前拦截的方法名: " + method.getName());
+    }
+
+    @After("authCut()")
+    public void after(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        System.out.println("注解方式AOP执行的方法 :" + method.getName() + " 执行完了");
+    }
+
+
+    @Around("authCut()")
+    public Object testCutAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("注解方式AOP拦截开始进入环绕通知.......");
+        Object proceed = joinPoint.proceed();
+        System.out.println("准备退出环绕......");
+        return proceed;
+    }
+
+    @AfterReturning(value = "authCut()", returning = "result")
+    public void afterReturn(JoinPoint joinPoint, Object result) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        System.out.println("注解方式AOP拦截的方法执行成功, 进入返回通知拦截, 方法名为: " + method.getName() + ", 返回结果为: " + result.toString());
+    }
+
+    @AfterThrowing(value = "authCut()", throwing = "e")
+    public void afterThrow(JoinPoint joinPoint, Exception e) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        System.out.println("注解方式AOP进入方法异常拦截, 方法名为: " + method.getName() + ", 异常信息为: " + e.getMessage());
+    }
+}
+```
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312301725231.png)
 
 
 ## 3.7、aop相关术语
