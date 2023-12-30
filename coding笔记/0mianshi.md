@@ -296,7 +296,9 @@ public class BService {
 ## 3.5、@Resource和@Autowired区别
 
 @Autowired是spring注解，默认情况是按类型（byType）匹配。如果需要按名称（byName）可以使用@Qualifier与@Autowired结合 
-@Resource是j2ee的注解，默认按byName模式自动注入
+@Resource是j2ee的注解，默认按byName模式自动注入。如果设置了type属性，则byType注入
+
+
 
 
 # 2、数据库
