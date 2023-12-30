@@ -405,6 +405,10 @@ public class AuthAspect {
 >2.在Bean对象中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在ThreadLocal中
 
 
+# 4、mybatis
+
+
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
