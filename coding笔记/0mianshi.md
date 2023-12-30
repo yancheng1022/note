@@ -388,15 +388,15 @@ public class AuthAspect {
 
 ## 3.9、spring bean的作用域
 
-singleton : bean 在每个 Spring ioc 容器中只有一个实例。
+- singleton：单例模式，在整个Spring IoC容器中，使用singleton定义的Bean将只有一个实例
+- prototype：原型模式，每次通过容器的getBean方法获取prototype定义的Bean时，都将产生一个新的Bean实例
+- request：对于每次HTTP请求，使用request定义的Bean都将产生一个新实例，即每次HTTP请求将会产生不同的Bean实例。只有在Web应用中使用Spring时，该作用域才有效
+- session：对于每次HTTP Session，使用session定义的Bean豆浆产生一个新实例。同样只有在Web应用中使用Spring时，该作用域才有效
+- globalsession：每个全局的HTTP Session，使用session定义的Bean都将产生一个新实例。典型情况下，仅在使用portlet context的时候有效。同样只有在Web应用中使用Spring时，该作用域才有效
 
-prototype：一个 bean 的定义可以有多个实例。
+## 3.10、spring bean是线程安全的吗
 
-request：每次 http 请求都会创建一个 bean
-
-session：在一个 HTTP Session 中，一个 bean 定义对应一个实例
-
-global-session：在一个全局的 HTTP Session 中，一个 bean 定义对应一个实例（类似于标准HTTP会话范围，仅适用于基于portlet的Web应用程序的上下文）
+对于原型Bean,每次创建一个新对象，也就是线程之间并不存在Bean共享，自然是不会有线程安全的问题
 
 
 # 2、数据库
