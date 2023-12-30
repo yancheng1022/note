@@ -293,6 +293,11 @@ public class BService {
 5、使用（In Use）：在初始化完成之后，Bean就可以被使用了。
 6、销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
 
+## 3.5、@Resource和@Autowired区别
+
+@Autowired是spring注解，默认情况是按类型（byType）匹配。如果需要按名称（byName）可以使用@Qualifier与@Autowired结合 
+@Resource是j2ee的注解，默认按byName模式自动注入
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
