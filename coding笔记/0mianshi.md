@@ -298,6 +298,11 @@ public class BService {
 @Autowired是spring注解，默认情况是按类型（byType）匹配。如果需要按名称（byName）可以使用@Qualifier与@Autowired结合 
 @Resource是j2ee的注解，默认按byName模式自动注入。如果设置了type属性，则byType注入
 
+## 3.6、@component和@bean区别
+
+1. 用途不同：@component用于标识普通类，@bean是在配置类中声明和配置bean对象
+2. 使用方式不同：@Component是类级别的注解，@Bean是修饰配置类中方法，将方法的返回值注入ioc容器
+
 ## 3.6、aop
 
 spring aop是基于代理模式实现的，它通过动态代理技术，在运行时生成代理对象，从而实现对目标方法的拦截和增强。其主要原理如下：
