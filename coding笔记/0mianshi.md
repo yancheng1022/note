@@ -375,8 +375,14 @@ public class AuthAspect {
 （4）切面：切点+通知
 （5）织入：将切面应用到应用程序的过程
 
-## 3.8、spring mvc执行原理
+## 3.8、spring mvc执行流程
 
+1. 用户发起请求，请求先被 Servlet 拦截转发给 Spring MVC 框架  
+2. Spring MVC 里面的 DispatcherSerlvet 核心控制器，会接收到请求并转发给HandlerMapping  
+3. HandlerMapping 负责解析请求，根据请求信息和配置信息找到匹配的 Controller类，不过这里如果有配置拦截器，就会按照顺序执行拦截器里面的 preHandle方法  
+4. 找到匹配的 Controller 以后，把请求参数传递给 Controller 里面的方法  
+5. Controller 中的方法执行完以后，会返回一个 ModeAndView，这里面会包括视图名称和需要传递给视图的模型数据  
+6. 视图解析器根据名称找到视图，然后把数据模型填充到视图里面再渲染成 Html 内容返回给客户端
 
 
 # 2、数据库
