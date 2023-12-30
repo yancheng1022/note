@@ -396,7 +396,7 @@ request：每次 http 请求都会创建一个 bean
 
 session：在一个 HTTP Session 中，一个 bean 定义对应一个实例
 
-global-session：在一个全局的 HTTP Session 中，一个 bean 定义对应一个实例
+global-session：在一个全局的 HTTP Session 中，一个 bean 定义对应一个实例（类似于标准HTTP会话范围，仅适用于基于portlet的Web应用程序的上下文）
 
 
 # 2、数据库
