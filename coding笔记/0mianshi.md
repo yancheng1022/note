@@ -280,6 +280,10 @@ public class BService {
 2. BeanFactroy采用延迟加载形式来注入Bean，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化，这样就不能发现一些存在的Spring的配置问题。而ApplicationContext则采用立即加载，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误
 
 
+## 3.4、spring bean生命周期
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
