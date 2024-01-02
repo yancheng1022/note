@@ -587,7 +587,7 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
 
 ## 5.1、守护线程和本地线程的区别
 
-
+java 中的线程分为两种：守护线程（Daemon）和用户线程（User）。任何线程都可以设置为守护线程和用户线程，通过方法 Thread.setDaemon(boolon)；true 则把该线程设置为守护线程，反之则为用户线程。Thread.setDaemon()必须在 Thread.start()之前调用，否则运行时会抛出异常。
 
 
 # 2、数据库
