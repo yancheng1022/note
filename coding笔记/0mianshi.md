@@ -585,12 +585,45 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
 
 # 5、java并发编程 
 
-## 5.1、死锁产生的必要条件
+## 5.1、死锁的必要条件
 
-1、互斥条件：所谓互斥就是进程在某一时间内独占资源。
-2、请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。
-3、不剥夺条件:进程已获得资源，在末使用完之前，不能强行剥夺。
-4、循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。
+1. 互斥条件：一个资源一次只能被一个进程使用
+2. 请求与保持条件：一个进程因请求资源而阻塞时，对已获得资源保持不放
+3. 不剥夺条件：进程获得的资源，在未完全使用完之前，不能强行剥夺
+4. 循环等待条件：若干进程之间形成一种头尾相接的环形等待资源关系
+## 5.2、死锁的实现
+
+```java
+/**
+ * 实现一个死锁
+ * 如果把lock(target, owner);放到上面则不会死锁
+ */
+public class DeadLock {
+    public static void main(String[] args) throws InterruptedException {
+        final Object owner = new Object();
+        final Object target = new Object();
+        //开启一个新线程
+        new Thread(() -> {
+            try {
+                lock(owner, target);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        //主线程
+        lock(target, owner);
+    }
+    public static void lock(Object owner, Object target) throws InterruptedException {
+        synchronized (owner) {
+            Thread.sleep(1000);
+            synchronized (target) {
+                System.out.println("success");
+            }
+        }
+    }
+}
+```
+
 
 
 # 2、数据库
