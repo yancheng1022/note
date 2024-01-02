@@ -571,6 +571,14 @@ mybatis.configuration.lazyLoadingEnabled=true
 一级缓存默认开启，二级缓存开启需要在mapper.xml里加cache标签
 
 
+## 4.7、mybatis插件原理
+
+Mybatis的插件，是采用责任链机制，通过JDK动态代理来实现的。默认情况下，Mybatis允许使用插件来拦截四个对象：
+
+Executor：执行CURD操作；
+StatementHandler：处理sql语句预编译，设置参数等相关工作；
+ParameterHandler：设置预编译参数用的；
+ResultSetHandler：处理结果集。
 
 
 # 2、数据库
