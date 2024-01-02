@@ -580,7 +580,9 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
  ParameterHandler：设置预编译参数用的；
  ResultSetHandler：处理结果集
 
-具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪一个
+具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪些方法 （4）注册插件，在配置文件中配置自己编写的插件类
+
+
 
 
 # 2、数据库
