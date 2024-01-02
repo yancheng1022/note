@@ -559,7 +559,7 @@ mybatis.configuration.lazyLoadingEnabled=true
 
 一级缓存失效场景：（1）不同的SqlSession对应不同的一级缓存（2）同一个SqlSession但是查询条件不同（3）同一个SqlSession两次查询期间执行了任何一次增删改操作（4）同一个SqlSession两次查询期间手动清空了缓存
 
-
+二级缓存：二级缓存相对于一级缓存来说，实现了`SqlSession`之间缓存数据的共享，同时粒度更加的细，能够到`namespace`级别，通过Cache接口实现类不同的组合，对Cache的可控性也更强
 
 
 
