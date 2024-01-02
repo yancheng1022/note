@@ -575,13 +575,12 @@ mybatis.configuration.lazyLoadingEnabled=true
 
 Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandler，ParameterHandler，ResultSetHandler这四种接口的插件。通过jdk动态代理，为需要拦截的接口生成代理对象以实现接口方法拦截功能，每当执行这四种接口对象方法时，执行插件类的增强方法，进行方法的拦截处理
 
+>Executor：执行CURD操作；
+ StatementHandler：处理sql语句预编译，设置参数等相关工作；
+ ParameterHandler：设置预编译参数用的；
+ ResultSetHandler：处理结果集
 
-Mybatis的插件，是采用责任链机制，通过JDK动态代理来实现的。默认情况下，Mybatis允许使用插件来拦截四个对象：
-
-Executor：执行CURD操作；
-StatementHandler：处理sql语句预编译，设置参数等相关工作；
-ParameterHandler：设置预编译参数用的；
-ResultSetHandler：处理结果集。
+具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪一个
 
 
 # 2、数据库
