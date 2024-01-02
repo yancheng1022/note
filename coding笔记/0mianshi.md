@@ -462,9 +462,36 @@ system.out.println(“generated key value = ” + name.getid());
 
 ## 4.4、mybatis一对一，一对多
 
+一对一：association
 
+```java
+public class Student {
+	private int id;
+	private String name;
+	private ClassStu cls;
+}
 
+	<resultMap type="domain.Student" id="clastu">
+        <id column="sid" property="id"/>
+        <result column="sname" property="name"/>
+        <!-- 一位学生对应一个班级，所以选用association标签 -->
+        <association property="cls" javaType="domain.ClassStu">
+            <id column="cid" property="id"/>
+       		<result column="cname" property="name"/>
+        </association>
+    </resultMap>
+    
+    <select id="select01" resultMap="clastu">
+        select 
+        	class.id as cid,
+        	class.name as cname,
+        	student.id as sid,
+        	student.name as sname
+	        from class inner join student on class.id = student.cid
+    </select>
+```
 
+一对多：
 
 
 
