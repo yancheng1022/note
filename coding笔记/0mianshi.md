@@ -515,10 +515,11 @@ public class ClassStu {
 
 就是在需要用到数据时才进行加载，不需要用到数据时就不加载数据。延迟加载也称懒加载。 先从单表查询，需要时再从关联表去关联查询，⼤⼤提⾼数据库性能，因为查询单表要比关联查询多张表速度要快。一对多，多对多：通常情况下采用延迟加载（**延迟加载是基于嵌套查询来实现的**）
 
->关联查询：SELECT orders., user.username FROM orders, USER WHERE orders.user_id = user.id
+>关联查询：
+>SELECT orders., user.username FROM orders, USER WHERE orders.user_id = user.id
 延迟加载相当于：
-SELECT orders.,
-(SELECT username FROM USER WHERE orders.user_id = user.id)username FROM orders
+ SELECT orders.,
+ (SELECT username FROM USER WHERE orders.user_id = user.id)username FROM orders
 
 mybatis默认没有开启延迟加载，需要手动开启
 
