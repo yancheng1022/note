@@ -568,6 +568,11 @@ mybatis.configuration.lazyLoadingEnabled=true
 - 如果一级缓存也没有命中，则查询数据库
 - SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 
+一级缓存默认开启，二级缓存开启需要在mapper.xml里加cache标签
+
+
+
+
 
 
 # 2、数据库
