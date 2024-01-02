@@ -553,6 +553,8 @@ mybatis.configuration.lazyLoadingEnabled=true
 ```
 
 
+## 4.6、mybatis一级缓存，二级缓存
+
 
 
 
