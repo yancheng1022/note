@@ -555,7 +555,7 @@ mybatis.configuration.lazyLoadingEnabled=true
 
 ## 4.6、mybatis一级缓存，二级缓存
 
-
+一级缓存：在一次 SqlSession 中（数据库会话），程序执行多次查询，且查询条件完全相同，多次查询之间程序没有其他增删改操作，则第二次及后面的查询可以从缓存中获取数据，避免走数据库
 
 
 
