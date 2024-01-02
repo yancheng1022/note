@@ -562,6 +562,11 @@ mybatis.configuration.lazyLoadingEnabled=true
 二级缓存：namespace级别的缓存，二级缓存被同一个 `namespace` 下的多个 `SqlSession` 共享，是一个全局的变量。MyBatis 的二级缓存不适应用于映射文件中存在多表查询的情况
 > 通常我们会为每个单表创建单独的映射文件，由于MyBatis的二级缓存是基于`namespace`的，多表查询语句所在的`namspace`无法感应到其他`namespace`中的语句对多表查询中涉及的表进行的修改，引发脏数据问题
 
+缓存查询顺序：
+- 先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用
+- 如果二级缓存没有命中，再查询一级缓存
+- 如果一级缓存也没有命中，则查询数据库
+- SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 
 
 
