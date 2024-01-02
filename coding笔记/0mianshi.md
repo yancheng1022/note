@@ -520,7 +520,11 @@ public class ClassStu {
 SELECT orders.,
 (SELECT username FROM USER WHERE orders.user_id = user.id)username FROM orders
 
+mybatis默认没有开启延迟加载，需要手动开启
 
+```properties
+mybatis.configuration.lazyLoadingEnabled=true
+```
 
 
 
