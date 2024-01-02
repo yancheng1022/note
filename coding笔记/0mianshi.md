@@ -583,6 +583,11 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
 具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪些方法 （4）注册插件，在配置文件中配置自己编写的插件类
 
 
+# 5、java并发编程 
+
+## 5.1、守护线程和本地线程的区别
+
+
 
 
 # 2、数据库
