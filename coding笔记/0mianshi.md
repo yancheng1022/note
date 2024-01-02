@@ -573,6 +573,9 @@ mybatis.configuration.lazyLoadingEnabled=true
 
 ## 4.7、mybatis插件原理
 
+Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandler，ParameterHandler，ResultSetHandler
+
+
 Mybatis的插件，是采用责任链机制，通过JDK动态代理来实现的。默认情况下，Mybatis允许使用插件来拦截四个对象：
 
 Executor：执行CURD操作；
