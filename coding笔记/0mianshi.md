@@ -573,8 +573,6 @@ mybatis.configuration.lazyLoadingEnabled=true
 
 
 
-
-
 # 2、数据库
 ## 2.1、数据库优化方案
 
