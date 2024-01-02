@@ -624,6 +624,21 @@ public class DeadLock {
 }
 ```
 
+## 5.3、什么是阻塞队列？实现原理？
+
+阻塞队列（BlockingQueue）是一个支持两个附加操作的队列。这两个附加的操作是：在队列为空时，获取元素的线程会等待队列变为非空。当队列满时，存储元素的线程会等待队列可用。
+阻塞队列常用于生产者和消费者的场景，生产者是往队列里添加元素的线程，消费者是从队列里拿元素的线程。阻塞队列就是生产者存放元素的容器，而消费者也只从容器里拿元素
+
+主要的两个实现ArrayBlockingQueue 和 LinkedBlockingQueue 
+
+1. 区别
+
+（1）内部实现：ArrayBlockingQueue 使用数组；LinkedBlockingQueue 使用单链表
+（2）锁的个数：ArrayBlockingQueue只有一把锁（最多只允许一个线程，生产者或消费者二选一）；	LinkedBlockingQueue 有两把锁：takeLock、putLock（可以允许两个线程同时执行，一个生产者，一个消费者）
+（3）支持公平锁：ArrayBlockingQueue 支持；LinkedBlockingQueue 不支持，因为有两把锁，没法实现
+
+### 6.4.4、ConcurrentLinkedQueue 
+ConcurrentLinkedQueue 的设计与 LinkedBlockingQueue 非常像，也是 两把【锁】，同一时刻，可以允许两个线程同时（一个生产者与一个消费者）
 
 
 # 2、数据库
