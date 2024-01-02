@@ -407,7 +407,25 @@ public class AuthAspect {
 
 # 4、mybatis
 
+## 4.1、实现批量插入
 
+```java
+sqlsession sqlsession = sqlsessionfactory.opensession(executortype.batch);
+try {
+	namemapper mapper = sqlsession.getmapper(namemapper.class);
+for (string name: names) {
+	mapper.insertname(name);
+}
+	sqlsession.commit();
+} catch (Exception e) {
+	e.printStackTrace();
+	sqlSession.rollback();
+	throw e;
+}
+finally {
+	sqlsession.close();
+}
+```
 
 
 # 2、数据库
