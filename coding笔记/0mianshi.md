@@ -427,6 +427,56 @@ finally {
 }
 ```
 
+## 4.2、获取自动生成主键值
+
+usegeneratedkeys=”true” keyproperty=”id”
+
+```java
+<insert id=”insertname” usegeneratedkeys=”true” keyproperty=”id”>
+	insert into names (name) values (#{name})
+</insert>
+
+name name = new name();
+name.setname(“fred”);
+int rows = mapper.insertname(name);
+
+// 完成后,id 已经被设置到对象中
+system.out.println(“rows inserted = ” + rows);
+system.out.println(“generated key value = ” + name.getid());
+
+```
+
+## 4.3、mapper如何传递多个参数
+
+1.#{0}
+```xml
+<!-- ,#{0}代表接收的是 dao 层中的第一个参数，#{1}代表 dao 层中第二参数-->
+<select id="selectUser"resultMap="BaseResultMap">
+	select * fromuser_user_t whereuser_name = #{0} and user_area=#{1}
+</select>
+```
+
+2.使用@param注解
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
