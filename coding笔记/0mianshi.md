@@ -522,6 +522,31 @@ SELECT orders.,
 
 mybatis默认没有开启延迟加载，需要手动开启
 
+1.局部延迟加载
+在**association**和**collection**标签中都有⼀个**fetchType属性**，通过修改它的值，可以修改局部的加载策略。
+
+```xml
+<!-- 开启⼀对多 延迟加载 -->
+<resultMap id="userMap" type="user">
+    <id column="id" property="id"></id>
+    <result column="username" property="username"></result>
+    <result column="password" property="password"></result>
+    <result column="birthday" property="birthday"></result>
+<!--
+fetchType="lazy" 懒加载策略
+fetchType="eager" ⽴即加载策略
+-->
+    <collection property="orderList" ofType="order" column="id"
+        select="com.lagou.dao.OrderMapper.findByUid" fetchType="lazy">
+    </collection>
+</resultMap>
+<select id="findAll" resultMap="userMap">
+    SELECT * FROM `user`
+</select>
+```
+
+2.全局延迟加载
+
 ```properties
 mybatis.configuration.lazyLoadingEnabled=true
 ```
