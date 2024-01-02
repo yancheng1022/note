@@ -462,7 +462,7 @@ system.out.println(“generated key value = ” + name.getid());
 
 ## 4.4、mybatis一对一，一对多
 
-一对一：association
+一对一：association (学生-班级)
 
 ```java
 public class Student {
@@ -491,7 +491,24 @@ public class Student {
     </select>
 ```
 
-一对多：
+一对多：collection（班级-学生）
+
+```java
+public class ClassStu {
+	private int id;
+	private String name;
+	private List<Student> list;
+}
+
+	<resultMap type="domain.ClassStu" id="clastu2">
+        <id column="cid" property="id"/>
+       	<result column="cname" property="name"/>
+        <collection property="list" ofType="domain.ClassStu">
+            <id column="sid" property="id"/>
+        	<result column="sname" property="name"/>
+        </collection>  
+    </resultMap>
+```
 
 
 
