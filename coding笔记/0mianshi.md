@@ -460,6 +460,9 @@ system.out.println(“generated key value = ” + name.getid());
 
 
 
+## 4.4、mybatis一对一，一对多
+
+
 
 
 
