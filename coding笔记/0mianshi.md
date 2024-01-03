@@ -637,9 +637,6 @@ public class DeadLock {
 （2）锁的个数：ArrayBlockingQueue只有一把锁（最多只允许一个线程，生产者或消费者二选一）；	LinkedBlockingQueue 有两把锁：takeLock、putLock（可以允许两个线程同时执行，一个生产者，一个消费者）
 （3）支持公平锁：ArrayBlockingQueue 支持；LinkedBlockingQueue 不支持，因为有两把锁，没法实现
 
-### 6.4.4、ConcurrentLinkedQueue 
-ConcurrentLinkedQueue 的设计与 LinkedBlockingQueue 非常像，也是 两把【锁】，同一时刻，可以允许两个线程同时（一个生产者与一个消费者）
-
 
 # 2、数据库
 ## 2.1、数据库优化方案
