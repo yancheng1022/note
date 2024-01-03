@@ -744,6 +744,10 @@ public class ThreadTest extends Thread {
 
 乐观锁：认为数据一般不会产生冲突，其核心思想是无需加锁，每次只有一个线程能成功修改共享变量，其它失败的线程不需要停止，不断重试直至成功。代表 Atomic原子类
 
+## 5.8、concurrentHashmap原理
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
