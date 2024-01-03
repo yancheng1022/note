@@ -714,7 +714,13 @@ log.debug("结果是:{}", result);
 
 ## 5.6、如何停止一个正在运行的线程
 
+1、使用退出标志退出线程
+2、使用interrupt方法中断线程
 
+使用interrupt()方法来中断线程是分两种情况的：
+
+线程处于阻塞状态：如使用了sleep()，同步锁的wait()，socket中的receiver()，accept()等方法时，会使线程处于阻塞状态。当调用线程interrupt()方法时，会抛出InterruptException异常。阻塞中的那个方法抛出此异常，通过代码可以捕获此异常，然后跳出循环状态，从而让我们有机会结束这个线程的执行。并不是只要调用interrupt()方法，线程就会结束，实际上是不正确的，一定要先捕获InterruptException异常之后通过break来跳出循环，才能正常结束run()方法。
+线程未处于阻塞状态：使用isInterrupted()判断线程的中断标志来退出循环。当使用interrupt()方法时，中断标志就会为true，和使用自定义的标志来控制循环是一样的道理。
 
 
 
