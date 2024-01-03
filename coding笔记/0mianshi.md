@@ -650,6 +650,71 @@ public class DeadLock {
 
 ![线程状态](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930532.jpg)
 
+
+## 5.5、线程创建方式
+
+1、继承Thread类
+
+```java
+// 创建线程对象
+Thread t = new Thread() {
+    public void run() {
+        // 要执行的任务
+    }
+};
+// 启动线程
+t.start();
+```
+2、实现 Runnable接口
+
+```java
+Runnable runnable = new Runnable() {
+    public void run(){
+        // 要执行的任务
+    }
+};
+// 创建线程对象
+Thread t = new Thread( runnable );
+// 启动线程
+t.start();
+```
+
+java8可用lambda精简
+
+```java
+// 创建任务对象
+Runnable task2 = () -> log.debug("hello");
+
+// 参数1 是任务对象; 参数2 是线程名字，推荐
+Thread t2 = new Thread(task2, "t2");
+t2.start();
+```
+### 2.1.3、FutureTask 配合 Thread 
+
+FutureTask 能够接收 Callable 类型的参数，用来处理有返回结果的情况
+
+```java
+// 创建任务对象
+FutureTask<Integer> task3 = new FutureTask<>(() -> {
+    log.debug("hello");
+    return 100;
+});
+
+// 参数1 是任务对象; 参数2 是线程名字，推荐
+new Thread(task3, "t3").start();
+
+// 主线程阻塞，同步等待 task 执行完毕的结果
+Integer result = task3.get();
+log.debug("结果是:{}", result);
+```
+
+
+
+
+
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
