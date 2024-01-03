@@ -637,6 +637,18 @@ public class DeadLock {
 （2）锁的个数：ArrayBlockingQueue只有一把锁（最多只允许一个线程，生产者或消费者二选一）；	LinkedBlockingQueue 有两把锁：takeLock、putLock（可以允许两个线程同时执行，一个生产者，一个消费者）
 （3）支持公平锁：ArrayBlockingQueue 支持；LinkedBlockingQueue 不支持，因为有两把锁，没法实现
 
+## 5.4、java线程状态
+
+| 状态   | 说明 |
+| --- | --- |
+| NEW | 初始状态:线程被创建，但还没有调用start()方法 |
+| RUNNABLE | 运行状态:Java线程将操作系统中的就绪和运行两种状态笼统的称作"运行" |
+| BLOCKED | 阻塞状态:表示线程阻塞于锁 |
+| WAITING | 等待状态:表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断) |
+| TIMEWAITING | 超时等待状态:该状态不同于WAITIND，它是可以在指定的时间自行返回的 |
+| TERMINATED | 终止状态:表示当前线程已经执行完毕 |
+
+![线程状态](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307230930532.jpg)
 
 # 2、数据库
 ## 2.1、数据库优化方案
