@@ -665,6 +665,7 @@ Thread t = new Thread() {
 // 启动线程
 t.start();
 ```
+
 2、实现 Runnable接口
 
 ```java
@@ -689,9 +690,11 @@ Runnable task2 = () -> log.debug("hello");
 Thread t2 = new Thread(task2, "t2");
 t2.start();
 ```
-### 2.1.3、FutureTask 配合 Thread 
+
+3、FutureTask 配合 Thread 
 
 FutureTask 能够接收 Callable 类型的参数，用来处理有返回结果的情况
+通过FutureTask的get方法拿到线程的返回值。
 
 ```java
 // 创建任务对象
@@ -708,6 +711,8 @@ Integer result = task3.get();
 log.debug("结果是:{}", result);
 ```
 
+
+## 5.6、如何停止一个正在运行的线程
 
 
 
