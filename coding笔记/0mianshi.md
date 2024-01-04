@@ -889,7 +889,16 @@ jvm经过这么多年的发展和验证，大部分情况下不需要进行调�
 
 1、分析定位当前系统的瓶颈
 
-gc日志：
+开启gc日志:
+
+```xml
+-XX:+PrintGCDetails 打印GC日志细节
+-XX:+PrintGCTimeStamps 打印GC日志时间
+-Xloggc:gc.log 将GC日志输出到指定的磁盘文件上去，这里会把gc.log输出到项目根路径
+```
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
