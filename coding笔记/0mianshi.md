@@ -1014,7 +1014,19 @@ public class AsyncController {
 }
 ```
 
+```java
+@Autowired  
+private ThreadPoolTaskExecutor executor;
 
+executor.submit(() -> {  
+    try {  
+        Thread.sleep(1000);  
+    } catch (InterruptedException e) {  
+        e.printStackTrace();  
+    }   
+    log.info("Offline，{}，{}处理完成，发送over", cloudToLinkInfoOverDO.getId(), cloudToLinkInfoOverDO.getAck());  
+});
+```
 # 6、jvm
 
 
