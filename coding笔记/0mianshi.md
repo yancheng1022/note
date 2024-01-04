@@ -975,6 +975,31 @@ public class ThreadPoolConfig
     }  
 }
 ```
+
+
+2、在实现方法上加@Async注解异步调用。或使用submit，execute手动提交任务
+
+```java
+@Slf4j
+@Service
+public class AsyncService {
+	public static Object object = new Object();
+	@Async("taskExecutor")
+	public String test(String message){
+		synchronized (object){
+			log.info("message={}",message);
+		}try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			log.error("error");
+		}
+		return message;
+	}
+}
+```
+
+
 # 6、jvm
 
 
