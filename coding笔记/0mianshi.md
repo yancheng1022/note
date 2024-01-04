@@ -889,31 +889,7 @@ jvm经过这么多年的发展和验证，大部分情况下不需要进行调�
 
 1、分析定位当前系统的瓶颈
 
-（1）cpu指标
-
-```txt
-// 显示系统各个进程的资振使用情况
-top
-// 查看某个进程线程占用情况
-top -Hp pid
-// 查看当前Java 进程的堆栈信息
-jstack pid
-```
-
-（2）jvm内存指标
-
-```txt
-ps -ef|grep java
-// 查看java进程的配置信息
-jinfo pid
-// java进程当前gc情况
-jstat -gc pid
-// java堆详细信息
-jmap -heap pid
-// 生成java堆快照信息
-jmap -F -dump:format=b,file=dumpFile.phrof pid
-```
-
+gc日志：
 # 2、数据库
 ## 2.1、数据库优化方案
 
