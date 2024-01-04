@@ -837,7 +837,7 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 ThreadLocal即线程变量，它用于共享变量在多线程中的隔绝，即每个线程都有一个该变量的副本彼此互不影响也就不需要同步机制了
 每个Thread对象都有一个ThreadLocalMap，当创建一个ThreadLocal的时候，就会将该ThreadLocal对象添加到该Map中，其中键就是ThreadLocal，值可以是任意类型。这样就实现了ThreadLocal在一个线程中是共享的，在不同线程之间是隔离的
 
-### 8.4.2、ThreadLocal存在的问题 - 内存泄漏
+## 5.14、ThreadLocal内存泄漏
 
 1. **弱引用**
 
