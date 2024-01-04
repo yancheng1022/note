@@ -856,6 +856,34 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 
 
 
+# 6、jvm
+
+## 6.1、常用jvm启动参数
+
+```
+# 设置堆内存
+-Xms4g  -Xmx4g  最小值和最大值
+# 指定gc算法
+-xx:+UseG1GC -xx:MaxGCPauseMillis=50 最大暂停时间50毫秒
+# 打印GC日志
+-XX:+PrintGCDetails 
+# 指定元空间最大值
+-XX:MaxMetaspaceSize=2g
+# 堆内存溢出时自动dump
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/usr/local
+```
+
+
+## 6.2、CPU飙升怎么排查
+
+1.先通过top命令找到消耗cpu很高的进程id
+2.top -p 2732 单独监控该进程
+3.在第二步的界面输入H，获取当前进程下的线程信息
+4.找到cpu占用特别高的线程id
+5.执行jstack 2732对当前进程做dump，输出所有的线程信息。同时将第四步得到的线程id转为16进制，在堆栈信息里去找对应的线程内容
+6.最后解读线程信息，定位具体代码位置
+
 
 
 # 2、数据库
