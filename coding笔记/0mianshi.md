@@ -954,33 +954,5 @@ interrupt虽然是打断线程的方法，但不会立即结束线程运行，�
 > 在创建订单的场景下。首先，先生成一个token，返回给客户端存起来，同时也在后端存起来（redis）。当他创建订单的时候，带着这个token来请求后端，后端判断redis里是否存在，如果存在，则操作成功，同时删除token（删除了之后，就算他重复多次调用，前边的判断不成立，这样子就不能多次操作了）
 
 
-# 8、jvm
-
-## 8.1、常用jvm启动参数
-
-```
-# 设置堆内存
--Xms4g  -Xmx4g  最小值和最大值
-# 指定gc算法
--xx:+UseG1GC -xx:MaxGCPauseMillis=50 最大暂停时间50毫秒
-# 打印GC日志
--XX:+PrintGCDetails 
-# 指定元空间最大值
--XX:MaxMetaspaceSize=2g
-# 堆内存溢出时自动dump
--XX:+HeapDumpOnOutOfMemoryError
--XX:HeapDumpPath=/usr/local
-```
-
-
-## 8.2、CPU飙升怎么排查
-
-1.先通过top命令找到消耗cpu很高的进程id
-2.top -p 2732 单独监控该进程
-3.在第二步的界面输入H，获取当前进程下的线程信息
-4.找到cpu占用特别高的线程id
-5.执行jstack 2732对当前进程做dump，输出所有的线程信息。同时将第四步得到的线程id转为16进制，在堆栈信息里去找对应的线程内容
-6.最后解读线程信息，定位具体代码位置
-
 
 # 9、mybatis
