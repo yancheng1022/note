@@ -910,6 +910,8 @@ jinfo pid
 jstat -gc pid
 // java堆详细信息
 jmap -heap pid
+// 生成java堆快照信息
+jmap -F -dump:format=b,file=dumpFile.phrof pid
 ```
 
 # 2、数据库
