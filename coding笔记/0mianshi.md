@@ -838,6 +838,7 @@ ThreadLocal即线程变量，它用于共享变量在多线程中的隔绝，即
 每个Thread对象都有一个ThreadLocalMap，当创建一个ThreadLocal的时候，就会将该ThreadLocal对象添加到该Map中，其中键就是ThreadLocal，值可以是任意类型。这样就实现了ThreadLocal在一个线程中是共享的，在不同线程之间是隔离的
 
 ## 5.14、ThreadLocal内存泄漏
+![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401041020818.png)
 
 1. **弱引用**
 
