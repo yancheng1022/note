@@ -855,13 +855,7 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 
 ## 5.16、线程池参数和原理
 
-
-1. 线程池可以有效地管理线程：它可以管理线程的数量,做到线程的服用，可以避免无节制的创建线程,导致超出系统负荷直至崩溃
-2. 构造方法的重要参数：corePoolSize（核心线程数）、workQueue（等待队列）、maxinumPoolSize（最大线程数）、handler（拒绝策略）、keepAliveTime（空闲线程存活时间）
-
-### 6.1.1、**ThreadPoolExecutor**
-
-1. **构造方法**
+**构造方法**
 
 通过new ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue workQueue,ThreadFactory threadFactory,RejectedExecutionHandler handler)自定义创建
 
@@ -878,13 +872,13 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 （4）callerrunPolicy：让调用者运行任务
 
 
-2. **工作原理**
+**工作原理**
 
 如果当前线程池中正在执行的线程数目小于corePoolSize，则每来一个任务，就会创建一个线程去执行这个任务；
 如果当前线程池中正在执行任务的的线程数目>=corePoolSize，则每来一个任务，会尝试将其添加到任务缓存队列当中，若添加成功，则该任务会等待空闲线程将其取出去执行；若添加失败（一般来说是任务缓存队列已满），则会尝试创建新的线程(救急线程)去执行这个任务；
 如果线程池中的线程数量大于 corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止，直至线程池中的线程数目不大于corePoolSize；
 如果当前线程池中的线程数目达到maximumPoolSize，则会采取任务拒绝策略进行处理
-### 6.1.2、Executors类中提供的工厂方法
+## 5.17、线程池类型
 
 根据上面的ThreadPoolExecutor这个构造方法，JDK Executors类中提供了众多工厂方法来创建各种用途的线程池
 
