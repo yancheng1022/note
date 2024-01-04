@@ -943,7 +943,9 @@ public static ExecutorService newSingleThreadExecutor() {
 4. TIDYING状态：当线程池处于SHUTDOWN或STOP状态时，所有任务都执行完毕后，线程池会进入TIDYING状态。在此状态下，线程池会进行清理工作，如关闭线程池中的所有线程等。当清理工作完成后，线程池会转换到TERMINATED状态。
 5. TERMINATED状态：线程池处于TERMINATED状态时，表示线程池已经完全终止，所有任务已经执行完毕并且清理工作也已经完成。此时线程池不再能接受新的任务。
 
+## 5.19、使用线程池
 
+ThreadPoolTaskExecutor
 
 
 # 6、jvm
