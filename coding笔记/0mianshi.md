@@ -1027,6 +1027,20 @@ executor.submit(() -> {
     log.info("Offline，{}，{}处理完成，发送over", cloudToLinkInfoOverDO.getId(), cloudToLinkInfoOverDO.getAck());  
 });
 ```
+
+
+## 5.20、线程池execute和submit的区别
+
+提交任务的类型：
+execute和submit都属于线程池的方法，execute只能提交Runnable类型的任务
+submit既能提交Runnable类型任务也能提交Callable类型任务。
+
+异常：
+execute会直接抛出任务执行时的异常，可以用try、catch来捕获，和普通线程的处理方式完全一致
+submit会吃掉异常，可通过Future的get方法将任务执行时的异常重新抛出。
+
+
+
 # 6、jvm
 
 
