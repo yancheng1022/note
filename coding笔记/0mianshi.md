@@ -903,7 +903,13 @@ jstack pid
 （2）jvm内存指标
 
 ```txt
-
+ps -ef|grep java
+// 查看java进程的配置信息
+jinfo pid
+// java进程当前gc情况
+jstat -gc pid
+// java堆详细信息
+jmap -heap pid
 ```
 
 # 2、数据库
