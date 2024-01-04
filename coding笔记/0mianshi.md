@@ -845,14 +845,14 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 当线程没有结束，但是ThreadLocal已经被回收，则可能导致线程中存在`ThreadLocalMap<null, Object>`的键值对，造成内存泄露。（ThreadLocal被回收，ThreadLocal关联的线程共享变量还存在）
 
 
-
 4. **怎么避免内存泄露？**
 
 1.Threadlocal自身做了一些处理，在每次调用ThreadLocal的get、set、remove方法时都会执行一个方法，该方法检测整个Entry[]表中对key为null的Entry一并擦除，重新调整索引
-
 2.程序员自身，在代码逻辑中使用完ThreadLocal，都要调用remove方法，及时清理
 
+## 5.15、ThreadLocal为什么使用弱引用
 
+引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。如果是使用弱引用，此时引用数为0，会被回收，
 # 2、数据库
 ## 2.1、数据库优化方案
 
