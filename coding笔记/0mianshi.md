@@ -1040,6 +1040,10 @@ execute会直接抛出任务执行时的异常，可以用try、catch来捕获�
 submit会吃掉异常，可通过Future的get方法将任务执行时的异常重新抛出。
 
 
+## 5.21、ReentrantReadWriteLock原理
+
+
+
 
 # 6、jvm
 
