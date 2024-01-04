@@ -832,6 +832,32 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 - 调用wait()进入等待状态的线程,需要由notify()/notifyAll()唤醒,从而返回。 
 - 调用sleep()进入超时等待的线程,需要在超时时间到达后自动返回。
 
+## 5.13、ThreadLocal变量原理
+
+ThreadLocal即线程变量，它用于共享变量在多线程中的隔绝，即每个线程都有一个该变量的副本彼此互不影响也就不需要同步机制了
+每个Thread对象都有一个ThreadLocalMap，当创建一个ThreadLocal的时候，就会将该ThreadLocal对象添加到该Map中，其中键就是ThreadLocal，值可以是任意类型。这样就实现了ThreadLocal在一个线程中是共享的，在不同线程之间是隔离的
+
+### 8.4.2、ThreadLocal存在的问题 - 内存泄漏
+
+1. **弱引用**
+
+正是因为有引用，对象才会在内存中存在。当对象的引用数量归零后，垃圾回收程序会把对象销毁。弱引用不会增加对象的引用数量。 引用的目标对象称为所指对象（referent）。 因此我们说，弱引用不会妨碍所指对象被当作垃圾回收。
+
+2. **ThreadLocalMap的key使用弱引用原因**
+
+假如使用强引用，当ThreadLocal不再使用需要回收时，发现某个线程中ThreadLocalMap存在该ThreadLocal的强引用，无法回收，造成内存泄漏。因此，使用弱引用可以防止长期存在的线程（通常使用了线程池）导致ThreadLocal无法回收造成内存泄漏。
+
+3. **通常说的ThreadLocal泄露是什么原因**
+
+我们注意到Entry对象中，虽然Key(ThreadLocal)是通过弱引用引入的，但是value即变量值本身是通过强引用引入。
+这就导致，假如不作任何处理，由于ThreadLocalMap和线程的生命周期是一致的，当线程资源长期不释放，即使ThreadLocal本身由于弱引用机制已经回收掉了，但value还是驻留在线程的ThreadLocalMap的Entry中。即存在key为null，但value却有值的无效Entry。导致内存泄漏。
+
+4. **怎么避免内存泄露？**
+
+1.Threadlocal自身做了一些处理，在每次调用ThreadLocal的get、set、remove方法时都会执行一个方法，该方法检测整个Entry[]表中对key为null的Entry一并擦除，重新调整索引
+
+2.程序员自身，在代码逻辑中使用完ThreadLocal，都要调用remove方法，及时清理
+
 
 # 2、数据库
 ## 2.1、数据库优化方案
