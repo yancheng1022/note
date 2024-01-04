@@ -854,8 +854,6 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。如果是使用弱引用，此时引用数为0，会被回收，这时就会出现key为null的entry，对应的value在下一次ThreadLocalMap调用set,get,remove的时候会被清除，避免了entry中value的内存泄漏
 
 
-
-
 # 6、jvm
 
 ## 6.1、常用jvm启动参数
