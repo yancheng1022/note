@@ -1048,7 +1048,7 @@ submit会吃掉异常，可通过Future的get方法将任务执行时的异常�
 ReentrantReadWriteLock还是基于AQS实现的，还是对state进行操作，拿到锁资源就去干活，如果没有拿到，依然去AQS队列中排队。将 state 的 高 16 位和低 16 位拆开表示读写锁。其中高 16 位表示读锁，低 16 位表示写锁。读锁，允许共享；写锁，是独占锁。适合在读多写少的场景中使用
 
 2、重入性
-ReentrantReadWriteLock依然是可重入的，写锁的重入和ReentrantLock没什么区别，依然是对state进行+1操作
+ReentrantReadWriteLock依然是可重入的，写锁的重入和ReentrantLock没什么区别，依然是对state进行+1操作。但是读锁是共享锁，对高16位进行加1，同一时间有多条读线程持有资源，无法确定每个线程读锁重入次数，每个读操作线程，都有一个ThreadLocal记录锁重入次数
 
 # 6、jvm
 
