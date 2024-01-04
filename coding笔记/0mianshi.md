@@ -997,6 +997,21 @@ public class AsyncService {
 		return message;
 	}
 }
+
+@RestController
+@Slf4j
+public class AsyncController {
+	@Autowiredprivate AsyncService asyncService;
+	@GetMapping("/test")public String test(){
+		long s = System.currentTimeMillis();
+		int count = 500;
+		for (int i=0;i<=count;i++){
+			asyncService.test("index="+i);
+		}
+		long e = System.currentTimeMillis();
+		log.info("haoshi={}",(e-s)/1000+"秒");return "s";
+	}
+}
 ```
 
 
