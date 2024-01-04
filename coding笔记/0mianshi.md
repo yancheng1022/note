@@ -1044,12 +1044,11 @@ submit会吃掉异常，可通过Future的get方法将任务执行时的异常�
 
 主要针对读多写少的场景，内部维护一个读锁和写锁。读写互斥，读读共享
 
-ReentrantReadWriteLock还是基于AQS实现的，还是对state进行操作，拿到锁资源就去干活，如果没有拿到，依然去AQS队列中排队
+1、原理
+ReentrantReadWriteLock还是基于AQS实现的，还是对state进行操作，拿到锁资源就去干活，如果没有拿到，依然去AQS队列中排队。将 state 的 高 16 位和低 16 位拆开表示读写锁。其中高 16 位表示读锁，低 16 位表示写锁。读锁，允许共享；写锁，是独占锁。适合在读多写少的场景中使用
 
-
-ReadLock和WriteLock是ReentrantReadWriteLock的两个内部类，Lock的上锁和释放锁都是通过一个AQS同步器来实现的。将 state 的 高 16 位和低 16 位拆开表示读写锁。其中高 16 位表示读锁，低 16 位表示写锁。读锁，允许共享；写锁，是独占锁。适合在读多写少的场景中使用
-
-
+2、重入性
+ReentrantReadWriteLock依然是可重入的，写锁的重入和ReentrantLock没什么区别，依然是对state进行+1操作
 
 # 6、jvm
 
