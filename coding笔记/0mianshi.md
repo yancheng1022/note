@@ -771,7 +771,7 @@ ConcurrentHashMap使用分段锁技术，数据结构：ReentrantLock+segement+h
 1. 首先CopyOnWriteArrayList的内部也是通过数组来实现的，在向CopyOnWriteArrayList添加元素时，会复制一个新的数组，写操作在新的数组上进行，读操作在原数组上进行
 2. 写数据时会加ReentLocak锁，防止并发写入丢失数据的问题
 3. 写操作结束后会把原数组指向新数组
-4. CopyOnWriteArrayList允许在写操作时来读取数据，大大提高了读的性能，因此适合读多写少的场景。但是CopyOnWriteArrayList比较占用内存，同时可能督导的数据不是实时最新的数据，所以不适合实时性要求很高的场景
+4. CopyOnWriteArrayList允许在写操作时来读取数据，大大提高了读的性能，因此适合读多写少的场景。但是CopyOnWriteArrayList比较占用内存，同时可能读到的数据不是实时最新的数据，所以不适合实时性要求很高的场景
 
 
 # 2、数据库
