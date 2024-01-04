@@ -10,7 +10,6 @@
 我们的项目云+系统就是接收仪器传来的实验数据，故障等信息。落地这些数据后，对数据做分析处理：比如实验流程的串联，实验结果波动分析，故障预警等。实现对远程设备的监管。用到的技术栈就是springboot，mybatis，dubbo，mysql，redis，mq，sharding-jdbc这些技术
 
 
-
 ![image.png|525](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312091541151.png)
 
 ## 1.2、项目过程遇到的问题？怎么解决
@@ -852,7 +851,13 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 
 ## 5.15、ThreadLocal为什么使用弱引用
 
-引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。如果是使用弱引用，此时引用数为0，会被回收，
+引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。如果是使用弱引用，此时引用数为0，会被回收，这时就会出现key为null的entry，对应的value在下一次ThreadLocalMap调用set,get,remove的时候会被清除，避免了entry中value的内存泄漏
+
+
+
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
