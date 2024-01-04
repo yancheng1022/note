@@ -853,6 +853,94 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 
 引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。如果是使用弱引用，此时引用数为0，会被回收，这时就会出现key为null的entry，对应的value在下一次ThreadLocalMap调用set,get,remove的时候会被清除，避免了entry中value的内存泄漏
 
+## 5.16、线程池参数和原理
+
+
+1. 线程池可以有效地管理线程：它可以管理线程的数量,做到线程的服用，可以避免无节制的创建线程,导致超出系统负荷直至崩溃
+2. 构造方法的重要参数：corePoolSize（核心线程数）、workQueue（等待队列）、maxinumPoolSize（最大线程数）、handler（拒绝策略）、keepAliveTime（空闲线程存活时间）
+
+### 6.1.1、**ThreadPoolExecutor**
+
+1. **构造方法**
+
+通过new ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue workQueue,ThreadFactory threadFactory,RejectedExecutionHandler handler)自定义创建
+
+> 1. corePoolSize：核心线程池的大小，如果核心线程池有空闲位置，新的任务就会被核心线程池新建一个线程执行，执行完毕后不会销毁线程，线程会进入缓存队列等待再次被运行。
+> 2. maximunPoolSize：线程池能创建最大的线程数量。如果核心线程池和缓存队列都已经满了，新的任务进来就会创建救急线程来执行。但是数量不能超过maximunPoolSize，否侧会采取拒绝接受任务策略，我们下面会具体分析。
+> 3. keepAliveTime：救急线程线程能够空闲的最长时间，超过时间，线程终止。这个参数默认只有在线程数量超过核心线程池大小时才会起作用。只要线程数量不超过核心线程大小，就不会起作用。
+> 4. unit：空闲线程存活时间单位 创建一个新线程时使用的工厂，可以用来设定线程名、是否为daemon线程等等
+> 5. workQueue：缓存队列，用来存放等待被执行的任务。
+> 6. threadFactory 线程工厂
+> 7. handler：拒绝策略
+（1）abortPolicy：抛出异常（默认）
+（2）discardPolicy：放弃本次任务
+（3）discardoldestPolicy：放弃队列中最早的任务，本任务取代
+（4）callerrunPolicy：让调用者运行任务
+
+
+2. **工作原理**
+
+如果当前线程池中正在执行的线程数目小于corePoolSize，则每来一个任务，就会创建一个线程去执行这个任务；
+如果当前线程池中正在执行任务的的线程数目>=corePoolSize，则每来一个任务，会尝试将其添加到任务缓存队列当中，若添加成功，则该任务会等待空闲线程将其取出去执行；若添加失败（一般来说是任务缓存队列已满），则会尝试创建新的线程(救急线程)去执行这个任务；
+如果线程池中的线程数量大于 corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止，直至线程池中的线程数目不大于corePoolSize；
+如果当前线程池中的线程数目达到maximumPoolSize，则会采取任务拒绝策略进行处理
+### 6.1.2、Executors类中提供的工厂方法
+
+根据上面的ThreadPoolExecutor这个构造方法，JDK Executors类中提供了众多工厂方法来创建各种用途的线程池
+
+1. **newFixedThreadPool**
+
+```java
+public static ExecutorService newFixedThreadPool(int nThreads) {
+    return new ThreadPoolExecutor(nThreads, nThreads,
+                                  0L, TimeUnit.MILLISECONDS,
+                                  new LinkedBlockingQueue<Runnable>());
+}
+```
+
+> 特点：
+> - 核心线程数 == 最大线程数（没有救急线程被创建），因此也无需超时时间 
+> - 阻塞队列是无界的，可以放任意数量的任务 
+> 
+评价：
+> 适用于任务量已知，相对耗时的任务
+
+
+2. **newCachedThreadPool**
+
+```java
+public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue<Runnable>());
+}
+```
+
+> 特点 
+> - 核心线程数是 0，最大线程数是 Integer.MAX_VALUE，救急线程的空闲生存时间是 60s，意味着 
+>    - 全部都是救急线程（60s 后可以回收）
+>    - 救急线程可以无限创建 
+> - 队列采用了 SynchronousQueue 实现特点是，它没有容量，没有线程来取是放不进去的（一手交钱、一手交货）
+> 
+评价：
+> 整个线程池表现为线程数会根据任务量不断增长，没有上限，当任务执行完，空闲 1分钟后释放线程
+> 适合任务数比较密集，但每个任务执行时间较短的情况
+
+
+3. newSingleThreadExecutor
+
+```java
+public static ExecutorService newSingleThreadExecutor() {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>()));
+}
+```
+使用场景： 
+希望多个任务排队执行。线程数固定为 1，任务数多于 1 时，会放入无界队列排队。
+任务执行完毕，这唯一的线程也不会被释放。 
+
 
 # 6、jvm
 
