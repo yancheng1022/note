@@ -1088,6 +1088,14 @@ Semaphore的实现原理主要是通过内部类Sync来实现的，内部类Sync
 2、 semaphore.acquire(); 当前线程会尝试去同步队列获取一个令牌，获取令牌的过程也就是使用原子的操作去修改同步队列的state ,获取一个令牌则修改为state=state-1。state<0,令牌数量不足，加入阻塞队列。>=0则获取成功
 3、semaphore.release() ，释放令牌的过程也就是把同步状态的state修改为state=state+1的过程。释放令牌成功之后，同时会唤醒同步队列的所有阻塞节共享节点线程
 
+## 5.24、countDownLatch原理
+
+CountDownLatch允许一个或多个线程等待其他线程完成操作。await（）用来等待计数归0，countDown（）用来让计数减少一。
+
+1、初始化CountDownLatch实际就是设置了AQS的state为计数的值
+2、调用CountDownLatch的countDown方法时实际就是调用AQS的relase方法，每调用一次就自减一次state值
+3、调用await方法实际就调用AQS的共享式获取同步状态state，当AQS的state值为0时，await方法才会执行成功，否则就会一直处于死循环中不断重试
+
 
 # 6、jvm
 
