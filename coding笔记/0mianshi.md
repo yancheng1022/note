@@ -1096,6 +1096,16 @@ CountDownLatch允许一个或多个线程等待其他线程完成操作。await�
 2、调用CountDownLatch的countDown方法时实际就是调用AQS的relase方法，每调用一次就自减一次state值
 3、调用await方法实际就调用AQS的共享式获取同步状态state，当AQS的state值为0时，await方法才会执行成功，否则就会一直处于死循环中不断重试
 
+## 5.25、CyclicBarrier原理
+
+CyclicBarrier可以理解为一个循环同步屏障，定义一个同步屏障之后，当一组线程都全部达到同步屏障之前都会被阻塞，直到最后一个线程达到了同步屏障之后才会被打开，其他线程才可继续执行（王者荣耀10人）
+
+1、创建CyclicBarrier时定义了CyclicBarrier对象需要达到的线程数count
+2、每当一个线程执行了await方法时，需要先通过ReentrantLock进行加锁操作，然后对count进行自减操作，操作成功则判断当前count是否为0；
+3、如果当前count不为0则调用Condition的await方法使当前线程进入等待状态；
+4、如果当前count为0则表示同步屏障已经完全，此时调用Condition的signalAll方法唤醒之前所有等待的线程，并开启循环的下一次同步屏障功能；
+5、唤醒其他线程之后，其他线程继续执行剩余的逻辑。
+
 
 # 6、jvm
 
