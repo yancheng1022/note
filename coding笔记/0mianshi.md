@@ -406,11 +406,11 @@ public class AuthAspect {
 ## 3.11、springBoot自动配置原理
 
 
->spring boot默认扫描启动类所在的包下的主类与子类的所有组件，但并没有包括依赖包中的类，那么依赖包中的bean是如何被发现和加载的。我们需要从Spring Boot项目的启动类开始跟踪
+>spring boot默认扫描启动类所在的包下的主类与子类的所有组件，但并没有包括依赖包中的bean，那么依赖包中的bean是如何被发现和加载的。我们需要从Spring Boot项目的启动类开始跟踪
 
-在启动类上我们一般会加入SpringBootApplication注解，它是一个复合注解，它下面的@EnableAutoConfiguration这个注解，这个注解也是一个复合注解。@EnableAutoConfiguration注解导入AutoConfigurationImportSelector类，这个类中有一个selectImports()方法，扫描了所有包含META-INF/spring.factories的jar包，这些jar包实际上就是我们引入的starter中的依赖。而自动配置的类的全类名就在这个文件中，然后就可以通过反射加载这些类
+在启动类上我们一般会加入SpringBootApplication注解，它是一个复合注解，它下面的@EnableAutoConfiguration这个注解，这个注解也是一个复合注解。@EnableAutoConfiguration注解导入AutoConfigurationImportSelector类，这个类中有一个selectImports()方法，扫描了所有包含META-INF/spring.factories的jar包，这个文件中列举了所有自动装备类的清单。通过`@ConditionalOn`条件注解，满足一定条件才会通过反射去创建对应的类
 
-这些配置类@Configuration和@Bean这两个注解一起使用就可以创建一个基于java代码的配置类.比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
+> 比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
 
 # 4、mybatis
 
