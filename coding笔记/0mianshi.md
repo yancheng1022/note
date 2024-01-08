@@ -1217,14 +1217,102 @@ Java堆的唯一目的就是存放对象实例，几乎所有的对象实例都�
 
 常见的垃圾收集器：
 
-新生代（高吞吐量）：serial New,ParNew,Parallel Scavenge
+新生代（高吞吐量）：serial,ParNew,Parallel Scavenge
 老年代：Serial Old, CMS, Parallel Old
 新生代和老年代（jdk9后）：G1,ZGC
 
 一般组合：
 
-Serial New（复制，单线程） + Serial Old（标记整理，单线程）
-Parallel Scavenge（复制，）
+Serial New + Serial Old
+Parallel New + CMS
+Parallel Scavenge +  Parallel Old
+
+
+**1、Serial（串行）收集器**
+
+Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JDK1.3.1之前）是虚拟机新生代收集的唯一选择。它是一种单线程收集器，不仅仅意味着它只会使用一个CPU或者一条收集线程去完成垃圾收集工作，更重要的是其在进行垃圾收集的时候需要暂停其他线程
+
+> 优点：简单高效，拥有很高的单线程收集效率
+  缺点：收集过程需要暂停所有线程
+  算法：复制算法应用
+
+2. **收集过程**
+
+![image (23).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222242409.png)
+
+
+**2、ParNew 收集器**
+
+概念：可以把这个收集器理解为Serial收集器的多线程版本
+
+> 优点：在多CPU时，比Serial效率高。
+  缺点：收集过程暂停所有应用程序线程，单CPU时比Serial效率差。
+  算法：复制算法
+
+
+![image (24).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222242011.png)
+
+
+**3、Parallel Scavenge 收集器**
+
+Parallel Scavenge收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器，看上去和ParNew一样，但是Parallel Scanvenge更关注系统的吞吐量 。
+可设置参数：-XX:MaxGCPauseMillis控制最大的垃圾收集停顿时间， -XX:GC Time Ratio直接设置吞吐量的大小
+
+> 吞吐量 = 运行用户代码的时间 / (运行用户代码的时间 + 垃圾收集时间)
+  比如虚拟机总共运行了120秒，垃圾收集时间用了1秒，吞吐量=(120-1)/120=99.167%。
+  若吞吐量越大，意味着垃圾收集的时间越短，则用户代码可以充分利用CPU资源，尽快完成程序的运算任务。
+
+
+**4、serial old**
+
+Serial Old收集器是Serial收集器的老年代版本，也是一个单线程收集器，不同的是采用"标记-整理算法"，运行过程和Serial收集器一样。
+
+**5、CMS**
+
+ **特点**最短回收停顿时间，
+ **回收算法**标记-清除
+ **回收步骤：**
+   （1）初始标记：标记GC Roots直接关联的对象，速度快
+   （2）并发标记：GC Roots Tracing过程，耗时长，与用户进程并发工作
+   （3）重新标记：修正并发标记期间用户进程运行而产生变化的标记，好事比初始标记长，但是远远小于并发标记
+   （4）并发清除：清除标记的对象
+**缺点**：
+
+	对CPU资源非常敏感，CPU少于4个时，CMS岁用户程序的影响可能变得很大，由此虚拟机提供了“增量式并发收集器”；无法回收浮动垃圾；采用标记清除算法会产生内存碎片，不过可以通过参数开启内存碎片的合并整理。
+
+![cms垃圾收集器](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222243378.png)
+
+
+**6、Parallel old**
+
+Parallel Old收集器是Parallel Scavenge收集器的老年代版本，使用多线程和"标记-整理算法"进行垃圾回收，吞吐量优先。
+**回收算法**：标记-整理
+**适用场景**：为了替代serial old与Parallel Scanvenge配合使用。
+
+
+**7、G1**
+
+G1将整个JVM堆划分成多个大小相等的独立区域regin，跟踪各个regin里面的垃圾堆积的价值大小，在后台维护一个优先列表，每次根据允许的收集时间，优先回收最大的regin，当然还保留有新生代和老年代的概念，但新生代和老年代不在是物理隔离了，他们都是一部分regin集合。内存“化整为零”的思路：在GC根节点的枚举范围汇总加入remembered set 即可保证不对全堆扫面也不会遗漏。
+
+   （1）初始标记：标记GC Roots直接关联的对象
+   （2）并发标记：对堆中对象进行可达性分析，找出存活对象，耗时长，与用户进程并发工作
+   （3）重新标记：修正并发标记期间用户进程继续运行而产生变化的标记
+   （4）筛选回收：对各个regin的回收价值进行排序，然后根据期望的GC停顿时间制定回收计划
+
+![G1垃圾收集器](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222244637.png)
+
+
+ 
+### 4.3.2、ZGC
+
+ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为首要目标的一款垃圾收集器。
+在JDK 11新加入，还在实验阶段，主要特点是：回收TB级内存（最大4T），停顿时间不超过10ms。
+**优点**：低停顿，高吞吐量，ZGC收集过程中额外耗费的内存小
+**缺点**：浮动垃圾
+目前使用的非常少，真正普及还是需要写时间的。
+
+
+
 # 2、数据库
 ## 2.1、数据库优化方案
 
