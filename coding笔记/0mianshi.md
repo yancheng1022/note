@@ -1217,7 +1217,9 @@ Java堆的唯一目的就是存放对象实例，几乎所有的对象实例都�
 
 常见的垃圾收集器：
 
-新生代（高吞吐量）：
+新生代（高吞吐量）：serial,ParNew,Parallel Scavenge
+老年代：Serial Old, CMS, Parallel Old
+新生代和老年代（jdk9后）：G1,ZGC
 
 # 2、数据库
 ## 2.1、数据库优化方案
