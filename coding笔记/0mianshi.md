@@ -1425,8 +1425,14 @@ Innodb通过主键聚集数据，如果没有定义主键，innodb会选择非�
 
 2、辅助索引
 
-辅助索引，也叫二级索引。叶子节点只存储了索引列和主键信息
+辅助索引，也叫二级索引。叶子节点只存储了索引列和主键信息。想要获取完整的数据需要根据主键值从主键索引中检索
 
+
+![image.png|358](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401091923809.png)
+
+
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401091924383.png)
 
 
 
