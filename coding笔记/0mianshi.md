@@ -1442,6 +1442,19 @@ Innodb通过主键聚集数据，如果没有定义主键，innodb会选择非�
 **覆盖索引（covering index）** 指一个查询语句的执行只需要从辅助索引中就可以得到查询记录，而不需要回表，去查询聚集索引中的记录。可以称之为实现了索引覆盖
 从执行计划看，Extra的信息为**using index** ，即用到了索引覆盖。
 
+比如
+
+select id name from table where name ='ls'
+
+这个就不会执行回表查询
+
+select id name ,sex from table where name ='ls'
+
+这个就要执行回表查询，因为sex在name索引上根本查不到。
+
+那么怎么解决呢？就是name 与 sex 可以建立联合索引。这就是索引覆盖
+
+
 # 3、网络
 3.1、三次握手四次挥手？为什么？
 
