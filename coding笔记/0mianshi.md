@@ -1149,24 +1149,6 @@ CyclicBarrier可以理解为一个循环同步屏障，定义一个同步屏障�
 
 jvm经过这么多年的发展和验证，大部分情况下不需要进行调优。通常我们jvm的参数配置大多还是遵循jvm的官方建议，例如：-xx:NewRatio=2（年轻代：老年代=1:2），-XX：SurvivorRatio=8（Eden:suvivor=8:1），堆内存设置为物理内存的3/4左右等
 
-**案例：元空间导致的FGC的问题**
-
-1、分析定位当前系统的瓶颈
-
-开启gc日志:
-
-```xml
--XX:+PrintGCDetails 打印GC日志细节
--XX:+PrintGCTimeStamps 打印GC日志时间
--Xloggc:gc.log 将GC日志输出到指定的磁盘文件上去，这里会把gc.log输出到项目根路径
-```
-
-2、发现老年代Full GC频繁
-发现是算法里会创建很多大对象（对象里包含大list），导致老年代空间不足
-
-3、修正
-复用一个list，自己做过滤，而不是创建很多大list
-
 
 ## 6.4、jvm内存模型
 
