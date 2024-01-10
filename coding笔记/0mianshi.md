@@ -1314,6 +1314,8 @@ Serial Old收集器是Serial收集器的老年代版本，也是一个单线程�
 
 ![cms垃圾收集器](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202310222243378.png)
 
+> 三色标记算法：黑（已扫描完） 灰（没有完全扫描）白（没有被引用，表示垃圾）
+
 
 **6、Parallel old**
 
