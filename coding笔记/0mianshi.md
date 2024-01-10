@@ -1456,6 +1456,9 @@ select id name ,sex from table where name ='ls'
 
 ## 1.6、索引设计原则
 
+基本的原则就是：查询更快，占用空间更小
+
+
 **适合建索引的场景**
 1. 频繁作为where条件语句查询的字段
 2. 关联字段需要建立索引，例如外键字段，student表中的classid,   classes表中的schoolid 等
