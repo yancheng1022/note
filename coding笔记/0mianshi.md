@@ -1158,6 +1158,7 @@ jstat -class 26530 # 类加载数量和空间占用
 jstat -gc 26530 # gc情况
 jstack 26530 # 线程堆栈信息
 jmap 26530 # 堆内存信息
+jmap -dump:format=b,live,file=test.txt  26530 # dump日志
 ```
 
 1、jconsole：查看 java 应用程序的运行概览、监控堆信息，可以监控Java应用程序的内存使用情况、线程状态、CPU占用率等
