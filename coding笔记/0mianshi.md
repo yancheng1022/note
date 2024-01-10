@@ -1562,3 +1562,4 @@ where a like 'xxx%' and b=yyy and c=zzz
 
 ## 1.4、RPC和HTTP的区别
 
+RPC，远程过程调用。RPC 和 HTTP 就不是一个层级的东西，所以严格意义上这两个没有可比性，也不应该来作比较
