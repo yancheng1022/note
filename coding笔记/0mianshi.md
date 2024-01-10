@@ -1540,7 +1540,7 @@ where a like 'xxx%' and b=yyy and c=zzz
 
 # 9、dubbo
 
-## 9.1、dubbo调用流程
+## 1.1、dubbo调用流程
 
 1. 服务启动，包括服务提供者和消费者的启动，封装服务调用链路。
 2. 服务提供者在启动时，向注册中心注册自己提供的服务。
@@ -1550,7 +1550,7 @@ where a like 'xxx%' and b=yyy and c=zzz
 6. 服务消费者和提供者，在内存中累计调用次数和调用时间，定时发送一次统计数据到监控中心。
 7. 服务提供方停止服务或者服务调用方关闭JVM的时候，会将provider及consumer进行销毁处理。
 
-## 1.3、dubbo和springCloud区别
+## 1.2、dubbo和springCloud区别
 两者都是现在主流的分布式框架，但却存在不少差异：
 
 - **生态环境不同：** SpringCloud定位为微服务架构下的一站式解决方案（网关，分布式配置，服务跟踪）；Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用和治理
@@ -1560,6 +1560,42 @@ where a like 'xxx%' and b=yyy and c=zzz
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141619063.png)
 
 
-## 1.4、RPC和HTTP的区别
+## 1.3、RPC和HTTP的区别
 
-RPC，远程过程调用。RPC 和 HTTP 就不是一个层级的东西，所以严格意义上这两个没有可比性，也不应该来作比较
+RPC，远程过程调用。RPC 和 HTTP 就不是一个层级的东西，所以严格意义上这两个没有可比性，也不应该来作比较。http可以理解为RPC的一种实现
+
+RPC可以用 HTTP 来传输，也可以基于 TCP 自定义协议传输
+
+## 1.4、dubbo支持协议
+
+**1、dubbo 默认协议：**
+
+- 单一 TCP 长连接，Hessian 二进制序列化和 NIO 异步通讯
+- 不适合传送大数据包的服务
+
+**2、rmi 协议：**
+
+- 采用 JDK 标准的 java.rmi.* 实现，采用阻塞式短连接和 JDK 标准序列化方式
+- 对传输数据包不限，消费者和传输者个数相当
+
+**3、hessian 协议：**
+
+- 底层 Http 通讯，Servlet 暴露服务，Dubbo 缺省内嵌 Jetty 作为服务器实现
+- 通讯效率高于 WebService 和 Java 自带的序列化
+- 适用于传输数据包较大，提供者比消费者个数多，提供者压力较大
+
+**4、http 协议：**
+
+- 基于 http 表单的远程调用协议，短连接，json 序列化
+- 对传输数据包不限，不支持传文件
+
+**5、webservice 协议：**
+
+- 基于 Apache CXF 的 frontend-simple 和 transports-http 实现，短连接，SOAP文本序列化
+- 可与原生 WebService 服务互操作
+- 适用于系统集成、跨语言调用
+
+**6、thrift 协议：**
+
+- 对 thrift 原生协议的扩展添加了额外的头信息
+- 使用较少，不支持传 null 值
