@@ -1554,9 +1554,11 @@ where a like 'xxx%' and b=yyy and c=zzz
 两者都是现在主流的分布式框架，但却存在不少差异：
 
 - **生态环境不同：** SpringCloud定位为微服务架构下的一站式解决方案（网关，分布式配置，服务跟踪）；Dubbo 是 SOA 时代的产物，它的关注点主要在于服务的调用和治理
-- **调用方式：** SpringCloud是采用Http协议做远程调用；Dubbo是基于RPC调用
+- **调用方式：** SpringCloud是采用Http协议做远程调用；Dubbo默认使用的是Dubbo协议进行远程调用
 - **组件差异比较多**，例如SpringCloud注册中心一般用Eureka，而Dubbo用的是Zookeeper
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311141619063.png)
 
+
+## 1.4、RPC和HTTP的区别
 
