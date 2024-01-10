@@ -1157,7 +1157,7 @@ jinfo 26530 # jvm参数
 jstat -class 26530 # 类加载数量和空间占用
 jstat -gc 26530 # gc情况
 jstack 26530 # 线程堆栈信息
-
+jmap 26530 # 堆内存信息
 ```
 
 1. jconsole
