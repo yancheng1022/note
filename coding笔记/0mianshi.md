@@ -1458,6 +1458,7 @@ select id name ,sex from table where name ='ls'
 
 基本的原则就是：查询更快，占用空间更小
 
+1、适合建索引的列是
 
 **适合建索引的场景**
 1. 频繁作为where条件语句查询的字段
