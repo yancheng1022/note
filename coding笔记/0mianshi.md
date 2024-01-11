@@ -1454,7 +1454,7 @@ explain select name from user
 3、**extra**：额外信息
 
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
-> （2）Using where：查询条件没使用到索引
+> （2）Using where：使用了额外的 `WHERE` 条件进行过滤。通常就是查询条件没使用到索引。
 > （3）Using temporary：执行查询时使用了临时表来处理结果集，通常发生在排序操作或多个连接的情况下
 > （4）Using filesort：将用外部排序而不是索引排序，这个其实也是让order by后面的字段走索引就行了
 
