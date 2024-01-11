@@ -1417,7 +1417,11 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 type 连接类型，访问类型，表示MySQL在访问表时所采取的方式
 性能：性能： null > system/const > eq_ref > ref > ref_or_null   >  range > index >  all 
 index：使用的索引
-exart：额外信息  using fileSort
+exart：额外信息  
+> （1）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
+> （2）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
+> （3）Using index：select操作中使用了覆盖索引(Covering Index)，避免访问了表的数据行，效率不错
+> （4）Using join buffer：表明使用了连接缓存，给驱动表建立索引可解决此问题
 
 ## 2.2、索引分类
 
