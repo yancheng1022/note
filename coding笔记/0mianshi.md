@@ -1439,10 +1439,10 @@ explain select * from user where name = '张三'
 ```
 
 （5）range：range使用索引来检索给定范围的行数据，一般是在where后面使用between、<>、in等查询语句就会出现range
-（6）index：当查询执行全索引扫描时，使用`index`访问方法。这意味着查询将遍历整个索引来获取所需的数据，而不是使用索引定位特定的行。通常，在没有更好的索引可用时或者查询需要访问大部分表中的数据时出现
+（6）index：使用索引进行全索引扫描
 
 ```sql
-
+explain select name from user
 ```
 
 
