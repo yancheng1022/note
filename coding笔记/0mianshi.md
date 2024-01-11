@@ -1446,12 +1446,12 @@ explain select name from user
 ```
 
 
-（7）all：ALL与index的区别就是ALL是从硬盘中读取，而index是从索引文件中读取，ALL全表扫描意味着Mysql会从表的头到尾进行扫描，这时候表示通常需要增加索引来进行优化了
+（7）all：进行了全表扫描，这时候表示通常需要增加索引来进行优化了
 
 
 2、**key**：实际使用的索引，表示MySQL在执行查询时所使用的索引
 
-3、**exart**：额外信息
+3、**extra**：额外信息
 
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
 > （2）Using where：查询条件没使用到索引
