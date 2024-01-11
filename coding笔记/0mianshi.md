@@ -1445,16 +1445,14 @@ explain select * from user where name = '张三'
 
 
 
-（2）key：实际使用的索引，表示MySQL在执行查询时所使用的索引
+2、**key**：实际使用的索引，表示MySQL在执行查询时所使用的索引
 
-（3）exart：额外信息
+3、**exart**：额外信息
 
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
 > （2）Using where：
 > （3）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
 > （4）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
-> （2）
-> （4）Using join buffer：表明使用了连接缓存，给驱动表建立索引可解决此问题
 
 ## 2.2、索引分类
 
