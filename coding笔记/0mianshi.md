@@ -1451,9 +1451,9 @@ explain select * from user where name = '张三'
 
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
 > （2）Using where：
-> （1）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
-> （2）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
-> 
+> （3）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
+> （4）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
+> （2）
 > （4）Using join buffer：表明使用了连接缓存，给驱动表建立索引可解决此问题
 
 ## 2.2、索引分类
