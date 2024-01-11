@@ -1417,10 +1417,10 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 关注字段：
 1、**type** 连接类型，访问类型，表示MySQL在访问表时所采取的方式
 
-性能：性能： null > system/const > eq_ref > ref >  range > index >  all 
+性能：性能： system/const > eq_ref > ref >  range > index >  all 
 
 
-（1）system：system是const的特例，**「表示表中只有一行记录」**，这个几乎不会出现，也作为了解。
+（1）system：system是const的特例，表示表中只有一行记录，这个几乎不会出现，也作为了解。
 （2）const: const表示通过索引一次就查找到了数据，一般const出现在**唯一索引或者主键索引中使用等值查询**
 
 ```sql
@@ -1450,7 +1450,7 @@ explain select * from user where name = '张三'
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
 > （2）Using where：查询条件没使用到索引
 > （3）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
-> （4）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
+> （4）Using filesort：将用外部排序而不是索引排序，这个其实也是让order by后面的字段走索引就行了
 
 ## 2.2、索引分类
 
