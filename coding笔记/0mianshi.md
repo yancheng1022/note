@@ -1433,7 +1433,7 @@ explain select * from user where id =2;
 EXPLAIN SELECT * FROM users JOIN orders ON users.id = orders.user_id;
 ```
 
-（4）ref：ref与eq_ref的区别就是：  eq_ref使用的是唯一索引或者主键索引，ref扫描后的结果可能会找到多条符合条件的行数据，本质上是一种索引访问，返回匹配的行
+（4）ref：使用的是非唯一索引来匹配行时
 ```sql
 explain select * from user where name = '张三'
 ```
