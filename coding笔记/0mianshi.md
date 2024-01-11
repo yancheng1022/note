@@ -1602,6 +1602,7 @@ where a like 'xxx%' and b=yyy and c=zzz
 **2、Fanout Exchange（广播交换机）**
 
 该类型的交换机会将⼀条消息⼴播到绑定到该交换机的所有队列上，不论你设置的路由键是什么
+
 > 如果想让多个消费者消费到数据必须不指定queues，指定交换机
 
 
