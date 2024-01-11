@@ -1746,3 +1746,19 @@ RPC可以用 HTTP 来传输，也可以基于 TCP 自定义协议传输
 
 - 对 thrift 原生协议的扩展添加了额外的头信息
 - 使用较少，不支持传 null 值
+
+
+# 10、SpringCloud
+
+## 10.1、项目中springCloud用的哪些组件
+
+|  | spring cloud官方 | spring cloud netflix | spring cloud alibaba |
+| --- | --- | --- | --- |
+| 服务注册发现 | - | Eureka | nacos |
+| 分布式配置 | spring cloud config | Archaius | nacos |
+| 服务熔断 | - | Hystrix | Sentinel |
+| 服务调用 | Open Fegin | Fegin | Dubbo RPC |
+| 服务路由 | spring cloud gateway | zuul | dubbo proxy |
+| 分布式消息 | rabbitmq | - | rocketmq |
+| 负载均衡 | - | ribbon | dubbo LB |
+| 分布式事务 | - | - | Seata |
