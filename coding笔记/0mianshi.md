@@ -1421,16 +1421,16 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 
 
 （1）system：system是const的特例，表示表中只有一行记录，这个几乎不会出现，也作为了解。
-（2）const: const表示通过索引一次就查找到了数据，一般const出现在**唯一索引或者主键索引中使用等值查询**
+（2）const: 通过索引直接访问一行数据，主键或唯一索引进行等值比较时出现
 
 ```sql
 explain select * from user where id =2;
 ```
 
-（3）eq_ref: eq_ref表示使用唯一索引或者主键索引扫描作为表链接匹配条件，对于每一个索引键，表中只有一条记录与之匹配
+（3）eq_ref: 当使用连接查询时，如果查询使用的是唯一索引来匹配每个行
 
 ```sql
-explain select * from user left join role_user on user.id = role_user.user_id left join role on role_user.role_id=role.id;
+EXPLAIN SELECT * FROM users JOIN orders ON users.id = orders.user_id;
 ```
 
 （4）ref：ref与eq_ref的区别就是：  eq_ref使用的是唯一索引或者主键索引，ref扫描后的结果可能会找到多条符合条件的行数据，本质上是一种索引访问，返回匹配的行
