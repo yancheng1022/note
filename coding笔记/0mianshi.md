@@ -1420,9 +1420,9 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 
 > null：优化过程中就已得到结果，不用再访问表或索引
 > const：在整个查询过程中这个表最多只会有一条匹配的行，比如主键 id=1 就肯定只有一行
-> eq_ref：使用有唯一性 索引查找（主键或唯一性索引）
-> ref：非唯一性索引访问（select * from user where username = '张三';）
-> ref_or_null：该联接类型如同ref类似,结果包含空行
+> eq_ref：多表的 join 查询, 表示对于前表的每一个结果, 都只能匹配到后表的一行结果. 并且查询的比较操作通常是 `=`, 查询效率较高
+> ref：多表的 join 查询, 针对于非唯一或非主键索引, 或者是使用了 `最左前缀` 规则索引的查询
+> ref_or_null：与ref方法类似，只是增加了null值的比较
 > (上面这五种情况都是很理想的索引使用情况)
 > range：索引范围扫描，常见于　<,<=,>,>=,between,in等操作符
 > index：索引全扫描，MySQL遍历整个索引来查询匹配的行：（select username from user）
