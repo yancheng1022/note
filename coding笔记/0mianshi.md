@@ -1555,7 +1555,8 @@ where a like 'xxx%' and b=yyy and c=zzz
 
 ## 8.3、死信队列
 
-
+死信场景：
+1. 消息被消费方否认确定。
 # 9、dubbo
 
 ## 1.1、dubbo调用流程
