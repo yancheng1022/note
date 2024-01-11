@@ -1565,29 +1565,62 @@ where a like 'xxx%' and b=yyy and c=zzz
 
 ## 8.4、rabbitmq工作模式
 
-### 2.3.1、简单模式
+**1、简单模式**
 一个生产者将消息发送到一个队列中，一个消费者从这个队列中获取消息并进行处理。这种模式仅适用于单个生产者和单个消费者的场景
 
 ![简单模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241557273.png)
 
 
-### 2.3.2、工作队列模式
+**2、工作队列模式**
 一个生产者将消息发送到一个队列中，多个消费者从这个队列中获取消息并进行处理。这种模式可以提高消息的处理效率
 
 > 对于任务过重或任务较多情况使用工作队列可以提高任务处理的速度
 
 ![工作队列模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241632591.png)
 
-### 2.3.3、发布订阅模式
+**3、发布订阅模式**
 一个生产者将消息发送到一个交换机中，交换机将消息广播到所有绑定的队列中，多个消费者可以分别从这些队列中获取消息并进行处理。这种模式适用于需要将消息广播到多个消费者的场景
 
 ![发布订阅模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241633780.png)
 
 
-### 2.3.4、路由模式
+**4、路由模式**
 一个生产者将消息发送到一个交换机中，交换机根据消息的Routing Key将消息路由到对应的队列中，多个消费者可以从这些队列中获取消息并进行处理。这种模式适用于需要根据消息的路由键进行精确匹配的场景
 
 ![路由模式](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241647936.png)
+
+
+## 8.5、交换机类型
+
+**1、Direct Exchange（直连交换机）**
+
+根据Routing Key(路由键)进行投递到不同队列。如果路由键不匹配，那么就不会发送到任何队列中去。
+
+![直连交换机](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241551705.png)
+
+
+**2、Fanout Exchange（广播交换机）**
+
+该类型的交换机会将⼀条消息⼴播到绑定到该交换机的所有队列上，不论你设置的路由键是什么
+> 如果想让多个消费者消费到数据必须不指定queues，指定交换机
+
+
+**3、Topic Exchange（主题交换机）**
+
+将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“\*”匹配不多不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.\* ” 只会匹配到“abc.def”。
+
+![主题交换机](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241552123.png)
+
+
+**4、Headers Exchanges（头交换机）**
+
+与routingKey无关，匹配机制是匹配消息头中的属性信息。在绑定消息队列与交换机之前声明一个map键值对，通过这个map对象实现消息队列和交换机的绑定。当消息发送到RabbitMQ时会取到该消息的headers与Exchange绑定时指定的键值对进行匹配；如果完全匹配则消息会路由到该队列，否则不会路由到该队列()
+
+> 匹配规则x-match有下列两种类型：
+x-match = all ：表示所有的键值对都匹配才能接受到消息
+x-match = any ：表示只要有键值对匹配就能接受到消息
+
+![image (6).png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241557662.png)
 
 
 
