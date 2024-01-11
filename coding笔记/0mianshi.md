@@ -1455,7 +1455,7 @@ explain select name from user
 
 > （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
 > （2）Using where：查询条件没使用到索引
-> （3）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
+> （3）Using temporary：执行查询时使用了临时表来处理结果集，通常发生在排序操作或多个连接的情况下
 > （4）Using filesort：将用外部排序而不是索引排序，这个其实也是让order by后面的字段走索引就行了
 
 ## 2.2、索引分类
