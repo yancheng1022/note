@@ -1562,6 +1562,20 @@ where a like 'xxx%' and b=yyy and c=zzz
 
 如果配置了死信队列，消息会被丢进死信队列，如果没有，消息会被丢弃
 
+```java
+ @Bean
+    public Queue DirectQueue1(){
+        Map<String,Object> args = new HashMap<>();
+        args.put("x-message-ttl",5000);//这里一定是int值
+        //指定进入的死信交换机
+        args.put("x-dead-letter-exchange","dead_direct_exchange");
+        //direct模式需要配置,fanout模式是不需要配置的
+        args.put("x-dead-letter-routing-key","dead");
+        return new Queue("ttl_direct_queue",
+                true,false,false,args);
+    }
+```
+
 
 ## 8.4、rabbitmq工作模式
 
