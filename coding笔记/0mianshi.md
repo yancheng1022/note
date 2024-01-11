@@ -1495,7 +1495,7 @@ select id name ,sex from table where name ='ls'
 eg：建立复合索引index:(a,b,c) --- 实际上已经建立了三个联合索引(a)、(a,b)、(a,b,c)
 select * from table where a = '1'  //走索引
 select * from table where c = '1'  //不走索引
-where a like 'xxx%' and b=yyy and c=zzz 
+select * from table where c = '1' and b > 1 and a='2' //走ab（因为优化成abc的顺序，然后b是范围，导致后面的c停止匹配）
 ```
 
 3. like查询是以%开头，索引失效（以%结尾，索引可以使用）
