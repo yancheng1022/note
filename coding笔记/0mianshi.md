@@ -1413,32 +1413,47 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 
 1.表结构优化。对经常使用的查询条件加索引
 2.查询语句优化。使用explain分析工具
+
 关注字段：
-**（1）type 连接类型，访问类型，表示MySQL在访问表时所采取的方式**
+1、**type** 连接类型，访问类型，表示MySQL在访问表时所采取的方式
 
-性能：性能： null > system/const > eq_ref > ref > ref_or_null   >  range > index >  all 
-
-**NULL**：mysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或索引。例如：在索引列中选取最小值，可以单独查找索引来完成，不需要在执行时访问表
+性能：性能： null > system/const > eq_ref > ref >  range > index >  all 
 
 
+（1）system：system是const的特例，**「表示表中只有一行记录」**，这个几乎不会出现，也作为了解。
+（2）const: const表示通过索引一次就查找到了数据，一般const出现在**唯一索引或者主键索引中使用等值查询**
 
-> null：优化过程中就已得到结果，不用再访问表或索引
-> const：在整个查询过程中这个表最多只会有一条匹配的行，比如主键 id=1 就肯定只有一行
-> eq_ref：多表的 join 查询, 表示对于前表的每一个结果, 都只能匹配到后表的一行结果. 并且查询的比较操作通常是 `=`, 查询效率较高
-> ref：多表的 join 查询, 针对于非唯一或非主键索引, 或者是使用了 `最左前缀` 规则索引的查询
-> ref_or_null：与ref方法类似，只是增加了null值的比较
-> (上面这五种情况都是很理想的索引使用情况)
-> range：索引范围扫描，常见于　<,<=,>,>=,between,in等操作符
-> index：索引全扫描，MySQL遍历整个索引来查询匹配的行：（select username from user）
-> all：全表扫描
+```sql
+explain select * from user where id =2;
+```
 
-**（2）key：实际使用的索引，表示MySQL在执行查询时所使用的索引**
+（3）eq_ref: eq_ref表示使用唯一索引或者主键索引扫描作为表链接匹配条件，对于每一个索引键，表中只有一条记录与之匹配
 
-**（3）exart：额外信息**  
+```sql
+explain select * from user left join role_user on user.id = role_user.user_id left join role on role_user.role_id=role.id;
+```
 
+（4）ref：ref与eq_ref的区别就是：  eq_ref使用的是唯一索引或者主键索引，ref扫描后的结果可能会找到多条符合条件的行数据，本质上是一种索引访问，返回匹配的行
+```sql
+explain select * from user where name = '张三'
+```
+
+（5）range：range使用索引来检索给定范围的行数据，一般是在where后面使用between、<>、in等查询语句就会出现range
+（6）index：index表示会遍历索引树，index会比ALL速度快一些，但是出现index说明需要检查自己的索引是否使用正确
+（7）all：ALL与index的区别就是ALL是从硬盘中读取，而index是从索引文件中读取，ALL全表扫描意味着Mysql会从表的头到尾进行扫描，这时候表示通常需要增加索引来进行优化了
+
+
+
+
+（2）key：实际使用的索引，表示MySQL在执行查询时所使用的索引
+
+（3）exart：额外信息
+
+> （1）Using index：select操作中使用了覆盖索引(Covering Index)，避免回表查询
+> （2）Using where：
 > （1）Using filesort：排序时没有按照建立复合索引字段的顺序进行，因此产生了外部的索引排序。效率低
 > （2）Using temporary：使了用临时表保存中间结果,MySQL在对查询结果排序时使用临时表。常见于排序 order by 和分组查询 group by
-> （3）Using index：select操作中使用了覆盖索引(Covering Index)，避免访问了表的数据行，效率不错
+> 
 > （4）Using join buffer：表明使用了连接缓存，给驱动表建立索引可解决此问题
 
 ## 2.2、索引分类
