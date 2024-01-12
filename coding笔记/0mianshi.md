@@ -1585,7 +1585,9 @@ lock tables user read; # 手动添加表读锁
 unlock tables # 关闭锁
 ```
 
+3、行锁
 
+行锁主要由innodb存储引擎提供。innodb支持两种类型的行锁：共享锁（s锁）和排它锁（x锁）
 
 
 # 8、mq
