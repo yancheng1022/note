@@ -1580,6 +1580,14 @@ myisam中：对表的读操作，会自动加读锁，对表的写操作，自�
 
 innodb中：非必要不使用表锁，主要是通过行锁来实现 
 
+```sql
+lock tables user read; # 手动添加表读锁
+unlock tables # 关闭锁
+```
+
+
+
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
