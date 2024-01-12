@@ -1563,7 +1563,14 @@ select * from table where c = '1' and b > 1 and a='2' //走ab（因为优化成a
 
 ## 1.10、mysql中有哪些锁
 
+1、全局锁
 
+  使用了全局锁后，整个数据库就处于只读状态了，无论是执行对于数据的操作:insert、delete、update还是对于表结构的增删改查，都会被**阻塞**。全局锁主要用于做全库逻辑备份。
+
+```sql
+flush tables with read lock # 开启全局锁
+unlock tables # 关闭全局锁
+```
 
 # 8、mq
 
