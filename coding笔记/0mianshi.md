@@ -1596,7 +1596,7 @@ unlock tables # 关闭锁
 
 ## 1.11、mysql去重
 
-
+distict ， group by ，
 
 # 8、mq
 
