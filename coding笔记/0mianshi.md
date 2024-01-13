@@ -1653,6 +1653,34 @@ innodb在可重复度的隔离级别下可以解决幻读，靠的就是mvcc机�
 它的实现依赖于三个概念：版本链和快照读和ReadView
 
 
+1. 版本链：多个事务并行操作某一行数据时，不同事务对该行数据的修改会产生多个版本，然后通过回滚指针（roll_pointer），连成一个链表，这个链表就称为版本链(最新记录+undo-log)
+
+> undo log，**回滚日志**，用于记录数据被修改前的信息。在表记录修改之前，会先把数据拷贝到undo log里，如果事务回滚，即可以通过undo log来还原数据. 可以这样认为，当delete一条记录时，undo log 中会记录一条对应的insert记录
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101605938.png)
+
+
+2. 快照读：读取的是记录数据的可见版本，不加锁，普通的select语句都是快照读
+
+> 当前读：读取的是记录数据的最新版本，显式加锁的都是当前读。如update，delete，select..for update
+> 【注意】：只有快照读才会使用MVCC，当前读使用行锁+间隙锁（临键锁Next-Key Locks）实现
+
+3. RedaView：读视图，其实就是一个数据结构，包含四个属性：当前活跃事务编号集合，最小活跃事务编号，预分配事务编号（当前最大事务编号+1），创建者事务编号
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101605005.png)
+
+
+> 读已提交：在每次执行快照读的时候生成ReadView
+> 可重复读：（同一事务）只在第一次使用快照读的时候生成ReadView，后续复用（解决不可重复读）,（但两次快照读之间存在当前读，也会重新生成，所以存在幻读的问题）
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311101606136.png)
+
+
+> 流程：
+> 1. 在执行查询操作时生成一个ReadView（注意在读已提交下，每次快照读都生成一个ReadView）
+> 2. 遍历版本链，判断是否符合ReadView规则（这个过程其实就是找它最近一次事务提交的数据版本）
+> 3. 返回符合规则的数据
+
 
 
 简单来说，mvcc就是存储了同一条数据的不同版本连，不同事务可以访问不同的数据库版本。
