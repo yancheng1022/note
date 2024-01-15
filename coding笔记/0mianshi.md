@@ -1685,7 +1685,11 @@ innodb在可重复度的隔离级别下可以解决幻读，靠的就是mvcc机�
 
 死锁的关键在于：两个(或以上)的Session加锁的顺序不一致。
 
-
+```sql
+# session1关闭自动提交
+select * from user where id in (2,4,5) for update # 会加写锁
+# 
+```
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
