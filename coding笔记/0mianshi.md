@@ -1812,12 +1812,11 @@ x-match = any ：表示只要有键值对匹配就能接受到消息
 
 出现顺序错乱的场景：
 
-1、一个queue，有多个consumer去消费，这样就会造成顺序的错误，consumer从MQ里面读取数据是有序的，但是每个consumer的执行时间是不固定的，无法保证先读到消息的consumer一定先完成操作，这样就会出现消息并没有按照顺序执行，造成数据顺序错误
-2、一个queue对应一个consumer，但是consumer里面进行了多线程消费，这样也会造成消息消费顺序错误。
+一个queue，有多个consumer去消费，这样就会造成顺序的错误，consumer从MQ里面读取数据是有序的，但是每个consumer的执行时间是不固定的，无法保证先读到消息的consumer一定先完成操作，这样就会出现消息并没有按照顺序执行，造成数据顺序错误
+
 
 解决方案：
-1、拆分成多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；
-2、
+拆分成多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；
 # 9、dubbo
 
 ## 1.1、dubbo调用流程
