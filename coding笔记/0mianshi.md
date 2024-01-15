@@ -1816,7 +1816,8 @@ x-match = any ：表示只要有键值对匹配就能接受到消息
 2、一个queue对应一个consumer，但是consumer里面进行了多线程消费，这样也会造成消息消费顺序错误。
 
 解决方案：
-1、拆分成多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；这样也会造成吞吐量下降，可以在消费者内部采用多线程的方式取消费
+1、拆分成多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；
+2、
 # 9、dubbo
 
 ## 1.1、dubbo调用流程
