@@ -1688,7 +1688,8 @@ innodb在可重复度的隔离级别下可以解决幻读，靠的就是mvcc机�
 ```sql
 # session1关闭自动提交
 select * from user where id in (2,4,5) for update # 会加写锁
-# 
+# session2
+select * from user where id in (3,4,5) fot update # 锁等待...
 ```
 # 8、mq
 
