@@ -1694,7 +1694,7 @@ select * from user where id in (3,4,5) fot update # 锁等待...
 
 ## 1.14、undo log、redo log、bin log的作用
 
-
+undo log是一种用于回退的日志，在数据库事务开始前，mysql会先记录更新前的数据到undo log日志文件里面。当事务回滚或数据库崩溃时，可以利用undo log来进行回退
 
 
 # 8、mq
