@@ -1691,6 +1691,12 @@ select * from user where id in (2,4,5) for update # 会加写锁
 # session2
 select * from user where id in (3,4,5) fot update # 锁等待...
 ```
+
+## 1.14、undo log、redo log、bin log的作用
+
+
+
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
