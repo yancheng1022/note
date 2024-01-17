@@ -2042,3 +2042,89 @@ nginx不仅能做反向代理，实现负载均衡，还能用作正向代理来
 为了加快网站的解析速度，可以把 动态页面 和 静态页面 由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力
 
 > 静态资源请求（如html、css、图片等）由静态资源服务器处理，动态资源请求（如 jsp页面、servlet程序等）由 tomcat 服务器处理，tomcat 本身是用来处理动态资源的，同时 tomcat 也能处理静态资源，**但是 tomcat 本身处理静态资源的效率并不高**，而且还会带来额外的资源开销。利用 nginx 实现动静分离的架构，能够让 tomcat 专注于处理动态资源，静态资源统一由静态资源服务器处理，从而提升整个服务系统的性能 
+
+## 12.2、负载均衡方案
+
+1、轮询（默认）
+每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器 down 掉，能自动剔除
+```shell
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    upstream webservers{
+      # weight 多台机器，可以配置权重值，权重高的服务将会优先被访问
+      server  192.168.9.134:8081;
+      server  192.168.9.134:8082;
+    }
+ 
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+             #转发到负载服务上
+            proxy_pass http://webservers/api/;
+         }
+    }
+}
+```
+
+2、weight
+weight 代表权重默认为 1,权重越高被分配的客户端越多。指定轮询几率，weight权重大小和访问比率成正比。用于后端服务器性能不均衡的情况。
+```shell
+
+    upstream webservers{
+      server  192.168.9.134:8081 weight=8;
+      server  192.168.9.134:8082 weight=2;
+    }
+```
+
+3、ip_hash
+每个请求按访问 ip 的 hash 结果分配，这样每个访客固定访问一个后端服务器
+> 使用nginx+ip_hash这种策略代理，很好解决了同一用户访问同一个应用，session不共享的问题,实现session共享的问题
+
+```shell
+    upstream webservers{
+      ip_hash;
+      server  192.168.9.134:8081;
+      server  192.168.9.134:8082;
+    }
+```
+
+4、fair
+
+按后端服务器的响应时间来分配请求，响应时间短的优先分配。
+```shell
+upstream webservers{
+        server 192.168.9.134:8081;
+        server 192.168.9.134:8082;
+        fair;
+}
+```
+
+5、url_hash
+
+按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效
+> 相同的url会被分配到同一个节点，主要为了提高缓存命中率
+
+```shell
+upstream webservers{
+    hash &request_uri;
+    server 192.168.9.134:8081;
+    server 192.168.9.134:8082;
+}
+```
+
+6、least_conn
+按节点连接数分配，把请求优先分配给连接数少的节点。该策略主要为了解决，各个节点请求处理时间长短不一造成某些节点超负荷的情况
+```shell
+upstream webservers{
+    least_conn;
+    server 192.168.9.134:8081;
+    server 192.168.9.134:8082;
+}
+```
