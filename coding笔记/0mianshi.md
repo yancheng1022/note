@@ -1121,7 +1121,9 @@ synchronized可以修饰静态方法、普通方法、代码块。 能够保证�
 
 synchronized关键字的底层原理是Java中的锁机制。在Java中，每个对象都有一个监视器锁（monitor）。当一个线程想要访问一个被synchronized修饰的方法或代码块时，它会尝试获取这个对象的监视器锁。如果这个锁没有被其他线程占用，那么这个线程就可以获取这个锁，并执行synchronized修饰的方法或代码块。如果这个锁已经被其他线程占用，那么这个线程就会进入阻塞状态（waitset，entrylist），直到它能够获取这个锁为止
   
+## 2.27、synchronized锁升级 
 
+Java中每个对象都拥有对象头，对象头由Mark World 、指向类的指针、以及数组长度三部分组成，本文，我们只需要关心Mark World 即可，Mark World 记录了对象的HashCode、分代年龄和锁标志位信息
 
 
 # 6、jvm
