@@ -412,6 +412,16 @@ public class AuthAspect {
 
 > 比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
 
+
+## 3.12、@Transactional原理
+
+
+
+## 3.13、@Transactional属性
+
+
+
+
 # 4、mybatis
 
 ## 4.1、实现批量插入
