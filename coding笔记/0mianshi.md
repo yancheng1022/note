@@ -153,6 +153,10 @@ char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Un
 1. 实现Cloneable接口并重写Object类中的clone（）方法
 2. 实现 Serializable 接口，通过对象的序列化和反序列化实现克隆，可以实现真正的深度克隆，代码如下
 
+>**浅拷贝**：基本数据类型复制值，引用数据类型复制地址，即拷贝出来的对象与被拷贝出来的对象中的引用的对象是同一个（java默认）：clone方法
+ **深拷贝**：基本数据类型复制值，引用数据类型，创建一个新的对象，并复制其内容
+
+
 ```java
 
 // 使用对象序列化来实现克隆
@@ -308,62 +312,13 @@ spring aop是基于代理模式实现的，它通过动态代理技术，在运�
 
 如果代理对象实现了某个接口，spring会使用jdk动态代理创建对象。反之使用CGLib动态代理生成一个被代理对象的子类作为代理
 
-> 代理对象是在bean初始化后的一个BeanPostProcessor后置处理器进行判断，是否进行了aop配置，如果有，返回代理对象
+spring动态代理的实现有以下两种方式:
+1.JDK 动态代理。它是通过反射来接收被代理的类，并且要求被代理的类必须实现一个或多个接口;JDK 动态代理的核心是java.lang.reflect 包中的 Proxy 类和InvocationHandler 接口
 
+2.CGlib 动态代理，CGlib 全称 Code Generation Library，它是一个第三方代码生成类库、CGlib 可以在运行时动态生成一个子类对象从而实现对目标对象功能的扩展。CGlib 的底层是通过使用一个小而快的字节码处理框架 ASM，来转换字节码并生成新的类。
 
-```java
-@Aspect
-@Component
-public class AuthAspect {
-    /**
-     * 定义了一个切点
-     * 这里的路径填自定义注解的全路径
-     */
-    @Pointcut("@annotation(com.zz.business.annotations.Auth)")
-    public void authCut() {
+> JDK 动态代理和 CGlb 动态代理的主要区别是:使用JDK 动态代理的对象必须实现一个或多个接口。而 CGlib 动态代理的对象则无需实现接口。
 
-    }
-	
-    @Before("authCut()")
-    public void cutProcess(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        System.out.println("注解方式AOP开始拦截, 当前拦截的方法名: " + method.getName());
-    }
-
-    @After("authCut()")
-    public void after(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        System.out.println("注解方式AOP执行的方法 :" + method.getName() + " 执行完了");
-    }
-
-
-    @Around("authCut()")
-    public Object testCutAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        System.out.println("注解方式AOP拦截开始进入环绕通知.......");
-        Object proceed = joinPoint.proceed();
-        System.out.println("准备退出环绕......");
-        return proceed;
-    }
-
-    @AfterReturning(value = "authCut()", returning = "result")
-    public void afterReturn(JoinPoint joinPoint, Object result) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        System.out.println("注解方式AOP拦截的方法执行成功, 进入返回通知拦截, 方法名为: " + method.getName() + ", 返回结果为: " + result.toString());
-    }
-
-    @AfterThrowing(value = "authCut()", throwing = "e")
-    public void afterThrow(JoinPoint joinPoint, Exception e) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        System.out.println("注解方式AOP进入方法异常拦截, 方法名为: " + method.getName() + ", 异常信息为: " + e.getMessage());
-    }
-}
-```
-
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202312301725231.png)
 
 
 ## 3.7、aop相关术语
@@ -572,6 +527,7 @@ mybatis.configuration.lazyLoadingEnabled=true
 一级缓存失效场景：（1）不同的SqlSession对应不同的一级缓存（2）同一个SqlSession但是查询条件不同（3）同一个SqlSession两次查询期间执行了任何一次增删改操作（4）同一个SqlSession两次查询期间手动清空了缓存
 
 二级缓存：namespace级别的缓存，二级缓存被同一个 `namespace` 下的多个 `SqlSession` 共享，是一个全局的变量。MyBatis 的二级缓存不适应用于映射文件中存在多表查询的情况
+
 > 通常我们会为每个单表创建单独的映射文件，由于MyBatis的二级缓存是基于`namespace`的，多表查询语句所在的`namspace`无法感应到其他`namespace`中的语句对多表查询中涉及的表进行的修改，引发脏数据问题
 
 缓存查询顺序：
@@ -593,6 +549,129 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
  ResultSetHandler：处理结果集
 
 具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪些方法 （4）注册插件，在配置文件中配置自己编写的插件类
+
+
+```java
+/**
+ * Mybatis分页插件 具体实现
+ */
+
+@Intercepts(@Signature(
+        type = StatementHandler.class,
+        method = "prepare",
+        args = {Connection.class, Integer.class}
+))
+@Slf4j
+@Component
+public class MyPagePlugin implements Interceptor {
+
+
+    /**
+     * 核心业务
+     * <p>
+     * 1、拿到原始sql
+     * 2、修改原始sql，增加分页
+     * 3、执行jdbc查询总数
+     */
+
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable {
+        // 从invocation获取statementHandler对象
+        StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
+        BoundSql boundSql = statementHandler.getBoundSql();
+        // 原始sql
+        String sql = boundSql.getSql();
+        log.info("原始sql===>>>{}", sql);
+
+        // 获取分页参数
+        Object parameterObject = boundSql.getParameterObject();
+
+        // 获取MappedStatement对象 (对应是就是我们写sql的xml文件)
+        MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
+        MappedStatement mappedStatement = (MappedStatement) metaObject.getValue("delegate.mappedStatement");
+        // 获取mapper接口中方法名称
+        String methodName = mappedStatement.getId();
+        // 拦截方法名为ByPage结尾的方法 只拦截涉及到分页的方法
+        if (methodName.matches(".*ByPage$")) {
+            Map<String, Object> parameterMap = (Map<String, Object>) parameterObject;
+            PageInfo pageInfo = (PageInfo) parameterMap.get("pageInfo");
+            // 页大小
+            int pageSize = pageInfo.getPageSize();
+            // 当前页数
+            int currentPage = pageInfo.getCurrentPage();
+            // 查总数
+            String countSql = "select count(0) from (" + sql + ") t";
+            log.info("查总数sql===>>>{}", countSql);
+
+            // 执行jdbc操作
+            Connection connection = (Connection) invocation.getArgs()[0];
+            PreparedStatement countStatement = connection.prepareStatement(countSql);
+            ParameterHandler parameterHandler = (ParameterHandler) metaObject.getValue("delegate.parameterHandler");
+            parameterHandler.setParameters(countStatement);
+            ResultSet resultSet = countStatement.executeQuery();
+            if (resultSet.next()) {
+                pageInfo.setTotalNumber(resultSet.getInt(1));
+                resultSet.close();
+                countStatement.close();
+            }
+            // 改造sql limit
+            String pageSql = initPageSql(sql, pageInfo);
+            log.info("分页sql===>>>{}", pageSql);
+            metaObject.setValue("delegate.boundSql.sql", pageSql);
+        }
+        return invocation.proceed();
+    }
+
+    @Override
+    public Object plugin(Object target) {
+        return Plugin.wrap(target, this);
+    }
+
+    @Override
+    public void setProperties(Properties properties) {
+
+    }
+
+    /**
+     * @param sql 原始sql
+     * @param pageInfo 分页对象
+     * @return 分页sql
+     */
+    private String initPageSql(String sql, PageInfo pageInfo) {
+        int totalNumber = pageInfo.getTotalNumber();
+        if (totalNumber <= 0) {
+            return sql;
+        }
+        int pageSize = pageInfo.getPageSize();
+        int currentPage = pageInfo.getCurrentPage();
+
+        if (currentPage <= 0) {
+            currentPage = 1;
+        }
+        if (pageSize <= 0) {
+            pageSize = 10;
+        }
+
+        int offset = (currentPage - 1) * pageSize;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(sql).append(" limit ").append(offset).append(",").append(pageSize);
+        return sb.toString();
+    }
+}
+
+在mybatis-config.xml中注册自己写的插件
+
+<configuration>
+    <!-- 引入 自己写的MyBatis 分页插件 -->
+    <plugins>
+        <plugin interceptor="cn.kinggm520.util.MyPagePlugin"/>
+    </plugins>
+</configuration>
+
+
+
+```
 
 
 ## 4.8、@Transactional原理
@@ -643,7 +722,7 @@ spring会创建一个代理对象作，利用事务管理器创建一个数据�
 
 3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
 
-## 3.15、声明式事务和编程式事务
+## 4.11、声明式事务和编程式事务
 
 Spring 事务管理分为**编码式和声明式**的两种方式
 
@@ -652,6 +731,10 @@ Spring 事务管理分为**编码式和声明式**的两种方式
 声明式事务管理： 建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务（使用**isolation**属性声明事务的隔离级别,使用**propagation**属性声明事务的传播机制）
 
 > 声明式事务管理不需要入侵代码，更快捷而且简单，推荐使用
+
+## 4.12、pageHelper原理
+
+PageHelper是MyBatis的一个插件，内部实现了一个PageInterceptor拦截器。Mybatis会加载这个拦截器到拦截器链中。在我们使用过程中先使用PageHelper.startPage这样的语句在当前线程上下文中设置一个ThreadLocal变量，再利用PageInterceptor这个分页拦截器拦截，从ThreadLocal中拿到分页的信息，如果有分页信息拼装分页SQL（limit语句等）进行分页查询，最后再把ThreadLocal中的东西清除掉。
 
 
 # 5、java并发编程 
@@ -1796,6 +1879,33 @@ Redo Log称为重做日志，提供写入操作，恢复提交事务修改页的
 3、bin log
 binlog是逻辑日志，记录内容是语句的原始逻辑，类似于“给 ID=2 这一行的 c 字段加 1”，属于MySQL Server层。不管用什么存储引擎，只要发生了表数据更新，都会产生 binlog 日志 
 数据库的数据备份、主备、主主、主从都离不开binlog，需要依靠binlog来同步数据，保证数据一致性
+
+
+## 1.15、小表驱动大表
+
+小表驱动大表是指在关联查询中，将小表作为驱动表，大表作为被驱动表。这种方式通常能够提高查询性能和效率
+
+```sql
+select * from main_table m inner join vice_table v where m.id = v.id and m.id > 10 and n.id <35;
+
+# 假设m表为驱动表，那么就会先去查询m表。在根据条件m.id>10获取到满足条件的第一条记录后(假设是一条id为11的记录)，马上去和被驱动表v做匹配，此时v表的查询条件就是：v.id<35 and v.id=11;
+
+# 不难发现，v.id=11 这个条件，是在获取到驱动表记录后才产生的，因此可以说是一个“被驱动”产生的条件。从中也可以看出，由于这个“被驱动”产生的条件一直在随着驱动表搜索出来的内容在发生变化，因此被驱动表必然需要被多次访问
+```
+
+假设m表作为驱动表记录数为A,n作为被驱动表记录数为B，假设A<B,那么:
+
+从访问表的次数来看：m表访问1次，n表访问A次
+从访问记录数来看：m表访问记录A条，n表访问记录A*B次
+
+如果m表和n表的位置反过来，显然：
+
+表的访问次数：n表访问1次，m表访问B次
+记录数的访问：n表访问记录B条，m表访问记录B*A次
+
+如果仅仅从两个次数上来看，不难看到，当记录数少的m表作为驱动表时，两个“次数”均小一些。
+此外，如果驱动表记录数更大，意味着该表要更长期的占用内存，对内存空间的挑战显然不小。而如果是被驱动表记录数大，我们还可以选择分批载入内存，多次磁盘IO虽然说损耗性能，但至少内存大小不成问题
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
@@ -2096,6 +2206,19 @@ public class RedisLock {
 
 > 另外可以通过Redisson框架，它的底层原理其实也是这个setnx
 
+
+
+## 10.5、如何保证分布式事务一致性？
+
+1. 首先是设计方案尽可能规避分布式事务的场景（相似的业务放在一起，不要过度的拆分）
+2. 根据业务场景，选择使用柔性事务（ap）还是强事务(cp)
+    如果可以允许消息存在一段时间不一致，只要保证最终一致性，可以用本地消息表来做。如果要保证一致性，可以用2pc，具体实现方案有阿里的seata
+3. 本地消息表（柔性事务）
+不去同步的调用，先将要请求的消息插入到本地的消息表中，消息状态为正在处理，起一个定时任务去查询消息表，将正在处理的消息发送到消息队列，B中消息处理完后，向一个return队列发送一个成功的消息，A订阅了该消息队列，收到成功的消息后将状态该为处理完毕。（被调用方应保证幂等性，如库存系统在减库存前先查流水表，看该订单是否扣过库存，扣过就不执行）
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311150941880.png)
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311150942538.png)
 
 # 11、redis
 
