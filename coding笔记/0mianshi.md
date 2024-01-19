@@ -413,12 +413,7 @@ public class AuthAspect {
 > 比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
 
 
-## 3.12、@Transactional原理
-
-
-
-## 3.13、@Transactional属性
-
+## 3.12、springBoot启动流程
 
 
 
@@ -598,6 +593,65 @@ Mybatis的插件相当于拦截器，我们可以针对Executor，StatementHandl
  ResultSetHandler：处理结果集
 
 具体实现：（1）实现mybatis的Interceptor接口，并重写intercept（）方法 （2）设置插件的签名，指定mybatis要拦截哪些方法 （4）注册插件，在配置文件中配置自己编写的插件类
+
+
+## 4.8、@Transactional原理
+基于数据库事务和aop机制实现的
+spring会创建一个代理对象作，利用事务管理器创建一个数据库连接，并且修改数据库连接的autocommit属性为false，禁止连接自动提交
+如果抛异常，则调用conn.rollback方法回滚，否则调用commit（）提交
+
+## 4.9、@Transactional属性
+
+| **参 数 名 称** | **功 能 描 述** |
+| ---- | ---- |
+| readOnly | 该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)` 注意是一次执行多次查询来统计某些信息，这时为了保证数据整体的一致性，要用只读事务 |
+| rollbackFor | rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class}) |
+| **propagation** | 该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)` |
+| **isolation** | 该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置 |
+| timeout | 该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒 |
+
+1、propagation：事务传播行为，指的就是当一个事务方法被另一个事务方法调用时，这个事务与事务应该如何运行
+
+|**事务传播行为类型**|**说明**|
+|---|---|
+|PROPAGATION_SUPPORTS|支持事务。若当前没有事务以非事务方式执行；若当前有事务，加入此事务中|
+|PROPAGATION_NOT_SUPPORTED|不支持事务。若当前存在事务，把当前事务挂起，然后运行方法|
+|PROPAGATION_NEVER|不使用事务。若当前方法存在事务，则抛出IllegalTransactionStateException异常，否则继续使用无事务机制运行|
+|PROPAGATION_MANDATORY|强制使用事务。若当前有事务，就使用当前事务；若当前没有事务，抛出IllegalTransactionStateException异常|
+|**PROPAGATION_REQUIRED**|需要事务（**默认**）。若当前无事务，新建一个事务；若当前有事务，加入此事务中|
+|**PROPAGATION_REQUIRES_NEW**|新建事务。无论当前是否有事务，都新建事务运行|
+|**PROPAGATION_NESTED**|嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作|
+
+
+2、isolation ：事务隔离级别，默认的隔离级别，使用数据库默认的事务隔离级别，下面四个与JDBC的隔离级别相对应
+
+| **级别** | **名字** | **隔离级别** | **脏读** | **不可重复读** | **幻读** | **数据库默认隔离级别** | 解释 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 读未提交 | read uncommitted | 是 | 是 | 是 |  | 事务A可以读取到事务B未提交的数据 |
+| 2 | 读已提交 | read committed | 否 | 是 | 是 | Oracle和SQL Server | 事务A只能读取其它事务已提交的数据（避免了脏读） |
+| 3 | 可重复读 | repeatable read | 否 | 否 | 是 | MySQL | 保证在同一个事务中多次读取同样数据的结果是一样的 |
+| 4 | 串行化 | serializable | 否 | 否 | 否 |  | 事务串行化顺序执行 |
+
+
+## 4.10、@Transactional失效场景
+
+1.@Transactional 注解应该只被应用在 public 修饰的方法上(注意)。 如果在 protected、private 或者 package-visible 的方法上使用 该注解，它也不会报错(IDEA会有提示)， 但事务并没有生效
+
+2.@Transactional是基于动态代理的(注意)，需要一个类调用另一个类，类内调用会失效
+
+> 当在类的内部调用被@Transactional注解修饰的方法时，实际上是通过类的实例直接调用方法，而不是通过代理对象。这样做会绕过代理对象，从而导致@Transactional注解失效
+
+3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
+
+## 3.15、声明式事务和编程式事务
+
+Spring 事务管理分为**编码式和声明式**的两种方式
+
+编程式事务管理： 利用TransactionTemplate模板通过编程的方式实现事务管理,而无需关注资源获取、复用、释放、事务同步及异常处理等操作
+
+声明式事务管理： 建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务（使用**isolation**属性声明事务的隔离级别,使用**propagation**属性声明事务的传播机制）
+
+> 声明式事务管理不需要入侵代码，更快捷而且简单，推荐使用
 
 
 # 5、java并发编程 
@@ -1149,7 +1203,6 @@ Java中每个对象都拥有对象头，对象头由Mark World 、指向类的�
 重量级锁：多个线程并发在同一个对象同步时，为了避免无用的自旋消耗cpu，轻量级锁会升级为重量级锁。重量级锁原理参考2.27
 
 # 6、jvm
-
 
 ## 6.1、常用jvm启动参数
 
@@ -1725,6 +1778,12 @@ select * from user where id in (2,4,5) for update # 会加写锁
 select * from user where id in (3,4,5) fot update # 锁等待...
 ```
 
+处理死锁：
+
+```sql
+show processlist
+kill + 线程id
+```
 ## 1.14、undo log、redo log、bin log的作用
 
 1、undo log
