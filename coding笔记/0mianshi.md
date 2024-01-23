@@ -2361,3 +2361,8 @@ upstream webservers{
 ## 13.2、linux文件系统
 
 在 Linux 系统中有一个重要的概念：一切都是文件
+
+/bin： 存放二进制可执行文件(ls,cat,mkdir等)，常用命令一般都在这里
+/etc： 存放系统管理和配置文件
+/home： 存放所有用户文件的根目录，是用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示
+/usr ： 用于存放系统应用程序
