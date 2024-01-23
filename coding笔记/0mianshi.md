@@ -2391,3 +2391,6 @@ ln ./a.txt /tmp/a.txt_hard
 ```
 
 ![image.png|525](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401231442092.png)
+
+删除源文件, 软连接失效, 硬链接无影响(还可以访问内容)
+删除源文件和硬链接, 整个文件会被真正的删除
