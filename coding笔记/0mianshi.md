@@ -2350,3 +2350,10 @@ upstream webservers{
 
 ## 13.1、linux体系结构
 
+用户空间(User Space) ：用户空间又包括用户的应用程序(User Applications)、C 库(C Library) 。
+内核空间(Kernel Space) ：内核空间又包括系统调用接口(System Call Interface)、内核(Kernel)、平台架构相关的代码(Architecture-Dependent Kernel Code) 。
+
+>为什么 Linux 体系结构要分为用户空间和内核空间的原因？
+>现代 CPU 实现了不同的工作模式，不同模式下 CPU 可以执行的指令和访问 的寄存器不同。
+>Linux 从 CPU 的角度出发，为了保护内核的安全，把系统分成了两部分。
+
