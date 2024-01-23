@@ -2390,3 +2390,4 @@ ln [源文件路径] [硬连接放置的路径及名字]
 ln ./a.txt /tmp/a.txt_hard 
 ```
 
+![image.png|525](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401231442092.png)
