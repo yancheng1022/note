@@ -2413,6 +2413,45 @@ head 文件名 ：仅查看头部,还可以指定行数；
 
 ## 13.5、linux常见命令
 
-1、查看进程
-ps aux | grep java
-ps ef | grep java
+1、关机开机
+
+关机
+
+```plaintext
+shutdown-h now  立刻关机shutdown-h 3  3分钟后关机poweroff立刻关机
+```
+
+重启
+
+```plaintext
+shutdown-r now  立刻重启shutdown-r 3  3分钟后重启reboot立刻重启
+```
+
+2、帮助命令
+--help命令shutdown --help：ifconfig  --help：查看网卡信息
+man命令（命令说明书） man shutdown注意：man shutdown打开命令说明书之后，使用按键q退出
+二、 目录操作命令
+
+1、目录切换
+
+cd /  切换到根目录cd /usr  切换到根目录下的usr目录cd ../  切换到上一级目录 或者  cd ..cd ~   切换到home目录cd -   切换到上次访问的目录
+2、目录查看
+
+ls查看当前目录下的所有目录和文件ls-a  查看当前目录下的所有目录和文件（包括隐藏的文件）ls-l 或 ll   列表查看当前目录下的所有目录和文件（列表查看，显示更多信息）ls/dir   查看指定目录下的所有目录和文件   如：ls /usr
+3、目录操作
+
+3.1、创建目录
+
+mkdir qq  在当前目录下创建一个名为qq的目录mkdir /usr/qq  在指定目录下创建一个名为qq的目录
+3.2、删除目录或文件
+
+删除文件：
+
+rm文件 删除当前目录下的文件rm-f 文件 删除当前目录的的文件（不询问）
+删除目录：
+
+rm-r qq  递归删除当前目录下的qq目录rm-rf qq  递归删除当前目录下的qq目录（不询问）
+全部删除：
+
+rm -rf *  将当前目录下的所有目录和文件全部删除rm -rf /*  将根目录下的所有文件全部删除（慎用！）
+————————————————
