@@ -2545,3 +2545,11 @@ chown user file
 # 修改所属组
 chgrp root file
 ```
+
+3、压缩和解压
+
+```
+# z：压缩 c：打包 v：过程 f：指定文件名 x：解压
+tar -zcvf filename.tar.gz directory_name # 压缩
+tar -xvf xxx.tar.gz -C /usr #（解压： -C代表解压的位置）
+```
