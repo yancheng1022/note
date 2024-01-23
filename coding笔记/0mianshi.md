@@ -2540,4 +2540,8 @@ find  /usr/lib  -name  'a*'
 ```
 # 读写执行权限修改 所有者，所属组，其它 4-2-1
 chmod 777 a.txt
+# 修改所有者
+chown user file
+# 修改所属组
+chgrp root file
 ```
