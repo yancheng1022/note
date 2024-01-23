@@ -2553,3 +2553,5 @@ chgrp root file
 tar -zcvf filename.tar.gz directory_name # 压缩
 tar -xvf xxx.tar.gz -C /usr #（解压： -C代表解压的位置）
 ```
+
+
