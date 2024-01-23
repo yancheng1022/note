@@ -2344,3 +2344,9 @@ upstream webservers{
     server 192.168.9.134:8082;
 }
 ```
+
+
+# 13、linux
+
+## 13.1、linux体系结构
+
