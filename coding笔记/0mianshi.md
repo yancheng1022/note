@@ -2290,6 +2290,10 @@ SPOP luckdraw:product:a 1
 ```
 zadd zsetofpost 89 post:1
 ```
+
+## 6、bitmap
+
+
 # 12、nginx
 
 ## 12.1、nginx作用
