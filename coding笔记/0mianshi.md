@@ -2249,6 +2249,14 @@ set user:1 json
 # 计数器
 incr article:read:id
 ```
+
+2、list
+
+```
+
+```
+
+
 # 12、nginx
 
 ## 12.1、nginx作用
