@@ -2262,6 +2262,8 @@ hmset user:1 name austin age 25 address guangzhou balance 6888
 ```
 # 基本操作
 LPUSH  key  value [value ...] 
+hget user:1 name
+
 ```
 
 3、set
