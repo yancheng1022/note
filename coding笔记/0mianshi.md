@@ -2276,10 +2276,11 @@ LRANGE  key  start  stop        // 返回列表key中指定区间内的元素，
 
 4、set
 
-使用场景：存储唯一的、无序的元素集合
+使用场景：存储唯一的、无序的元素集合（抽奖）。并支持集合间的交集、并集和差集等操作（共同好友）
 
 ```
-
+SADD luckdraw:product:a 10001
+SPOP luckdraw:product:a 1
 ```
 
 5、zset
