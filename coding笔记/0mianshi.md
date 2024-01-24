@@ -2253,6 +2253,9 @@ incr article:read:id
 2、list
 
 ```
+# 基本操作
+LPUSH  key  value [value ...] 
+# 抽奖
 
 ```
 
