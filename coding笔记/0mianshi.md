@@ -2555,3 +2555,10 @@ tar -xvf xxx.tar.gz -C /usr #（解压： -C代表解压的位置）
 ```
 
 
+## 13.6、文件中字符串替换
+
+1、sed -i 's/old_string/new_string/g' file.txt
+
+s表示替换操作，old_string是要被替换的旧字符串，new_string是要替换成的新字符串，/g表示全局替换
+
+2、
