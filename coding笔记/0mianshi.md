@@ -2254,7 +2254,7 @@ incr article:read:id
 
 ```
 # 基本操作
-
+hmset user:1 name austin age 25 address guangzhou balance 6888
 ```
 
 2、list
