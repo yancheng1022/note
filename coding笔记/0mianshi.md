@@ -2250,15 +2250,24 @@ set user:1 json
 incr article:read:id
 ```
 
+2、hash
+
+```
+# 基本操作
+
+```
+
 2、list
 
 ```
 # 基本操作
 LPUSH  key  value [value ...] 
-# 抽奖
-
 ```
 
+3、set
+```
+
+```
 
 # 12、nginx
 
