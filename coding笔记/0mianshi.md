@@ -1904,7 +1904,10 @@ select * from main_table m inner join vice_table v where m.id = v.id and m.id > 
 
 ## 1.16、innodb和myisam区别
 
-
+1、innodb支持事务，外键。myisam不支持
+2、innodb支持行锁，myisam不支持
+3、innodb使用聚簇索引，myisam使用非聚簇索引
+4、innodb不存储行数，myisam存储行数
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
