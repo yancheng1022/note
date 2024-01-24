@@ -2239,6 +2239,8 @@ cluster集群：即使使用哨兵，redis每个实例也是全量存储，每�
 
 1、string
 
+使用场景：存储简单的键值对、缓存对象（序列化数据）、计数器等。
+
 > **Redis的key允许有多个单词形成层级结构，多个单词之间用” ：“隔开**
 
 ```
@@ -2252,26 +2254,37 @@ incr article:read:id
 
 2、hash
 
+使用场景：存储对象的属性和值，适合存储复杂的数据结构
+
 ```
 # 基本操作
 hmset user:1 name austin age 25 address guangzhou balance 6888
 ```
 
-2、list
+3、list
+
+使用场景：存储有序的元素列表，支持在列表的两端进行插入和删除操作
 
 ```
 # 基本操作
-LPUSH  key  value [value ...] 
-hget user:1 name
+LPUSH  key  value [value ...]       // 将一个或多个值value插入到key列表的表头(最左边)
+RPUSH  key  value [value ...]       // 将一个或多个值value插入到key列表的表尾(最右边)
+LPOP  key                   // 移除并返回key列表的头元素
+RPOP  key                   // 移除并返回key列表的尾元素
+LRANGE  key  start  stop        // 返回列表key中指定区间内的元素，区间以偏移量start和stop指定
+```
+
+4、set
+
+使用场景：存储唯一的、无序的元素集合
 
 ```
 
-3、set
-
 ```
 
-```
+5、zset
 
+使用场景：存储有序的元素集合，每个元素都与一个分数相关联，可以根据分数进行范围查询和排序
 # 12、nginx
 
 ## 12.1、nginx作用
