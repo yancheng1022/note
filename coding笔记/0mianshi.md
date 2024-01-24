@@ -2235,9 +2235,20 @@ public class RedisLock {
 
 cluster集群：即使使用哨兵，redis每个实例也是全量存储，每个redis存储的内容都是完整的数据。cluster是为了解决单机Redis容量有限的问题，将数据按一定的规则分配到多台机器，提高并发量
 
-## 11.2、redis数据类型
+## 11.2、redis数据类型和使用场景
 
+1、string
 
+> **Redis的key允许有多个单词形成层级结构，多个单词之间用” ：“隔开**
+
+```
+# 单值缓存
+set num 1
+# 对象缓存
+set user:1 json
+# 计数器
+incr article:read:id
+```
 # 12、nginx
 
 ## 12.1、nginx作用
