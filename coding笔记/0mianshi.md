@@ -2286,6 +2286,10 @@ SPOP luckdraw:product:a 1
 5、zset
 
 使用场景：存储有序的元素集合，每个元素都与一个分数相关联，可以根据分数进行范围查询和排序
+
+```
+zadd zsetofpost 89 post:1
+```
 # 12、nginx
 
 ## 12.1、nginx作用
