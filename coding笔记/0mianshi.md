@@ -376,7 +376,8 @@ spring动态代理的实现有以下两种方式:
 
 
 1、使用范围不同：过滤器依赖于Servlet容器，拦截器不依赖与servlet容器是SpringMVC自带的
-2、触发时机不同：
+2、触发时机不同：Filter是在请求进入容器后，但在进入servlet之前进行预处理。拦截器 Interceptor 是在请求进入servlet后，在进入Controller之前进行预处理的
+3、
 
 
 ## 3.14、防止xss攻击
