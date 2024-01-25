@@ -394,6 +394,8 @@ spring动态代理的实现有以下两种方式:
 
 ## 3.15、CommandLineRunner和ApplicationRunner
 
+我们在开发过程中会有这样的场景：需要在容器启动的时候执行一些内容，比如：读取配置文件信息，数据库连接，删除临时文件，清除缓存信息。在Spring Boot中提供了CommandLineRunner和ApplicationRunner，他们的执行时机为容器启动完成的时候
+
 CommandLineRunner和ApplicationRunner的作用是相同的。不同之处在于CommandLineRunner接口的run()方法接收String数组作为参数，即是最原始的参数，没有做任何处理；而ApplicationRunner接口的run()方法接收ApplicationArguments对象作为参数，是对原始参数做了进一步的封装。
 
 当程序启动时，我们传给main()方法的参数可以被实现CommandLineRunner和ApplicationRunner接口的类的run()方法访问，即可接收启动服务时传过来的参数。我们可以创建多个实现CommandLineRunner和ApplicationRunner接口的类。为了使他们按一定顺序执行，可以使用@Order注解
