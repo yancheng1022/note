@@ -375,7 +375,8 @@ spring动态代理的实现有以下两种方式:
 ## 3.13、拦截器和过滤器
 
 
-1、拦截器不依赖与servlet容器是SpringMVC自带的，过滤器依赖于Servlet容器。
+1、使用范围不同：过滤器依赖于Servlet容器，拦截器不依赖与servlet容器是SpringMVC自带的
+2、触发时机不同：
 
 
 ## 3.14、防止xss攻击
