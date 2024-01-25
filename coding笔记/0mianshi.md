@@ -375,9 +375,7 @@ spring动态代理的实现有以下两种方式:
 ## 3.13、拦截器和过滤器
 
 
-拦截器是基于Spring MVC框架的一部分，可以通过实现HandlerInterceptor接口或继承HandlerInterceptorAdapter类来创建自定义拦截器。拦截器的方法包括preHandle（在控制器方法执行前执行）、postHandle（在控制器方法执行后视图渲染前执行）、afterCompletion（在视图渲染后执行）
-
-过滤器是基于Servlet规范的一部分，需要实现`javax.servlet.Filter`接口来创建自定义过滤器.实现 init，doFilter，destroy方法。通过注解`@WebFilter`来简化过滤器的注册，它会自动注册并配置过滤器。可以通过设置`urlPatterns`属性指定过滤器的拦截路径，也可以通过`value`属性设置过滤器的名称
+1、拦截器不依赖与servlet容器是SpringMVC自带的，过滤器依赖于Servlet容器。
 
 
 ## 3.14、防止xss攻击
