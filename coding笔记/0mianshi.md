@@ -377,7 +377,9 @@ spring动态代理的实现有以下两种方式:
 
 拦截器是基于Spring MVC框架的一部分，可以通过实现HandlerInterceptor接口或继承HandlerInterceptorAdapter类来创建自定义拦截器。拦截器的方法包括preHandle（在控制器方法执行前执行）、postHandle（在控制器方法执行后视图渲染前执行）、afterCompletion（在视图渲染后执行）
 
-过滤器是基于Servlet规范的一部分，需要实现`javax.servlet.Filter`接口来创建自定义过滤器.
+过滤器是基于Servlet规范的一部分，需要实现`javax.servlet.Filter`接口来创建自定义过滤器.实现 init，doFilter，destroy方法。通过注解`@WebFilter`来简化过滤器的注册，它会自动注册并配置过滤器。可以通过设置`urlPatterns`属性指定过滤器的拦截路径，也可以通过`value`属性设置过滤器的名称
+
+
 ## 3.14、防止xss攻击
 
 跨站脚本攻击。常见的就是反射型xss攻击，过URL传递参数的功能，如网站搜索，跳转等。由于需要用户主动打开恶意的URL才能生效，攻击者往往会结合多种手段诱导用户点击。攻击者构造出特殊的URL，其中包含恶意代码.网站服务器端将恶意代码从URL取出，拼接在HTML返回给浏览器。恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户行为，调用目标网站接口执行攻击者指定的操作
