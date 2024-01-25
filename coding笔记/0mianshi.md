@@ -392,6 +392,12 @@ spring动态代理的实现有以下两种方式:
 
 使用过滤器，清除请求参数url中的html标签
 
+## 3.15、CommandLineRunner和ApplicationRunner
+
+CommandLineRunner和ApplicationRunner的作用是相同的。不同之处在于CommandLineRunner接口的run()方法接收String数组作为参数，即是最原始的参数，没有做任何处理；而ApplicationRunner接口的run()方法接收ApplicationArguments对象作为参数，是对原始参数做了进一步的封装。
+
+当程序启动时，我们传给main()方法的参数可以被实现CommandLineRunner和ApplicationRunner接口的类的run()方法访问，即可接收启动服务时传过来的参数。我们可以创建多个实现CommandLineRunner和ApplicationRunner接口的类。为了使他们按一定顺序执行，可以使用@Order注解
+
 # 4、mybatis
 
 ## 4.1、实现批量插入
