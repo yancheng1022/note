@@ -1956,7 +1956,7 @@ Server 层负责建立连接、分析和执行 SQL；
 explain select * from employees where name like "yc%" and age = 18
 ```
 
-mysql5.6版本前：这个查询只能
+mysql5.6版本前：这个查询只能匹配到yc开头的索引，然后
 
 # 8、mq
 
