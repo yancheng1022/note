@@ -1943,6 +1943,20 @@ Server 层负责建立连接、分析和执行 SQL；
 
 ![|725](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401261116175.png)
 
+服务层包含：连接器，解析器，执行器
+
+连接器：与mysql客户端建立TCP连接。校验客户端用户名密码
+解析器：进行词法和语法分析，判断是否满足sql语法
+执行器：预处理阶段判断是否存在对应的表和字段，优化阶段就是确定合适索引的过程，执行阶段会从存储引擎读数据，返回客户端
+
+
+## 1.18、索引下推
+
+```sql
+explain select * from employees where name like "yc%" and age = 18
+```
+
+mysql5.6版本前：这个查询只能
 
 # 8、mq
 
