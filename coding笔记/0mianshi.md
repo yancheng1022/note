@@ -1957,7 +1957,10 @@ explain select * from employees where name like "yc%" and age = 18
 ```
 
 mysql5.6版本前：这个查询只能匹配到yc开头的索引，然后拿这些索引对应的主键，到主键索引找对应的记录，再对比age是否满足
-5.6以后使用了索引下推，匹配到yc开头的索引后，同时还会在索引里过滤age字段，最后拿着过滤完的主键id再徽标查询
+5.6以后使用了索引下推，匹配到yc开头的索引后，同时还会在索引里过滤age字段，最后拿着过滤完的主键id再回表查询
+
+
+>当一条sql使用索引下推技术后，在explain执行计划中，extra列中出现using index condition的信息
 
 # 8、mq
 
