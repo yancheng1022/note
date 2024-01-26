@@ -1952,6 +1952,9 @@ Server 层负责建立连接、分析和执行 SQL；
 
 ## 1.18、索引下推
 
+索引下推的下推其实就是指将部分上层（服务层）负责的事情，交给了下层（引擎层）去处理
+
+
 ```sql
 explain select * from employees where name like "yc%" and age = 18
 ```
