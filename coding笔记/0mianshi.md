@@ -2162,7 +2162,9 @@ RPC可以用 HTTP 来传输，也可以基于 TCP 自定义协议传输
 - 对 thrift 原生协议的扩展添加了额外的头信息
 - 使用较少，不支持传 null 值
 
+## 1.5、zookeeper概念
 
+zookeeper是apache hadoop项目下的一个子项目，是一个树形目录服务。
 # 10、SpringCloud
 
 ## 10.1、项目中springCloud用的哪些组件
