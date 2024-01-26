@@ -2249,6 +2249,11 @@ public class RedisLock {
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202311150942538.png)
 
+
+## 11.6、CAP理论
+
+一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两项
+
 # 11、redis
 
 ## 11.1、redis工作模式
