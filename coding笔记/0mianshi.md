@@ -2169,7 +2169,7 @@ zookeeper是apache hadoop项目下的一个子项目，是一个树形目录服�
 ## 1.6、zk是如何保存数据的
 zk的数据是保存在节点上的，节点就是znode，多个znode之间构成一颗树的目录结构
 
-对于znode，包含四个部分：data（保存数据）、acl（读写权限）、stat（当前znode的元数据）、child（当前节点的子节点）
+对于znode，包含四个部分：data（保存数据）、acl（读写权限）、stat（当前znode的元数据创建时间，修改时间，版本号等）、child（当前节点的子节点）
 # 10、SpringCloud
 
 ## 10.1、项目中springCloud用的哪些组件
