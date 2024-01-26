@@ -1935,6 +1935,15 @@ select * from main_table m inner join vice_table v where m.id = v.id and m.id > 
 2、innodb支持行锁，myisam不支持
 3、innodb使用聚簇索引，myisam使用非聚簇索引
 4、innodb不存储行数，myisam存储行数
+
+## 1.17、mysql架构
+
+Server 层负责建立连接、分析和执行 SQL；
+存储引擎层负责数据的存储和提取，默认为InnoDB
+
+![|725](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202401261116175.png)
+
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
