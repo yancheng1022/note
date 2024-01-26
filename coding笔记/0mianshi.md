@@ -2164,7 +2164,8 @@ RPC可以用 HTTP 来传输，也可以基于 TCP 自定义协议传输
 
 ## 1.5、zookeeper概念
 
-zookeeper是apache hadoop项目下的一个子项目，是一个树形目录服务。zookeeper是为分布式应用提供协调服务的Apache项目。提供主要的功能包括：配置管理，分布式锁，集群管理
+zookeeper是apache hadoop项目下的一个子项目，是一个树形目录服务。zookeeper是为分布式应用提供协调服务的Apache项目。提供主要的功能包括：配置管理，分布式锁，集群管理（dubbo）
+
 
 # 10、SpringCloud
 
