@@ -2205,6 +2205,8 @@ Eureka服务端会检查最近15分钟内所有Eureka 实例正常心跳占比�
 
 ## 10.4、分布式锁实现
 
+**1、redis实现**
+
 在分布式的环境下,会发生多个server并发修改同一个资源的情况,这种情况下,由于多个server是多个不同的JRE环境,而Java自带的锁局限于当前JRE,所以Java自带的锁机制在这个场景下是无效的,那么就需要我们自己来实现一个分布式锁
 
 1. 通过`set...nx...`命令,将加锁、过期命令编排到一起,把他们变成原子操作。完整命令：set key random-value nx ex seconds
@@ -2271,6 +2273,8 @@ public class RedisLock {
 
 > 另外可以通过Redisson框架，它的底层原理其实也是这个setnx
 
+
+**2、zookeeper实现**
 
 
 ## 10.5、如何保证分布式事务一致性？
