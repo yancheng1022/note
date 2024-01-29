@@ -2201,6 +2201,11 @@ zk的数据是保存在节点上的，节点就是znode，多个znode之间构�
     
 8. Sticky（粘滞会话）：粘滞会话策略会将同一消费者的请求始终路由到同一提供者，除非该提供者不可用。这样可以保持会话的一致性
 
+## 1.8、zookeeper选举机制
+
+虽然在配置文件中并没有指定Master和Slave。但是，Zookeeper 工作时，是有一个节点为 Leader，其他则为 Follower，Leader是通过内部的选举机制临时产生的
+
+
 # 10、SpringCloud
 
 ## 10.1、项目中springCloud用的哪些组件
