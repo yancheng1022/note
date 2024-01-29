@@ -229,7 +229,7 @@ Exception：异常，能够被程序本身处理的，可以通过try…catch语
 
 ## 2.15、hashmap原理
 
-hashmap数据结构是数组+链表+红黑树，HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含一个key-value键值对  
+hashmap数据结构是数组+链表+红黑树，HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含key-value键值对  
 两个重要的方法put() get()  
 （1）.put方法：调用key的hash方法得hash值，再与（数组长度-1）做与（&）运算，到这个元素在数组中的位置（即下标）如果该位置已经存在其它元素，那么在同一个位子上的元素将以链表的形式存放，通过equals方法依次比较链表中的key，相同则替换。不同则添加到表尾（1.8之前添加到表头）。
 
