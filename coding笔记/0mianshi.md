@@ -2203,7 +2203,13 @@ zk的数据是保存在节点上的，节点就是znode，多个znode之间构�
 
 ## 1.8、zookeeper选举机制
 
-虽然在配置文件中并没有指定Master和Slave。但是，Zookeeper 工作时，是有一个节点为 Leader，其他则为 Follower，Leader是通过内部的选举机制临时产生的
+半数机制，虽然在配置文件中并没有指定Master和Slave。但是，Zookeeper 工作时，是有一个节点为 Leader，其他则为 Follower，Leader是通过内部的选举机制临时产生的
+
+1、Server1 先投票，投给自己，自己为 1 票，没有超过半数，根本无法成为 leader，顺水推舟将票数投给了 id 比自己大的 Server2
+2、Server2 也把自己的票数投给了自己，再加上 Server1 给的票数，总票数为 2 票，没有超过半数，也 无法成为 leader，也学习 Server1，顺水推舟，将自己所有的票数给了 id 比自己大的 Server3
+3、Server3 得到了 Server1 和 Server2 的两票，再加上自己投给自己的一票。3 票超过半数，顺利成为 leader
+4、Server4 和 Server5 都投给自己，但是无法改变 Server3 的票数，只好听天由命，承认 Server3 是 leader
+
 
 
 # 10、SpringCloud
