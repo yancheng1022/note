@@ -1965,6 +1965,11 @@ mysql5.6版本前：这个查询只能匹配到yc开头的索引，然后拿这�
 
 >当一条sql使用索引下推技术后，在explain执行计划中，extra列中出现using index condition的信息
 
+## 1.19、cout(1)和count(星)和count(字段)区别
+
+1、count（1）和count（星）是一样的，不管是innodb还是myisam （其中myisam一个字段存储行数，innodb利用索引统计）
+2、count（字段）会选择该字段的可用索引进行统计，如果没有则进行全部扫描，同时它会过滤掉null值
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
