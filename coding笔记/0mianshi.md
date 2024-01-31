@@ -2784,5 +2784,84 @@ s表示替换操作，old_string是要被替换的旧字符串，new_string是�
 
 ## 14.1、vue常见指令
 
-v-text：会替换掉元素里的内容
-v-bind：
+1、v-text
+v-text 指令，会把该元素下面的所有内容替换掉。
+
+<div v-text="hello vue">hello world</div>
+现实结果是：hello vue
+
+2、v-html
+v-html 指令，会用一个HTML标签字符串，替换该元素下面的所有内容。
+
+但是，不建议使用v-html指令，因为它会导致被恶意者进行XSS攻击的潜在风险。
+
+<div v-html="'<span style=&quot;color:red&quot;>hello vue</span>'">
+ 
+  hello world
+ 
+</div>
+现实结果是：字体颜色为红色的 hello vue
+
+3、v-show
+v-show 指令，控制元素的显示隐藏，元素存在并占据空间。
+
+元素隐藏时，相当于给该元素添加了 CSS 样式：display:none;
+
+<div v-show="show">hello vue</div>
+ 
+<button @click="show = !show">changeShow</button>
+4、v-if/v-esle-if/v-else
+（1）、v-if
+v-if指令，控制元素是否加载。
+
+v-esle-if/v-else指令不能单独使用，必须配合v-if一起使用。
+
+<div v-if="number===1">hello vue {{number}}</div>
+ 
+<div v-else-if="number===2">hello world {{number}}</div>
+ 
+<div v-else>hello someone {{number}}</div>
+（2）、v-if 与 v-show
+v-if：有更高的切换开销；
+v-show：有更高的初始化开销。
+若需要频繁的切换则使用 v-show 比较好，否则使用 v-if 比较好。
+
+5、v-for
+v-for 指令，for循环，基于源数据多次渲染元素或模板块。
+
+v-for 既可以渲染一个数组，也可以渲染一个对象。
+
+（1）、v-for 渲染一个数组
+<div v-for="(item, idx) in [1, 2, 3]" :key="idx">
+ 
+    {{item}}
+ 
+</div>
+// 渲染的结果：
+// 1
+// 2
+// 3
+（2）、 v-for 渲染一个对象
+<div v-for="(val, key) in {one: 1, two: 2}" :key="key">
+ 
+    {{key}}: {{val}}
+ 
+</div>
+// 渲染的结果：
+// one: 1
+// two: 2
+（3）、v-if 与 v-for
+同时使用 v-if 和 v-for 是不推荐的，因为这样二者的优先级不明显。请查看风格指南获得更多信息。
+
+当 v-if 与 v-for 一起使用时：
+
+在 vue2 中 v-for 比 v-if 有更高的优先级。这意味着 v-if 将分别重复运行于每个 v-for 循环中。
+在 vue3 中 v-if 比 v-for 有更高的优先级。这意味着 v-if 的条件将无法访问到 v-for 作用域内定义的变量别名。
+vue3 官网之 v-for 与 v-if
+
+（4）、v-for 之 key
+①、为什么需要给 v-for 设置 key？
+
+这牵扯到 vue 的 vnode 的 Diff 算法的特点，请参见此文。
+
+②、在 v-for 中直接用 index 作为 key 的值有什么不好？
