@@ -373,6 +373,9 @@ spring动态代理的实现有以下两种方式:
 
 1、通过@SpringBootApplication引入@EnableAutoConfiguration，负责启动自动配置功能
 2、@EnableAutoConfiguration引入了@Import注解，导入一个ImportSelector
+3、它会读取所有/META-INF/spring.factory文件，然后把扫描到的文件包装成properties对象
+4、从properties中获取EnableAutoConfiguration的key里对应的所有的类
+
 
 
 ## 3.12、springBoot启动流程
