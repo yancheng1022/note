@@ -763,7 +763,7 @@ spring会创建一个代理对象作，利用事务管理器创建一个数据�
 
 > 当在类的内部调用被@Transactional注解修饰的方法时，实际上是通过类的实例直接调用方法，而不是通过代理对象。这样做会绕过代理对象，从而导致@Transactional注解失效
 
-3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的。如果想事务生效可以进行手动回滚或者在catch里面将异常抛出throw new RuntimeException()
+3.事务@Transactional由spring控制时，它会在抛出异常的时候进行回滚。如果自己使用try-catch捕获处理了，是不生效的
 
 ## 4.11、声明式事务和编程式事务
 
