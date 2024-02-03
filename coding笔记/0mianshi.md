@@ -409,6 +409,10 @@ CommandLineRunner和ApplicationRunner的作用是相同的。不同之处在于C
 
 当程序启动时，我们传给main()方法的参数可以被实现CommandLineRunner和ApplicationRunner接口的类的run()方法访问，即可接收启动服务时传过来的参数。我们可以创建多个实现CommandLineRunner和ApplicationRunner接口的类。为了使他们按一定顺序执行，可以使用@Order注解
 
+## 3.16、jdk和cglib动态代理区别
+
+
+
 # 4、mybatis
 
 ## 4.1、实现批量插入
