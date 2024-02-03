@@ -372,7 +372,7 @@ spring动态代理的实现有以下两种方式:
 
 
 1、通过@SpringBootApplication引入@EnableAutoConfiguration，负责启动自动配置功能
-2、
+2、@EnableAutoConfiguration引入了@Import注解，
 
 
 ## 3.12、springBoot启动流程
