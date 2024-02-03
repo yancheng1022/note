@@ -712,6 +712,7 @@ public class MyPagePlugin implements Interceptor {
 
 
 ## 4.8、@Transactional原理
+
 基于数据库事务和aop机制实现的
 spring会创建一个代理对象作，利用事务管理器创建一个数据库连接，并且修改数据库连接的autocommit属性为false，禁止连接自动提交
 如果抛异常，则调用conn.rollback方法回滚，否则调用commit（）提交
@@ -753,7 +754,8 @@ spring会创建一个代理对象作，利用事务管理器创建一个数据�
 
 1.@Transactional 注解应该只被应用在 public 修饰的方法上(注意)。 如果在 protected、private 或者 package-visible 的方法上使用 该注解，它也不会报错(IDEA会有提示)， 但事务并没有生效
 
->Spring事务的实现都是依靠AOP，本质上也是依靠代理来实现。事务在spring中的实现其实就是生成bean对象的代理对象。在bean进行创建出实例时， 如果是有事务注解的方法，就会被进行增强，最终形成代理类。在spring中，有两种动态代理的方式，一种是jdk，它是将原始对象放入代理对象内部，通过调用内含的原始对象来实现原始的业务逻辑，而另一种是cglib，它是通过生成原始对象的子类，子类复写父类的方法，从而实现对父类的增强。jdk中，如果是private的方法，显然是无法访问的，而在cglib中，也是同样。所以总结来说private方法不能被继承，final方法不能被重写，static方法和继承不相干，所以它们3个的事务不起作用。Spring选择让protected方法和package方法不支持事务，所以只有public方法支持事务
+>Spring事务的实现都是依靠AOP，本质上也是依靠代理来实现。事务在spring中的实现其实就是生成bean对象的代理对象。在bean进行创建出实例时， 如果是有事务注解的方法，就会被进行增强，最终形成代理类。
+>在spring中，有两种动态代理的方式，一种是jdk，它是将原始对象放入代理对象内部，通过调用内含的原始对象来实现原始的业务逻辑，而另一种是cglib，它是通过生成原始对象的子类，子类复写父类的方法，从而实现对父类的增强。jdk中，如果是private的方法，显然是无法访问的，而在cglib中，也是同样。所以总结来说private方法不能被继承，final方法不能被重写，static方法和继承不相干，所以它们3个的事务不起作用。Spring选择让protected方法和package方法不支持事务，所以只有public方法支持事务
 
 
 
