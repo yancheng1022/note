@@ -371,11 +371,8 @@ spring动态代理的实现有以下两种方式:
 ## 3.11、springBoot自动配置原理
 
 
->spring boot默认扫描启动类所在的包下的主类与子类的所有组件，但并没有包括依赖包中的bean，那么依赖包中的bean是如何被发现和加载的。我们需要从Spring Boot项目的启动类开始跟踪
-
-在启动类上我们一般会加入SpringBootApplication注解，它是一个复合注解，它下面的@EnableAutoConfiguration这个注解，这个注解也是一个复合注解。@EnableAutoConfiguration注解导入AutoConfigurationImportSelector类，这个类中有一个selectImports()方法，扫描了所有包含META-INF/spring.factories的jar包，这个文件中列举了所有自动装备类的清单。通过`@ConditionalOn`条件注解，满足一定条件才会通过反射去创建对应的类
-
-> 比如**MybatisAutoConfiguration**这个类，会先通过依赖条件判断@ConditionOnClass等，判断有没有SqlSessionFactory类和Datasource实例。满足条件时创建对应的需要的实例
+1、通过@SpringBootApplication引入@EnableAutoConfiguration，负责启动自动配置功能
+2、
 
 
 ## 3.12、springBoot启动流程
