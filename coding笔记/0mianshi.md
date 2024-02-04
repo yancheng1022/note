@@ -1387,26 +1387,25 @@ public class FutureTest {
 
 但是Future对于结果的获取，不是很友好，只能通过阻塞或者轮询的方式得到任务的结果。Future.get() 就是阻塞调用，在线程获取结果之前get方法会一直阻塞
 
-因此，JDK8设计出CompletableFuture。CompletableFuture提供了一种观察者模式类似的机制，可以让任务执行完成后通知监听的一方.避免无谓的cpu资源的消耗
-
+因此，JDK8设计出CompletableFuture。CompletableFuture，它针对`Future`做了改进，可以传入回调对象，当异步任务完成或者发生异常时，自动调用回调对象的回调方法
 ```java
 public class FutureTest {
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
-
-        UserInfoService userInfoService = new UserInfoService();
-        long userId =666L;
-        long startTime = System.currentTimeMillis();
-
-        //调用用户服务获取用户基本信息
-        CompletableFuture<UserInfo> completableUserInfoFuture = CompletableFuture.supplyAsync(() -> userInfoService.getUserInfo(userId));
-
-        Thread.sleep(300); //模拟主线程其它操作耗时
-
-        UserInfo userInfo = completableUserInfoFuture.get(2,TimeUnit.SECONDS);//获取个人信息结果
-        System.out.println("总共用时" + (System.currentTimeMillis() - startTime) + "ms");
-
-    }
+   public static void main(String[] args) throws Exception {
+        // 创建异步执行任务:
+        CompletableFuture<Double> cf = CompletableFuture.supplyAsync(Main::fetchPrice);
+        // 如果执行成功:
+        cf.thenAccept((result) -> {
+            System.out.println("price: " + result);
+        });
+        // 如果执行异常:
+        cf.exceptionally((e) -> {
+            e.printStackTrace();
+            return null;
+        });
+        // 主线程不要立刻结束，否则CompletableFuture默认使用的线程池会立刻关闭:
+        Thread.sleep(200);
+    }
 }
 
 ```
@@ -1415,7 +1414,7 @@ public class FutureTest {
 - runAsync执行CompletableFuture任务，没有返回值
 ## 5.30、notify和join
 
-wait是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒
+wait()方法：是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒
 
 join()方法：把指定的线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行。比如在线程B中调用了线程A的Join()方法，直到线程A执行完毕后，才会继续执行线程B
 
