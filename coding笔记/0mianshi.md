@@ -1384,6 +1384,10 @@ public class FutureTest {
     }
 }
 ```
+
+但是Future对于结果的获取，不是很友好，只能通过阻塞或者轮询的方式得到任务的结果。Future.get() 就是阻塞调用，在线程获取结果之前get方法会一直阻塞
+
+
 ## 5.30、notify和join
 
 wait是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒
