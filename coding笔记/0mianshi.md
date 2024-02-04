@@ -1387,7 +1387,32 @@ public class FutureTest {
 
 但是Future对于结果的获取，不是很友好，只能通过阻塞或者轮询的方式得到任务的结果。Future.get() 就是阻塞调用，在线程获取结果之前get方法会一直阻塞
 
+因此，JDK8设计出CompletableFuture。CompletableFuture提供了一种观察者模式类似的机制，可以让任务执行完成后通知监听的一方.避免无谓的cpu资源的消耗
 
+```java
+public class FutureTest {
+
+    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
+
+        UserInfoService userInfoService = new UserInfoService();
+        long userId =666L;
+        long startTime = System.currentTimeMillis();
+
+        //调用用户服务获取用户基本信息
+        CompletableFuture<UserInfo> completableUserInfoFuture = CompletableFuture.supplyAsync(() -> userInfoService.getUserInfo(userId));
+
+        Thread.sleep(300); //模拟主线程其它操作耗时
+
+        UserInfo userInfo = completableUserInfoFuture.get(2,TimeUnit.SECONDS);//获取个人信息结果
+        System.out.println("总共用时" + (System.currentTimeMillis() - startTime) + "ms");
+
+    }
+}
+
+```
+
+- supplyAsync执行CompletableFuture任务，支持返回值
+- runAsync执行CompletableFuture任务，没有返回值
 ## 5.30、notify和join
 
 wait是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒
