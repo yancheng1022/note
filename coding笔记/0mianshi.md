@@ -1355,6 +1355,35 @@ I/O密集型：线程数 = cpu核心数 * （1 + （I/O耗时/CPU耗时））
 
 Future是Java5新加的一个接口，它提供了一种异步并行计算的功能。如果主线程需要执行一个很耗时的计算任务，我们就可以通过future把这个任务放到异步线程中执行。主线程继续处理其他任务，处理完成后，再通过Future获取计算结果
 
+```java
+public class FutureTest {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        UserInfoService userInfoService = new UserInfoService();
+    
+        long userId =666L;
+        long startTime = System.currentTimeMillis();
+
+        //调用用户服务获取用户基本信息
+        FutureTask<UserInfo> userInfoFutureTask = new FutureTask<>(new Callable<UserInfo>() {
+            @Override
+            public UserInfo call() throws Exception {
+                return userInfoService.getUserInfo(userId);
+            }
+        });
+        executorService.submit(userInfoFutureTask);
+
+        Thread.sleep(300); //模拟主线程其它操作耗时
+
+        UserInfo userInfo = userInfoFutureTask.get();//获取个人信息结果
+
+        System.out.println("总共用时" + (System.currentTimeMillis() - startTime) + "ms");
+    }
+}
+```
 ## 5.30、notify和join
 
 wait是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒
