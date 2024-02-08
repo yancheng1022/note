@@ -1308,7 +1308,7 @@ Semaphore的实现原理主要是通过内部类Sync来实现的，内部类Sync
 
 ## 5.24、countDownLatch原理
 
-CountDownLatch允许一个或多个线程等待其他线程完成操作。await（）用来等待计数归0，countDown（）用来让计数减少一。
+CountDownLatch允许一个或多个线程等待其他线程完成操作。await（）线程进入阻塞队列。用来等待计数归0，countDown（）用来让计数减少一。
 
 1、初始化CountDownLatch实际就是设置了AQS的state为计数的值
 2、调用CountDownLatch的countDown方法时实际就是调用AQS的relase方法，每调用一次就自减一次state值
