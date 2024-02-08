@@ -1059,6 +1059,8 @@ CAS自旋操作，会不断的轮询内存位置，直到成功。消耗大量CP
 由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收。
 当线程没有结束，但是ThreadLocal已经被回收，则可能导致线程中存在`ThreadLocalMap<null, Object>`的键值对，造成内存泄露。（ThreadLocal被回收，ThreadLocal关联的线程共享变量还存在）
 
+如果在线程池中使⽤ThreadLocal也会造成内存泄漏，因为当ThreadLocal对象使⽤完之后，应该要把设置的key，value，也就是Entry对象进⾏回收，但线程池中的线程不会回收，⽽线程对象是通过强引⽤指向ThreadLocalMap，ThreadLocalMap也是通过强引⽤指向Entry对象，线程不被回收，Entry对象也就不会被回收，从⽽出现内存泄漏，解决办法是，在使⽤了ThreadLocal对象之后，⼿动调⽤ThreadLocal的remove⽅法，⼿动清楚Entry对象
+
 
 4. **怎么避免内存泄露？**
 
