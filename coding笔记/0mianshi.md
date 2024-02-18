@@ -2477,7 +2477,8 @@ follower：可以直接处理客户端的读请求，写请求会转发到leader
 observer：观察者，提供读服务，不参与leader的选取
 
 ## 1.11、zab协议
-zab，zookeeper原子广播协议。用来保证zk分布式事务的最终一致性
+zab，zookeeper原子广播协议。用来保证zk分布式事务的最终一致性。具体分为两部分：
+1、
 
 # 10、SpringCloud
 
