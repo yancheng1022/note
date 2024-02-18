@@ -2470,7 +2470,8 @@ zab协议，半数机制，虽然在配置文件中并没有指定Master和Slave
 
 ## 1.10、zookeeper集群角色
 
-
+leader:zookper集群的核心，处理客户端的写请求
+follower：可以直接处理客户端的读请求，写请求会转发到leader
 
 # 10、SpringCloud
 
