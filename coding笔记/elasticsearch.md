@@ -144,6 +144,7 @@ elasticsearch是面向**文档（Document）**存储的，可以是数据库中�
 
 
 
+
 ### 1.3.3.mysql与elasticsearch
 
 我们统一的把mysql与elasticsearch的概念做一下对比：
