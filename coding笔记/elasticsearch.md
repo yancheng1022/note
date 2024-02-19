@@ -19,8 +19,7 @@ elasticsearch是一款非常强大的开源搜索引擎，具备非常多强大�
 
 elasticsearch结合kibana、Logstash、Beats，也就是elastic stack（ELK）。被广泛应用在日志数据分析、实时监控等领域：而elasticsearch是elastic stack的核心，负责存储、搜索、分析数据。
 
-![image-20210720194230265](assets/image-20210720194230265.png)
-
+![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202402191619685.png)
 
 
 ### 1.1.3.elasticsearch和lucene
@@ -29,34 +28,13 @@ elasticsearch底层是基于**lucene**来实现的。
 
 **Lucene**是一个Java语言的搜索引擎类库，是Apache公司的顶级项目，由DougCutting于1999年研发。官网地址：https://lucene.apache.org/ 。
 
-![image-20210720194547780](assets/image-20210720194547780.png)
-
-
-
-
-
 **elasticsearch**的发展历史：
 
 - 2004年Shay Banon基于Lucene开发了Compass
 - 2010年Shay Banon 重写了Compass，取名为Elasticsearch。
 
-![image-20210720195001221](assets/image-20210720195001221.png)
 
-
-
-### 1.1.4.为什么不是其他搜索技术？
-
-目前比较知名的搜索引擎技术排名：
-
-![image-20210720195142535](assets/image-20210720195142535.png)
-
-虽然在早期，Apache Solr是最主要的搜索引擎技术，但随着发展elasticsearch已经渐渐超越了Solr，独占鳌头：
-
-![image-20210720195306484](assets/image-20210720195306484.png)
-
-
-
-### 1.1.5.总结
+### 1.1.4.总结
 
 什么是elasticsearch？
 
