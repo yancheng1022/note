@@ -559,6 +559,10 @@ package：打包，包含构建，编译等过程
 install：将项目打成jar包，并保存到本地maven仓库
 compile：对当前项目进行编译操作
 deploy：依次执行clean compile package，并上传到远程仓库
+
+## 3.19、spring如何解决循环依赖
+
+
 # 4、mybatis
 
 ## 4.1、实现批量插入
