@@ -123,10 +123,6 @@ elasticsearch中有很多独有的概念，与mysql中略有差别，但也有�
 
 elasticsearch是面向**文档（Document）**存储的，可以是数据库中的一条商品数据，一个订单信息。文档数据会被序列化为json格式后存储在elasticsearch中：
 
-![image-20210720202707797](assets/image-20210720202707797.png)
-
-
-
 而Json文档中往往包含很多的**字段（Field）**，类似于数据库中的列。
 
 
