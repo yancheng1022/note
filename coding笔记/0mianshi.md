@@ -510,6 +510,7 @@ class TestApplicationTests {
 ```
 
 8、实现热插拔
+
 ```java
 // 1. 新增标记类
 public class ConfigMarker {
