@@ -357,8 +357,7 @@ spring动态代理的实现有以下两种方式:
 
 1. 客户端发送请求到DispatcherServlet。
 2. DispatcherServlet根据请求的URL找到对应的handler（controller）。返回对应的HandlerExecutionChain，其中包含处理请求的Controller以及拦截器。
-4. DispatcherServlet
-5. 调用处理器适配器handlerAdapter选择合适的处理器handler处理（controller，httprequesthandler，servlet）
+4. DispatcherServlet调用处理器适配器handlerAdapter选择合适的处理器handler处理（controller，httprequesthandler，servlet）
 6. 返回一个ModelAndView对象（jsp）。前后端分离在处理器直接返回json，然后返回一个null的modelAndView
 7. DispatcherServlet根据返回的ModelAndView对象，调用对应的ViewResolver进行视图解析。
 8. ViewResolver返回对应的View对象。然后结合之前返回的数据，进行视图渲染
@@ -376,7 +375,7 @@ spring动态代理的实现有以下两种方式:
 
 对于原型Bean,每次创建一个新对象，也就是线程之间并不存在Bean共享，自然是不会有线程安全的问题
 
-对于单例Bean,所有线程都共享一个单例实例Bean,因此是存在资源的竞争。
+对于单例Bean,所有线程都共享一个单例实例Bean,因此是存在资源的竞争
 
 >怎样解决单例bean对象的线程安全问题
 >1.在bean对象中尽量避免使用可变的成员变量
