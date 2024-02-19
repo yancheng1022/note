@@ -17,13 +17,7 @@ elasticsearch是一款非常强大的开源搜索引擎，具备非常多强大�
 
 ### 1.1.2.ELK技术栈
 
-elasticsearch结合kibana、Logstash、Beats，也就是elastic stack（ELK）。被广泛应用在日志数据分析、实时监控等领域：
-
-![image-20210720194008781](assets/image-20210720194008781.png)
-
-
-
-而elasticsearch是elastic stack的核心，负责存储、搜索、分析数据。
+elasticsearch结合kibana、Logstash、Beats，也就是elastic stack（ELK）。被广泛应用在日志数据分析、实时监控等领域：而elasticsearch是elastic stack的核心，负责存储、搜索、分析数据。
 
 ![image-20210720194230265](assets/image-20210720194230265.png)
 
