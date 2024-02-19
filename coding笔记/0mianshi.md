@@ -1562,7 +1562,9 @@ join()方法：把指定的线程加入到当前线程，可以将两个交替�
 
 3. 弱引用，以WeakReference引用对象，被弱引用引用的对象一定会被回收，它只能存活到下一次垃圾回收。（弱引用不会增加引用数量）
 
+```java
 WeakReference<Obejct> wf = new WeakReference<Obejct>(new Object);
+```
 
 4. 虚引用：以PhantomReference引用对象，一个对象被引用引用后不会有任何影响，也无法通过该引用来获取该对象，只是其在被垃圾回收时会收到一个系统通知（作用是用来跟踪它所引用的对象被垃圾收集器回收的活动）
 
