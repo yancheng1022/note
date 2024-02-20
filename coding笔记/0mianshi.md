@@ -2500,9 +2500,12 @@ zab，zookeeper原子广播协议。保证各个server之间的同步。分三�
 2. 同步（选出 Leader 后，Follower 和 Observer 需进行数据同步）
 3. 广播（同步之后，集群对外工作响应请求，并进行消息广播，实现数据在集群节点的副本存储）
 
-## 1.12、
+## 1.12、zookeeper四种状态
 
-LOOKING 寻找 Leader 状态 当服务器处于这种状态时，表示当前没有Leader，需要进入选举流程 FOLLOWING 从机状态，表明当前服务器角色是Follower OBSERVING 观察者状态，表明当前服务器角色是Observer LEADING 领导者状态，表明当前服务器角色是Leader
+LOOKING ：寻找 Leader 状态 当服务器处于这种状态时，表示当前没有Leader，需要进入选举流程 
+FOLLOWING ：从机状态，表明当前服务器角色是Follower 
+OBSERVING ：观察者状态，表明当前服务器角色是Observer 、
+LEADING ：领导者状态，表明当前服务器角色是Leader
 
 ## 1.13、数据变更通知（Watch机制）
 
