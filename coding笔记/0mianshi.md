@@ -2492,11 +2492,12 @@ leader:zookper集群的核心，处理客户端的写请求
 follower：可以直接处理客户端的读请求，写请求会转发到leader。同时参与leader的选取
 observer：观察者，提供读服务，不参与leader的选取
 
-## 1.11、zab协议
-zab，zookeeper原子广播协议。用来保证zk分布式事务的最终一致性。具体分为两部分：
+## 1.11、zookeeper怎么保证主从节点状态一致
 
-1、消息广播阶段（leader正常时）
-leader负责处理客户端写入操作，接受事务提交，每次接受一个事务就会产生一个提案对象请求广播给flower。leader收集各个节点的反馈，然后决定是否commit
+zab，zookeeper原子广播协议。保证各个server之间的同步。它有两种模式：恢复模式和广播模式
+
+1、恢复模式
+当服务启动或在领导者崩溃，zab就进入
 
 2、崩溃恢复阶段（leader崩溃时）
 处理选举问题。比如leader节点宕机，重新进行选举
