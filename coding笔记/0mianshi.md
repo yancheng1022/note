@@ -3191,30 +3191,32 @@ greap "hello" a.txt
 1、v-text
 v-text 指令，会把该元素下面的所有内容替换掉。
 
+```vue
 <div v-text="hello vue">hello world</div>
 现实结果是：hello vue
+```
 
 2、v-html
-v-html 指令，会用一个HTML标签字符串，替换该元素下面的所有内容。
+v-html 指令，会用一个HTML标签字符串，替换该元素下面的所有内容。但是，不建议使用v-html指令，因为它会导致被恶意者进行XSS攻击的潜在风险。
 
-但是，不建议使用v-html指令，因为它会导致被恶意者进行XSS攻击的潜在风险。
-
+```vue
 <div v-html="'<span style=&quot;color:red&quot;>hello vue</span>'">
- 
   hello world
- 
 </div>
 现实结果是：字体颜色为红色的 hello vue
+```
 
 3、v-show
-v-show 指令，控制元素的显示隐藏，元素存在并占据空间。
 
-元素隐藏时，相当于给该元素添加了 CSS 样式：display:none;
+v-show 指令，控制元素的显示隐藏，元素存在并占据空间。元素隐藏时，相当于给该元素添加了 CSS 样式：display:none;
 
+```vue
 <div v-show="show">hello vue</div>
- 
 <button @click="show = !show">changeShow</button>
+```
+
 4、v-if/v-esle-if/v-else
+
 （1）、v-if
 v-if指令，控制元素是否加载。
 
