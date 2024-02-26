@@ -3218,19 +3218,16 @@ v-show 指令，控制元素的显示隐藏，元素存在并占据空间。元�
 4、v-if/v-esle-if/v-else
 
 （1）、v-if
-v-if指令，控制元素是否加载。
+v-if指令，控制元素是否加载。v-esle-if/v-else指令不能单独使用，必须配合v-if一起使用。
 
-v-esle-if/v-else指令不能单独使用，必须配合v-if一起使用。
-
+```vue
 <div v-if="number===1">hello vue {{number}}</div>
- 
 <div v-else-if="number===2">hello world {{number}}</div>
- 
 <div v-else>hello someone {{number}}</div>
+```
+
 （2）、v-if 与 v-show
-v-if：有更高的切换开销；
-v-show：有更高的初始化开销。
-若需要频繁的切换则使用 v-show 比较好，否则使用 v-if 比较好。
+v-if：有更高的切换开销；v-show：有更高的初始化开销。若需要频繁的切换则使用 v-show 比较好，否则使用 v-if 比较好。
 
 5、v-for
 v-for 指令，for循环，基于源数据多次渲染元素或模板块。
