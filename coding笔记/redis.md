@@ -915,7 +915,7 @@ PUBLISH channel1 "Redis PUBLISH test"
 
 1. 通过`set...nx...`命令,将加锁、过期命令编排到一起,把他们变成原子操作。完整命令：set key random-value nx ex seconds
 
-> 其实目前通常所说的Setnx命令，并非单指Redis的setnx key value这条命令。
+> 其实目前通常所说的Setnx命令，并非单指Redis的setnx key value这条命令
 > 一般代指Redis中对set命令加上nx参数进行使用
 
 > （1）nx  ex 是set指令的两个参数： ex过期时间    nx只有key不存在时设置新的key/value
