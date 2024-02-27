@@ -1084,7 +1084,29 @@ Integer result = task3.get();
 log.debug("结果是:{}", result);
 ```
 
-
+```java
+// 线程池submit callable返回Future，从Future对象获取任务的返回值，并输入到控制台
+int taskSize = 5;  
+// 创建一个线程池  
+ExecutorService pool = Executors.newFixedThreadPool(taskSize);  
+// 创建多个有返回值的任务  
+List<Future> list = new ArrayList<Future>();  
+for (int i = 0; i < taskSize; i++) {  
+Callable c = new MyCallable(i + " ");  
+// 执行任务并获取Future对象  
+Future f = pool.submit(c);  
+// System.out.println(">>>" + f.get().toString());  
+list.add(f);  
+}  
+// 关闭线程池  
+pool.shutdown();  
+  
+// 获取所有并发任务的运行结果  
+for (Future f : list) {  
+// 从Future对象上获取任务的返回值，并输出到控制台  
+System.out.println(">>>" + f.get().toString());  
+}
+```
 ## 5.6、如何停止一个正在运行的线程
 
 1、使用退出标志退出线程
