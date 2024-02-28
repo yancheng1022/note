@@ -586,7 +586,7 @@ deploy：依次执行clean compile package，并上传到远程仓库
 
 ## 3.19、spring如何解决循环依赖
 
-## 3.20、spring事务失效的场景
+## 3.20、spring事务失效的场景（）
 
 
 
