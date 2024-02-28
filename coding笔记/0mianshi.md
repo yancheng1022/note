@@ -1945,7 +1945,7 @@ ZGC（Z Garbage Collector）是一款由Oracle公司研发的，以低延迟为�
 explain select * from user where id =2;
 ```
 
-（3）eq_ref: 当使用连接查询时，如果查询使用的是唯一索引来匹配每个行
+（3）eq_ref: 当使用连接查询时，如果查询使用的是主键或唯一索引来查询
 
 ```sql
 EXPLAIN SELECT * FROM users JOIN orders ON users.id = orders.user_id;
@@ -1964,7 +1964,7 @@ explain select name from user
 ```
 
 
-（7）all：进行了全表扫描，这时候表示通常需要增加索引来进行优化了
+（7）all：不走索引，进行了全表扫描，这时候表示通常需要增加索引来进行优化了
 
 
 2、**key**：实际使用的索引，表示MySQL在执行查询时所使用的索引
@@ -2288,7 +2288,8 @@ mysql5.6版本前：这个查询只能匹配到yc开头的索引，然后拿这�
 常见的慢查询：
 聚合查询，多表查询，表数据量过大查询，深度分页查询
 
-在mysql配置文件中开启慢日志查询，并配置超过多长时间被认为是慢sql（比如2）。这样就会有一个log文件去记录慢sql
+1、在mysql配置文件中开启慢日志查询，并配置超过多长时间被认为是慢sql（比如2）。这样就会有一个log文件去记录慢sql
+2、定位到具体的sql后用explain分析，判断是否使用索引
 
 # 8、mq
 
