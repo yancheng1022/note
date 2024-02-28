@@ -587,11 +587,11 @@ deploy：依次执行clean compile package，并上传到远程仓库
 ## 3.19、spring如何解决循环依赖
 
 
-| **缓存**                | **说明**                                                |
-| --------------------- | ----------------------------------------------------- |
-| singletonObjects      | 第一级缓存，存放可用的成品Bean。                                    |
-| earlySingletonObjects | 第二级缓存，存放半成品的Bean，半成品的Bean是已创建对象，但是未注入属性和初始化。用以解决循环依赖。 |
-| singletonFactories    | 第三级缓存，存的是Bean工厂对象，用来生成半成品的Bean并放入到二级缓存中。用以解决循环依赖。     |
+| **缓存**                | **说明**                                       |
+| --------------------- | -------------------------------------------- |
+| singletonObjects      | 第一级缓存，存放可用的成品Bean。                           |
+| earlySingletonObjects | 第二级缓存，存放半成品的Bean，半成品的Bean是已创建对象，但是未注入属性和初始化。 |
+| singletonFactories    | 第三级缓存，存的是Bean工厂对象，用来生成半成品的Bean并放入到二级缓存中。     |
 
 一级缓存和二级缓存能解决一般对象的循环依赖，但不能满足代理对象
 
@@ -603,9 +603,6 @@ deploy：依次执行clean compile package，并上传到远程仓库
 5. B完成属性填充，执行初始化方法，将自己放入第1级缓存singletonObjects中（此时B是一个完整的对象），同时从第3级缓存singletonFactories和第2级缓存earlySingletonObjects中删除。
 6. A得到“对象B的完整实例”，将B注入到A中。
 7. A完成属性填充，执行初始化方法，并放入到第1级缓存singletonObjects中。
-
-
-
 
 # 4、mybatis
 
