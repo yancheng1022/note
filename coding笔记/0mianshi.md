@@ -586,7 +586,22 @@ deploy：依次执行clean compile package，并上传到远程仓库
 
 ## 3.19、spring如何解决循环依赖
 
-## 3.20、spring事务失效的场景（）
+
+| **缓存**                | **说明**                                                |
+| --------------------- | ----------------------------------------------------- |
+| singletonObjects      | 第一级缓存，存放可用的成品Bean。                                    |
+| earlySingletonObjects | 第二级缓存，存放半成品的Bean，半成品的Bean是已创建对象，但是未注入属性和初始化。用以解决循环依赖。 |
+| singletonFactories    | 第三级缓存，存的是Bean工厂对象，用来生成半成品的Bean并放入到二级缓存中。用以解决循环依赖。     |
+|                       |                                                       |
+
+1. A 调用doCreateBean()创建Bean对象：由于还未创建，从第1级缓存singletonObjects查不到，此时只是一个半成品（提前暴露的对象），放入第3级缓存singletonFactories。
+2. A在属性填充时发现自己需要B对象，但是在三级缓存中均未发现B，于是创建B的半成品，放入第3级缓存singletonFactories。
+3. B在属性填充时发现自己需要A对象，从第1级缓存singletonObjects和第2级缓存earlySingletonObjects中未发现A，但是在第3级缓存singletonFactories中发现A，将A放入第2级缓存earlySingletonObjects，同时从第3级缓存singletonFactories删除。
+4. 将A注入到对象B中。
+5. B完成属性填充，执行初始化方法，将自己放入第1级缓存singletonObjects中（此时B是一个完整的对象），同时从第3级缓存singletonFactories和第2级缓存earlySingletonObjects中删除。
+6. A得到“对象B的完整实例”，将B注入到A中。
+7. A完成属性填充，执行初始化方法，并放入到第1级缓存singletonObjects中。
+
 
 
 
