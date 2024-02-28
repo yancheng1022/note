@@ -2208,7 +2208,7 @@ kill + 线程id
 ## 1.14、undo log、redo log、bin log的作用
 
 1、undo log
-Undo Log称为回滚日志，回滚记录到某个特定的版本，用来保证事务的原子性和一致性
+Undo Log称为回滚日志，记录的是逻辑日志，当事务回滚时，通过你操作恢复原来的数据，用来保证事务的原子性和一致性
 
 
 2、redo log
