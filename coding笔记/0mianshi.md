@@ -389,6 +389,7 @@ spring动态代理的实现有以下两种方式:
 1. 客户端发送请求到DispatcherServlet。
 2. DispatcherServlet根据请求的URL找到对应的handler（controller）。返回对应的HandlerExecutionChain，其中包含处理请求的Controller以及拦截器。
 4. DispatcherServlet调用处理器适配器handlerAdapter选择合适的处理器handler处理（controller，httprequesthandler，servlet）
+5. 
 6. 返回一个ModelAndView对象（jsp）。前后端分离在处理器直接返回json，然后返回一个null的modelAndView
 7. DispatcherServlet根据返回的ModelAndView对象，调用对应的ViewResolver进行视图解析。
 8. ViewResolver返回对应的View对象。然后结合之前返回的数据，进行视图渲染
