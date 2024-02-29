@@ -974,6 +974,10 @@ Spring 事务管理分为**编码式和声明式**的两种方式
 
 PageHelper是MyBatis的一个插件，内部实现了一个PageInterceptor拦截器。Mybatis会加载这个拦截器到拦截器链中。在我们使用过程中先使用PageHelper.startPage这样的语句在当前线程上下文中设置一个ThreadLocal变量，再利用PageInterceptor这个分页拦截器拦截，从ThreadLocal中拿到分页的信息，如果有分页信息拼装分页SQL（limit语句等）进行分页查询，最后再把ThreadLocal中的东西清除掉。
 
+## 4.13、mybatis执行流程
+
+
+
 
 # 5、java并发编程 
 
