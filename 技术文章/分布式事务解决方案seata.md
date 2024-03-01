@@ -74,35 +74,43 @@ Seata连接到服务器的时候需要一些配置项，这时候有一个regist
 
 ```properties
 registry {
-  # tc服务的注册中心类，这里选择nacos，eureka、zookeeper等
-  type = "nacos"
+  # file zk
+  type = "zk"
 
-  nacos {
-    # seata tc 服务注册到 nacos的服务名称，可以自定义
-    application = "seata-tc-server"
-    serverAddr = "127.0.0.1:8848"
-    group = "DEFAULT_GROUP"
-    namespace = ""
-    cluster = "SH"
-    username = "nacos"
-    password = "nacos"
+ zk {
+    cluster = "default"
+    serverAddr = "127.0.0.1:2181"
+    session.timeout = 6000
+    connect.timeout = 2000
+  }
+  file {
+    name = "file.conf"
   }
 }
 
 config {
-  # 读取tc服务端的配置文件的方式，这里是从nacos配置中心读取，这样如果tc是集群，可以共享配置
-  type = "nacos"
-  # 配置nacos地址等信息
-  nacos {
-    serverAddr = "127.0.0.1:8848"
-    namespace = ""
-    group = "SEATA_GROUP"
-    username = "nacos"
-    password = "nacos"
-    dataId = "seataServer.properties"
+  # file、nacos 、apollo、zk、consul
+  type = "zk"
+
+  zk {
+    serverAddr = "127.0.0.1:2181"
+    session.timeout = 6000
+    connect.timeout = 2000
+  }
+
+  file {
+    name = "file.conf"
   }
 }
+
+
 ```
+
+
+主要修改了store.mode为db,还有数据库相关的配置
+
+
+
 
 
 
