@@ -64,7 +64,7 @@ SAGA模式：长事务模式，有业务侵入
 
 下载seata-server包，地址在[http](http://seata.io/zh-cn/blog/download.html)[://seata.io/zh-cn/blog/download](http://seata.io/zh-cn/blog/download.html)[.](http://seata.io/zh-cn/blog/download.html)[html](http://seata.io/zh-cn/blog/download.html) 
 
-## 1.2、修改配置
+## 1.2、修改 conf/registry.conf 和file.conf配置
 
 Seata连接到服务器的时候需要一些配置项，这时候有一个registry.conf文件可以指定注册中心和配置文件是什么。  
 
@@ -102,8 +102,6 @@ config {
     name = "file.conf"
   }
 }
-
-
 ```
 
 
