@@ -18,6 +18,10 @@ TM (Transaction Manager) - 事务管理器，定义全局事务的范围：开�
 RM (Resource Manager) - 资源管理器，管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。
 
 ## 1.3、seata下的分布式事务解决方案
+### 1.3.1、XA
+
+XA 规范 是 X/Open 组织定义的分布式事务处理（DTP，Distributed Transaction Processing）标准，XA 规范 描述了全局的TM与局部的RM之间的接口，几乎所有主流的数据库都对 XA 规范 提供了支持。
+
 
 XA模式：强一致性分阶段事务模式，牺牲了一定的可用性，无业务侵入
 TCC模式：最终一致的分阶段事务模式，有业务侵入
@@ -177,7 +181,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 进入bin目录，运行其中的seata-server.bat即可：启动成功后，seata-server应该已经注册到nacos注册中心了。打开浏览器，访问nacos地址：http://localhost:8848，然后进入服务列表页面，可以看到seata-tc-server的信息：
 
-
 # 3、微服务集成seata
 
 ## 3.1、引入依赖
@@ -205,7 +208,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 ```
 
 
-
 ## 3.2、修改配置文件
 
 需要修改application.yml文件，添加一些配置：
@@ -226,156 +228,4 @@ seata:
     vgroup-mapping: # 事务组与TC服务cluster的映射关系
       seata-demo: SH
 ```
-
-
-
-# 三、TC服务的高可用和异地容灾
-
-## 1.模拟异地容灾的TC集群
-
-计划启动两台seata的tc服务节点：
-
-| 节点名称 | ip地址    | 端口号 | 集群名称 |
-| -------- | --------- | ------ | -------- |
-| seata    | 127.0.0.1 | 8091   | SH       |
-| seata2   | 127.0.0.1 | 8092   | HZ       |
-
-之前我们已经启动了一台seata服务，端口是8091，集群名为SH。
-
-现在，将seata目录复制一份，起名为seata2
-
-修改seata2/conf/registry.conf内容如下：
-
-```nginx
-registry {
-  # tc服务的注册中心类，这里选择nacos，也可以是eureka、zookeeper等
-  type = "nacos"
-
-  nacos {
-    # seata tc 服务注册到 nacos的服务名称，可以自定义
-    application = "seata-tc-server"
-    serverAddr = "127.0.0.1:8848"
-    group = "DEFAULT_GROUP"
-    namespace = ""
-    cluster = "HZ"
-    username = "nacos"
-    password = "nacos"
-  }
-}
-
-config {
-  # 读取tc服务端的配置文件的方式，这里是从nacos配置中心读取，这样如果tc是集群，可以共享配置
-  type = "nacos"
-  # 配置nacos地址等信息
-  nacos {
-    serverAddr = "127.0.0.1:8848"
-    namespace = ""
-    group = "SEATA_GROUP"
-    username = "nacos"
-    password = "nacos"
-    dataId = "seataServer.properties"
-  }
-}
-```
-
-
-
-进入seata2/bin目录，然后运行命令：
-
-```powershell
-seata-server.bat -p 8092
-```
-
-
-
-打开nacos控制台，查看服务列表：
-
-![image-20210624151150840](assets/image-20210624151150840.png)
-
-点进详情查看：
-
-![image-20210624151221747](assets/image-20210624151221747.png)
-
-
-
-## 2.将事务组映射配置到nacos
-
-接下来，我们需要将tx-service-group与cluster的映射关系都配置到nacos配置中心。
-
-新建一个配置：
-
-![image-20210624151507072](assets/image-20210624151507072.png)
-
-配置的内容如下：
-
-```properties
-# 事务组映射关系
-service.vgroupMapping.seata-demo=SH
-
-service.enableDegrade=false
-service.disableGlobalTransaction=false
-# 与TC服务的通信配置
-transport.type=TCP
-transport.server=NIO
-transport.heartbeat=true
-transport.enableClientBatchSendRequest=false
-transport.threadFactory.bossThreadPrefix=NettyBoss
-transport.threadFactory.workerThreadPrefix=NettyServerNIOWorker
-transport.threadFactory.serverExecutorThreadPrefix=NettyServerBizHandler
-transport.threadFactory.shareBossWorker=false
-transport.threadFactory.clientSelectorThreadPrefix=NettyClientSelector
-transport.threadFactory.clientSelectorThreadSize=1
-transport.threadFactory.clientWorkerThreadPrefix=NettyClientWorkerThread
-transport.threadFactory.bossThreadSize=1
-transport.threadFactory.workerThreadSize=default
-transport.shutdown.wait=3
-# RM配置
-client.rm.asyncCommitBufferLimit=10000
-client.rm.lock.retryInterval=10
-client.rm.lock.retryTimes=30
-client.rm.lock.retryPolicyBranchRollbackOnConflict=true
-client.rm.reportRetryCount=5
-client.rm.tableMetaCheckEnable=false
-client.rm.tableMetaCheckerInterval=60000
-client.rm.sqlParserType=druid
-client.rm.reportSuccessEnable=false
-client.rm.sagaBranchRegisterEnable=false
-# TM配置
-client.tm.commitRetryCount=5
-client.tm.rollbackRetryCount=5
-client.tm.defaultGlobalTransactionTimeout=60000
-client.tm.degradeCheck=false
-client.tm.degradeCheckAllowTimes=10
-client.tm.degradeCheckPeriod=2000
-
-# undo日志配置
-client.undo.dataValidation=true
-client.undo.logSerialization=jackson
-client.undo.onlyCareUpdateColumns=true
-client.undo.logTable=undo_log
-client.undo.compress.enable=true
-client.undo.compress.type=zip
-client.undo.compress.threshold=64k
-client.log.exceptionRate=100
-```
-
-## 3.微服务读取nacos配置
-
-接下来，需要修改每一个微服务的application.yml文件，让微服务读取nacos中的client.properties文件：
-
-```yaml
-seata:
-  config:
-    type: nacos
-    nacos:
-      server-addr: 127.0.0.1:8848
-      username: nacos
-      password: nacos
-      group: SEATA_GROUP
-      data-id: client.properties
-```
-
-
-
-重启微服务，现在微服务到底是连接tc的SH集群，还是tc的HZ集群，都统一由nacos的client.properties来决定了。
 
