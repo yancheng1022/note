@@ -274,37 +274,67 @@ create table `lock_table` (
 ```
 
 
-## 3.2、修改配置文件
+## 3.2、添加配置类
 
 需要修改application.yml文件，添加一些配置：
+DEFAULT_MODE：默认的事务模式 为AT_MODE
 
-```properties
-server.port=8102
-spring.application.name=dubbo-account-example
+```java
 
-#====================================Dubbo config===============================================
-dubbo.application.id= dubbo-account-example
-dubbo.application.name= dubbo-account-example
-dubbo.protocol.id=dubbo
-dubbo.protocol.name=dubbo
-dubbo.registry.id=dubbo-account-example-registry
-dubbo.registry.address=zookeeper://127.0.0.1:2181
-dubbo.protocol.port=20880
-dubbo.application.qos-enable=false
-dubbo.config-center.address=zookeeper://127.0.0.1:2181
-dubbo.metadata-report.address=zookeeper://127.0.0.1:2181
-
-#====================================mysql config============================================
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/seata?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-spring.datasource.username=root
-spring.datasource.password=123456
+@Configuration
+public class SeataAutoConfig {
 
 
-#=====================================mybatis config======================================
-mybatis.mapper-locations=classpath*:/mapper/*.xml
+    @Autowired
+    private DataSourceProperties dataSourceProperties;
+
+    @Bean
+    @Primary
+    public DruidDataSource druidDataSource(){
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setUrl(dataSourceProperties.getUrl());
+        druidDataSource.setUsername(dataSourceProperties.getUsername());
+        druidDataSource.setPassword(dataSourceProperties.getPassword());
+        druidDataSource.setDriverClassName(dataSourceProperties.getDriverClassName());
+        druidDataSource.setInitialSize(0);
+        druidDataSource.setMaxActive(180);
+        druidDataSource.setMaxWait(60000);
+        druidDataSource.setMinIdle(0);
+        druidDataSource.setValidationQuery("Select 1 from DUAL");
+        druidDataSource.setTestOnBorrow(false);
+        druidDataSource.setTestOnReturn(false);
+        druidDataSource.setTestWhileIdle(true);
+        druidDataSource.setTimeBetweenEvictionRunsMillis(60000);
+        druidDataSource.setMinEvictableIdleTimeMillis(25200000);
+        druidDataSource.setRemoveAbandoned(true);
+        druidDataSource.setRemoveAbandonedTimeout(1800);
+        druidDataSource.setLogAbandoned(true);
+        return druidDataSource;
+    }
+
+    @Bean
+    public DataSourceProxy dataSourceProxy(DruidDataSource druidDataSource){
+        return new DataSourceProxy(druidDataSource);
+    }
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSourceProxy dataSourceProxy) throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSourceProxy);
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources("classpath*:/mapper/*.xml"));
+        return factoryBean.getObject();
+    }
+
+    @Bean
+    public GlobalTransactionScanner globalTransactionScanner(){
+        return new GlobalTransactionScanner("account-gts-seata-example", "account-service-seata-service-group");
+    }
+}
 
 ```
+
+## 3.3、业务代码增加
 
 
 # 4、XA模式
