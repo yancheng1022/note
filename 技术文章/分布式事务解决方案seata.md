@@ -156,13 +156,30 @@ store {
 }
 ```
 
+
+修改 conf/nacos-config.txt配置为zk-config.properties
+
+```
+store.mode :存储模式 默认file 这里我修改为db 模式 ，并且需要三个表global_table、branch_table和lock_table
+store.db.driver-class-name： 默认没有，会报错。添加了 com.mysql.jdbc.Driver
+store.db.datasource=dbcp ：数据源 dbcp
+store.db.db-type=mysql : 存储数据库的类型为mysql
+store.db.url=jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true : 修改为自己的数据库url、port、数据库名称
+store.db.user=root :数据库的账号
+store.db.password=123456 :数据库的密码
+service.vgroup_mapping.order-service-seata-service-group=default
+service.vgroup_mapping.account-service-seata-service-group=default
+service.vgroup_mapping.storage-service-seata-service-group=default
+service.vgroup_mapping.business-service-seata-service-group=default
+
+```
+
 ## 1.4、创建数据库表
 
 特别注意：tc服务在管理分布式事务时，需要记录事务相关数据到数据库中，你需要提前创建好这些表。
-这些表主要记录全局事务、分支事务、全局锁信息：
+这些表主要记录全局事务(global_table)、分支事务(branch_table)、全局锁信息(lock_table)：
 
 ```mysql
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
