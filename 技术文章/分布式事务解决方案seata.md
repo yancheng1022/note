@@ -25,22 +25,16 @@ AT模式：最终一致的分阶段事务模式，无业务侵入，也是Seata�
 SAGA模式：长事务模式，有业务侵入
 
 
-# 一、部署Seata的tc-server
+# 2、部署Seata的tc-server
 
 
-
-## 1.下载
+1.下载，解压
 
 下载seata-server包，地址在[http](http://seata.io/zh-cn/blog/download.html)[://seata.io/zh-cn/blog/download](http://seata.io/zh-cn/blog/download.html)[.](http://seata.io/zh-cn/blog/download.html)[html](http://seata.io/zh-cn/blog/download.html) 
-## 2.解压
 
-在非中文目录解压缩这个zip包，其目录结构如下：
+2.修改配置
 
-## 3.修改配置
-
-修改conf目录下的registry.conf文件：
-
-内容如下：
+修改conf目录下的registry.conf文件：内容如下：
 
 ```properties
 registry {
@@ -76,19 +70,11 @@ config {
 
 
 
-
-
-## 4.在nacos添加配置
+3.在nacos添加配置
 
 特别注意，为了让tc服务的集群可以共享配置，我们选择了nacos作为统一配置中心。因此服务端配置文件seataServer.properties文件需要在nacos中配好。
 
-格式如下：
-
-![image-20210622203609227](assets/image-20210622203609227.png)
-
-
-
-配置内容如下：
+格式如下：配置内容如下：
 
 ```properties
 # 数据存储方式，db代表数据库
@@ -128,8 +114,7 @@ metrics.exporterPrometheusPort=9898
 ```
 
 
-
-==其中的数据库地址、用户名、密码都需要修改成你自己的数据库信息。==
+其中的数据库地址、用户名、密码都需要修改成你自己的数据库信息。
 
 
 
