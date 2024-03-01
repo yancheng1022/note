@@ -19,8 +19,10 @@ RM (Resource Manager) - 资源管理器，管理分支事务处理的资源，�
 
 ## 1.3、seata下的分布式事务解决方案
 
-
-
+XA模式：强一致性分阶段事务模式，牺牲了一定的可用性，无业务侵入
+TCC模式：最终一致的分阶段事务模式，有业务侵入
+AT模式：最终一致的分阶段事务模式，无业务侵入，也是Seata的默认模式
+SAGA模式：长事务模式，有业务侵入
 
 
 # 一、部署Seata的tc-server
@@ -29,31 +31,20 @@ RM (Resource Manager) - 资源管理器，管理分支事务处理的资源，�
 
 ## 1.下载
 
-首先我们要下载seata-server包，地址在[http](http://seata.io/zh-cn/blog/download.html)[://seata.io/zh-cn/blog/download](http://seata.io/zh-cn/blog/download.html)[.](http://seata.io/zh-cn/blog/download.html)[html](http://seata.io/zh-cn/blog/download.html) 
-
-当然，课前资料也准备好了：
-
-![image-20210622202357640](assets/image-20210622202357640.png)
-
-
-
+下载seata-server包，地址在[http](http://seata.io/zh-cn/blog/download.html)[://seata.io/zh-cn/blog/download](http://seata.io/zh-cn/blog/download.html)[.](http://seata.io/zh-cn/blog/download.html)[html](http://seata.io/zh-cn/blog/download.html) 
 ## 2.解压
 
 在非中文目录解压缩这个zip包，其目录结构如下：
-
-![image-20210622202515014](assets/image-20210622202515014.png)
 
 ## 3.修改配置
 
 修改conf目录下的registry.conf文件：
 
-![image-20210622202622874](assets/image-20210622202622874.png)
-
 内容如下：
 
 ```properties
 registry {
-  # tc服务的注册中心类，这里选择nacos，也可以是eureka、zookeeper等
+  # tc服务的注册中心类，这里选择nacos，eureka、zookeeper等
   type = "nacos"
 
   nacos {
