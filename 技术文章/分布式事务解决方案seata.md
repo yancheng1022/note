@@ -66,7 +66,11 @@ SAGA模式：长事务模式，有业务侵入
 
 ## 1.2、修改配置
 
-修改conf目录下的registry.conf文件：内容如下：
+Seata连接到服务器的时候需要一些配置项，这时候有一个registry.conf文件可以指定注册中心和配置文件是什么。  
+
+这里有很多可选性，比如file、nacos 、apollo、zk、consul
+
+
 
 ```properties
 registry {
@@ -100,53 +104,6 @@ config {
 }
 ```
 
-
-
-## 1.3、在nacos添加配置
-
-特别注意，为了让tc服务的集群可以共享配置，我们选择了nacos作为统一配置中心。因此服务端配置文件seataServer.properties文件需要在nacos中配好。
-
-格式如下：配置内容如下：
-
-```properties
-# 数据存储方式，db代表数据库
-store.mode=db
-store.db.datasource=druid
-store.db.dbType=mysql
-store.db.driverClassName=com.mysql.jdbc.Driver
-store.db.url=jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&rewriteBatchedStatements=true
-store.db.user=root
-store.db.password=123
-store.db.minConn=5
-store.db.maxConn=30
-store.db.globalTable=global_table
-store.db.branchTable=branch_table
-store.db.queryLimit=100
-store.db.lockTable=lock_table
-store.db.maxWait=5000
-# 事务、日志等配置
-server.recovery.committingRetryPeriod=1000
-server.recovery.asynCommittingRetryPeriod=1000
-server.recovery.rollbackingRetryPeriod=1000
-server.recovery.timeoutRetryPeriod=1000
-server.maxCommitRetryTimeout=-1
-server.maxRollbackRetryTimeout=-1
-server.rollbackRetryTimeoutUnlockEnable=false
-server.undo.logSaveDays=7
-server.undo.logDeletePeriod=86400000
-
-# 客户端与服务端传输方式
-transport.serialization=seata
-transport.compressor=none
-# 关闭metrics功能，提高性能
-metrics.enabled=false
-metrics.registryType=compact
-metrics.exporterList=prometheus
-metrics.exporterPrometheusPort=9898
-```
-
-
-其中的数据库地址、用户名、密码都需要修改成你自己的数据库信息。
 
 
 ## 1.4、创建数据库表
