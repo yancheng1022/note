@@ -71,8 +71,13 @@ Seata连接到服务器的时候需要一些配置项，这时候有一个regist
 这里有很多可选性，比如file、nacos 、apollo、zk、consul
 
 
-
 ```properties
+
+- serverAddr = “127.0.0.1:2181” ：zk 的地址
+- cluster = “default” ：集群设置为默认 `default`
+- session.timeout = 6000 ：会话的超时时间
+- connect.timeout = 2000：连接的超时时间
+
 registry {
   # file zk
   type = "zk"
@@ -105,12 +110,51 @@ config {
 ```
 
 
-主要修改了store.mode为db,还有数据库相关的配置
 
+file.conf 配置
 
+```properties
 
+主要修改了`store.mode`为`db`,还有数据库相关的配置
+store {
+  ## store mode: file、db
+  mode = "db"
 
+  ## file store
+  file {
+    dir = "sessionStore"
 
+    # branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions
+    max-branch-session-size = 16384
+    # globe session size , if exceeded throws exceptions
+    max-global-session-size = 512
+    # file buffer size , if exceeded allocate new buffer
+    file-write-buffer-cache-size = 16384
+    # when recover batch read size
+    session.reload.read_size = 100
+    # async, sync
+    flush-disk-mode = async
+  }
+
+  ## database store
+  db {
+    ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+    datasource = "dbcp"
+    ## mysql/oracle/h2/oceanbase etc.
+    db-type = "mysql"
+    driver-class-name = "com.mysql.jdbc.Driver"
+    url = "jdbc:mysql://127.0.0.1:3306/seata"
+    user = "root"
+    password = "123456"
+    min-conn = 1
+    max-conn = 3
+    global.table = "global_table"
+    branch.table = "branch_table"
+    lock-table = "lock_table"
+    query-limit = 100
+  }
+}
+```
 
 ## 1.4、创建数据库表
 
