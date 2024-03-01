@@ -28,11 +28,11 @@ SAGA模式：长事务模式，有业务侵入
 # 2、部署Seata的tc-server
 
 
-1.下载，解压
+## 1.1、下载，解压
 
 下载seata-server包，地址在[http](http://seata.io/zh-cn/blog/download.html)[://seata.io/zh-cn/blog/download](http://seata.io/zh-cn/blog/download.html)[.](http://seata.io/zh-cn/blog/download.html)[html](http://seata.io/zh-cn/blog/download.html) 
 
-2.修改配置
+## 1.2、修改配置
 
 修改conf目录下的registry.conf文件：内容如下：
 
@@ -70,7 +70,7 @@ config {
 
 
 
-3.在nacos添加配置
+## 1.3、在nacos添加配置
 
 特别注意，为了让tc服务的集群可以共享配置，我们选择了nacos作为统一配置中心。因此服务端配置文件seataServer.properties文件需要在nacos中配好。
 
@@ -117,7 +117,7 @@ metrics.exporterPrometheusPort=9898
 其中的数据库地址、用户名、密码都需要修改成你自己的数据库信息。
 
 
-4.创建数据库表
+## 1.4、创建数据库表
 
 特别注意：tc服务在管理分布式事务时，需要记录事务相关数据到数据库中，你需要提前创建好这些表。
 这些表主要记录全局事务、分支事务、全局锁信息：
@@ -173,29 +173,14 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-## 6.启动TC服务
+## 1.5、启动TC服务
 
-进入bin目录，运行其中的seata-server.bat即可：
-
-![image-20210622205427318](assets/image-20210622205427318.png)
-
-启动成功后，seata-server应该已经注册到nacos注册中心了。
+进入bin目录，运行其中的seata-server.bat即可：启动成功后，seata-server应该已经注册到nacos注册中心了。打开浏览器，访问nacos地址：http://localhost:8848，然后进入服务列表页面，可以看到seata-tc-server的信息：
 
 
+# 3、微服务集成seata
 
-打开浏览器，访问nacos地址：http://localhost:8848，然后进入服务列表页面，可以看到seata-tc-server的信息：
-
-![image-20210622205901450](assets/image-20210622205901450.png)
-
-
-
-
-
-
-
-# 二、微服务集成seata
-
-## 1.引入依赖
+## 3.1、引入依赖
 
 首先，我们需要在微服务中引入seata依赖：
 
@@ -221,7 +206,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-## 2.修改配置文件
+## 3.2、修改配置文件
 
 需要修改application.yml文件，添加一些配置：
 
