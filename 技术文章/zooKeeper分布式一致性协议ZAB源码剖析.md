@@ -1,0 +1,11 @@
+
+# 1、zab协议介绍
+
+> ZAB协议全称：Zookeeper Atomic Broadcast（Zookeeper原子广播协议）
+
+
+整个ZooKeeper就是一个多节点分布式一致性算法的实现，底层采用的实现协议是ZAB。
+ZooKeeper是一个为分布式应用提供高效且可靠的分布式协调服务。在解决分布式一致性方面，ZooKeeper并没有使用Paxos，而是采用了ZAB协议，ZAB是Paxos算法的一种简化实现。
+ZAB协议定义：ZAB协议是为分布式协调服务ZooKeeper专门设计的一种支持崩溃恢复和原子广播的协议。下面我们会重点讲这两个东西。
+基于该协议，ZooKeeper实现了一种主备模式的系统架构来保持集群中各个副本之间数据一致性。具体如下图所示
+
