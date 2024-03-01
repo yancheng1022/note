@@ -1,6 +1,6 @@
 ---
 title: mysql
-date: 2023/08/12
+date: 2022/08/12
 categories:
   - coding
 tags:

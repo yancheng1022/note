@@ -1,3 +1,14 @@
+---
+title: 分布式事务解决方案seata
+date: 2023/08/01
+updated: 2023/08/02
+categories:
+  - coding
+tags:
+  - seata
+  - 分布式事务
+  - 技术文章
+---
 
 # 1、概念
 

@@ -1,10 +1,11 @@
 ---
 title: java core
-date: 2023/08/22
+date: 2022/08/22
 categories:
   - coding
 tags:
-  - java core
+  - java
+  - core
   - 编程基础
 ---
 #  1、Java概述
