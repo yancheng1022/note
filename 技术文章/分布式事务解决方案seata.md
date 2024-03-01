@@ -225,6 +225,24 @@ CREATE TABLE `global_table`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+create table `lock_table` (
+  `row_key` varchar(128) not null,
+  `xid` varchar(96),
+  `transaction_id` long ,
+  `branch_id` long,
+  `resource_id` varchar(256) ,
+  `table_name` varchar(32) ,
+  `pk` varchar(32) ,
+  `gmt_create` datetime ,
+  `gmt_modified` datetime,
+  primary key(`row_key`)
+);
+————————————————
+
+                            本文为博主原创文章，未经博主允许不得转载。
+                        
+原文链接：https://blog.csdn.net/u010046908/article/details/102661739/
 ```
 
 
