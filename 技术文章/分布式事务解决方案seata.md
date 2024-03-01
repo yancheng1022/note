@@ -238,11 +238,7 @@ create table `lock_table` (
   `gmt_modified` datetime,
   primary key(`row_key`)
 );
-————————————————
 
-                            本文为博主原创文章，未经博主允许不得转载。
-                        
-原文链接：https://blog.csdn.net/u010046908/article/details/102661739/
 ```
 
 
@@ -282,21 +278,32 @@ create table `lock_table` (
 
 需要修改application.yml文件，添加一些配置：
 
-```yaml
-seata:
-  registry: # TC服务注册中心的配置，微服务根据这些信息去注册中心获取tc服务地址
-    # 参考tc服务自己的registry.conf中的配置
-    type: nacos
-    nacos: # tc
-      server-addr: 127.0.0.1:8848
-      namespace: ""
-      group: DEFAULT_GROUP
-      application: seata-tc-server # tc服务在nacos中的服务名称
-      cluster: SH
-  tx-service-group: seata-demo # 事务组，根据这个获取tc服务的cluster名称
-  service:
-    vgroup-mapping: # 事务组与TC服务cluster的映射关系
-      seata-demo: SH
+```properties
+server.port=8102
+spring.application.name=dubbo-account-example
+
+#====================================Dubbo config===============================================
+dubbo.application.id= dubbo-account-example
+dubbo.application.name= dubbo-account-example
+dubbo.protocol.id=dubbo
+dubbo.protocol.name=dubbo
+dubbo.registry.id=dubbo-account-example-registry
+dubbo.registry.address=zookeeper://127.0.0.1:2181
+dubbo.protocol.port=20880
+dubbo.application.qos-enable=false
+dubbo.config-center.address=zookeeper://127.0.0.1:2181
+dubbo.metadata-report.address=zookeeper://127.0.0.1:2181
+
+#====================================mysql config============================================
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/seata?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+spring.datasource.username=root
+spring.datasource.password=123456
+
+
+#=====================================mybatis config======================================
+mybatis.mapper-locations=classpath*:/mapper/*.xml
+
 ```
 
 
