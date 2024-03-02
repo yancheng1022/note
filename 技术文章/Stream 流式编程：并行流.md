@@ -46,10 +46,11 @@ numbers.parallelStream() .map(n -> compute(n)) // 在多个线程上并行处理
 
 在这个示例中，使用 map 方法对流中的每个元素进行计算。由于并行流的特性，计算操作会在多个线程上并行执行，提高了计算的效率。
 
-避免共享可变状态：在并行流中，多个线程会同时操作数据。如果共享可变状态（如全局变量）可能导致数据竞争和不确定的结果。因此，避免在并行流中使用共享可变状态，或者采取适当的同步措施来确保线程安全。
+3、避免共享可变状态：在并行流中，多个线程会同时操作数据。如果共享可变状态（如全局变量）可能导致数据竞争和不确定的结果。因此，避免在并行流中使用共享可变状态，或者采取适当的同步措施来确保线程安全。
 
-使用合适的操作：一些操作在并行流中的性能表现更好，而另一些操作则可能导致性能下降。一般来说，在并行流中使用基于聚合的操作（如 reduce、collect）和无状态转换操作（如 map、filter）的性能较好，而有状态转换操作（如 sorted）可能会导致性能下降。
+4、使用合适的操作：一些操作在并行流中的性能表现更好，而另一些操作则可能导致性能下降。一般来说，在并行流中使用基于聚合的操作（如 reduce、collect）和无状态转换操作（如 map、filter）的性能较好，而有状态转换操作（如 sorted）可能会导致性能下降。
 
+```java
 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
  
 // good performance
@@ -65,6 +66,8 @@ List<Integer> evenNumbers = numbers.parallelStream()
 List<Integer> sortedNumbers = numbers.parallelStream()
                                      .sorted()
                                      .collect(Collectors.toList());
+```
+
  
 
  
