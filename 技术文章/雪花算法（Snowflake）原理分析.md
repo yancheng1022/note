@@ -33,3 +33,19 @@ snowflake生成的id通常是一个64bit数字，java中用long类型。
 4、12bit-序列号，用来记录同毫秒内产生的不同id。12位（bit）可以表示的最大正整数是2^12−1=4095，即可以用0、1、2、3、....4095这4096个数字，来表示同一机器同一时间截（毫秒）内产生的4096个ID序号
 
 > 同一毫秒的ID数量 = 1024 X 4096 = 4194304，所以最大可以支持单应用差不多四百万的并发量，这个妥妥的够用了
+
+
+# 3、使用
+
+## 3.1、引入依赖
+
+```xml
+<dependency>
+    <groupId>com.github.beyondfengyu</groupId>
+    <artifactId>snowflake-spring-boot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+```
+
+## 3.2、
