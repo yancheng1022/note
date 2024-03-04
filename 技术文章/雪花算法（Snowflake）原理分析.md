@@ -106,4 +106,5 @@ sequence = 0排除掉初始sequence=-1 +1 = 0的情况就是sequence超过最大
 
 
 ## 4.2、机器ID重复的问题
-机器 ID（5 位）和数据中心 ID（5 位）配置没有解决，分布式部署的时候会使用相同的配置，仍然有 ID 重复的风险。如果是在单节点中，这种固定的配置没有问题的，但是在分布式部署中，需要由dataCenterID和workerID组成唯一的机器码，否则在同毫秒内，在机器码workerId相同的情况下，有较大几率出现重复雪花Id。那么这个时候，dataCenterID和workerID的配置就不能写死。而且必须保证唯一
+机器 ID（5 位）和数据中心 ID（5 位）配置没有解决，分布式部署的时候会使用相同的配置，仍然有 ID 重复的风险。如果是在单节点中，这种固定的配置没有问题的，但是在分布式部署中，需要由dataCenterID和workerID组成唯一的机器码，否则在同毫秒内，在机器码workerId相同的情况下，有较大几率出现重复雪花Id。那么这个时候，dataCenterID和workerID的配置就不能写死。而且必须保证唯一。解决思路可以考虑redis保证workid不容。工作机器id：10bit，表示工作机器id，用于处理分布式部署id不重复问题，可支持2^10 = 1024个节点，我们只需要给同一个微服务分配不同的工作机器ID即可，在redis中存储一个当前workerId的最大值。每次生成workerId时，从redis中获取到当前workerId最大值，并+1作为当前workerId，并存入redis。如果workerId为1023，自增为1024，则重置0，作为当前workerId，并存入redis。
+
