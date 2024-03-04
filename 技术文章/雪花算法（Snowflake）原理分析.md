@@ -48,4 +48,34 @@ snowflake生成的id通常是一个64bit数字，java中用long类型。
 
 ```
 
-## 3.2、
+## 3.2、在配置文件中配置雪花算法参数
+
+```yml
+snowflake:
+  data-center-id: 1 # 数据中心ID，可以使用机器IP地址最后一段数字，范围为0-31
+  machine-id: 1 # 机器ID，可以使用服务器编号，范围为0-31
+```
+
+## 3.3、注入SnowflakeIdWorker
+
+使用snowflakeIdWorker.nextId()方法既可以获取生成的雪花ID。
+
+```java
+@Service
+public class UserService {
+    @Autowired
+    private SnowflakeIdWorker snowflakeIdWorker;
+ 
+    public Long generateUserId() {
+        return snowflakeIdWorker.nextId();
+    }
+}
+```
+
+
+# 4、几个问题
+
+## 4.1、时钟倒拨问题
+
+雪花算法的另一个难题就是时间倒拨，也就是跑了一段时间之后，系统时间回到过去。显然，时间戳上有很大几率产生相同毫秒数，在机器码workerId相同的情况下，有较大几率出现重复雪花Id。
+Snowflake根据SmartOS操作系统调度算法，初始化时锁定基准时间，并记录处理器时钟嘀嗒数。在需要生成雪花Id时，取基准时间与当时处理器时钟嘀嗒数，计算得到时间戳。也就是说，在初始化之后，Snowflake根本不会读取系统时间，即使时间倒拨，也不影响雪花Id的生成！
