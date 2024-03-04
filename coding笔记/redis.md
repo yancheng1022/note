@@ -1,6 +1,6 @@
 ---
 title: redis
-date: 2023/08/07
+date: 2022/08/07
 categories:
   - coding
 tags:
