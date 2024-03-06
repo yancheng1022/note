@@ -69,7 +69,6 @@ public class BossMeeting {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
- 
             }
         }
         System.out.println("老板开会end");
