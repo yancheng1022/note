@@ -21,8 +21,6 @@ public class BossMeeting {
  
     /**
      * 主线程为老板正在开会
-     *
-     * @param args
      */
     public static void main(String[] args) {
         System.out.println("老板开会start");
@@ -74,9 +72,7 @@ public class BossMeeting {
  
             }
         }
- 
         System.out.println("老板开会end");
- 
     }
 }
 ```
