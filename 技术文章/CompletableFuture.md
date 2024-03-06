@@ -15,3 +15,68 @@
 老板开会是主线程，不能中断。秘书就是异步任务秘书执行完任务需要将结果返回给老板这个主线程手中。咱们看看通过Future实现此需求有什么局限，然后再通过CompletableFuture实现此需求看看是否更好。
 
 Future接口（实现类：FutureTask）定义了操作异步任务执行的一些方法：如获取异步任务执行结果、取消任务的执行结果、判断任务是否被取消、判断任务执行是否完成等。
+
+```java
+public class BossMeeting {
+ 
+    /**
+     * 主线程为老板正在开会
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println("老板开会start");
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        FutureTask<String> secretaryFuture = new FutureTask<>(() -> {
+            Thread.sleep(1000);
+            return "老板需要的材料";
+        });
+ 
+        //老板发现缺少材料，提交异步任务（找秘书）
+        executorService.submit(secretaryFuture);
+ 
+        /**
+         * 方法1
+         * 局限：导致线程堵塞
+         */
+        try {
+            //获取秘书搜集的材料 （堵塞线程）
+            String material = secretaryFuture.get();
+            System.out.println("秘书搜集到的材料：" + material);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+ 
+        /**
+         * 方法2
+         * 通过while轮询方式会消耗cpu
+         */
+        while (true) {
+            if (secretaryFuture.isDone()) {
+                try {
+                    //获取秘书搜集的材料 （堵塞线程）
+                    String material = secretaryFuture.get();
+                    System.out.println("秘书搜集到的材料：" + material);
+                    break;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+ 
+            }
+        }
+ 
+        System.out.println("老板开会end");
+ 
+    }
+}
+```
