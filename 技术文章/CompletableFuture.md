@@ -146,4 +146,33 @@ public class BossMeeting {
 老板开会end
 
 
-## 
+# 4、CompletableFuture相关方法
+
+
+## 4.1、CompletableFuture创建方式
+
+官方推荐使用CompletableFuture提供的静态方法创建CompletableFuture实例，以下是提供的静态方法：
+
+```java
+// 无返回值 使用ForkJoinPool线程池
+public static CompletableFuture<Void> runAsync(Runnable runnable)
+// 无返回值 可以自定义线程池
+public static CompletableFuture<Void> runAsync(Runnable runnable, Executor executor)
+// 有返回值 使用ForkJoinPool线程池
+public static <U> CompletableFuture<U> supplyAsync(Supplier<U> supplier)
+// 有返回值 可以自定义线程池
+public static <U> CompletableFuture<U> supplyAsync(Supplier<U> supplier, Executor executor)
+```
+
+supply开头：这种方法，可以返回异步线程执行之后的结果。  
+run开头：这种不会返回结果，就只是执行线程任务。  
+如果你想异步运行一些后台任务并且不想从任务中返回任何东西，那么你可以使用run开头的
+
+
+### 4.2、CompletableFuture获取返回值
+
+通过get、join、getNow获取返回值，区别如下：
+
+join：返回结果或者抛出一个unchecked异常(CompletionException)，不需要显示捕获异常。
+get：返回结果或者一个具体的异常(ExecutionException, InterruptedException)，此方法继承至Future是堵塞的。
+getNow：如果当前任务执行完成，返回执行结果，否则返回valueIfAbsent（默认值）。
