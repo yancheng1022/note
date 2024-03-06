@@ -260,20 +260,6 @@ public <U> CompletableFuture<U> handleAsync(BiFunction<? super T,Throwable,? ext
 那就需要查询完订单再查询商品最后查询图片信息，这3个异步任务需要串行执行。
 
 ```java
-package com.lc;
- 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
- 
-/**
- * @author liuchao
- * @date 2023/4/5
- */
 public class Test {
  
     public static void main(String[] args) {
