@@ -222,11 +222,24 @@ System.out.println("执行结果：" + future.getNow(-1)); //3
 ```
 
 - thenAccept() 和 thenRun()方法
-- 
-如果你不想从你的回调函数中返回任何东西，只想在 Future 完成后运行一些代码，那么你可以使用thenAccept()andthenRun()方法。这些方法是消费者Consumer< ? super T> action，通常用作回调链中的最后一个回调。
+	如果你不想从你的回调函数中返回任何东西，只想在 Future 完成后运行一些代码，那么你可以使用thenAccept()andthenRun()方法。这些方法是消费者Consumer< ? super T> action，通常用作回调链中的最后一个回调。
 
 ```java
 // 模拟 1 + 1 + 1
 CompletableFuture.supplyAsync(() -> 1).thenApply(v -> v + 1).thenApply(v -> v + 1)
         thenAccept(r -> System.out.println("1+1+1=" + r));
+```
+
+- complete()：当前阶段异步任务执行完成
+  complete()其实也是个消费操作，但是与thenRun()不同的是，里面可以可抛出的异常
+  
+```java
+// 区别就是不是异步处理
+public CompletableFuture<T>  whenComplete(BiConsumer<? super T,? super Throwable> action)
+// 使用异步处理
+public CompletableFuture<T>  whenCompleteAsync(BiConsumer<? super T,? super Throwable> action)
+// 区别在于可以指定线程池
+public CompletableFuture<T>  whenCompleteAsync(BiConsumer<? super T,? super Throwable> action, Executor executor)
+// 接收一个可抛出的异常，且必须有返回值
+public CompletableFuture<T>  exceptionally(Function<Throwable,? extends T> fn)
 ```
