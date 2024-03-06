@@ -249,3 +249,60 @@ public <U> CompletableFuture<U> handle(BiFunction<? super T,Throwable,? extends 
 public <U> CompletableFuture<U> handleAsync(BiFunction<? super T,Throwable,? extends U> fn)
 public <U> CompletableFuture<U> handleAsync(BiFunction<? super T,Throwable,? extends U> fn, Executor executor)
 ```
+
+
+# 5、综合应用
+
+需求：要查找10个订单信息以及关联的商品、图片信息
+
+订单上有商品ID，通过商品ID可以查询到商品详细信息，图片信息存储在商品详细信息中。
+
+那就需要查询完订单再查询商品最后查询图片信息，这3个异步任务需要串行执行。
+
+```java
+package com.lc;
+ 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+ 
+/**
+ * @author liuchao
+ * @date 2023/4/5
+ */
+public class Test {
+ 
+    public static void main(String[] args) {
+        //10个订单号
+        List<String> orderCodeList = Arrays.asList(new String[]{"order_01", "order_02", "order_03", "order_04",
+                "order_05", "order_06", "order_07", "order_08", "order_09", "order_10"});
+ 
+        //定义线程池
+        ExecutorService threadPool = Executors.newFixedThreadPool(15);
+ 
+        try {
+            List<String> collect = orderCodeList.stream().map(o ->
+                    CompletableFuture.supplyAsync(() -> String.format("订单：%s，关联商品ID为：%s", o, ThreadLocalRandom.current().nextInt()), threadPool)
+                            .thenApplyAsync((v) -> String.format(v + ",关联图片ID为：%s", ThreadLocalRandom.current().nextInt()), threadPool)
+                            .thenApplyAsync((v) -> String.format(v + ",关联图信息获取成功"), threadPool)
+                            .exceptionally(e -> {
+                                e.printStackTrace();
+                                return null;
+                            })
+                            .join()
+            ).collect(Collectors.toList());
+ 
+            //打印结果
+            System.out.println(collect);
+        } finally {
+            //释放资源
+            threadPool.shutdown();
+        }
+ 
+    }
+}
+```
