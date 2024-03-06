@@ -83,3 +83,51 @@ CompletableFuture提供了一种观察者模式类似的机制，可以让任务
 ```java
 public class CompletableFuture<T> implements Future<T>, CompletionStage<T> {
 ```
+
+用CompletableFuture实现上述的业务场景：
+
+```java
+ 
+/**
+ * 老板开会Future实现
+ */
+public class BossMeeting {
+    public static void main(String[] args) {
+        System.out.println("老板开会start");
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        try {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                return "秘书搜集完材料";
+                //结束返回
+            }, executorService).whenComplete((v, e) -> {
+                //无异常说明 执行成功
+                if (e == null) {
+                    System.out.println("秘书搜集到的材料：" + v);
+                }
+                //异常处理
+            }).exceptionally(e -> {
+                e.printStackTrace();
+                System.out.println("执行异常：" + e.getCause());
+                return null;
+            });
+ 
+            System.out.println("老板继续开会");
+ 
+            try {
+                //模拟老板继续开会3秒钟
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("老板开会end");
+        } finally {
+            executorService.shutdown();
+        }
+    }
+}
+```
