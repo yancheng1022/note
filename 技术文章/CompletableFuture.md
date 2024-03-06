@@ -76,6 +76,10 @@ public class BossMeeting {
 }
 ```
 
+输出结果：
+老板开会start
+秘书搜集到的材料：老板需要的材料
+老板开会end
 # 3、CompletableFuture实现非阻塞式执行
 
 CompletableFuture提供了一种观察者模式类似的机制，可以让任务执行完成后通知监听的一方。
@@ -131,12 +135,15 @@ public class BossMeeting {
     }
 }
 
+
+
+```
+
+执行结果：
 老板开会start  
 老板继续开会  
 秘书搜集到的材料：秘书搜集完材料  
 老板开会end
 
-```
 
-
-如果把秘书收集材料时间延长到5000（超过开会时间），
+## 
