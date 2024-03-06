@@ -218,6 +218,15 @@ getNow：如果当前任务执行完成，返回执行结果，否则返回value
 ```java
 // 模拟 1 + 1 + 1
 CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 1).thenApply(v -> v + 1).thenApply(v -> v + 1);
-System.out.println("执行结果：" + future.getNow(-1));
+System.out.println("执行结果：" + future.getNow(-1)); //3
 ```
 
+- thenAccept() 和 thenRun()方法
+- 
+如果你不想从你的回调函数中返回任何东西，只想在 Future 完成后运行一些代码，那么你可以使用thenAccept()andthenRun()方法。这些方法是消费者Consumer< ? super T> action，通常用作回调链中的最后一个回调。
+
+```java
+// 模拟 1 + 1 + 1
+CompletableFuture.supplyAsync(() -> 1).thenApply(v -> v + 1).thenApply(v -> v + 1)
+        thenAccept(r -> System.out.println("1+1+1=" + r));
+```
