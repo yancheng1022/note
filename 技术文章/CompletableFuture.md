@@ -76,8 +76,10 @@ public class BossMeeting {
 }
 ```
 
-# 3、CompletableFuture实现
+# 3、CompletableFuture实现非阻塞式执行
 
 CompletableFuture提供了一种观察者模式类似的机制，可以让任务执行完成后通知监听的一方。
 
-首先看看CompletableFuture的类图关系，CompletableFuture实现了Future和CompletionStage接口，因此看来CompletableFuture具有Future和CompletionStage的特性。
+```java
+public class CompletableFuture<T> implements Future<T>, CompletionStage<T> {
+```
