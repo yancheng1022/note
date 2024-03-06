@@ -214,3 +214,10 @@ getNow：如果当前任务执行完成，返回执行结果，否则返回value
 ## 4.3、其它方法
 
 - thenApply()：拿到上一个异步执行的结果继续后续操作
+
+```java
+// 模拟 1 + 1 + 1
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 1).thenApply(v -> v + 1).thenApply(v -> v + 1);
+System.out.println("执行结果：" + future.getNow(-1));
+```
+
