@@ -169,10 +169,48 @@ run开头：这种不会返回结果，就只是执行线程任务。
 如果你想异步运行一些后台任务并且不想从任务中返回任何东西，那么你可以使用run开头的
 
 
-### 4.2、CompletableFuture获取返回值
+## 4.2、CompletableFuture获取返回值
 
 通过get、join、getNow获取返回值，区别如下：
 
 join：返回结果或者抛出一个unchecked异常(CompletionException)，不需要显示捕获异常。
 get：返回结果或者一个具体的异常(ExecutionException, InterruptedException)，此方法继承至Future是堵塞的。
 getNow：如果当前任务执行完成，返回执行结果，否则返回valueIfAbsent（默认值）。
+
+```java
+ 
+    /**
+     * 通过get获取方法
+     */
+    public void test1() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "get方法需要显示捕获异常");
+        try {
+            System.out.println(future.get());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+ 
+    /**
+     * join 不需要显示捕获异常
+     */
+    public void test2() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "join方法不需要显示捕获异常");
+        System.out.println(future.join());
+    }
+ 
+    /**
+     * getNow方法可以设置默认值
+     * 在有效的时间内，未返回结果，则直接返回默认值
+     */
+    public void test3() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "getNow获取返回值");
+        System.out.println(future.getNow("默认值"));
+    }
+```
+
+## 4.3、其它方法
+
+- thenApply()：拿到上一个异步执行的结果继续后续操作
