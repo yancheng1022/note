@@ -1,11 +1,19 @@
 ---
-title: 雪花算法（Snowflake）原理分析
+title: 异步非阻塞编程：CompletableFuture
+date: 2023/09/17
+categories:
+  - coding
+tags:
+  - 技术文章
+  - CompletableFuture
+  - 并发编程
 ---
 
 # 1、背景
 
 我们都知道可以通过继承Thread类或者实现Runnable接口两种方式实现多线程。但是有时候我们希望得到多线程异步任务执行后的结果，也就是异步任务执行后有返回值，Thread和Runnable是不能实现的。当我们需要返回值的时候怎么办呢？ Java 1.5 推出的Callable和Future接口就解决了这个问题。但是因为Future有几个局限，由于这几个局限，在Java1.8就推出了加强版的Future类：CompletableFuture
 
+Future用于表示异步计算的结果，只能通过阻塞或者轮询的方式获取结果，而且不支持设置回调方法，Java8之前若要设置回调一般会使用guava的ListenableFuture。 CompletableFuture对Future进行了扩展，可以通过设置回调的方式处理计算结果，同时也支持组合操作，支持进一步的编排
 
 # 2、Future使用
 
