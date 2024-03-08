@@ -93,19 +93,33 @@ ApplicationListener可以监听某个事件event。通过实现这个接口，�
 
 ## 2.2、具体使用
 
-1、自定义类，实现接口
+1、定义自己的ApplicationListener
 
 ```java
 @Component
-public class CustomeApplicationListener implements ApplicationListener<ApplicationStartedEvent> , Ordered {
+public class MyApplicationListener implements ApplicationListener<ApplicationEvent> {
     @Override
-    public void onApplicationEvent(ApplicationStartedEvent applicationStartingEvent) {
-        System.out.println("自定义监听器CustomeApplicationListener，监听springboot启动，监听EventPublishingRunListener发布的启动开始事件");
-    }
- 
-    @Override
-    public int getOrder() {
-        return 0;
+    public void onApplicationEvent(ApplicationEvent event) {
+        System.out.println(" my application listener" + event);
     }
 }
+```
+
+2、定义自己的事件
+
+```java
+public class MyApplicationEvent extends ApplicationEvent {
+    public MyApplicationEvent(Object source) {
+        super(source);
+    }
+}
+```
+
+3、发布时间
+
+```java
+	public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
+        context.publishEvent(new MyApplicationEvent(new String("event")) {});
+    }
 ```
