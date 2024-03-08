@@ -11,6 +11,14 @@
 10、redis内存淘汰策略
 11、redis哨兵模式具体搭建流程
 12、mybatis-plus如何实现分页
-13、pagehelper如果出了
+13、pagehelper如果出了想实现分页还实现排序该怎么改造
+14、mybatis insert后要返回自增主键该怎么做
+15、mqtt的基本架构和工作流程
+16、mqtt是如何保证可靠性的
+17、mqtt想实现一个订阅者订阅多个topic该怎么实现
+18、项目怎么做权限的
+19、shiro用户登录的基本流程
+
+
 
 
