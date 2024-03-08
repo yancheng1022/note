@@ -238,3 +238,45 @@ Spring Boot中的CommandLineRunner接口允许你在Spring Boot应用程序启�
 
 场景：springboot启动后将数据库某些热点数据加载到redis
 
+1、自定义类
+
+```java
+@Component
+@Slf4j
+@Order(value=1)
+public class MyStartupRunner implements CommandLineRunner {
+ 
+    @Autowired
+    ProvinceCityDistrictSerivce provinceCityDistrictSerivce;
+ 
+    @Override
+    public void run(String... args) throws Exception {
+       provinceCityDistrictSerivce.initProvinceCityDistrictDtoList();
+    }
+}
+```
+
+2、具体业务类
+
+```java
+@Service
+@Slf4j
+public class ProvinceCityDistrictServiceImpl implements ProvinceCityDistrictSerivce {
+ 
+    @Autowired
+    ProvinceCityDistrictMapper provinceCityDistrictMapper;
+    @Autowired
+    RedisService redisService;
+
+    @Override
+    public String initProvinceCityDistrictDtoList(){
+        ProvinceCityDistrict provinceCityDistrict = new ProvinceCityDistrict();
+        List<ProvinceCityDistrictDto> provinceCityDistrictDtos = provinceCityDistrictMapper.selectDtoList(provinceCityDistrict);
+        String s = JSON.toJSONString(provinceCityDistrictDtos);
+        log.info(">>>>>>>>>>开始缓存省市区信息到redis<<<<<<<<<<<");
+        redisService.set("PROVINCE_CITY_DISCTRICT_KEY",s);
+        log.info(">>>>>>>>>>缓存省市区信息到redis完毕<<<<<<<<<<<");
+        return s;
+    }
+}
+```
