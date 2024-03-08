@@ -90,18 +90,17 @@ org.springframework.boot.SpringApplicationRunListener=com.study.springbootplus.c
 
 ApplicationListener不是新东西，它属于Spring框架对Java中实现的监听者模式的一种框架实现，这里需要注意的是：对于刚接触SpringBoot，但是对于Spring框架本身又没有过多地接触的开发人员来说，可能会将这个名字与SpringApplicationRunListener弄混。
 
-ApplicationListener通过监听容器中发布的一些事件，事件发生就会触发监听器的回调，就完成了事件驱动开发。原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。spring定义了一些内置事件，当然我们也可以自定义事件
+ApplicationListener通过监听容器中发布的一些事件，事件发布就会触发监听器的回调，就完成了事件驱动开发。原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。spring定义了一些内置事件，当然我们也可以自定义事件
 
 **内置事件：**
-|序号|Spring 内置事件|描述|
-|---|---|---|
-|1|ContextRefreshedEvent|ApplicationContext 被初始化或刷新时，该事件被发布。这也可以在ConfigurableApplicationContext接口中使用 refresh() 方法来发生。此处的初始化是指：所有的Bean被成功装载，后处理Bean被检测并激活，所有Singleton Bean 被预实例化，ApplicationContext容器已就绪可用|
-|2|ContextStartedEvent|当使用 ConfigurableApplicationContext （ApplicationContext子接口）接口中的 start() 方法启动 ApplicationContext 时，该事件被发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序。|
-|3|ContextStoppedEvent|当使用 ConfigurableApplicationContext （ApplicationContext子接口）接口中的 start() 方法启动 ApplicationContext 时，该事件被发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序。|
-|4|ContextClosedEvent|当使用 ConfigurableApplicationContext 接口中的 close() 方法关闭 ApplicationContext 时，该事件被发布。一个已关闭的上下文到达生命周期末端；它不能被刷新或重启。|
-|5|RequestHandledEvent|这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务。只能应用于使用DispatcherServlet的Web应用。在使用Spring作为前端的MVC控制器时，当Spring处理用户请求结束后，系统会自动触发该事件。|
 
-
+| 序号  | Spring 内置事件           | 描述                                                                                                                                            |
+| --- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | ContextRefreshedEvent | ApplicationContext 被初始化或刷新时，该事件被发布。所有的Bean被成功装载，后处理Bean被检测并激活，所有Singleton Bean 被预实例化，ApplicationContext容器已就绪可用                                |
+| 2   | ContextStartedEvent   | 当使用 ConfigurableApplicationContext （ApplicationContext子接口）接口中的 start() 方法启动 ApplicationContext 时，该事件被发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序。 |
+| 3   | ContextStoppedEvent   | 当使用 ConfigurableApplicationContext （ApplicationContext子接口）接口中的 start() 方法启动 ApplicationContext 时，该事件被发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序。 |
+| 4   | ContextClosedEvent    | 当使用 ConfigurableApplicationContext 接口中的 close() 方法关闭 ApplicationContext 时，该事件被发布。一个已关闭的上下文到达生命周期末端；它不能被刷新或重启。                                 |
+| 5   | RequestHandledEvent   | 这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务。只能应用于使用DispatcherServlet的Web应用。在使用Spring作为前端的MVC控制器时，当Spring处理用户请求结束后，系统会自动触发该事件。                 |
 ## 2.2、自定义事件具体使用
 
 1、定义自己的ApplicationListener
@@ -134,3 +133,8 @@ public class MyApplicationEvent extends ApplicationEvent {
         context.publishEvent(new MyApplicationEvent(new String("event")) {});
     }
 ```
+
+
+使用事件模式可以将代码解耦，使得代码更加灵活和可扩展。如果直接调用处理点赞的方法，那么每次需要添加新的功能或者修改现有功能时，都需要修改这个方法，这样会导致代码的耦合度很高，难以维护和扩展。
+
+而使用事件模式，可以将点赞事件和处理点赞的方法分离开来，当有新的功能需要添加时，只需要添加一个新的事件处理器即可，不需要修改原有的代码，这样可以大大提高代码的可维护性和可扩展性。
