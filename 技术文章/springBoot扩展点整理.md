@@ -173,7 +173,10 @@ public class OrderService {
 
 比如要增加一个发邮件功能，业务代码不用动，直接增加一个邮件的Listener即可。
 
+## 2.3、和SpringApplicationRunListener的联系
 
+SpringApplicationRunListener类是SpringBoot中新增的类。ApplicationListener是spring中框架的类
+在SpringBoot（SpringApplication类）中，使用SpringApplicationRunListener来间接调用ApplicationListener，**所以**SpringApplicationRunListener就是一个ApplicationListener的代理
 # 3、ApplicationContextInitializer
 ## 3.1、基本概念
 
