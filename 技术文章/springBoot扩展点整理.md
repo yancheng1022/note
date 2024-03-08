@@ -174,3 +174,6 @@ public class OrderService {
 比如要增加一个发邮件功能，业务代码不用动，直接增加一个邮件的Listener即可。
 
 
+# 3、ApplicationContextInitializer
+
+ApplicationContextInitializer 接口用于在 Spring 容器刷新之前执行的一个回调函数，通常用于向 SpringBoot 容器中注入属性
