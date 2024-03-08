@@ -1,3 +1,12 @@
+---
+title: spring（Boot）扩展点整理
+categories:
+  - coding
+date: 2023/11/15
+tags:
+  - 技术文章
+  - springBoot
+---
 
 
 
@@ -176,7 +185,7 @@ public class OrderService {
 ## 2.3、和SpringApplicationRunListener的联系
 
 SpringApplicationRunListener类是SpringBoot中新增的类。ApplicationListener是spring中框架的类
-在SpringBoot（SpringApplication类）中，使用SpringApplicationRunListener来间接调用ApplicationListener，**所以**SpringApplicationRunListener就是一个ApplicationListener的代理
+在SpringBoot（SpringApplication类）中，使用SpringApplicationRunListener来间接调用ApplicationListener，**所以**SpringApplicationRunListener就是一个ApplicationListener的代理，算是对SpringApplication的一个扩展
 # 3、ApplicationContextInitializer
 ## 3.1、基本概念
 
