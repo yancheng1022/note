@@ -83,3 +83,9 @@ public class MyApplicationRunListener implements SpringApplicationRunListener {
 ```properties
 org.springframework.boot.SpringApplicationRunListener=com.study.springbootplus.config.MyApplicationRunListener
 ```
+
+
+# 2、ApplicationListener
+
+ApplicationListener不是新东西，它属于Spring框架对Java中实现的监听者模式的一种框架实现，这里需要注意的是：对于刚接触SpringBoot，但是对于Spring框架本身又没有过多地接触的开发人员来说，可能会将这个名字与SpringApplicationRunListener弄混。
+ApplicationListener可以监听某个事件event。通过实现这个接口，传入一个泛型事件，在run方法中就可以监听这个事件，从而做出一定的逻辑。比如在等所有bean加载完之后执行某些操作
