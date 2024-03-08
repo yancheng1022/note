@@ -103,35 +103,70 @@ ApplicationListener通过监听容器中发布的一些事件，事件发布就�
 | 5   | RequestHandledEvent   | 这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务。只能应用于使用DispatcherServlet的Web应用。在使用Spring作为前端的MVC控制器时，当Spring处理用户请求结束后，系统会自动触发该事件。                 |
 ## 2.2、自定义事件具体使用
 
-1、定义自己的ApplicationListener
+场景：下单后调用短信发送
+
+1、定义订单事件
+
+```java
+public class OrderCreateEvent extends ApplicationEvent {
+ 
+    private String orderInfo;//订单信息
+    public OrderCreateEvent(Object source,String orderInfo){
+        super(source);
+        this.orderInfo = orderInfo;
+    }
+ 
+    public String getOrderInfo() {
+        return orderInfo;
+    }
+ 
+    public void setOrderInfo(String orderInfo) {
+        this.orderInfo = orderInfo;
+    }
+}
+ 
+```
+
+
+2、定义短信发送的监听器（ApplicationListener）
 
 ```java
 @Component
-public class MyApplicationListener implements ApplicationListener<ApplicationEvent> {
+public class SmsListener implements ApplicationListener<OrderCreateEvent> {
     @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-        System.out.println(" my application listener" + event);
+    public void onApplicationEvent(OrderCreateEvent event) {
+        //. 发送短信: 调用短信服务，给手机号发送短信信息.
+        System.out.println("发送短信 - 调用短信服务，给手机号发送短信信息;订单信息："+event.getOrderInfo());
     }
 }
-```
-
-2、定义自己的事件
-
-```java
-public class MyApplicationEvent extends ApplicationEvent {
-    public MyApplicationEvent(Object source) {
-        super(source);
-    }
-}
+ 
+ 
 ```
 
 3、发布事件
 
 ```java
-	public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
-        context.publishEvent(new MyApplicationEvent(new String("event")) {});
-    }
+ 
+@Service
+public class OrderService {
+    @Autowired
+    private ApplicationContext applicationContext;
+ 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+ 
+    /**
+     * 创建订单.
+     */
+    public void createOrder(){
+        //1. 创建订单: 生成订单信息，然后保存到数据库.
+        System.out.println("创建订单 - 生成订单信息，然后保存到数据库");
+ 
+ 
+        //2. 发布事件
+        OrderCreateEvent orderCreateEvent = new OrderCreateEvent(this,"orderNo:20230815");
+        applicationEventPublisher.publishEvent(orderCreateEvent);//也可以
+}
 ```
 
 
