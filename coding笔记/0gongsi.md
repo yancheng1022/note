@@ -1,2 +1,4 @@
 
-1、
+1、SpringBoot相比于Spring的优势
+2、springboot提供了哪些启动扩展点
+3、springboot与dubbo的spi机制有什么不同
