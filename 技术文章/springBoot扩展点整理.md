@@ -5,7 +5,9 @@ SpringBoot的主要功能都是依靠它内部很多的扩展点来完成的，�
 
 # 1、SpringApplicationRunListener
 
-从命名我们就可以知道它是一个监听者，分析springboot启动流程我们会发现，它其实是用来在整个启动流程中接收不同执行点事件通知的监听者，SpringApplicationRunListener接口规定了SpringBoot的生命周期，在各个生命周期广播相应的事件，调用实际的ApplicationListener类
+## 1.1、作用
+
+从命名我们就可以知道它是一个监听者，分析springboot启动流程我们会发现，它其实是用来在整个启动流程中接收不同执行点事件通知的监听者，SpringApplicationRunListener接口规定了SpringBoot的生命周期，在各个生命周期广播相应的事件，调用实际的ApplicationListener类。对于开发者来说，基本没有什么常见的场景要求我们必须实现一个自定义的SpringApplicationRunListener
 
 ```java
 public interface SpringApplicationRunListener {
@@ -22,3 +24,58 @@ public interface SpringApplicationRunListener {
 }
 
 ```
+
+## 1.2、具体使用
+
+1、新建类实现SpringApplicationRunListener,需要构造方法,里面两个参数SpringApplication sa, String[] args;
+
+```java
+
+public class MyApplicationRunListener implements SpringApplicationRunListener {
+
+  private final SpringApplication application;
+  private final String[] args;
+
+  public MyApplicationRunListener(SpringApplication sa, String[] args) {
+    this.application = sa;
+    this.args = args;
+  }
+
+  @Override
+  public void starting() {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的starting方法...");
+  }
+
+  @Override
+  public void environmentPrepared(ConfigurableEnvironment environment) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的environmentPrepared方法...");
+  }
+
+  @Override
+  public void contextPrepared(ConfigurableApplicationContext context) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的contextPrepared方法...");
+  }
+
+  @Override
+  public void contextLoaded(ConfigurableApplicationContext context) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的contextLoaded方法...");
+  }
+
+  @Override
+  public void running(ConfigurableApplicationContext context) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的running方法...");
+  }
+
+  @Override
+  public void failed(ConfigurableApplicationContext context, Throwable exception) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的failed方法...");
+  }
+
+  @Override
+  public void started(ConfigurableApplicationContext context) {
+    System.out.println("服务启动RunnerTest  SpringApplicationRunListener的started方法...");
+  }
+}
+```
+
+在resources下新建META-INF\spring.factories文件,文件里面将新建的实现类的类路径配置进去:
