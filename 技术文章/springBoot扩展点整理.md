@@ -175,8 +175,13 @@ public class OrderService {
 
 
 # 3、ApplicationContextInitializer
+## 3.1、基本概念
 
 ApplicationContextInitializer 接口用于在 Spring 容器刷新之前执行的一个回调函数，通常用于向 SpringBoot 容器中注入属性
+
+## 3.2、具体使用
+
+1、自定义ApplicationContextInitializer接口实现
 
 ```java
 @Slf4j
@@ -199,4 +204,26 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
         log.info("MyApplicationContextInitializer initialize");
     }
 }
+```
+
+2、SpringApplicaiton启动类
+
+```java
+@Slf4j
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+
+        // 初始化SpringApplication
+        SpringApplication application = new SpringApplication(Application.class);
+        
+        // 添加初始化器
+        application.addInitializers(new MyApplicationContextInitializer());
+        application.addInitializers(new OtherApplicationContextInitializer());
+
+        // 启动SpringApplication
+        application.run(args);
+    }
+
 ```
