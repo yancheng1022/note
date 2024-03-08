@@ -139,8 +139,6 @@ public class SmsListener implements ApplicationListener<OrderCreateEvent> {
         System.out.println("发送短信 - 调用短信服务，给手机号发送短信信息;订单信息："+event.getOrderInfo());
     }
 }
- 
- 
 ```
 
 3、发布事件
