@@ -93,20 +93,13 @@ ApplicationListener不是新东西，它属于Spring框架对Java中实现的监
 ApplicationListener通过监听容器中发布的一些事件，事件发生就会触发监听器的回调，就完成了事件驱动开发。原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。spring定义了一些内置事件，当然我们也可以自定义事件
 
 **内置事件：**
-1、ContextRefreshedEvent
-ApplicationContext 被初始化或刷新时，该事件被发布。此处的初始化是指：所有的Bean被成功装载，后处理Bean被检测并激活，所有Singleton Bean 被预实例化，ApplicationContext容器已就绪可用
+- ApplicationStartingEvent：在Spring最开始启动的时候触发
+- ApplicationEnvironmentPreparedEvent：在Spring已经准备好上下文但是上下文尚未创建的时候触发,可加载一些属性
+- ApplicationPreparedEvent：在Bean定义加载之后、刷新上下文之前触发
+- ApplicationStartedEvent：在刷新上下文之后、调用application命令之前触发
+- ApplicationReadyEvent：在调用applicaiton命令之后触发
+- ApplicationFailedEvent：在启动Spring发生异常时触发
 
-2、ContextStartedEvent
-当使用 ConfigurableApplicationContext （ApplicationContext子接口）接口中的 start() 方法启动 ApplicationContext 时，该事件被发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序
-
-3、ContextStoppedEvent
-当使用 ConfigurableApplicationContext 接口中的 stop() 停止 ApplicationContext 时，发布这个事件。你可以在接受到这个事件后做必要的清理的工作
-
-4、ContextClosedEvent
-当使用 ConfigurableApplicationContext 接口中的 close() 方法关闭 ApplicationContext 时，该事件被发布。一个已关闭的上下文到达生命周期末端；它不能被刷新或重启
-
-5、RequestHandledEvent
-这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务。只能应用于使用DispatcherServlet的Web应用。在使用Spring作为前端的MVC控制器时，当Spring处理用户请求结束后，系统会自动触发该事件
 
 ## 2.2、自定义事件具体使用
 
