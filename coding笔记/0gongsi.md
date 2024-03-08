@@ -18,6 +18,8 @@
 17、mqtt想实现一个订阅者订阅多个topic该怎么实现
 18、项目怎么做权限的
 19、shiro用户登录的基本流程
+20、beanFactory和FactoryBean
+
 
 
 
