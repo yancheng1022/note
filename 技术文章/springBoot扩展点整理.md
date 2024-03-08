@@ -78,4 +78,8 @@ public class MyApplicationRunListener implements SpringApplicationRunListener {
 }
 ```
 
-在resources下新建META-INF\spring.factories文件,文件里面将新建的实现类的类路径配置进去:
+2、在resources下新建META-INF\spring.factories文件,文件里面将新建的实现类的类路径配置进去:
+
+```properties
+org.springframework.boot.SpringApplicationRunListener=com.study.springbootplus.config.MyApplicationRunListener
+```

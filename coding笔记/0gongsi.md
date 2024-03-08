@@ -19,6 +19,8 @@
 18、项目怎么做权限的
 19、shiro用户登录的基本流程
 20、beanFactory和FactoryBean
+21、自己实现一个ioc容器
+
 
 
 
