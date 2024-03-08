@@ -177,3 +177,26 @@ public class OrderService {
 # 3、ApplicationContextInitializer
 
 ApplicationContextInitializer 接口用于在 Spring 容器刷新之前执行的一个回调函数，通常用于向 SpringBoot 容器中注入属性
+
+```java
+@Slf4j
+@Order(2)
+public class MyApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+        // 声明要添加的属性
+        Map<String, Object> mysqlMap = new HashMap<>();
+        mysqlMap.put("mysql-host", "127.0.0.1");
+        // 将属性添加到Application Context中
+        applicationContext.getEnvironment().getPropertySources()
+                .addLast(new MapPropertySource("mysqlMap", mysqlMap));
+
+        // 添加要激活的配置文件
+        ConfigurableEnvironment environment = applicationContext.getEnvironment();
+        environment.addActiveProfile("extend");
+        ConfigDataEnvironmentPostProcessor.applyTo(environment);
+        log.info("MyApplicationContextInitializer initialize");
+    }
+}
+```
