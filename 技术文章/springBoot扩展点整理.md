@@ -230,4 +230,11 @@ public class Application {
 
 # 4、CommandLineRunner
 
-## 4.1、
+## 4.1、基本概念
+
+Spring Boot中的CommandLineRunner接口允许你在Spring Boot应用程序启动后执行一些代码。通过实现CommandLineRunner接口，你可以编写自定义的CommandLineRunner实现类，以在应用程序启动时执行特定的操作
+
+## 4.2、具体使用
+
+场景：springboot启动后将数据库某些热点数据加载到redis
+
