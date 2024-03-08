@@ -90,7 +90,7 @@ org.springframework.boot.SpringApplicationRunListener=com.study.springbootplus.c
 
 ApplicationListener不是新东西，它属于Spring框架对Java中实现的监听者模式的一种框架实现，这里需要注意的是：对于刚接触SpringBoot，但是对于Spring框架本身又没有过多地接触的开发人员来说，可能会将这个名字与SpringApplicationRunListener弄混。
 
-ApplicationListener通过监听容器中发布的一些事件，事件发生就会触发监听器的回调，就完成了事件驱动开发。spring定义了一些内置事件，当然我们也可以自定义事件
+ApplicationListener通过监听容器中发布的一些事件，事件发生就会触发监听器的回调，就完成了事件驱动开发。原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。spring定义了一些内置事件，当然我们也可以自定义事件
 
 **内置事件：**
 1、ContextRefreshedEvent
