@@ -146,7 +146,6 @@ public class SmsListener implements ApplicationListener<OrderCreateEvent> {
 3、发布事件
 
 ```java
- 
 @Service
 public class OrderService {
     @Autowired
