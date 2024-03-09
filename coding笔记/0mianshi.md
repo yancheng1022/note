@@ -608,6 +608,11 @@ deploy：依次执行clean compile package，并上传到远程仓库
 
 ## 3.21、实现异常统一处理
 
+## 3.22、springBoot的优势
+
+spirngBoot主要目标是简化 Spring 应用的初始搭建以及开发过程
+1、开箱即用
+
 
 # 4、mybatis
 
