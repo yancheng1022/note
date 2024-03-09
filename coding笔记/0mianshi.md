@@ -612,6 +612,8 @@ deploy：依次执行clean compile package，并上传到远程仓库
 
 spirngBoot主要目标是简化 Spring 应用的初始搭建以及开发过程
 1、开箱即用
+2、自动配置
+3、依赖管理 stater
 
 
 # 4、mybatis
