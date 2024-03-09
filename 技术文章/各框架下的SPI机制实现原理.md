@@ -102,14 +102,158 @@ serviceLoader 只能通过遍历的方式将接口的实现类全部获取、加
 
 # 3、Spring SPI
 
+## 3.1、概念
+
 与 JDK SPI 类似， 相对于 Java 的 SPI 的优势在于：  
 Spring SPI 指定配置文件为 classpath 下的 META-INF/spring.factories，所有的拓展点配置放到一个文件中。  
 配置文件内容为 key-value 类型，key 为接口的全限定名， value 为 实现类的全限定名，可以为多个。
 
+> 值得一提的是，loadFactoryNames方法不仅加载当前资源目录META-INF下的spring.factories文件，还会导入项目中引入jar包的META-INF/spring.factories文件
 
 
+## 3.2、spring SPI引入mybatis流程
 
+mybatis不集成springBoot时使用方法：
 
+```java
+InputStream xml = Resources.getResourceAsStream("mybatis-config.xml");
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xml);
+SqlSession sqlSession = sqlSessionFactory.openSession();
 
+PersonDao personDao = sqlSession.getMapper(PersonDao.class);
+List<Person> all = personDao.findAll();
+```
 
+mybatis在不集成springboot时，需要mybatis-config.xml配置文件，而且需要手动调用SqlSessionFactoryBuilder()的build()方法解析配置文件并生成SqlSessionFactory。
+
+springBoot自动配置如何实现注入：
+
+1、在springboot中，mybatis引用的jar包
+
+```xml
+ <dependency>
+     <groupId>org.mybatis.spring.boot</groupId>
+     <artifactId>mybatis-spring-boot-starter</artifactId>
+     <version>2.1.3</version>
+</dependency>
+
+```
+
+2、导入后发现这个依赖其实就是帮助我们导入了mybatis需要的依赖，其中和自动配置相关最重要的一个就是mybatis-spring-boot-autoconfigure
+
+```xml
+<dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+    </dependency>
+  </dependencies>
+
+```
+
+3、通过spring SPI加载了自动配置类 MybatisAutoConfiguration
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403082339214.png)
+
+4、通过@Condition，确保有sqlSessionFactory类和spring容器中有数据源实例
+
+```java
+@org.springframework.context.annotation.Configuration
+@ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
+@ConditionalOnSingleCandidate(DataSource.class)
+@EnableConfigurationProperties(MybatisProperties.class)
+@AutoConfigureAfter({ DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class })
+public class MybatisAutoConfiguration implements InitializingBean {
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+    factory.setDataSource(dataSource);
+    factory.setVfs(SpringBootVFS.class);
+    if (StringUtils.hasText(this.properties.getConfigLocation())) {
+      factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
+    }
+    applyConfiguration(factory);
+	
+    // ... 省略部分代码   
+
+	// 通过SqlSessionFactoryBean 注入 SqlSessionFactory
+    return factory.getObject();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+    ExecutorType executorType = this.properties.getExecutorType();
+    // ...注入SqlSessionTemplate
+    if (executorType != null) {
+      return new SqlSessionTemplate(sqlSessionFactory, executorType);
+    } else {
+      return new SqlSessionTemplate(sqlSessionFactory);
+    }
+  }
+
+```
+
+5、到这里也就知道了MyBatis自动配置其实就是替我们完成了SqlSessionFactory和SqlSessionTempate的创建, 省去了自己导入相关依赖和配置相关Bean的麻烦.
+
+# 4、Dubbo SPI
+## 4.1、基本概念
+
+dubbo的 Filter、Protocol、Cluster、LoadBalance 等都是通过 SPI 的方式进行拓展加载的。但它没有使用jdk的spi机制，而是自己实现了一套ExetensionLoader
+
+相Dubbo的SPI机制可直接通过Key获取我们想要的对象实例，比原生的Java SPI更有优势，除此之外，Dubbo在设计中还用到了大量的全局缓存，提高了我们实例化对象的效率，同时还支持通过注解默认实现，AOP,IOC等功能
+
+## 4.2、demo
+
+1、测试方法
+
+```java
+@Slf4j
+public class Main {
+    public static void main(String[] args) {
+        log.info("这是Dubbo的SPI机制");
+        Animal cat = ExtensionLoader.getExtensionLoader(Animal.class)
+                .getExtension("cat");
+        Animal dog = ExtensionLoader.getExtensionLoader(Animal.class)
+                .getExtension("dog");
+        cat.call();
+        dog.call();
+ 
+    }
+}
+ 
+```
+
+2、配置文件
+
+```
+cat=cuit.epoch.pymjl.spi.impl.Cat
+dog=cuit.epoch.pymjl.spi.impl.Dog
+```
+
+# 5、JDK SPI 、spring spi、dubbo spi 的比较
+
+JDK SPI: 每个扩展点单独一个文件;只能通过ServiceLoader的迭代器遍历获取扩展实现类，同时也会加载所有实现类，这样就会把用不到的类也会进行实例化，浪费一定资源；是java自带实现，不需要引入第三方依赖可直接使用．
+
+spring spi: spring指定配置文件为classpath下的META-INF/spring.factories, 所有的扩展点配置都放到这个文件中．配置文件内容为key=value的形式，key为接口的全限定名，value为实现类的全限定名，可以为多个．
+
+dubbo spi:每个扩展点一个配置文件，文件名为接口的全限定名．支持别名的概念，可以通过别名获取某个具体扩展点的实现．配置文件的内容为key=value形式，key是别名，value是实现类的全限定名．
 
