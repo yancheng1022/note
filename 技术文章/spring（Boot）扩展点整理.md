@@ -10,7 +10,7 @@ tags:
 
 
 
-SpringBoot的主要功能都是依靠它内部很多的扩展点来完成的，今天来做个总结和记录
+SpringBoot的主要功能都是依靠它内部很多的扩展点来完成的，今天来做个总结和记录。
 
 # 1、SpringApplicationRunListener
 
