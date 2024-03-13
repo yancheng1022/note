@@ -227,6 +227,8 @@ public class MyAnnotationConfigApplicationContext {
 # 4、工具类(MyTools)
 
 - getClasses:根据包名获取该包下
+- findClassesInPackageByFile：以文件的方式扫描整个包下的文件 并添加到集合中
+- 
 
 ```java
 public class MyTools {
