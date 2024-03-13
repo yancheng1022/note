@@ -65,6 +65,7 @@ public @interface myValue {
 存放class和className
 
 ```java
+@Data
 public class MyBeanDefinition {
     private String BeanName;
     private Class beanClass;
@@ -75,22 +76,6 @@ public class MyBeanDefinition {
                 "BeanName='" + BeanName + '\'' +
                 ", beanClass=" + beanClass +
                 '}';
-    }
-
-    public String getBeanName() {
-        return BeanName;
-    }
-
-    public void setBeanName(String beanName) {
-        BeanName = beanName;
-    }
-
-    public Class getBeanClass() {
-        return beanClass;
-    }
-
-    public void setBeanClass(Class beanClass) {
-        this.beanClass = beanClass;
     }
 
     public MyBeanDefinition(String beanName, Class beanClass) {
