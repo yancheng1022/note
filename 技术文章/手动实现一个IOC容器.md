@@ -102,6 +102,31 @@ public class MyAnnotationConfigApplicationContext {
         autowireObject(beanDefinitions);
     }
 
+	public Set<BeanDefinition> findBeanDefinitions(String pack){
+        //1、获取包下的所有类
+        Set<Class<?>> classes = MyTools.getClasses(pack);
+        Iterator<Class<?>> iterator = classes.iterator();
+        Set<BeanDefinition> beanDefinitions = new HashSet<>();
+        while (iterator.hasNext()) {
+            //2、遍历这些类，找到添加了注解的类
+            Class<?> clazz = iterator.next();
+            Component componentAnnotation = clazz.getAnnotation(Component.class);
+            if(componentAnnotation!=null){
+                //获取Component注解的值
+                String beanName = componentAnnotation.value();
+                if("".equals(beanName)){
+                    //获取类名首字母小写
+                    String className = clazz.getName().replaceAll(clazz.getPackage().getName() + ".", "");
+                    beanName = className.substring(0, 1).toLowerCase()+className.substring(1);
+                }
+                //3、将这些类封装成BeanDefinition，装载到集合中
+                beanDefinitions.add(new BeanDefinition(beanName, clazz));
+                beanNames.add(beanName);
+            }
+        }
+        return beanDefinitions;
+    }
+
     public void autowireObject(Set<BeanDefinition> beanDefinitions){
         Iterator<BeanDefinition> iterator = beanDefinitions.iterator();
         while (iterator.hasNext()) {
@@ -195,31 +220,6 @@ public class MyAnnotationConfigApplicationContext {
                 e.printStackTrace();
             }
         }
-    }
-
-    public Set<BeanDefinition> findBeanDefinitions(String pack){
-        //1、获取包下的所有类
-        Set<Class<?>> classes = MyTools.getClasses(pack);
-        Iterator<Class<?>> iterator = classes.iterator();
-        Set<BeanDefinition> beanDefinitions = new HashSet<>();
-        while (iterator.hasNext()) {
-            //2、遍历这些类，找到添加了注解的类
-            Class<?> clazz = iterator.next();
-            Component componentAnnotation = clazz.getAnnotation(Component.class);
-            if(componentAnnotation!=null){
-                //获取Component注解的值
-                String beanName = componentAnnotation.value();
-                if("".equals(beanName)){
-                    //获取类名首字母小写
-                    String className = clazz.getName().replaceAll(clazz.getPackage().getName() + ".", "");
-                    beanName = className.substring(0, 1).toLowerCase()+className.substring(1);
-                }
-                //3、将这些类封装成BeanDefinition，装载到集合中
-                beanDefinitions.add(new BeanDefinition(beanName, clazz));
-                beanNames.add(beanName);
-            }
-        }
-        return beanDefinitions;
     }
 }
 ```
