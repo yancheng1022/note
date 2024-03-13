@@ -127,54 +127,7 @@ public class MyAnnotationConfigApplicationContext {
         return beanDefinitions;
     }
 
-    public void autowireObject(Set<BeanDefinition> beanDefinitions){
-        Iterator<BeanDefinition> iterator = beanDefinitions.iterator();
-        while (iterator.hasNext()) {
-            BeanDefinition beanDefinition = iterator.next();
-            Class clazz = beanDefinition.getBeanClass();
-            Field[] declaredFields = clazz.getDeclaredFields();
-            for (Field declaredField : declaredFields) {
-                Autowired annotation = declaredField.getAnnotation(Autowired.class);
-                if(annotation!=null){
-                    Qualifier qualifier = declaredField.getAnnotation(Qualifier.class);
-                    if(qualifier!=null){
-                        //byName
-                        try {
-                            String beanName = qualifier.value();
-                            Object bean = getBean(beanName);
-                            String fieldName = declaredField.getName();
-                            String methodName = "set"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
-                            Method method = clazz.getMethod(methodName, declaredField.getType());
-                            Object object = getBean(beanDefinition.getBeanName());
-                            method.invoke(object, bean);
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
-                        //byType
-                    }
-                }
-            }
-        }
-    }
-
-    public Object getBean(String beanName){
-        return ioc.get(beanName);
-    }
-
-    public String[] getBeanDefinitionNames(){
-        return beanNames.toArray(new String[0]);
-    }
-
-    public Integer getBeanDefinitionCount(){
-        return beanNames.size();
-    }
-
-    public void createObject(Set<BeanDefinition> beanDefinitions){
+	public void createObject(Set<BeanDefinition> beanDefinitions){
         Iterator<BeanDefinition> iterator = beanDefinitions.iterator();
         while (iterator.hasNext()) {
             BeanDefinition beanDefinition = iterator.next();
@@ -220,6 +173,53 @@ public class MyAnnotationConfigApplicationContext {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void autowireObject(Set<BeanDefinition> beanDefinitions){
+        Iterator<BeanDefinition> iterator = beanDefinitions.iterator();
+        while (iterator.hasNext()) {
+            BeanDefinition beanDefinition = iterator.next();
+            Class clazz = beanDefinition.getBeanClass();
+            Field[] declaredFields = clazz.getDeclaredFields();
+            for (Field declaredField : declaredFields) {
+                Autowired annotation = declaredField.getAnnotation(Autowired.class);
+                if(annotation!=null){
+                    Qualifier qualifier = declaredField.getAnnotation(Qualifier.class);
+                    if(qualifier!=null){
+                        //byName
+                        try {
+                            String beanName = qualifier.value();
+                            Object bean = getBean(beanName);
+                            String fieldName = declaredField.getName();
+                            String methodName = "set"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
+                            Method method = clazz.getMethod(methodName, declaredField.getType());
+                            Object object = getBean(beanDefinition.getBeanName());
+                            method.invoke(object, bean);
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        //byType
+                    }
+                }
+            }
+        }
+    }
+
+    public Object getBean(String beanName){
+        return ioc.get(beanName);
+    }
+
+    public String[] getBeanDefinitionNames(){
+        return beanNames.toArray(new String[0]);
+    }
+
+    public Integer getBeanDefinitionCount(){
+        return beanNames.size();
     }
 }
 ```
