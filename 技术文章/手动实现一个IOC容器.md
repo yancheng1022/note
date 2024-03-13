@@ -361,3 +361,39 @@ public class MyTools {
 
 }
 ```
+
+
+# 5、测试方法
+
+```java
+public class run {
+    public static void main(String[] args) {
+        MyAnnotationConfigApplicationContext myAnnotationConfigApplicationContext = new MyAnnotationConfigApplicationContext("myioc.test");
+        Object student = myAnnotationConfigApplicationContext.getBean("student");
+        System.out.println(student.toString());
+        Object at = myAnnotationConfigApplicationContext.getBean("at");
+        At a=(At)at;
+        System.out.println("================");
+        System.out.println(a.student.toString());
+    }
+}
+
+@myComponent()
+@Data
+public class At {
+  @myAutowired
+  @myQualifier("student")
+  public Student student;
+}
+
+
+@myComponent()
+@Data
+public class Student {
+    @myValue("张三")
+    String name;
+    @myValue("25")
+    Integer age;
+}
+```
+
