@@ -87,6 +87,10 @@ public class MyBeanDefinition {
 
 # 3、MyAnnotationConfigApplicationContext
 
+- 遍历包，找到目标类(原材料)，封装成BeanDefinition
+- 根据BeanDefinition创建Bean
+- 自动装载
+
 ```java
 public class MyAnnotationConfigApplicationContext {
 
@@ -94,7 +98,7 @@ public class MyAnnotationConfigApplicationContext {
     private List<String> beanNames = new ArrayList<>();
 
     public MyAnnotationConfigApplicationContext(String pack) {
-        //遍历包，找到目标类(原材料)
+        //遍历包，找到目标类(原材料)，封装成BeanDefinition
         Set<BeanDefinition> beanDefinitions = findBeanDefinitions(pack);
         //根据原材料创建bean
         createObject(beanDefinitions);
