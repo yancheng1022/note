@@ -13,6 +13,8 @@
 
 ## 1.1、@myAutowired
 
+自动byType注入
+
 ```java
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -23,3 +25,77 @@ public @interface myAutowired {
 
 ## 1.2、@myComponent
 
+标记该类让他被我写的ioc管理
+
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface myComponent {
+String value() default "";
+}
+```
+
+## 1.3、@myQualifier
+
+是根据value去注入
+
+```java
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface myQualifier {
+    String value();
+}
+```
+
+## 1.4、@myValue
+
+@myValue是根据value的值给实例化对象赋值
+
+```java
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface myValue {
+    String value();
+}
+```
+
+
+# 2、MyBeanDefinition
+
+存放class和className
+
+```java
+public class MyBeanDefinition {
+    private String BeanName;
+    private Class beanClass;
+
+    @Override
+    public String toString() {
+        return "MyBeanDefinition{" +
+                "BeanName='" + BeanName + '\'' +
+                ", beanClass=" + beanClass +
+                '}';
+    }
+
+    public String getBeanName() {
+        return BeanName;
+    }
+
+    public void setBeanName(String beanName) {
+        BeanName = beanName;
+    }
+
+    public Class getBeanClass() {
+        return beanClass;
+    }
+
+    public void setBeanClass(Class beanClass) {
+        this.beanClass = beanClass;
+    }
+
+    public MyBeanDefinition(String beanName, Class beanClass) {
+        BeanName = beanName;
+        this.beanClass = beanClass;
+    }
+}
+```
