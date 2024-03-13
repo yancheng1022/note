@@ -84,3 +84,9 @@ public class MyBeanDefinition {
     }
 }
 ```
+
+# 3、MyAnnotationConfigApplicationContext
+
+```java
+
+```
