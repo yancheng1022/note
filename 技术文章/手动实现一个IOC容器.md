@@ -8,6 +8,7 @@
 | MyApplicationContext | 该类是一个简单的 IoC 容器实现，主要实现了对象的创建（@MyComponent）和注入（@MyAutowired） |
 | @MyComponent         | 该注解用于标记需要被 IoC 容器所管理的类，被标记的类会自动被扫描并加入到 IoC 容器中进行管理          |
 | @MyAutowired         | 该注解用于标记需要进行依赖注入的属性，被标记的属性会自动被 IoC 容器所管理的对象所注入               |
+| MyBeanDefinition     | 定义 Bean 的配置元信息接口                                            |
 
 # 1、定义注解
 
@@ -64,7 +65,7 @@ public @interface myValue {
 
 # 2、MyBeanDefinition
 
-存放class和className
+存放class和className，spring实现中还有作用域、自动绑定模式、生命周期回调、延迟加载、初始方法、销毁方法等。这里不一一实现
 
 ```java
 @Data
