@@ -96,7 +96,7 @@ grep keyword file.txt >> result.txt
 cat 文件的路径:cat有直接打开一个文件的功能
 cat 待合并的文件路径1 待合并的文件路径2... > 合并之后的文件路径:合并若干个文件并存到一个文件中，配合输出重定向使用
 
-
+## 3.2、进阶指令
 # 4、Linux权限管理
 
 Linux系统一般将文件可存/取访问的身份分为3个类别:owner、group、others，且3种身份各有read、write、execute等权限。
@@ -136,7 +136,7 @@ chmod a=rwx 1.txt
 ```
 
 
-## 4.3、属主与属租设置
+## 4.3、属主与属组设置
 
 chown -R username 文档路径:更改文档的所属用户
 chgrp -R groupname 文档的路径:更改文档所属的用户组
