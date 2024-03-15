@@ -146,6 +146,11 @@ clear:清除终端中已经存在的命令和结果(信息)
 >按下ctrl+L指令，也能达到同样的效果
 
 
+## 3.3、高阶指令
+
+
+
+
 # 4、Linux权限管理
 
 Linux系统一般将文件可存/取访问的身份分为3个类别:owner、group、others，且3种身份各有read、write、execute等权限。
