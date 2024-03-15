@@ -248,7 +248,10 @@ netstat -tnlp:查看网络的连接状态
  -p 显示建立相关链接的程序名
 
 ```shell
+# 查看服务
 netstat -antp | grep ssh
+# 查看端口
+netstat -antp | grep 22
 ```
 
 **17、man**
@@ -299,3 +302,10 @@ chmod a=rwx 1.txt
 chown -R username 文档路径:更改文档的所属用户
 chgrp -R groupname 文档的路径:更改文档所属的用户组
 chown -R username:groupname 文档路径:更改所属的用户以及用户组
+
+
+# 5、vi编辑器
+
+## 5.1、vim三种模式
+
+命令模式
