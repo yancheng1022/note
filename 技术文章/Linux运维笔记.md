@@ -131,8 +131,8 @@ drwxr-x---
 chmod u-w 1.txt
 # 设置所有者读写执行权限，所属组读和执行权限，其它没有任何权限
 chmod 750 1.txt
-# 设置
-chmod a=rwx file
+# 设置所有用户读写执行权限
+chmod a=rwx 1.txt
 ```
 
 
