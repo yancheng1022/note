@@ -247,6 +247,10 @@ netstat -tnlp:查看网络的连接状态
  -l 仅列出有在 Listen (监听) 的服务状态
  -p 显示建立相关链接的程序名
 
+```shell
+netstat -antp | grep ssh
+```
+
 **17、man**
 
 man 命令:手册
