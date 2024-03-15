@@ -106,6 +106,11 @@ cat 待合并的文件路径1 待合并的文件路径2... > 合并之后的文�
 
 free -m：表示以Mb为单位查看剩余内存
 
+3、head
+
+head -n 文件路径:查看一个文件的前n行，默认n为10
+
+
 # 4、Linux权限管理
 
 Linux系统一般将文件可存/取访问的身份分为3个类别:owner、group、others，且3种身份各有read、write、execute等权限。
