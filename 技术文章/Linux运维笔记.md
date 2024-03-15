@@ -200,30 +200,24 @@ find 路径范围 选项 选项的值:用于查找文件
 -type:按照文档的类型进行搜索
 文档类型:“-”表示文件(用“f”来代替)，“d”表示文件夹
 
-
-
 **9、service**
 
 service 服务名 start/stop/restart:用于控制一些软件的服务启动/停止/重启
-
 
 **10、kill**
 
 kill 进程PID:杀死进程
 kill all 进程名称:与kill相似
 
-
 **11、ifconfig**
 
 ifconfig:获取网卡信息
 inet addr就是网卡的IP地址
 
-
 **12、reboot**
 
 reboot:重新启动计算机
 reboot -w:模拟重启(实际不重启)
-
 
 **13、shutdown**
 
@@ -249,8 +243,6 @@ netstat -tnlp:查看网络的连接状态
 **17、man**
 
 man 命令:手册
-
-
 
 # 4、Linux权限管理
 
