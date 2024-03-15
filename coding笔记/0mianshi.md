@@ -2404,6 +2404,23 @@ select  id,name,balance FROM account where id > 100000 limit 10;
 select  acct1.id,acct1.name,acct1.balance FROM account acct1 INNER JOIN (SELECT a.id FROM account a WHERE a.create_time > '2020-09-19' limit 100000, 10) AS acct2 on acct1.id= acct2.id;
 
 优化思路就是，先通过`idx_create_time`二级索引树查询到满足条件的`主键ID`，再与原表通过`主键ID`内连接，这样后面直接走了主键索引了，同时也减少了回表。
+
+
+## 7.22、in和exist的区别
+
+```sql
+select    *      from   a     where    id    in  （select  id  from  b） ;    
+select    *      from   a     where    id    exists  （select  id  from  b） ;   
+``` 
+
+使用in ,sql语句是先执行子查询，也就是先查询b表，再查a表，而使用exists是先查主表a ,再查字表b; 
+
+对于主表数据较多时，我们使用in速度比exist更快，反之，从表b较大时，使用exist插叙速度更快（都会使用索引）,
+
+   如果使用的是not in与not exists，直接使用not exists，因为not in 会进行全表扫描
+
+不走索引，not exists会走索引。 
+
 # 8、mq
 
 ## 8.1、rabbitmq如何保证可靠性
