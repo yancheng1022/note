@@ -199,18 +199,33 @@ find 路径范围 选项 选项的值:用于查找文件
 -name:按照文档名称进行搜索
 -type:按照文档的类型进行搜索
 文档类型:“-”表示文件(用“f”来代替)，“d”表示文件夹
-service指令(重点)
+
+
+
+**9、service**
+
 service 服务名 start/stop/restart:用于控制一些软件的服务启动/停止/重启
-kill指令(重点)
+
+
+**10、kill**
+
 kill 进程PID:杀死进程
 kill all 进程名称:与kill相似
-ifconfig指令(重点)
+
+
+**11、ifconfig**
+
 ifconfig:获取网卡信息
 inet addr就是网卡的IP地址
-reboot指令
+
+
+**12、reboot**
+
 reboot:重新启动计算机
 reboot -w:模拟重启(实际不重启)
-shutdown指令(重要)
+
+
+**13、shutdown**
 shutdown -h now "关机提示"或者shutdown -h 指定时间 "关机提示":关机
 取消关机:
 centos7.x之前的版本:Ctrl+c
