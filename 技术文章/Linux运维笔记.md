@@ -133,7 +133,13 @@ date +%F:输出形式为yyyy-MM-dd
 date +"%F %T":引号表示年月日与时分秒成为一个整体，输出形式 yyyy-MM-dd HH:mm:ss
 date -d "-1 day":获取之前或者之后的某个时间(备份)
 
+**8、cal指令**
 
+
+
+#### clear/按下ctrl+L指令
+
+- `clear`:清除终端中已经存在的命令和结果(信息)
 
 
 # 4、Linux权限管理
