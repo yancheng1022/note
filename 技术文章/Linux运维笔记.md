@@ -226,20 +226,28 @@ reboot -w:模拟重启(实际不重启)
 
 
 **13、shutdown**
+
 shutdown -h now "关机提示"或者shutdown -h 指定时间 "关机提示":关机
+
 取消关机:
 centos7.x之前的版本:Ctrl+c
 centos7.x之后的版本 shutdown -c
 
-uptime指令
+**14、uptime**
+
 uptime:输出计算机从开机到现在的时间
-uname指令
+
+**15、uname**
+
 uname:获取操作系统的类型
 uname -a:获取全部的系统信息(类型、全部主机名、内核版本、发布时间、开源计划)
-netstat -tnlp指令
+
+**16、netstat**
+
 netstat -tnlp:查看网络的连接状态
 
-man指令
+**17、man**
+
 man 命令:手册
 
 
