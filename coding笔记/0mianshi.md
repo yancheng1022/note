@@ -2417,9 +2417,7 @@ select    *      from   a     where    id    exists  （select  id  from  b） ;
 
 对于主表数据较多时，我们使用in速度比exist更快，反之，从表b较大时，使用exist插叙速度更快（都会使用索引）,
 
-   如果使用的是not in与not exists，直接使用not exists，因为not in 会进行全表扫描
-
-不走索引，not exists会走索引。 
+如果使用的是not in与not exists，直接使用not exists，因为not in 会进行全表扫描不走索引，not exists会走索引。 
 
 # 8、mq
 
