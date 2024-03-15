@@ -133,9 +133,11 @@ date +%F:输出形式为yyyy-MM-dd
 date +"%F %T":引号表示年月日与时分秒成为一个整体，输出形式 yyyy-MM-dd HH:mm:ss
 date -d "-1 day":获取之前或者之后的某个时间(备份)
 
-**8、cal指令**
+**8、cal**
 
-
+cal:直接输出当前月份的日历
+cal -3:输出上月、本月、下月的日历
+cal -y 年份:输出整年的月份
 
 #### clear/按下ctrl+L指令
 
