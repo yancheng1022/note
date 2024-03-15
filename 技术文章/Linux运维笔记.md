@@ -136,4 +136,8 @@ chmod a=rwx 1.txt
 ```
 
 
+## 4.3、属主与属租设置
 
+chown -R username 文档路径:更改文档的所属用户
+chgrp -R groupname 文档的路径:更改文档所属的用户组
+chown -R username:groupname 文档路径:更改所属的用户以及用户组
