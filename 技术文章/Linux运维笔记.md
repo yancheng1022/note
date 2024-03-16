@@ -1,3 +1,14 @@
+---
+title: Linux运维笔记
+date: 2023/06/15
+categories:
+  - coding
+tags:
+  - 技术文章
+  - linux
+  - 运维
+---
+
 # 1、Linux终端
 
 ## 1.1、终端组成部分
@@ -359,6 +370,9 @@ i：光标后插入
 ## 5.4、三种模式之间的切换
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403161704451.png)
+
+
+# 6、防火墙服务
 
 
 
