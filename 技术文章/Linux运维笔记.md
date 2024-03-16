@@ -356,6 +356,9 @@ i：光标后插入
 显示行号：set nu
 取消显示行号：set nonu
 
+## 5.4、三种模式之间的切换
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403161704451.png)
 
 
 
