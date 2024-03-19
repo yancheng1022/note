@@ -113,6 +113,7 @@ public class CustomerRealm extends AuthorizingRealm {
 ```
 
 ### 3.2.2、用定义的Realm进行认证
+
 ```java
 /**
  * 测试自定义的Realm
