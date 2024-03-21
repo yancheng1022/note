@@ -43,5 +43,11 @@ TiDB 是 PingCAP 公司自主设计、研发的开源分布式关系型数据库
 兼容 MySQL 5.7 协议、MySQL 常用的功能、MySQL 生态，应用无需或者修改少量代码即可从 MySQL 迁移到 TiDB。提供丰富的数据迁移工具帮助应用便捷完成数据迁移。
 
 
+## 2.3、架构
+
+![image.png|600](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403211617902.png)
+
+
+
 
 
