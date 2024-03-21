@@ -12,5 +12,6 @@
 | OceanBase | 阿里      | 2010 |
 | TDSQL     | 腾讯      | 2004 |
 | TiDB      | PingCAP | 2015 |
+| Spanner   | 谷歌      |      |
 
 
