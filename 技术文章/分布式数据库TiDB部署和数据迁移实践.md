@@ -9,9 +9,9 @@
 
 | 名称        | 厂商      | 诞生年份 |
 | --------- | ------- | ---- |
-| OceanBase | 阿里      | 2010 |
 | TDSQL     | 腾讯      | 2004 |
+| OceanBase | 阿里      | 2010 |
 | TiDB      | PingCAP | 2015 |
-| Spanner   | 谷歌      |      |
+| Spanner   | 谷歌      | 2017 |
 
 
