@@ -51,7 +51,7 @@ TiDB 是 PingCAP 公司的开源分布式关系型数据库，是一款同时支
 
 
 
-1、PD (Placement Driver) Server：整个 TiDB 集群的元信息管理模块，负责存储每个 TiKV 节点实时的数据分布情况和集群的整体拓扑结构，提供 TiDB Dashboard 管控界面，并为分布式事务分配事务 ID。PD 不仅存储元信息，同时还会根据 TiKV 节点实时上报的数据分布状态，下发数据调度命令给具体的 TiKV 节点，可以说是整个集群的“大脑”。此外，PD 本身也是由至少 3 个节点构成，拥有高可用的能力。建议部署奇数个 PD 节点。
+1、PD (Placement Driver) Server：整个 TiDB 集群的元信息管理模块，是tidb的大脑，会生成tidb正常工作所依赖的系统级别的data。通过架构图可以看到和TiDB交互
 
 
 
