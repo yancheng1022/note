@@ -374,7 +374,17 @@ i：光标后插入
 
 # 6、防火墙服务
 
+```shell
+# 查看防火墙状态
+systemctl status firewalld
+# 开启防火墙
+systemctl start firewalld
+# 查看所有开启的端口（启动防火墙后，默认没有开启任何端口，需要手动开启端口）
+firewall-cmd --list-ports
+# 防火墙开启端口访问
+firewall-cmd --zone=public --add-port=80/tcp --permanent
 
+```
 
 
 
