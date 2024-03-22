@@ -51,7 +51,7 @@ TiDB 是 PingCAP 公司的开源分布式关系型数据库，是一款同时支
 
 
 
-1、PD (Placement Driver) Server：整个 TiDB 集群的元信息管理模块，是tidb的大脑，会生成tidb正常工作所依赖的系统级别的data。通过架构图可以看到和TiDB cluster交换TSO/Data location。TSO是timestamp oracle（时间戳神谕），功能是说明在数据库发生的事件的先后顺序（用来保障分布式数据库的序列化，是分布式事务的前提）。Data Location：tidb通过data location定位数据位置。和Storage cluster交互的Metadata 
+1、PD (Placement Driver) Server：整个 TiDB 集群的元信息管理模块，是tidb的大脑，会生成tidb正常工作所依赖的系统级别的data。通过架构图可以看到和TiDB cluster交换TSO/Data location。TSO是timestamp oracle（时间戳神谕），功能是说明在数据库发生的事件的先后顺序（用来保障分布式数据库的序列化，是分布式事务的前提），Data Location：tidb通过data location定位数据位置。和Storage cluster交互的Metadata 
 
 
 
