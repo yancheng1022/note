@@ -4,9 +4,9 @@ date: 2023/06/15
 categories:
   - coding
 tags:
-  - 技术文章
   - linux
   - 运维
+  - 编程基础
 ---
 
 # 1、Linux终端
