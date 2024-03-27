@@ -6,4 +6,5 @@ Arthas是阿里巴巴旗下的一款开源的JAVA诊断工具，可以进行线�
 
 ```shell
 curl -O https://arthas.aliyun.com/arthas-boot.jar
+java -jar arthas-boot.jar
 ```
