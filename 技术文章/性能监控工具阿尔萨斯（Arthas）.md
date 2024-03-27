@@ -14,3 +14,7 @@ java -jar arthas-boot.jar
 ![image.png|675](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271031144.png)
 
 # 3、常用命令
+
+## 3.1、dashbord
+
+dashboard 命令可以查看当前系统的实时数据面板。可以查看到CPU、内存、GC、运行环境等信息
