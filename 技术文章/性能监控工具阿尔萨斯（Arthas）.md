@@ -20,3 +20,12 @@ java -jar arthas-boot.jar
 dashboard 命令可以查看当前系统的实时数据面板。可以查看到CPU、内存、GC、运行环境等信息、
 
 ![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271123268.png)
+
+>ID: 线程ID 
+>NAME: 线程名 
+>GROUP: 线程组名 
+>PRIORITY: 线程优先级, 1~10之间的数字，越大表示优先级越高 
+>STATE: 线程的状态. 
+>CPU%: 线程的cpu使用率。比如采样间隔1000ms，某个线程的增量cpu时间为100ms，则cpu使用率=100/1000=10% 
+>DELTA_TIME: 上次采样之后线程运行增量CPU时间，数据格式为秒 
+>TIME: 线程运行总CPU时间，数据格式为分:秒 INTERRUPTED: 线程当前的中断位状态 DAEMON: 是否是daemon线程
