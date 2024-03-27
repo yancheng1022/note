@@ -35,5 +35,5 @@ watch com.data.controller.baseInfo.InstrumentBaseController list '{params,return
 
 
 ```shell
-ognl '@com.chivd.common.utils.DateUtils@getDate("")'
+ognl '@com.chivd.common.utils.DateUtils@getDate()'
 ```
