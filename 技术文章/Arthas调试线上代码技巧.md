@@ -35,5 +35,5 @@ watch com.data.controller.baseInfo.InstrumentBaseController list '{params,return
 
 
 ```shell
-ognl com.data.controller.baseInfo.InstrumentBaseController list '{params,returnObj,throwExp}' -n 5 -x 3
+ognl '@com.chivd.util.business' list '{params,returnObj,throwExp}' -n 5 -x 3
 ```
