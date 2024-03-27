@@ -29,3 +29,7 @@ watch com.data.controller.baseInfo.InstrumentBaseController list '{params,return
 ```
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271353072.png)
+
+
+# 5、执行静态方法
+
