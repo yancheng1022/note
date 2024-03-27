@@ -66,5 +66,7 @@ profiler start --duration 300
 trace命令能记录指定方法的调用路径，并统计方法向下一层调用的耗时。
 
 ```shell
-trace *DashboardMetaController queryList
+trace *InstrumentBaseController list
 ```
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271525052.png)
