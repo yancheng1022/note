@@ -37,3 +37,8 @@ watch com.data.controller.baseInfo.InstrumentBaseController list '{params,return
 ```shell
 ognl '@com.chivd.common.utils.DateUtils@getDate()'
 ```
+
+
+# 6、编译class文件，替换线上代码
+
+
