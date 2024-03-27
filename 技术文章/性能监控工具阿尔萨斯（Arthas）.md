@@ -8,3 +8,9 @@ Arthas是阿里巴巴旗下的一款开源的JAVA诊断工具，可以进行线�
 curl -O https://arthas.aliyun.com/arthas-boot.jar
 java -jar arthas-boot.jar
 ```
+
+启动之后，就会列出当前系统上所有的java进程，输入进程前面的序号，连接到相应的应用进程。
+
+![image.png|675](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271031144.png)
+
+# 3、常用命令
