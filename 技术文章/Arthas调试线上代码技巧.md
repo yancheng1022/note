@@ -1,8 +1,14 @@
 ---
 title: Arthas调试线上代码技巧
-date:
+date: 2024/03/27
+categories:
+  - coding
+tags:
+  - 阿尔萨斯
+  - Arthas
+  - 代码调试
+  - 技术文章
 ---
-
 
 # 1、背景
 
