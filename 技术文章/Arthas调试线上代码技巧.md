@@ -33,3 +33,7 @@ watch com.data.controller.baseInfo.InstrumentBaseController list '{params,return
 
 # 5、执行静态方法
 
+
+```shell
+ognl com.data.controller.baseInfo.InstrumentBaseController list '{params,returnObj,throwExp}' -n 5 -x 3
+```
