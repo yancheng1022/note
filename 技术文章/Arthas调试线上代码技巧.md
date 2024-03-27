@@ -25,5 +25,7 @@ jad --source-only com.controller.HomePageController getSaleData --lineNumber fal
 # 4、监视方法执行
 
 ```shell
-watch com.chivd.ims.data.controller.baseInfo.InstrumentBaseController list '{params,returnObj,throwExp}' -n 5 -x 3
+watch com.data.controller.baseInfo.InstrumentBaseController list '{params,returnObj,throwExp}' -n 5 -x 3
 ```
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271353072.png)
