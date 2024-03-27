@@ -17,4 +17,6 @@ java -jar arthas-boot.jar
 
 ## 3.1、dashbord
 
-dashboard 命令可以查看当前系统的实时数据面板。可以查看到CPU、内存、GC、运行环境等信息
+dashboard 命令可以查看当前系统的实时数据面板。可以查看到CPU、内存、GC、运行环境等信息、
+
+![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271123268.png)
