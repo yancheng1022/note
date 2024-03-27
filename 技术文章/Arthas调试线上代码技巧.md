@@ -19,3 +19,5 @@ jad --source-only com.chivd.ims.controller.HomePageController getSaleData --line
 ```
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271326704.png)
+
+> 注意：访问类的静态成员时（属性或方法），才会进行类加载。
