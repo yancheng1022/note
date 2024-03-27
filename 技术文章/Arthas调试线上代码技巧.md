@@ -8,6 +8,7 @@
 
 # 2、安装
 
+其实就是下载一个jar包
 ```shell
 curl -O https://arthas.aliyun.com/arthas-boot.jar
 java -jar arthas-boot.jar
@@ -58,4 +59,12 @@ profiler命令可以在一段时间内对数据采样，生成火焰图。该命
 profiler start --duration 300
 ```
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202403271520463.png)
 
+# 8、性能调优计时
+
+trace命令能记录指定方法的调用路径，并统计方法向下一层调用的耗时。
+
+```shell
+trace *DashboardMetaController queryList
+```
