@@ -11,7 +11,7 @@ CREATE STABLE `godboot_cisp`.`aq_gas_hastory` (
 	`sensor_code` VARCHAR(64)
 );
 
-create stable godboot_cisp.aq_gas_history(
+create stable godboot_cisp.aq_gas(
 	ts timestamp, 
 	sensor_value nchar(8), 
 	sensor_status nchar(8), 
@@ -22,4 +22,5 @@ create stable godboot_cisp.aq_gas_history(
 );
 
 
-INSERT INTO godboot_cisp.aq_gas_067000002_001A03 USING aq_gas_hastory.meters TAGS ('067000002', '001A03') VALUES ('2024-04-16 13:14:04.777', '18.60', '0','2024-04-16 09:06:13');
+insert into godboot_cisp.aq_gas_067000002_001A03 USING godboot_cisp.aq_gas tags ('067000002', '001A03') values ('2024-04-16 13:14:04.777', '18.60', '0','2024-04-16 09:06:13');
+
