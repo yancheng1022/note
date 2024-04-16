@@ -1,6 +1,5 @@
 
 
-
 create stable godboot_cisp.aq_gas(
 	ts timestamp, 
 	sensor_value nchar(8), 
