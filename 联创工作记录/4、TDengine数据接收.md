@@ -11,19 +11,4 @@ CREATE STABLE `godboot_cisp`.`aq_gas_hastory` (
 	`sensor_code` VARCHAR(64)
 );
 
-CREATE STABLE godboot_cisp.aq_gas_history ( 
-	ts TIMESTAMP, 
-	mine_code BINARY(32), 
-	sensor_code BINARY(64), 
-	sensor_value BINARY(8), 
-	sensor_status BINARY(8), 
-	file_update_time BINARY(32));
-
-CREATE STABLE godboot_cisp.aq_gas_history ( 
-    ts TIMESTAMP, 
-    mine_code BINARY(32), 
-    sensor_code BINARY(64), 
-    sensor_value BINARY(8), 
-    sensor_status BINARY(8), 
-    file_update_time BINARY(32)
-);
+create stable godboot_cisp.aq_gas_hastory(ts timestamp,  sensor_value nchar(8), sensor_status nchar(8), file_update_time nchar(32)) tags (mine_code nchar(32), sensor_code nchar(64));
