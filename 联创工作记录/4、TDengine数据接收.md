@@ -13,3 +13,6 @@ create stable godboot_cisp.aq_gas(
 
 insert into godboot_cisp.aq_gas_067000002_001A03 USING godboot_cisp.aq_gas tags ('067000002', '001A03') values ('2024-04-16 13:14:04.777', '18.60', '0','2024-04-16 09:06:13');
 
+
+select * from  godboot_cisp.aq_gas_067000002_013A05 where ts > '2024-04-17 09:00:00.000';
+
