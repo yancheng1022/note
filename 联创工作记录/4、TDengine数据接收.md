@@ -1,5 +1,5 @@
 
-
+# 1、语句备份
 create stable godboot_cisp.aq_gas(
 	ts timestamp, 
 	sensor_value nchar(8), 
@@ -16,3 +16,10 @@ insert into godboot_cisp.aq_gas_067000002_001A03 USING godboot_cisp.aq_gas tags 
 
 select * from  godboot_cisp.aq_gas_067000002_013A05 where ts > '2024-04-17 09:00:00.000';
 
+select distinct mine_code from  godboot_cisp.aq_gas;
+
+# 2、同步进程
+
+芦子沟：067000001
+何家堡：067000002
+吴家窑：066000002
