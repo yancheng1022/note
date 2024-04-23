@@ -23,4 +23,4 @@ select distinct mine_code from  godboot_cisp.aq_gas;
 芦子沟：067000001
 何家堡：067000002
 吴家窑：066000002
-
+后安：135000001
