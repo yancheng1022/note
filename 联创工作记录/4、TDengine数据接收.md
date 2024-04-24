@@ -25,3 +25,4 @@ select distinct mine_code from  godboot_cisp.aq_gas;
 吴家窑：066000002
 后安：135000001
 焦煤矿：002030011
+14062400003
