@@ -26,3 +26,6 @@ select distinct mine_code from  godboot_cisp.aq_gas;
 后安：135000001
 焦煤矿：002030011
 140 624 000 03
+
+
+INSERT INTO `godboot_csms`.`gas_alarm_history` (`id`, `sensor_code`, `install_location`, `physics_name`, `alarm_threshold`, `unit`, `overrun_alarm_start_time`, `overrun_alarm_end_time`, `overrun_alarm_duration`, `station_code`, `sensor_value`) VALUES ('300', '033A08', 'JW301左翼皮轨巷回风流', '甲烷', '0.80', '%CH4', '2024-03-19 23:59:26', NULL, NULL, NULL, NULL);
