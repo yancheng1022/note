@@ -18,6 +18,9 @@ select * from  godboot_cisp.aq_gas_067000002_013A05 where ts > '2024-04-17 09:00
 
 select distinct mine_code from  godboot_cisp.aq_gas;
 
+select * from  godboot_cisp.aq_gas where mine_code = '028000001' order by ts asc limit 10;
+
+aq_gas_028000001_029a05
 # 2、同步进程
 
 芦子沟：067000001
