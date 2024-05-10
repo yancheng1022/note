@@ -45,8 +45,6 @@ docker run -d --name person \
 > --restart=always -p 10951:8080 -v /home/lantrack/gasEtlUpload:/upload -v /home/lantrack/tto:/conf 39.10ry/2016-tto-server-prod/gas:tto_0.1.79
 
 ```
-# 1、矿端编码
 
-吴家窑：066000002
-芦子沟：067000001
-何家堡：067000002
+
+
