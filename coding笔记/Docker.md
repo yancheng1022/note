@@ -42,6 +42,51 @@ systemctl enable --now docker
 
 ## 2.2、使用二进制安装
 
+```shell
+wget https://download.docker.com/linux/static/stable/x86_64/docker-24.0.4.tgz
+tar xf docker-24.0.4.tgz
+cp docker/* /usr/bin/
+dockerd & 
+```
+
+# 3、Docker使用生态
+
+![image.png|650](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515160029.png)
+
+
+## 3.1 Docker Host
+
+用于安装Docker daemon的主机，即为Docker Host，并且该主机中可基于容器镜像运行容器。
+
+## 3.2 Docker daemon
+
+用于管理Docker Host中运行的容器、容器镜像、容器网络等，管理由Containerd.io提供的容器。
+
+## 3.3 Registry
+
+容器镜像仓库，用于存储已生成容器运行模板的仓库，用户使用时，可直接从容器镜像仓库中下载容器镜像，即容器运行模板，就可以运行容器镜像中包含的应用了。例如：DockerHub,也可以使用Harbor实现企业私有的容器镜像仓库。
+
+## 3.4 Docker client
+
+Docker Daemon客户端工具，用于同Docker Daemon进行通信，执行用户指令，可部署在Docker Host上，也可以部署在其它主机，能够连接到Docker Daemon即可操作。
+
+## 3.5 Image
+
+把应用运行环境及计算资源打包方式生成可再用于启动容器的不可变的基础设施的模板文件，主要用于基于其启动一个容器。
+
+## 3.6 Container
+
+由容器镜像生成，用于应用程序运行的环境，包含容器镜像中所有文件及用户后添加的文件，属于基于容器镜像生成的可读写层，这也是应用程序活跃的空间。
+
+## 3.7 Docker Desktop
+
+> 仅限于MAC、Windows、部分Linux操作系统上安装使用。
+
+Docker Desktop 提供了一个简单的界面，使您能够直接从您的机器管理您的容器、应用程序和映像，而无需使用 CLI 来执行核心操作。
+
+
+
+
 
 # 2、Docker安装
 ## 2.1、仓库设置
