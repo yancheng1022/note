@@ -85,6 +85,9 @@ Docker Daemon客户端工具，用于同Docker Daemon进行通信，执行用户
 Docker Desktop 提供了一个简单的界面，使您能够直接从您的机器管理您的容器、应用程序和映像，而无需使用 CLI 来执行核心操作。
 
 
+# 4、Docker命令
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515161620.png)
 
 
 
