@@ -89,6 +89,71 @@ Docker Desktop 提供了一个简单的界面，使您能够直接从您的机�
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515161620.png)
 
+## 4.1 docker run
+
+
+```
+docker run -it --name c1 centos:latest bash
+```
+
+>命令解释
+ docker run 运行一个命令在容器中，命令是主体，没有命令容器就会消亡
+ -i 交互式
+ -t 提供终端
+ --name c1 把将运行的容器命名为c1
+ centos:latest 使用centos最新版本容器镜像
+ bash 在容器中执行的命令(也可以写成/bin/bash)
+
+>操作说明
+ 在上述提示符处按住ctrl键，再按p键与q键，可以退出交互式的容器，容器会处于运行状态。
+
+## 4.2、docker ps
+
+```shell
+docker ps 查看正在运行的容器
+docker ps --all 可以查看正在运行的和停止运行的容器
+```
+
+## 4.3、docker inspect
+
+```shell
+docker inspect [容器id]
+```
+
+## 4.4、docker exec
+
+以json格式得到 docker 镜像/容器的元数据
+
+```shell
+docker exec -it c2 ls /root
+```
+
+>命令解释
+ docker exec 在容器外实现与容器交互执行某命令
+ -it 交互式
+ c2 正在运行的容器名称
+ ls /root 在正在运行的容器中运行相关的命令
+
+## 4.5、docker attach
+
+```shell
+docker attach c2
+```
+
+>命令解释
+ docker attach 类似于ssh命令，可以进入到容器中
+ c2 正在运行的容器名称
+
+>说明
+ docker attach 退出容器时，如不需要容器再运行，可直接使用exit退出；如需要容器继续运行，可使用ctrl+p+q
+
+
+## 4.6、docker stop 
+
+```shell
+docker stop 9f2eea # 停止容器
+docker stop $(docker ps -a -q) # 批量停止容器
+```
 
 
 # 2、Docker安装
