@@ -190,6 +190,32 @@ docker rm c2
 # 批量删除
 docker rm $(docker ps -a -q)
 ```
+
+# 5、Docker容器镜像
+
+
+## 5.1、Docker容器镜像操作
+
+```shell
+# 查看本地容器镜像
+docker images
+docker image list
+# 查看docker容器镜像本地存储位置
+ls /var/lib/docker
+# 搜索docker hub容器镜像
+docker search centos
+# 下载镜像
+docker pull centos
+# 删除镜像
+docker rmi centos:7
+```
+
+## 5.2、Docker容器镜像介绍
+
+docker镜像为只读的容器模板，是docker容器的基础。为docker容器提供了静态文件系统运行环境（rootfs），是容器的静止状态，容器时镜像的运行状态。
+
+
+
 # 2、Docker安装
 ## 2.1、仓库设置
 
