@@ -116,13 +116,13 @@ docker ps --all 可以查看正在运行的和停止运行的容器
 
 ## 4.3、docker inspect
 
+以json格式得到 docker 镜像/容器的元数据
+
 ```shell
 docker inspect [容器id]
 ```
 
 ## 4.4、docker exec
-
-以json格式得到 docker 镜像/容器的元数据
 
 ```shell
 docker exec -it c2 ls /root
