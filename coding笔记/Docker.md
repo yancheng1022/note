@@ -155,7 +155,41 @@ docker stop 9f2eea # 停止容器
 docker stop $(docker ps -a -q) # 批量停止容器
 ```
 
+## 4.7、docker top
 
+在Docker Host查看容器中运行的进程信息
+
+```shell
+docker top c2
+```
+
+| UID  | PID   | PPID  | C    | STIME | TTY   | TIME     | CMD  |
+| ---- | ----- | ----- | ---- | ----- | ----- | -------- | ---- |
+| root | 69040 | 69020 | 0    | 18:37 | pts/0 | 00:00:00 | bash |
+
+>命令解释
+ docker top 查看container内进程信息，指在docker host上查看，与docker exec -it c2 ps -ef不同。
+
+>输出说明
+ UID 容器中运行的命令用户ID
+ PID 容器中运行的命令PID
+ PPID 容器中运行的命令父PID，由于PPID是一个容器，此可指为容器在Docker Host中进程ID
+ C     占用CPU百分比
+ STIME 启动时间
+ TTY   运行所在的终端
+ TIME  运行时间
+ CMD   执行的命令
+
+## 3.8、docker rm
+
+如果容器已停止，使用此命令可以直接删除；如果容器处于运行状态，则需要提前关闭容器后，再删除容器
+
+```shell
+# 单个删除
+docker rm c2
+# 批量删除
+docker rm $(docker ps -a -q)
+```
 # 2、Docker安装
 ## 2.1、仓库设置
 
