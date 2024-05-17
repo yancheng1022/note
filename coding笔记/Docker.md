@@ -122,50 +122,211 @@ docker pull nginx:1.22.0-alpine
 
 ## 3.3、docker run命令
 
-```shell
 docker run [可选参数] 镜像名:版本 []
 
+1、公开端口（-P）
+```shell
 docker run --name some-nginx -d -p 8080:80 nginx:1.22
 默认情况下，容器无法通过外部网络访问。
-需要使用-p参数将容器的端口映射到宿主机端口，才可以通过宿主机IP进行访问。
+需要使用-p参数将容器的80端口映射到宿主机8080端口，才可以通过宿主机IP进行访问。
 浏览器打开 http://192.168.56.106:8080
 
 ```
+2、后台运行
+```shell
+docker run --name db-mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+```
+>使用run命令，部署mysql，docker先去本地查找镜像，如果找不到，就去docker hub中拉取镜像
+--name 定义容器的名称
+-e 声明环境变量
+-d容器在后台运行
 
-# 3、Docker使用生态
+```shell
+# 查看运行ip
+docker inspect \
+	--format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db-mysql
+```
+3、前台交互运行
+
+创建一个新的容器，使用mysql客户端
+
+```shell
+docker run -it --rm mysql:5.7 mysql -h172.17.0.2 -uroot -p
+```
+>
+-it 使用交互模式，可以在控制台里输入、输出
+--rm在容器退出时自动删除容器。一般在使用客户端程序时使用此参数。
+如果每次使用客户端都创建一个新的容器，这样将占用大量的系统空间。
+mysql -h172.17.0.2 -uroot -p表示启动容器时执行的命令。
 
 
+```shell
+# docker exec在运行的容器中执行命令，一般配合-it参数使用交互模式
+docker exec -it db-mysql /bin/bash
+```
 
-## 3.1 Docker Host
+## 3.4、常用命令
 
-用于安装Docker daemon的主机，即为Docker Host，并且该主机中可基于容器镜像运行容器。
+```shell
+# 查看正在运行的容器
+docker ps 
+# 查看所有容器，包括正在运行和停止的
+docker ps -a
+# 查看容器信息
+docker inspect
+# 查看日志
+docker logs
+# 在容器和宿主机间复制文件
+docker cp ./some_file 容器名:/work
+docker cp 容器名:/var/logs/ /tmp/app_logs
+```
 
-## 3.2 Docker daemon
+![image.png|625](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515161620.png)
 
-用于管理Docker Host中运行的容器、容器镜像、容器网络等，管理由Containerd.io提供的容器。
+# 4、Docker网络
 
-## 3.3 Registry
+## 4.1、默认网络
 
-容器镜像仓库，用于存储已生成容器运行模板的仓库，用户使用时，可直接从容器镜像仓库中下载容器镜像，即容器运行模板，就可以运行容器镜像中包含的应用了。例如：DockerHub,也可以使用Harbor实现企业私有的容器镜像仓库。
+docker会自动创建三个网络，bridge,host,none
 
-## 3.4 Docker client
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240517150727.png)
 
-Docker Daemon客户端工具，用于同Docker Daemon进行通信，执行用户指令，可部署在Docker Host上，也可以部署在其它主机，能够连接到Docker Daemon即可操作。
+1、bridge桥接网络
 
-## 3.5 Image
+如果不指定，新创建的容器默认将连接到bridge网络。
+默认情况下，使用bridge网络，宿主机可以ping通容器ip，容器中也能ping通宿主机。
+容器之间只能通过 IP 地址相互访问，由于容器的ip会随着启动顺序发生变化，因此不推荐使用ip访问。
 
-把应用运行环境及计算资源打包方式生成可再用于启动容器的不可变的基础设施的模板文件，主要用于基于其启动一个容器。
+2、host
 
-## 3.6 Container
+慎用，可能会有安全问题。
+容器与宿主机共享网络，不需要映射端口即可通过宿主机IP访问。（-p选项会被忽略）
+主机模式网络可用于优化性能，在容器需要处理大量端口的情况下，它不需要网络地址转换 （NAT），并且不会为每个端口创建“用户空间代理”。
 
-由容器镜像生成，用于应用程序运行的环境，包含容器镜像中所有文件及用户后添加的文件，属于基于容器镜像生成的可读写层，这也是应用程序活跃的空间。
+3、none
 
-## 3.7 Docker Desktop
+禁用容器中所用网络，在启动容器时使用
 
-> 仅限于MAC、Windows、部分Linux操作系统上安装使用。
+## 4.2、用户自定义网络
 
-Docker Desktop 提供了一个简单的界面，使您能够直接从您的机器管理您的容器、应用程序和映像，而无需使用 CLI 来执行核心操作。
+创建用户自定义网络
 
+```shell
+docker network create my-net
+```
+
+将已有容器连接到此网络
+
+```shell
+docker network connect my-net db-mysql
+```
+
+创建容器时指定网络
+
+```shell
+docker run -it --rm --network my-net mysql:5.7 mysql -h**db-mysql** -uroot -p
+```
+
+
+在用户自定义网络上，容器之间可以通过容器名进行访问。
+
+用户自定义网络使用 Docker 的嵌入式 DNS 服务器将容器名解析成 IP。
+
+# 5、docker存储
+
+将数据存储在容器中，一旦容器被删除，数据也会被删除。同时也会使容器变得越来越大，不方便恢复和迁移。
+
+将数据存储到容器之外，这样删除容器也不会丢失数据。一旦容器故障，我们可以重新创建一个容器，将数据挂载到容器里，就可以快速的恢复
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240517153044.png)
+
+## 5.1、挂载绑定（bind mount）
+
+绑定挂载可以将主机文件系统上目录或文件装载到容器中，但是主机上的非 Docker 进程可以修改它们，同时在容器中也可以更改主机文件系统，包括创建、修改或删除文件或目录，使用不当，可能会带来安全隐患
+
+绑定挂载适用以下场景：
+
+- 将配置文件从主机共享到容器。
+- 在 Docker 主机上的开发环境和容器之间共享源代码或编译目录。
+- 例如，可以将 Maven 的`target/`目录挂载到容器中，每次在主机上用 Maven打包项目时，容器内都可以使用新编译的程序包
+
+1、-V
+
+绑定挂载将主机上的目录或者文件装载到容器中。绑定挂载会覆盖容器中的目录或文件
+如果宿主机目录不存在，docker会自动创建这个目录。但是docker只自动创建文件夹，不会创建文件。
+例如，mysql的配置文件和数据存储目录使用主机的目录。可以将配置文件设置为只读（read-only）防止容器更改主机中的文件。
+
+```shell
+docker run -e MYSQL_ROOT_PASSWORD=123456 \
+           -v /home/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro  \
+           -v /home/mysql/data:/var/lib/mysql  \
+           -d mysql:5.7 
+```
+
+2、--tmpfs临时挂载
+临时挂载将数据保留在主机内存中，当容器停止时，文件将被删除。
+
+```shell
+docker run -d -it --tmpfs /tmp nginx:1.22-alpine
+```
+
+## 5.2、volume卷
+
+卷 是docker 容器存储数据的首选方式，卷有以下优势：
+
+- 卷可以在多个正在运行的容器之间共享数据。仅当显式删除卷时，才会删除卷。
+- 当你想要将容器数据存储在外部网络存储上或云提供商上，而不是本地时。
+- 卷更容易备份或迁移，当您需要备份、还原数据或将数据从一个 Docker 主机迁移到另一个 Docker 主机时，卷是更好的选择。
+
+```shell
+docker volume create my-data
+
+docker run -e MYSQL_ROOT_PASSWORD=123456 \
+           -v /home/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf:ro  \
+           -v my-data:/var/lib/mysql  \
+           -d mysql:5.7 
+# 创建nfs卷
+docker volume create --driver local \
+    --opt type=nfs \
+    --opt o=addr=192.168.1.1,rw \
+    --opt device=:/path/to/dir \
+    vol-nfs
+```
+
+# 6、部署自己的应用
+
+本例子我们使用docker来部署一个RuoYi应用系统
+将源码编译打包成ruoyi-admin.jar文件，放到宿主机/home/app目录下，/home/app/sql目录下是数据库初始化脚本
+
+1、准备工作：创建网络和存储卷
+
+```shell
+docker volume create ruoyi-data
+docker network create ruoyi-net
+```
+2、部署mysql并初始化数据库
+
+```shell
+docker run -e MYSQL_ROOT_PASSWORD=123456 \
+           -e MYSQL_DATABASE=ry \
+					 -v /home/app/sql:/docker-entrypoint-initdb.d \
+           -v ruoyi-data:/var/lib/mysql  \
+        	 --network ruoyi-net \
+           --name ruoyi-db \
+           -d mysql:5.7 \
+           --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+```
+
+3、部署应用
+
+```shell
+docker run -p 8080:8080 \
+					 -v /home/app/ruoyi-admin.jar:/usr/local/src/ruoyi-admin.jar \
+        	 --network ruoyi-net \
+           --name ruoyi-java \
+					 -d openjdk:8u342-jre \
+           java -jar /usr/local/src/ruoyi-admin.jar
+```
 
 # 4、Docker命令
 
