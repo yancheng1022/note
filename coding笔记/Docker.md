@@ -214,6 +214,11 @@ docker rmi centos:7
 
 docker镜像为只读的容器模板，是docker容器的基础。为docker容器提供了静态文件系统运行环境（rootfs），是容器的静止状态，容器时镜像的运行状态。
 
+### 5.2.1、联合文件系统
+联合文件系统是实现联合挂载技术的文件系统，联合挂载技术可以实现在一个挂载点同时挂载多个文件系统，将挂载点的原目录与被挂载内容进行整合，使得最终的文件系统包含整合后的各层文件和目录
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240517110423.png)
+
 
 
 # 2、Docker安装
