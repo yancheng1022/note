@@ -367,37 +367,70 @@ docker compose命令启动时，默认在当前目录下寻找compose.yaml或com
 也可以使用-f参数手动指定文件docker compose -f docker-compose-dev.yml up -d
 
 ```yml
-version: '3.1'
+services: 
 
-services:
-
-  wordpress:
-    image: wordpress
+  ruoyi-app:
+    #  docker run --name ruoyi-app      \
+    #             -p 8080:8080        \
+    #             --network ruoyi-net      \
+    #             -v /home/app/ruoyi-admin.jar:/usr/local/src/ruoyi-admin.jar   \
+    #             -d openjdk:8u342-jre    \
+    #             java -jar /usr/local/src/ruoyi-admin.jar
+    image: openjdk:8u342-jre
     restart: always
     ports:
-      - 8080:80
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: exampleuser
-      WORDPRESS_DB_PASSWORD: examplepass
-      WORDPRESS_DB_NAME: exampledb
+      - 8080:8080
+    networks:
+      - ruoyi-net
     volumes:
-      - wordpress:/var/www/html
+      - /home/app/ruoyi-admin.jar:/usr/local/src/ruoyi-admin.jar
+    command: [ "java", "-jar", "/usr/local/src/ruoyi-admin.jar" ]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      ruoyi-db:
+        condition: service_healthy
 
-  db:
+  ruoyi-db:
+    #  docker run --name ruoyi-db -p 3303:3306 \
+    #             --network ruoyi-net        \
+    #             -v ruoyi-data:/var/lib/mysql  \
+    #             -v /home/app/sql:/docker-entrypoint-initdb.d   \
+    #             -e MYSQL_DATABASE=ry         \
+    #             -e MYSQL_ROOT_PASSWORD=123456    \
+    #             -d mysql:5.7      \
+    #             --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-character-set-client-handshake
     image: mysql:5.7
-    restart: always
     environment:
-      MYSQL_DATABASE: exampledb
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepass
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      - MYSQL_DATABASE=ry
+      - MYSQL_ROOT_PASSWORD=123456
     volumes:
-      - db:/var/lib/mysql
+      - ruoyi-data:/var/lib/mysql
+      - /home/app/sql:/docker-entrypoint-initdb.d
+    networks:
+      - ruoyi-net
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--skip-character-set-client-handshake"
+      ]
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
-  wordpress:
-  db:
+  ruoyi-data:
+
+networks:
+  ruoyi-net:
 
 ```
 
@@ -430,6 +463,19 @@ EXPOSE 80
 `RUN`打包时执行的命令，相当于打包过程中在容器中执行shell脚本，通常用来安装应用程序所需要的依赖、设置权限、初始化配置文件等
 `CMD`运行镜像时执行的命令
 `EXPOSE`指定容器在运行时监听的网络端口，它并不会公开端口，仅起到声明的作用，公开端口需要容器运行时使用-p参数指定。
+
+## 8.1、制作自己的镜像
+
+```shell
+FROM openjdk:8u342-jre
+WORKDIR /app
+COPY ./ruoyi-admin.jar .
+CMD [ "java", "-jar", "ruoyi-admin.jar" ]
+EXPOSE 8080
+```
+docker build . 打包
+
+
 
 # 4、Docker命令
 
