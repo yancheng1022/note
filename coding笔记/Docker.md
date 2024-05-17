@@ -30,28 +30,110 @@ Docker公司将runC捐献给了OCI，将containerd捐献给了CNCF，剩下的do
 > Docker-ce Docker社区版，主要用于个人开发者测试使用，免费版本
 > Docker-ee Docker企业版，主要用于为企业开发及应用部署使用，收费版本，免费试用一个月，2020年因国际政治原因曾一度限制中国企业使用。
 
-## 2.1、使用yum源安装
+安装环境：CentOS 7.3+
 
->使用阿里云开源软件镜像站。
-
-``` shell
-wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
-yum -y install docker-ce
-systemctl enable --now docker
-```
-
-## 2.2、使用二进制安装
+1、如果之前安装了旧版docker，请先删除。
 
 ```shell
-wget https://download.docker.com/linux/static/stable/x86_64/docker-24.0.4.tgz
-tar xf docker-24.0.4.tgz
-cp docker/* /usr/bin/
-dockerd & 
+sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+```
+
+2、安装仓库
+```shell
+sudo yum install -y yum-utils
+
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+```
+
+3、安装docker engine
+
+```shell
+sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+4、启动docker，运行hello world，查看是否成功
+
+```shell
+sudo systemctl start docker
+sudo docker run hello-world
+```
+
+5、配置国内镜像仓库地址
+新建/etc/docker/daemon.json文件，输入如下内容：
+
+```json
+{
+  "registry-mirrors": [
+    "https://registry.docker-cn.com",
+    "http://hub-mirror.c.163.com",
+    "https://fsp2sfpr.mirror.aliyuncs.com/"
+  ]
+}
+```
+
+6、然后重启，配置开机启动
+```shell
+systemctl restart docker
+systemctl enable docker
+systemctl enable containerd
+```
+
+# 3、docker run开箱即用
+
+## 3.1、docker架构
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240517143534.png)
+
+**registry 镜像仓库**
+
+registry可以理解为镜像仓库，用于保存docker image。
+
+Docker Hub 是docker官方的镜像仓库，docker命令默认从docker hub中拉取镜像。我们也可以搭建自己的镜像仓库。
+
+**image 镜像**
+
+image可以理解为一个只读的应用模板。image包含了应用程序及其所需要的依赖环境，例如可执行文件、环境变量、初始化脚本、启动命令等。
+
+**container 容器**
+
+容器是image的一个运行实例。当我们运行一个image，就创建了一个容器。
+
+
+## 3.2、docker pull拉取镜像
+
+从镜像仓库拉取镜像到本地
+
+```shell
+docker pull nginx 不写默认是latest
+docker pull nginx:latest
+docker pull nginx:1.22
+docker pull nginx:1.22.0-alpine
+```
+
+一般不建议使用latest，因为最新的镜像是滚动更新的，过一段时间，可能跟你本地的不是同一个。
+使用docker images命令查看本地镜像
+
+## 3.3、docker run命令
+
+```shell
+docker run [可选参数] 镜像名:版本 []
+
+docker run --name some-nginx -d -p 8080:80 nginx:1.22
+默认情况下，容器无法通过外部网络访问。
+需要使用-p参数将容器的端口映射到宿主机端口，才可以通过宿主机IP进行访问。
+浏览器打开 http://192.168.56.106:8080
+
 ```
 
 # 3、Docker使用生态
 
-![image.png|650](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515160029.png)
 
 
 ## 3.1 Docker Host
