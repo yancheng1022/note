@@ -328,6 +328,109 @@ docker run -p 8080:8080 \
            java -jar /usr/local/src/ruoyi-admin.jar
 ```
 
+# 7、Docker compose容器编排
+
+在实际工作中，部署一个应用可能需要部署多个容器，一个一个部署非常不方便。docker compose可以一键部署和启动多个容器，它使用yaml文件来编排服务。
+
+github和docker hub很多项目都提供了docker-compose.yaml文件，我们可以一键部署项目，非常方便
+
+## 7.1、compose文件结构
+
+```yml
+version: '3'  # 指定Compose文件的版本
+services:     # 定义应用程序服务
+  web:
+    image: nginx  # 指定服务的Docker镜像
+    ports:
+      - "80:80"  # 映射端口
+    volumes:
+      - ./html:/usr/share/nginx/html  # 挂载卷
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example  # 设置环境变量
+ 
+networks:   # 定义网络
+  front-tier:
+    driver: bridge
+ 
+volumes:    # 定义卷
+  db-data:
+```
+
+## 7.2、一键部署wordpress
+
+wordpress是一个著名的开源博客系统。
+将以下内容保存到本地的docker-compose.yml文件中。
+docker compose命令启动时，默认在当前目录下寻找compose.yaml或compose.yml，
+为了兼容之前的版本，也会查找docker-compose.yaml或docker-compose.yml。
+也可以使用-f参数手动指定文件docker compose -f docker-compose-dev.yml up -d
+
+```yml
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
+
+```
+
+相关命令：
+```shell
+#一键部署启动
+docker compose up -d 
+# 启动/停止服务
+docker compose start/stop
+# 停止并删除容器，不会删除存储卷volume
+docker compose down 
+```
+
+# 8、Dockerfile镜像制作
+
+
+dockerfile通常包含以下几个常用命令：
+
+```shell
+FROM ubuntu:18.04
+WORKDIR /app
+COPY . .
+RUN make .
+CMD python app.py
+EXPOSE 80
+```
+`FROM` 打包使用的基础镜像
+`WORKDIR`相当于`cd`命令，进入工作目录
+`COPY` 将宿主机的文件复制到容器内
+`RUN`打包时执行的命令，相当于打包过程中在容器中执行shell脚本，通常用来安装应用程序所需要的依赖、设置权限、初始化配置文件等
+`CMD`运行镜像时执行的命令
+`EXPOSE`指定容器在运行时监听的网络端口，它并不会公开端口，仅起到声明的作用，公开端口需要容器运行时使用-p参数指定。
+
 # 4、Docker命令
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515161620.png)
