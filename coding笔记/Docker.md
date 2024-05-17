@@ -219,6 +219,165 @@ docker镜像为只读的容器模板，是docker容器的基础。为docker容�
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240517110423.png)
 
+## 5.3、Docker容器镜像操作命令
+
+
+
+### 8.3.1  docker commit
+
+docker 通过 commit 和 build 操作实现镜像的构建。commit 将容器提交为一个镜像，build 在一个镜像的基础上构建镜像。
+
+
+~~~powershell
+# docker commit 355e99982248
+sha256:8965dcf23201ed42d4904e2f10854d301ad93b34bea73f384440692e006943de
+~~~
+
+
+
+
+
+~~~powershell
+# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+<none>       <none>    8965dcf23201   About a minute ago   231MB
+~~~
+
+
+
+
+
+image 短 ID 8965dcf23201 即为容器提交的镜像，查看镜像的 imagedb 元数据：
+
+
+
+~~~powershell
+# cat  /var/lib/docker/image/overlay2/imagedb/content/sha256/8965dcf23201ed42d4904e2f10854d301ad93b34bea73f384440692e006943de
+......
+"os":"linux","rootfs":{"type":"layers","diff_ids":["sha256:74ddd0ec08fa43d09f32636ba91a0a3053b02cb4627c35051aff89f853606b59","sha256:551c3089b186b4027e949910981ff1ba54114610f2aab9359d28694c18b0203b"]}}
+~~~
+
+
+
+可以看到镜像层自上而下的前1个镜像层 diff_id 和 centos 镜像层 diff_id 是一样的，说明每层镜像层可以被多个镜像共享。而多出来的一层镜像层内容即是上节我们写入文件的内容：
+
+
+
+~~~powershell
+# echo -n "sha256:74ddd0ec08fa43d09f32636ba91a0a3053b02cb4627c35051aff89f853606b59 sha256:551c3089b186b4027e949910981ff1ba54114610f2aab9359d28694c18b0203b" | sha256sum -
+92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b  -
+~~~
+
+
+
+~~~powershell
+# cd /var/lib/docker/image/overlay2/layerdb/sha256/92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b
+[root@192 92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b]# ls
+cache-id  diff  parent  size  tar-split.json.gz
+
+
+[root@192 92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b]# cat cache-id
+250dc0b4f2c5f27952241a55cd4c286bfaaf8af4b77c9d0a38976df4c147cb95
+
+
+[root@192 92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b]# ls /var/lib/docker/overlay2/250dc0b4f2c5f27952241a55cd4c286bfaaf8af4b77c9d0a38976df4c147cb95
+diff  link  lower  work
+
+
+[root@192 92f7208b1cc0b5cc8fe214a4b0178aa4962b58af8ec535ee7211f335b1e0ed3b]# ls /var/lib/docker/overlay2/250dc0b4f2c5f27952241a55cd4c286bfaaf8af4b77c9d0a38976df4c147cb95/diff
+msb.txt
+
+~~~
+
+
+
+### 8.3.2 docker save
+
+> 导出容器镜像，方便分享。
+
+
+
+~~~powershell
+# docker save -o centos.tar centos:latest  
+~~~
+
+
+
+~~~powershell
+# ls
+
+centos.tar  
+~~~
+
+
+
+### 8.3.3 docker load
+
+> 把他人分享的容器镜像导入到本地，这通常是容器镜像分发方式之一。
+
+
+
+~~~powershell
+# docker load -i centos.tar
+~~~
+
+
+
+### 8.3.4 docker export
+
+> 把正在运行的容器导出
+
+
+
+~~~powershell
+# docker ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS       PORTS     NAMES
+355e99982248   centos:latest   "bash"                   7 hours ago   Up 7 hours             fervent_perlman
+~~~
+
+
+
+~~~powershell
+# docker export -o centos7.tar 355e99982248
+~~~
+
+
+
+~~~powershell
+# ls
+centos7.tar
+~~~
+
+
+
+### 8.3.5 docker import
+
+> 导入使用docker export导入的容器做为本地容器镜像。
+
+
+
+~~~powershell
+# ls
+centos7.tar 
+~~~
+
+
+
+~~~powershell
+# docker import centos7.tar centos7:v1
+~~~
+
+
+
+~~~powershell
+# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+centos7      v1        3639f9a13231   17 seconds ago       231MB
+~~~
+
+
+
+通过docker save与docker load及docker export与docker import分享容器镜像都是非常麻烦的，有没有更方便的方式分享容器镜像呢？
 
 
 # 2、Docker安装
