@@ -473,10 +473,41 @@ COPY ./ruoyi-admin.jar .
 CMD [ "java", "-jar", "ruoyi-admin.jar" ]
 EXPOSE 8080
 ```
+
 docker build . 打包
 
+## 8.2、image镜像与layer层
 
+image文件由一系列层构建而成，dockerfile每一个命令都会生成一个层，每一层都是只读的
+可以使用：docker image history + 镜像名 命令查看
 
+创建容器时，会创建一个新的可写层，通常称为“容器层”，对正在运行的容器所做的所有更改（如写入新文件，修改现有文件或删除文件）都将写入容器层而不会修改镜像
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405181122438.png)
+
+## 8.3、多阶段构建
+
+在构建基于java应用时，需要一个JDK将源码编译为java字节码，但是在生产环境中不需要该JDK。多阶段构建可以将生成时依赖和运行时依赖分开，减少整个image文件大小
+
+以maven/tomcat为例。使用 Maven来构建应用，在最终的image中不需要包含maven。我们可以使用多阶段构建，每一个阶段从`FROM`开始，最终的image只会从最后一个阶段构建，不会包含前面阶段产生的层，因此可以减少镜像体积
+
+```shell
+FROM maven AS build
+WORKDIR /source
+COPY . .
+RUN mvn package
+
+FROM  openjdk:8u342-jre
+WORKDIR /app
+COPY --from=build /source/ruoyi-admin/target/ruoyi-admin.jar .
+EXPOSE 80
+ENTRYPOINT ["java","-jar","ruoyi-admin.jar"]
+```
+
+> ENTRYPOINT和CMD的区别：
+> dockerfile至少应包含一个ENTRYPONIT和CMD
+> ENTRYPOINT指定容器启动时执行的默认程序，一般运行容器时不会被替换或覆盖，除非使用--entrypoint进行指定
+> cmd可以在容器启动时被替换或覆盖
 # 4、Docker命令
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240515161620.png)
