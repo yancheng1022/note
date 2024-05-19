@@ -188,3 +188,7 @@ String result = restTemplate.getForObject("http://localhost:8761/order", String.
 
 ## 3.1、Ribbon的工作流程
 
+1、restTemplate的bean添加了@LoadBalanced注解，这个注解就是一个标记，表示这个RestTemplate发起的请求要被Ribbon拦截和处理。
+2、Ribbon解析url中的host，获取服务名，根据服务名获取实例列表（先从本地缓存获取，没有再从nacos server获取并缓存实例列表）
+3、通过相应的负载均衡策略获取一个实例的ip+端口
+4、发起远程调用
