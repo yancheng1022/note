@@ -93,7 +93,7 @@ http {
 
 ## 1.2、nacos注册中心工作流程
 
-**服务注册**:Nacos Client会通过发送REST请求的方式向Nacos Server注册自己的服务，提供自身的元数据，比如ip地址、端口等信息。Nacos Server接收到注册请求后，就会把这些元数据信息存储在一个双层的内存Map中。
+**服务注册**:Nacos Client会通过发送REST请求的方式向Nacos Server注册自己的服务，提供自身的元数据，比如ip地址、端口等信息。Nacos Server接收到注册请求后，就会把这些元数据信息存储在一个双层的内存Map中（外层key是namespace，内层key是group:service）。
 
 **服务心跳**:在服务注册后，Nacos Client会维护一个定时心跳来持续通知Nacos Server，说明服务一直处于可用状态，防止被剔除。默认5s发送一次心跳。
 
@@ -124,5 +124,67 @@ Nacos 服务发现使用的领域模型是命名空间-分组-服务-集群-实�
 
 # 2、远程调用 - RestTemplate
 
+RestTemplate是一款Spring框架中的HTTP客户端工具类库，它封装了大量的HTTP请求处理代码，使得我们可以方便地进行HTTP请求的发送与处理。RestTemplate支持多种HTTP请求方式，例如GET、POST、PUT、DELETE等，同时也支持参数的传递与响应结果的解析等功能
 
+下面简单看一下它的三种使用方式：
+
+## 2.1、直接使用
+
+```java
+RestTemplate restTemplate = new RestTemplate();
+String result = restTemplate.getForObject("http://localhost:8761/order", String.class);
+```
+
+
+## 2.2、使用cloud的 LoadBalancerClient 获取服务地址
+
+```java
+    @Autowired
+    LoadBalancerClient loadBalancerClient;
+
+    @GetMapping
+    public String getOrder()
+    {
+        RestTemplate template = new RestTemplate();
+		// ORDER为服务名
+        ServiceInstance instance = loadBalancerClient.choose("ORDER");
+        String url = instance.getHost();
+        int port = instance.getPort();
+
+        String result = template.getForObject(url + ":" + port + "/order", String.class);
+        return result;
+    }
+```
+
+## 2.3、Ribbon + RestTemplate
+
+其实就是和cloud的Ribbon负载均衡器整合
+
+```java
+    // RestTemplate 注解为bean， 并加上 @LoadBalanced
+    @Bean
+    @LoadBalanced
+    RestTemplate restTemplate()
+    {
+        return new RestTemplate();
+    }
+  
+    
+    // 注入 @Autowired
+    RestTemplate template;
+  
+    // 使用(ORDER为服务名)
+    @GetMapping
+    public String getOrder()
+    {
+        String result = template.getForObject("http://ORDER/order", String.class);
+        return result;
+    }
+```
+
+# 3、负载均衡器 - Ribbon
+
+实际开发中一般不会让网址直接访问代码服务器(小项目除外),通常是通过nginx进行反向代理和负载均衡.而在Springcloud里我们用了另外2个组件来代替nginx的这两个功能,网关代替反向代理，Ribbon就是代替负载均衡的组件.通常在微服务架构中,业务都会被拆分成一个独立的服务,服务与服务的通讯是基于http restful的.Spring cloud有两种服务调用方式,一种是ribbon+restTemplate,另一种是feign
+
+## 3.1、Ribbon的工作流程
 
