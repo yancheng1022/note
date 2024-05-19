@@ -103,6 +103,26 @@ http {
 
 **服务健康检查**:Nacos Server会开启一个定时任务用来检查注册服务实例的健康情况，对于超过15s没有收到客户端心跳的实例会将它的healthy属性置为false(客户端服务发现时不会发现)，如果某个实例超过30秒没有收到心跳，直接别除该实例(被剔除的实例如果恢复发送心跳则会重新注册)
 
+## 1.3、nacos领域模型
 
-# 2、案例demo
+nacos的服务由三元组唯一确定（namespace、group、serviceName）
+nacos的配置由三元组唯一确定（namespace、group、dataId）
+
+![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405191706470.png)
+
+
+| 模型名称      | 解释                                     |
+| --------- | -------------------------------------- |
+| Namespace | 实现环境隔离，默认值public（一般用于区分测试、生产环境等）       |
+| Group     | 不同的service可以组成一个Group，默认值Default-Group |
+| Service   | 服务名称                                   |
+| Cluster   | 对指定的微服务虚拟划分，默认值Default                 |
+| Instance  | 某个服务的具体实例（ip+端口）                       |
+
+Nacos 服务发现使用的领域模型是命名空间-分组-服务-集群-实例这样的多层结构。服务 Service 和实例 Instance 是核心模型，命名空间 Namespace 、分组 Group、集群 Cluster 则是在不同粒度实现了服务的隔离
+
+
+# 2、远程调用 - RestTemplate
+
+
 
