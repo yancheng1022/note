@@ -211,7 +211,7 @@ Ribbon核心组件IRule：根据特定算法从服务列表中选取一个需要
 
 ## 3.3、切换负载均衡策略
 
-方法一：
+**方法一：**
 
 1、创建配置类
 
@@ -226,4 +226,21 @@ public class MyRibbonConfig {
     }
 
 }
+```
+
+2、启动类上加注解
+
+```java
+@RibbonClient(name = "user-provider", configuration = MyRibbonConfig.class)
+```
+
+
+**方法二：**
+
+application.yml文件中，添加新的配置也可以修改规则
+
+```yml
+userservice:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #负载均衡规则
 ```
