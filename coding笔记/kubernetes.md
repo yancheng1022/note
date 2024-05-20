@@ -125,5 +125,55 @@ K3s集群分为k3s Server(控制平面)和k3s Agent(工作节点)。所有的组
 - 最低运行要求：内存: 512MB / CPU: 1 核心
 - K3s版本：v1.25.0+k3s1
 
+1、准备工作
+```shell
+# 关闭防火墙，设置selinux（需要联网）
+systemctl disable firewalld --now
+yum install -y container-selinux selinux-policy-base
+yum install -y https://rpm.rancher.io/k3s/latest/common/centos/7/noarch/k3s-selinux-0.2-1.el7_8.noarch.rpm
+```
 
+2、下载安装包
 
+下载安装脚本install.sh：https://get.k3s.io/
+下载k3s二进制文件：k3s
+下载必要的image：离线安装需要的image文件
+
+>这些文件都可以在github仓库中获取：https://github.com/k3s-io/k3s
+
+3、执行安装脚本 
+
+```shell
+# 将k3s二进制文件移动到`/usr/local/bin`目录，并添加执行权限
+mv k3s /usr/local/bin
+chmod +x /usr/local/bin/k3s
+# 将镜像移动到/var/lib/rancher/k3s/agent/images/目录（无需解压）
+mkdir -p /var/lib/rancher/k3s/agent/images/
+cp ./k3s-airgap-images-amd64.tar.gz /var/lib/rancher/k3s/agent/images/
+# 在k8s-master节点执行
+# -------------
+#修改权限
+chmod +x install.sh
+#离线安装
+INSTALL_K3S_SKIP_DOWNLOAD=true ./install.sh
+#安装完成后，查看节点状态
+kubectl get node
+#查看token
+cat /var/lib/rancher/k3s/server/node-token
+# --------------
+# 在k8s-worker1和k8s-worker2节点执行
+INSTALL_K3S_SKIP_DOWNLOAD=true \
+K3S_URL=https://192.168.56.109:6443 \
+K3S_TOKEN=K1012bdc3ffe7a5d89ecb125e56c38f9fe84a9f9aed6db605f7698fa744f2f2f12f::server:fdf33f4921dd607cadf2ae3c8eaf6ad9 \
+./install.sh
+
+```
+
+## 1.6、pord容器集
+
+Pod 是包含一个或多个容器的容器组，是 Kubernetes 中创建和管理的最小对象。
+Pod 有以下特点：
+Pod是kubernetes中最小的调度单位（原子单元），Kubernetes直接管理Pod而不是容器。
+同一个Pod中的容器总是会被自动安排到集群中的同一节点（物理机或虚拟机）上，并且一起调度。
+Pod可以理解为运行特定应用的“逻辑主机”，这些容器共享存储、网络和配置声明(如资源限制)。
+每个 Pod 有唯一的 IP 地址。 IP地址分配给Pod，在同一个 Pod 内，所有容器共享一个 IP 地址和端口空间，Pod 内的容器可以使用localhost互相通信。
