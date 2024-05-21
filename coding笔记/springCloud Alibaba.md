@@ -253,7 +253,7 @@ OpenFeign的设计宗旨式简化Java Http客户端的开发。用户只需创�
 
 ## 4.1、实现流程
 
-1、消费者添加依赖
+1、调用方添加依赖
 
 ```xml
 <dependency>  
@@ -275,3 +275,28 @@ public class NacosConsumer8080 {
   
 }
 ```
+
+3、调用方定义pai
+
+```java
+@FeignClient("depart-provider")  
+public interface ProviderServiceApi {  
+  
+    @GetMapping("/provider/depart/list")  
+    List<Depart> getInfo();  
+}
+```
+
+4、调用方调用pai
+
+```java
+    @GetMapping("/list")  
+    public List<Depart> listHandle() {  
+//        String url = SERVICE_PROCIER + "/list";  
+//        return template.getForObject(url, List.class);  
+        return providerServiceApi.getInfo();  
+    }
+```
+
+# 5、配置中心 - nacos
+
