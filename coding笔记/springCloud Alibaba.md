@@ -316,7 +316,7 @@ public interface ProviderServiceApi {
 1、创建namespace
 2、在配置中心对应的namespace下创建配置
 
-nacos中，dataId的完整格式如下：
+nacos中，dataId不能随便写，完整格式如下：
 
 ```txt
 ${prefix}-${spring.profiles.active}.${file-extension}
@@ -327,3 +327,76 @@ spring.profiles.active 即为当前环境对应的 profile
 file-extension为配置内容的数据格式。可以通过配置项 spring.cloud.nacos.config.file-extension 来配置。目前只支持 properties 和 yaml 类型。
 
 ![image.png|575](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405232230561.png)
+
+3、添加依赖
+
+```xml
+<dependency>  
+    <groupId>com.alibaba.cloud</groupId>  
+    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>  
+</dependency>
+```
+
+4、不能使用原来的application.yml作为配置文件，而是新建一个bootstrap.yml作为配置文件
+
+> 配置文件优先级(由高到低):  
+bootstrap.properties -> bootstrap.yml -> application.properties -> application.yml
+
+
+```yml
+# 从破配置中心加载配置文件  
+spring:  
+  cloud:  
+    nacos:  
+      config:  
+        namespace: dev  
+        server-addr: localhost:8848  
+        group: DEFAULT_GROUP  
+        username: nacos  
+        password: nacos  
+        prefix: depart-provider  
+        file-extension: yml  
+  profiles:  
+    active: dev
+```
+
+>不同环境下配置文件只需要修改namespace和active即可
+
+注意：在SpringBoot 2.4.x的版本之后，默认禁用bootstrap，需要手动导入依赖：
+
+```xml
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-starter-bootstrap</artifactId>
+</dependency>
+```
+
+## 5.3、配置动态刷新
+
+上面的使用我们做到了远程存放，但是此时如果修改了配置，我们的程序是无法读取到 的，因此，我们需要开启配置的动态刷新功能
+@RefreshScope
+
+```java
+    @RestController
+    @RefreshScope// 只需要在需要动态读取配置的类上添加此注解就可以
+    public class NacosConfigController {
+        @Value("${config.appName}")
+        private String appName;
+        //2 注解方式
+        @GetMapping("/nacos-config-test2")
+        public String nacosConfingTest2() {
+            return appName;
+        }
+    }
+```
+
+
+## 5.4、共享配置
+
+当配置越来越多的时候，我们就发现有很多配置是重复的，这时候就可以考虑将公共配置文件 提取出来，然后实现共享
+
+### 5.4.1、同一微服务不同环境之间共享配置
+
+如果想在同一个微服务的不同环境之间实现配置共享，其实很简单。只需要提取一个以spring.application.name 命名的配置文件，然后将其所有环境的公共配置放在里面即可
+
+
