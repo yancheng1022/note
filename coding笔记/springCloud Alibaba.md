@@ -300,3 +300,30 @@ public interface ProviderServiceApi {
 
 # 5、配置中心 - nacos
 
+## 5.1、基本概念
+
+微服务下配置文件存在的问题：
+
+1、配置文件分散在每个微服务中，并且每个服务都有不同的环境（开发，测试，生产等），手动维护很困难
+2、配置文件无法实时更新，修改配置文件后必须重启微服务才能生效
+
+配置中心的思路是：
+
+首先把项目中各种配置全部都放到一个集中的地方进行统一管理，并提供一套标准的接口。  当各个服务需要获取配置的时候，就来配置中心的接口拉取自己的配置。当配置中心中的各种参数有更新的时候，也能通知到各个服务实时的过来同步最新的信息，使之动态更新
+
+## 5.2、使用
+
+1、创建namespace
+2、在配置中心对应的namespace下创建配置
+
+nacos中，dataId的完整格式如下：
+
+```txt
+${prefix}-${spring.profiles.active}.${file-extension}
+```
+
+prefix 默认为 spring.application.name 的值，也可以通过配置项 spring.cloud.nacos.config.prefix 来配置。
+spring.profiles.active 即为当前环境对应的 profile
+file-extension为配置内容的数据格式。可以通过配置项 spring.cloud.nacos.config.file-extension 来配置。目前只支持 properties 和 yaml 类型。
+
+![image.png|575](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405232230561.png)
