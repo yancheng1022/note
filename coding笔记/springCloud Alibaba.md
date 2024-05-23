@@ -400,3 +400,34 @@ spring:
 如果想在同一个微服务的不同环境之间实现配置共享，其实很简单。只需要提取一个以spring.application.name 命名的配置文件，然后将其所有环境的公共配置放在里面即可
 
 
+### 5.4.2、不同微服务中共享配置
+
+不同微服务之间实现配置共享的原理类似于文件引入，就是定义一个公共配置，然后在当前配置中引入。 1 在nacos中定义一个DataID为all-service.yaml的配置，用于所有微服务共享
+
+```yml
+    spring:
+      jpa:
+        properties:
+          hibernate:
+            hbm2ddl:
+              auto: update
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      cloud:
+        nacos:
+          discovery:
+            server-addr: localhost:8848
+```
+
+ shared-dataids: all-service.yaml和refreshable-dataids: all-service.yaml已过时
+ 
+ 可以使用以下取代
+ 
+     extension-configs[0]:
+         data-id: all-service.yaml
+         group: DEFAULT_GROUP
+         refresh: true
+     
+     shared-configs[0]:
+         data-id: all-service.yaml
+         group: DEFAULT_GROUP
+         refresh: true   
