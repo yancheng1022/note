@@ -404,32 +404,24 @@ public class DepartController {
 
 ### 5.4.2、不同微服务中共享配置
 
-不同微服务之间实现配置共享的原理类似于文件引入，就是定义一个公共配置，然后在当前配置中引入。 1 在nacos中定义一个DataID为all-service.yaml的配置，用于所有微服务共享
+不同微服务之间实现配置共享的原理类似于文件引入，就是定义一个公共配置，然后在当前配置中引入。 1 在nacos中定义一个DataID为all-service.yaml（随意命名）的配置，用于所有微服务共享。同时shared-configs声明公共配置
 
 ```yml
-    spring:
-      jpa:
-        properties:
-          hibernate:
-            hbm2ddl:
-              auto: update
-            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-      cloud:
-        nacos:
-          discovery:
-            server-addr: localhost:8848
+spring:  
+  cloud:  
+    nacos:  
+      config:  
+        server-addr: 127.0.0.1:8848  
+        file-extension: yml  
+        namespace: cef6473d-6914-4cd9-968c-b98017fe6b37 #配置文件命名空间要和服务实例的一致  
+        group: DEFAULT_GROUP  #配置文件的组要和服务实例的一致  
+        username: nacos  
+        password: nacos  
+        shared-configs:  
+          - common.yml  
+  application:  
+    name: depart-provider #服务的名称  
+  profiles:  
+    active: prod
 ```
 
- shared-dataids: all-service.yaml和refreshable-dataids: all-service.yaml已过时
- 
- 可以使用以下取代
- 
-     extension-configs[0]:
-         data-id: all-service.yaml
-         group: DEFAULT_GROUP
-         refresh: true
-     
-     shared-configs[0]:
-         data-id: all-service.yaml
-         group: DEFAULT_GROUP
-         refresh: true   
