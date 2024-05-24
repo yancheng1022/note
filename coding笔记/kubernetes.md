@@ -163,10 +163,9 @@ cat /var/lib/rancher/k3s/server/node-token
 # --------------
 # 在k8s-worker1和k8s-worker2节点执行
 INSTALL_K3S_SKIP_DOWNLOAD=true \
-K3S_URL=https://192.168.56.109:6443 \
-K3S_TOKEN=K1012bdc3ffe7a5d89ecb125e56c38f9fe84a9f9aed6db605f7698fa744f2f2f12f::server:fdf33f4921dd607cadf2ae3c8eaf6ad9 \
+K3S_URL=https://117.72.75.47:6443 \
+K3S_TOKEN=K1067df23d36545a47ad93191b0a902c426822e45c0d269e8b1cad2ac29dfbf9d90::server:da58fdc7ec6353010c580b70279ae367 \
 ./install.sh
-
 ```
 
 ## 1.6、pord容器集
@@ -178,3 +177,54 @@ Pod是kubernetes中最小的调度单位（原子单元），Kubernetes直接管
 同一个Pod中的容器总是会被自动安排到集群中的同一节点（物理机或虚拟机）上，并且一起调度。
 Pod可以理解为运行特定应用的“逻辑主机”，这些容器共享存储、网络和配置声明(如资源限制)。
 每个 Pod 有唯一的 IP 地址。 IP地址分配给Pod，在同一个 Pod 内，所有容器共享一个 IP 地址和端口空间，Pod 内的容器可以使用localhost互相通信。
+
+### 1.6.1、创建和管理pod
+
+```shell
+kubectl run mynginx --image=nginx
+# 查看Pod
+kubectl get pod
+# 描述
+kubectl describe pod mynginx
+# 查看Pod的运行日志
+kubectl logs mynginx
+
+# 显示pod的IP和运行节点信息
+kubectl get pod -owide
+# 使用Pod的ip+pod里面运行容器的端口
+curl 10.42.1.3
+
+#在容器中执行
+kubectl exec mynginx -it -- /bin/bash
+
+kubectl get po --watch
+# -it 交互模式 
+# --rm 退出后删除容器，多用于执行一次性任务或使用客户端
+kubectl run mynginx --image=nginx -it --rm -- /bin/bash 
+
+# 删除
+kubectl delete pod mynginx
+# 强制删除
+kubectl delete pod mynginx --force
+```
+
+## 1.7、Deployment(部署)与ReplicaSet(副本集)
+
+**Deployment**是对ReplicaSet和Pod更高级的抽象。它使Pod拥有多副本，自愈，扩缩容、滚动升级等能力。
+
+**ReplicaSet**(副本集)是一个Pod的集合。
+
+它可以设置运行Pod的数量，确保任何时间都有指定数量的 Pod 副本在运行。通常我们不直接使用ReplicaSet，而是在Deployment中声明。
+
+```shell
+#创建deployment,部署3个运行nginx的Pod
+kubectl create deployment nginx-deployment --image=nginx:1.22 --replicas=3
+#查看deployment
+kubectl get deploy
+#查看replicaSet
+kubectl get rs 
+#删除deployment
+kubectl delete deploy nginx-deployment
+```
+
+### 1.7.1、缩放
