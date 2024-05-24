@@ -344,18 +344,18 @@ bootstrap.properties -> bootstrap.yml -> application.properties -> application.y
 
 
 ```yml
-# 从破配置中心加载配置文件  
 spring:  
   cloud:  
     nacos:  
       config:  
-        namespace: dev  
-        server-addr: localhost:8848  
-        group: DEFAULT_GROUP  
+        server-addr: 127.0.0.1:8848  
+        file-extension: yml  
+        namespace: 0f4ed5b7-9e5d-4319-90e5-69ede3d2a23f #配置文件命名空间要和服务实例的一致  
+        group: DEFAULT_GROUP  #配置文件的组要和服务实例的一致  
         username: nacos  
         password: nacos  
-        prefix: depart-provider  
-        file-extension: yml  
+  application:  
+    name: depart-provider #服务的名称  
   profiles:  
     active: dev
 ```
@@ -377,17 +377,19 @@ spring:
 @RefreshScope
 
 ```java
-    @RestController
-    @RefreshScope// 只需要在需要动态读取配置的类上添加此注解就可以
-    public class NacosConfigController {
-        @Value("${config.appName}")
-        private String appName;
-        //2 注解方式
-        @GetMapping("/nacos-config-test2")
-        public String nacosConfingTest2() {
-            return appName;
-        }
-    }
+@RequestMapping("/provider/depart")  
+@RestController  
+@RefreshScope  
+public class DepartController {  
+
+    @Value("${pic.url}")  
+    public String picUrl;  
+  
+    @GetMapping("/pic")  
+    public String picUrl() {  
+        return picUrl;  
+    }  
+}
 ```
 
 
