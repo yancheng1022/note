@@ -52,3 +52,16 @@ export PATH=$KAFKA_HOME/bin:$PATH
 # 刷新配置
 source /etc/profile
 ```
+
+6、安装zookeeper（过程不再记录）
+7、启动kafka
+
+```
+bin/kafka-server-start.sh -daemon config/server.properties
+```
+
+8、查看是否安装成功
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240524160039.png)
+
+
