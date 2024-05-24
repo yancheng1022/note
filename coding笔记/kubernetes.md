@@ -210,6 +210,8 @@ kubectl delete pod mynginx --force
 
 ## 1.7、Deployment(部署)与ReplicaSet(副本集)
 
+#### 1.7.1、概念和基本操作
+
 **Deployment**是对ReplicaSet和Pod更高级的抽象。它使Pod拥有多副本，自愈，扩缩容、滚动升级等能力。
 
 **ReplicaSet**(副本集)是一个Pod的集合。
@@ -227,4 +229,99 @@ kubectl get rs
 kubectl delete deploy nginx-deployment
 ```
 
-### 1.7.1、缩放
+### 1.7.2、缩放
+
+1、手动缩放
+
+```shell
+#将副本数量调整为5
+kubectl scale deployment/nginx-deployment --replicas=5
+kubectl get deploy
+```
+
+2、自动缩放
+自动缩放通过增加和减少副本的数量，以保持所有 Pod 的平均 CPU 利用率不超过 75%。
+自动伸缩需要声明Pod的资源限制，同时使用 Metrics Server 服务（K3s默认已安装）。
+
+
+```shell
+#自动缩放
+kubectl autoscale deployment/nginx-auto --min=3 --max=10 --cpu-percent=75 
+#查看自动缩放
+kubectl get hpa
+#删除自动缩放
+kubectl delete hpa nginx-deployment
+```
+
+### 1.7.3、滚动更新
+
+```shell
+#查看版本和Pod
+kubectl get deployment/nginx-deployment -owide
+kubectl get pods
+
+#更新容器镜像
+kubectl set image deployment/nginx-deployment nginx=nginx:1.23
+#滚动更新
+kubectl rollout status deployment/nginx-deployment
+#查看过程
+kubectl get rs --watch
+```
+
+### 1.7.4、版本回滚
+
+```shell
+#查看历史版本
+kubectl rollout history deployment/nginx-deployment
+#查看指定版本的信息
+kubectl rollout history deployment/nginx-deployment --revision=2
+#回滚到历史版本
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
+```
+
+## 1.8、service（服务）
+
+Service将运行在一组 Pods 上的应用程序公开为网络服务的抽象方法。Service为一组 Pod 提供相同的 DNS 名，并且在它们之间进行负载均衡。Kubernetes 为 Pod 提供分配了IP 地址，但IP地址可能会发生变化。集群内的容器可以通过service名称访问服务，而不需要担心Pod的IP发生变化
+
+Kubernetes Service 定义了这样一种抽象：
+逻辑上的一组可以互相替换的 Pod，通常称为微服务。 Service 对应的 Pod 集合通常是通过选择算符来确定的。 
+举个例子，在一个Service中运行了3个nginx的副本。这些副本是可互换的，我们不需要关心它们调用了哪个nginx，也不需要关注 Pod的运行状态，只需要调用这个服务就可以了
+
+### 1.8.1、创建service对象
+
+ClusterIP：将服务公开在集群内部。kubernetes会给服务分配一个集群内部的 IP，集群内的所有主机都可以通过这个Cluster-IP访问服务。集群内部的Pod可以通过service名称访问服务。
+
+NodePort：通过每个节点的主机IP 和静态端口（NodePort）暴露服务。 集群的外部主机可以使用节点IP和NodePort访问服务。
+
+ExternalName：将集群外部的网络引入集群内部。
+
+LoadBalancer：使用云提供商的负载均衡器向外部暴露服务。
+
+```shell
+# port是service访问端口,target-port是Pod端口
+# 二者通常是一样的
+kubectl expose deployment/nginx-deployment \
+--name=nginx-service --type=ClusterIP --port=80 --target-port=80
+# 随机产生主机端口
+kubectl expose deployment/nginx-deployment \
+--name=nginx-service2 --type=NodePort --port=8080 --target-port=80
+```
+
+### 1.8.2、访问service
+
+外部主机访问：192.168.56.109:32296
+
+>1.NodePort端口是随机的，范围为:30000-32767。
+ 2.集群中每一个主机节点的NodePort端口都可以访问。
+ 3.如果需要指定端口，不想随机产生，需要使用配置文件来声明。
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240524133628.png)
+
+```shell
+#集群内访问
+curl 10.43.65.187:80
+#容器内访问
+kubectl run nginx-test --image=nginx:1.22 -it --rm -- sh
+#
+curl nginx-service:80
+```
