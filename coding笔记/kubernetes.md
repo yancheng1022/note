@@ -172,6 +172,7 @@ K3S_TOKEN=K1012bdc3ffe7a5d89ecb125e56c38f9fe84a9f9aed6db605f7698fa744f2f2f12f::s
 ## 1.6、pord容器集
 
 Pod 是包含一个或多个容器的容器组，是 Kubernetes 中创建和管理的最小对象。
+
 Pod 有以下特点：
 Pod是kubernetes中最小的调度单位（原子单元），Kubernetes直接管理Pod而不是容器。
 同一个Pod中的容器总是会被自动安排到集群中的同一节点（物理机或虚拟机）上，并且一起调度。
