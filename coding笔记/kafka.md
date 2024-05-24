@@ -29,7 +29,7 @@ Kafka是由LinkedIn公司开发的一款分布式的流数据处理系统，它�
 
 # 2、安装kafka
 
-## 2.1、linux安装
+## 2.1、单机版安装
 
 1、下载地址：https://kafka.apache.org/downloads，到/opt/software
 2、解压：tar -zxvf kafka_2.12-3.7.0.tgz -C /opt/module/
@@ -67,4 +67,11 @@ bin/kafka-server-start.sh -daemon config/server.properties
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240524160039.png)
 
+# 3、kafka的操作
 
+## 3.1、主题（topic）
+
+```shell
+# 帮助命令
+kafka-topics.sh --help
+```
