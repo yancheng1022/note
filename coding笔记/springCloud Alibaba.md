@@ -439,6 +439,8 @@ sentinel 的使用可以分为两个部分:
 
 2、控制台（Dashboard）：Dashboard 主要负责管理推送规则、监控、管理机器信息等。基于 Spring Boot 开发，打包后可以直接运行。
 
+![image.png|475](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251219281.png)
+
 
 ## 6.2、工作流程
 
@@ -451,3 +453,43 @@ sentinel 的使用可以分为两个部分:
 5、AuthoritySlot 则根据配置的黑白名单和调用来源信息，来做黑白名单控制；
 6、DegradeSlot 则通过统计信息以及预设的规则，来做熔断降级；
 7、SystemSlot 则通过系统的状态，例如 load1 等，来控制总的入口流量；
+
+## 6.3、基本使用
+
+### 6.3.1、dashboard搭建
+
+1、https://github.com/alibaba/sentinel/releases 下载jar包
+2、执行命令启动
+```shell
+java -jar sentinel-dashboard-1.8.7.jar --server.port=8888
+pause
+```
+
+3、访问localhost:8888  sentinel/sentinel
+
+### 6.3.2、微服务整合sentinel
+
+1、添加依赖
+
+```xml
+<dependency>  
+    <groupId>com.alibaba.cloud</groupId>  
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>  
+</dependency>
+```
+
+2、添加配置
+
+```yml
+spring:  
+  cloud:  
+    sentinel:  
+      transport:  
+        port: 8179  
+        dashboard: 127.0.0.1:8888  
+      eager: true # 默认懒加载，true为开机饥饿加载
+```
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251214913.png)
+
+
