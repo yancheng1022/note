@@ -493,3 +493,5 @@ spring:
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251214913.png)
 
 
+## 6.4、流量控制
+
