@@ -521,7 +521,7 @@ spring:
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251516505.png)
 
 
-### 6.4.2、服务中处理流控
+### 6.4.2、自定义异常处理
 
 @SentinelResource的属性
 1、value：作用指定资源名称，必填
@@ -544,3 +544,34 @@ spring:
 8、exceptionsToIgnore：指定排除掉哪些异常。排除的异常不会计入异常统计，也不会进入fallback逻辑，而是原样抛出
 
 9、exceptionsToTrace：需要trace的异常
+
+```java
+@RequestMapping("/provider/depart")  
+@RestController  
+@RefreshScope  
+public class DepartController {  
+    @Value("${love.name}")  
+    public String love;  
+  
+    @GetMapping("/love")  
+    @SentinelResource(value = "love",blockHandler = "loveBlockHandler",blockHandlerClass = DepartController.class)  
+    public String love() {  
+        return love;  
+    }  
+  
+    public static String loveBlockHandler(BlockException exception){  
+        String msg = "不好意思，前方拥挤，请您稍后再试";  
+        return msg;  
+    }  
+  
+}
+```
+
+
+
+注意dashboard加流控规则的位置：
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251603875.png)
+
+## 6.5、熔断规则
+
