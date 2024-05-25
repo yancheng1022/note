@@ -426,3 +426,28 @@ spring:
   profiles:  
     active: prod
 ```
+
+# 6、流量治理 - sentinel
+
+Sentinel 以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性
+
+## 6.1、组成部分
+
+sentinel 的使用可以分为两个部分:
+
+1、核心库（Java 客户端）：不依赖任何框架/库，能够运行于 Java 8 及以上的版本的运行时环境，同时对 Dubbo / Spring Cloud 等框架也有较好的支持。
+
+2、控制台（Dashboard）：Dashboard 主要负责管理推送规则、监控、管理机器信息等。基于 Spring Boot 开发，打包后可以直接运行。
+
+
+## 6.2、工作流程
+
+在 Sentinel 里面，所有的资源都对应一个资源名称（resourceName），每次资源调用都会创建一个 Entry 对象。Entry可以通过对主流框架的适配自动创建，也可以通过注解的方式或调用 SphU API 显式创建。Entry 创建的时候，同时也会创建一系列功能插槽（slot chain），这些插槽有不同的职责，例如:
+
+1、NodeSelectorSlot 负责收集资源的路径，并将这些资源的调用路径，以树状结构存储起来，用于根据调用路径来限流降级；
+2、ClusterBuilderSlot 则用于存储资源的统计信息以及调用者信息，例如该资源的 RT, QPS, thread count 等等，这些信息将用作为多维度限流，降级的依据；
+3、StatisticSlot 则用于记录、统计不同纬度的 runtime 指标监控信息；
+4、FlowSlot 则用于根据预设的限流规则以及前面 slot 统计的状态，来进行流量控制；
+5、AuthoritySlot 则根据配置的黑白名单和调用来源信息，来做黑白名单控制；
+6、DegradeSlot 则通过统计信息以及预设的规则，来做熔断降级；
+7、SystemSlot 则通过系统的状态，例如 load1 等，来控制总的入口流量；
