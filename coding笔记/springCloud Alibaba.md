@@ -592,3 +592,31 @@ public class DepartController {
 >如果接下来的请求不正常，断路器的状态是open
 
 
+## 6.6、热点key限制
+
+热点即经常访问的数据。很多时候我们希望统计某个热点数据中访问频次最高的 TopK数据，并对其访问进行限制。比如:用户 ID 为参数，针对一段时间内频繁访问的用户ID 进行限制热点参数限流会统计传入参数中的热点参数，并根据配置的限流阈值与模式，对包含热点参数的资源调用进行限流。热点参数限流可以看做是一种特殊的流量控制，仅对包含热点参数的资源调用生效。
+
+### 6.6.1、基本使用
+
+1、对应链路增加热点key限制
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405251751346.png)
+
+2、接口声明资源名称
+
+```java
+
+  
+@RequestMapping("/provider/depart")  
+@RestController  
+@RefreshScope  
+public class DepartController {  
+    @GetMapping("/hot")  
+    @SentinelResource(value = "hot")  
+    public String hot(String id) {  
+        return "热点key";  
+    }  
+}
+```
+
+3、请求时携带参数：http://localhost:9081/provider/depart/hot?id=1
