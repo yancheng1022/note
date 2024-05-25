@@ -523,3 +523,24 @@ spring:
 
 ### 6.4.2、服务中处理流控
 
+@SentinelResource的属性
+1、value：作用指定资源名称，必填
+
+2、entryType：entry类型，标记流量的方向，指明是出口流量，还是入口流量；取值 IN/OUT ,默认是OUT。非必填
+
+3、blockHandler：处理BlockException的函数名称，函数要求为必须是public返回类型与原方法一致。参数类型需要和原方法相匹配，并在最后加上BlockException类型的参数。默认需和原方法在同一个类中，如果希望使用其他类的函数，可配置blockHandlerClass,并指定blockHandlerClass里面的方法
+
+4、blockHandlerClass：存放blockHandler的类。对应的处理函数必须static修饰，否则无法解析。函数要求为：必须是public，返回类型与原方法一致，参数类型需要和原方法相匹配，并在最后加上BlockException类型的参数
+
+5、fallback：用于在抛出异常的时候提供fallback处理逻辑。fallback函数可以针对所有类型的异常（除了execptionsToIgnore 里面排除掉的异常类型）进行处理，函数要求为：返回类型与原方法一致参数类型需要和原方法相匹配，Sentinel 1.6版本之后，也可在方法最后加上Throwable类型的参数。默认需和原方法在同一个类中，若希望使用其他类的函数，可配置fallbackClass，并指定fallbackClass里面的方法
+
+6、fallbackClass：存放fallback的类。对应的处理函数必须static修饰，否则无法解析，其他要求：同fallback。
+
+7、defaultFallback：用于通用的 fallback 逻辑。默认fallback函数可以针对所有类型的异常（除了 exceptionsToIgnore 里面排除掉的异常类型）进行处理。若同时配置了 fallback 和 defaultFallback，以fallback为准。函数要求：
+返回类型与原方法一致
+方法参数列表为空，或者有一个Throwable类型的参数
+默认需要和原方法在同一个类中，若希望使用其他类的函数，可配置fallbackclass，并指定fallbackClass里面的方法。
+
+8、exceptionsToIgnore：指定排除掉哪些异常。排除的异常不会计入异常统计，也不会进入fallback逻辑，而是原样抛出
+
+9、exceptionsToTrace：需要trace的异常
