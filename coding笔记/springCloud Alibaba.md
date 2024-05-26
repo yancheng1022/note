@@ -619,7 +619,6 @@ public class DepartController {
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405262242741.png)
 
-
 ## 6.6、热点key限制
 
 热点即经常访问的数据。很多时候我们希望统计某个热点数据中访问频次最高的 TopK数据，并对其访问进行限制。比如:用户 ID 为参数，针对一段时间内频繁访问的用户ID 进行限制热点参数限流会统计传入参数中的热点参数，并根据配置的限流阈值与模式，对包含热点参数的资源调用进行限流。热点参数限流可以看做是一种特殊的流量控制，仅对包含热点参数的资源调用生效。
@@ -679,3 +678,33 @@ public class MyRequestOriginParser implements RequestOriginParser {
 
 >特别注意：origin获取为空时要么直接报错（强权没问题），或者给默认值如上"xxxx"。否则授权失效
 
+### 6.8、全局自定义异常处理
+
+上面熔断，流控等自定义异常处理要指定rollback，还是比较麻烦，这里考虑使用全局自定义异常处理
+
+```java
+/*
+全局异常处理器的定义:
+定义一个类  并且带有@RestControllerAdvice注解
+@ExceptionHandler注解指定要捕获的异常的类型
+*/
+@RestControllerAdvice
+public class GlobalException {
+ 
+    @ExceptionHandler(Exception.class)
+    public String globalException(Exception e){
+        String msg="";
+        if (e instanceof FlowException) {
+            msg = "请求被限流了";
+        } else if (e instanceof ParamFlowException) {
+            msg = "请求被热点参数限流";
+        } else if (e instanceof DegradeException) {
+            msg = "请求被降级了";
+        } else if (e instanceof AuthorityException) {
+            msg = "没有权限访问";
+        }
+        msg+="   全局异常处理器判断得到";
+        return msg;
+    }
+}
+```
