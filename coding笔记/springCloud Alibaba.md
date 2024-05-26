@@ -629,3 +629,24 @@ public class DepartController {
 
 - 白名单：来源（origin）在白名单内的调用者允许访问
 - 黑名单：来源（origin）在黑名单内的调用者不允许访问
+
+1、新增授权规则
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405261112780.png)
+
+2、客户端添加来源解析器
+
+```java
+@Component  
+public class MyRequestOriginParser implements RequestOriginParser {  
+  
+    @Override  
+    public String parseOrigin(HttpServletRequest request) {  
+        String origin = request.getHeader("origin");  
+        return StringUtils.isEmpty(origin) ? "xxxx" : origin;  
+    }  
+  
+}
+```
+
+>特别注意：origin获取为空时要么直接报错（强权没问题），或者给默认值如上"xxxx"。否则授权失效
