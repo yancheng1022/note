@@ -593,6 +593,31 @@ public class DepartController {
 
 ### 6.5.2、熔断自定义异常处理
 
+1、定义资源和处理逻辑
+
+```java
+@RequestMapping("/provider/depart")  
+@RestController  
+@RefreshScope  
+public class DepartController {  
+  
+    @GetMapping("/hello")  
+    @SentinelResource(value = "hello",fallback = "helloHandler")  
+    public String hot(String id) throws InterruptedException {  
+        Thread.sleep(1000);  
+        return "hello sentinel";  
+    }  
+  
+    public static String helloHandler(Throwable throwable){  
+        String msg = "熔断中...";  
+        return msg;  
+    }  
+}
+```
+
+2、配置熔断规则
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405262242741.png)
 
 
 ## 6.6、热点key限制
@@ -653,3 +678,4 @@ public class MyRequestOriginParser implements RequestOriginParser {
 ```
 
 >特别注意：origin获取为空时要么直接报错（强权没问题），或者给默认值如上"xxxx"。否则授权失效
+
