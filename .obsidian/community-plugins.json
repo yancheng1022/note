@@ -1,7 +1,7 @@
 [
   "obsidian-excalidraw-plugin",
-  "obsidian-git",
   "obsidian-image-auto-upload-plugin",
   "mousewheel-image-zoom",
-  "markdown-table-editor"
+  "markdown-table-editor",
+  "obsidian-git"
 ]

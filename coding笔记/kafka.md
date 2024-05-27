@@ -1,3 +1,14 @@
+---
+title: kafka
+categories:
+  - coding
+tags:
+  - kafka
+  - 大数据
+  - 消息队列
+date: 2024/05/25
+---
+
 # 1、概述
 
 ## 1.1、介绍
@@ -36,6 +47,7 @@ Kafka是由LinkedIn公司开发的一款分布式的流数据处理系统，它�
 3、修改名称： mv kafka_2.12-3.7.0/ kafka
 4、修改config/server.properties
 
+
 ```properties
 # 注意要保证每个节点brokerId不同
 broker.id=0
@@ -65,6 +77,7 @@ bin/kafka-server-start.sh -daemon config/server.properties
 
 8、查看是否安装成功
 
+
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240524160039.png)
 
 # 3、kafka的操作
@@ -74,4 +87,8 @@ bin/kafka-server-start.sh -daemon config/server.properties
 ```shell
 # 帮助命令
 kafka-topics.sh --help
+# 查看主题列表
+kafka-topics.sh --list --bootstrap-server localhost:9092
+# 创建主题
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic yc --replication-factor 1 --partitions 1
 ```
