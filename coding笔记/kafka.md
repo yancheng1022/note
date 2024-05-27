@@ -72,16 +72,17 @@ source /etc/profile
 7、启动kafka
 
 ```
-bin/kafka-server-start.sh -daemon config/server.properties
+bin/kafka-server-start.sh -daemon config/server.properties 
 ```
 
 8、查看是否安装成功
+
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20240524160039.png)
 
 # 3、kafka的操作
 
-## 3.1、主题（topic）
+## 3.1、主题（topic） 
 
 ```shell
 # 帮助命令
