@@ -72,7 +72,7 @@ source /etc/profile
 7、启动kafka
 
 ```
-bin/kafka-server-start.sh -daemon config/server.properties 
+bin/kafka-server-start.sh -daemon config/server.properties
 ```
 
 8、查看是否安装成功
@@ -82,7 +82,7 @@ bin/kafka-server-start.sh -daemon config/server.properties
 
 # 3、kafka的操作
 
-## 3.1、主题（topic） 
+## 3.1、主题（topic）
 
 ```shell
 # 帮助命令
@@ -91,6 +91,4 @@ kafka-topics.sh --help
 kafka-topics.sh --list --bootstrap-server localhost:9092
 # 创建主题
 kafka-topics.sh --create --bootstrap-server localhost:9092 --topic yc --replication-factor 1 --partitions 1
-
-
 ```
