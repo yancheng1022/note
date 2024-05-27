@@ -678,7 +678,7 @@ public class MyRequestOriginParser implements RequestOriginParser {
 
 >特别注意：origin获取为空时要么直接报错（强权没问题），或者给默认值如上"xxxx"。否则授权失效
 
-### 6.8、全局自定义异常处理
+## 6.8、全局自定义异常处理
 
 上面熔断，流控等自定义异常处理要指定rollback，还是比较麻烦，这里考虑使用全局自定义异常处理
 
