@@ -1,3 +1,14 @@
+---
+title: kafka
+categories:
+  - coding
+tags:
+  - kafka
+  - 大数据
+  - 消息队列
+date: 2024/05/25
+---
+
 # 1、概述
 
 ## 1.1、介绍
@@ -35,6 +46,7 @@ Kafka是由LinkedIn公司开发的一款分布式的流数据处理系统，它�
 2、解压：tar -zxvf kafka_2.12-3.7.0.tgz -C /opt/module/
 3、修改名称： mv kafka_2.12-3.7.0/ kafka
 4、修改config/server.properties
+
 
 ```properties
 # 注意要保证每个节点brokerId不同
