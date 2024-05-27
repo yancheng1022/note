@@ -74,4 +74,10 @@ bin/kafka-server-start.sh -daemon config/server.properties
 ```shell
 # 帮助命令
 kafka-topics.sh --help
+# 查看主题列表
+kafka-topics.sh --list --bootstrap-server localhost:9092
+# 创建主题
+kafka-topics.sh --create --bootstrap-server localhost:9092 --topic yc --replication-factor 1 --partitions 1
+
+
 ```
