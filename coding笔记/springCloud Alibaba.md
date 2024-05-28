@@ -708,3 +708,150 @@ public class GlobalException {
     }
 }
 ```
+
+## 6.9、规则持久化
+
+| 推送模式   | 说明                                                                                                                      | 优点           | 缺点                                |     |
+| ------ | ----------------------------------------------------------------------------------------------------------------------- | ------------ | --------------------------------- | --- |
+| 原始模式   | API将规则推送至客户端并直接更新到内存中                                                                                                   | 简单，无任何依赖     | 不保证一致性；规则保存在内存中，重启即消失。严重不建议用于生产环境 |     |
+| Pull模式 | 扩展写数据源（WritableDataSource），客户端主动向某个规则管理中心定期轮询拉取规则，这个规则中心可以是RDBMS、文件等                                                    | 简单           | 不保证一致性；实时性不保证，拉取过于频繁也可能会有性能问题。    |     |
+| Push模式 | 扩展读数据源（ReadableDataSource），规则中心统一推送，客户端通过注册监听器的方式时刻监听变化，比如使用Nacos、Zookeeper等配置中心。这种方式有更好的实时性和一致性保证。生产环境下一般采用push模式的数据源。 | 规则持久化；一致性；快速 | 引入第三方依赖                           |     |
+
+### 6.9.1、pull模式
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405272253044.png)
+
+
+
+pull模式的数据源（如本地文件、RDBMS等）一般是可写入的。使用时需要在客户端注册数据源：将对应的读数据源注册至对应的 RuleManager，将写数据源注册至transport的WritableDataSourceRegistry中
+
+1、引入依赖
+
+```xml
+<dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-extension</artifactId>
+</dependency>
+
+```
+
+2、实现InitFunc接口，在init中处理DataSource初始化逻辑，并利用spi机制实现加载
+
+```java
+public class FileDataSourceInit implements InitFunc {
+
+    private static final String RULE_FILE_PATH = System.getProperty("user.home") + File.separator;
+
+    private static final String FLOW_RULE_FILE_NAME = "FlowRule.json";
+
+    @Override
+    public void init() throws Exception {
+
+        //处理流控规则逻辑
+        dealFlowRules();
+    }
+
+
+    private void dealFlowRules() throws FileNotFoundException {
+        String ruleFilePath = RULE_FILE_PATH + FLOW_RULE_FILE_NAME;
+
+        //创建流控规则的可读数据源
+        FileRefreshableDataSource flowRuleRDS = new FileRefreshableDataSource(
+                ruleFilePath, source -> JSON.parseObject((String) source,
+                new TypeReference<List<FlowRule>>() {
+                })
+        );
+
+        // 将可读数据源注册至FlowRuleManager 这样当规则文件发生变化时，就会更新规则到内存
+        FlowRuleManager.register2Property(flowRuleRDS.getProperty());
+
+        WritableDataSource<List<FlowRule>> flowRuleWDS = new FileWritableDataSource<>(
+                ruleFilePath, this::encodeJson
+        );
+
+        // 将可写数据源注册至 transport 模块的 WritableDataSourceRegistry 中.
+        // 这样收到控制台推送的规则时，Sentinel 会先更新到内存，然后将规则写入到文件中.
+        WritableDataSourceRegistry.registerFlowDataSource(flowRuleWDS);
+    }
+
+
+    private <T> String encodeJson(T t) {
+        return JSON.toJSONString(t);
+    }
+
+}
+
+```
+
+3、在META-INF/services目录下创建com.alibaba.csp.sentinel.init.InitFunc，内容如下：
+
+```
+com.morris.user.config.FileDataSourceInit
+```
+
+这样当在Dashboard中修改了配置后，Dashboard会调用客户端的接口修改客户端内存中的值，同时将配置写入文件FlowRule.json中，这样操作的话规则是实时生效的，如果是直接修改FlowRule.json的内容，这样需要等定时任务3秒后执行才能读到最新的规则
+
+### 6.9.2、push模式
+
+生产环境下一般更常用的是push模式的数据源。对于push模式的数据源，如远程配置中心（ZooKeeper, Nacos, Apollo等等），推送的操作不应由Sentinel客户端进行，而应该经控制台统一进行管理，直接进行推送，数据源仅负责获取配置中心推送的配置并更新到本地。因此推送规则正确做法应该是配置中心控制台/Sentinel控制台 → 配置中心 → Sentinel数据源 → Sentinel，而不是经Sentinel数据源推送至配置中心。这样的流程就非常清晰了
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202405272253061.png)
+
+
+1、引入依赖
+
+```xml
+<dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency>
+
+```
+
+2、配置文件增加nacos数据源
+
+```yml
+spring:
+  application:
+    name: user-service
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+      web-context-unify: false # 默认将调用链路收敛，需要打开才可以进行链路流控
+      datasource:
+        flow-ds:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-flow
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+```
+
+3、最后在Nacos控制台新建一个`user-service-flow`的json配置，内容如下：
+
+```json
+[
+  {
+    "resource": "/sentinel/chainB",
+    "controlBehavior": 0,
+    "count": 1,
+    "grade": 1,
+    "limitApp": "default",
+    "strategy": 0
+  }
+]
+```
+
+这样直接在Nacos控制台修改规则就能实时生效了，缺点是直接在Sentinel Dashboard中修改规则配置，配置中心的配置不会发生变化
+
+
+原理简述
+1、控制台推送规则：将规则推送到Nacos或其他远程配置中心；
+2、Sentinel客户端链接Nacos，获取规则配置；并监听Nacos配置变化，如发生变化，就更新本地缓存（从而让本地缓存总是和Nacos一致）；
+3、控制台监听Nacos配置变化，如发生变化就更新本地缓存（从而让控制台本地缓存总是和Nacos一致）
+
+# 7、网关 - GateWay
+
