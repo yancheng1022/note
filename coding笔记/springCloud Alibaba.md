@@ -925,7 +925,7 @@ spring:
             - Path=/provider/depart/**
 ```
 
-## 7.3、谓词断言工厂
+## 7.3、谓词断言工厂 - predicates
 
 Route Predicate Factories（路由断言工厂）是Spring Cloud Gateway中的一种机制，用于定义路由规则中的断言条件。在Spring Cloud Gateway中，路由断言工厂允许基于HTTP请求的各种属性（例如路径、主机、请求方法、请求头等）来匹配和过滤路由。这些断言条件决定了请求是否会被路由到特定的目标服务
 
@@ -1110,3 +1110,7 @@ spring:
 ```
 
 该配置表示大约80%的请求会发送到https://weighthigh1111.org，20%的请求会发送到https://weightlow2222.org。
+
+## 7.4、过滤器 - filters
+
+1、内置过滤器
