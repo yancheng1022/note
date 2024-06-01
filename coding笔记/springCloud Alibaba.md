@@ -875,6 +875,7 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 ## 7.2、routes使用
 
 1、路由到指定URL
+
 ```
 spring:  
   application:  
@@ -889,3 +890,5 @@ spring:
 ```
 
 访问http://localhost:8040/** 跳转到https://www.baidu.com/**
+
+2、路由到微服务
