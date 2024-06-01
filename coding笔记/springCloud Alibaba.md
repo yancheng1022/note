@@ -872,5 +872,7 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 >2、将其发送到gateway web handler
 >3、Handler再通过指定过滤器链来将请求发送到我们实际的服务执行业务逻辑，然后返回
 
-## 7.2、搭建网关
+## 7.2、routes使用
+
+
 
