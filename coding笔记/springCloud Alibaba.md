@@ -874,6 +874,24 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 
 ## 7.2、routes使用
 
+```xml
+<dependencies>  
+    <!--naocs服务发现依赖-->  
+    <dependency>  
+        <groupId>com.alibaba.cloud</groupId>  
+        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>  
+    </dependency>    <!--使用nacos + ribbon做负载均衡时添加的loadbalancer依赖-->  
+    <dependency>  
+        <groupId>org.springframework.cloud</groupId>  
+        <artifactId>spring-cloud-starter-loadbalancer</artifactId>  
+        <version>3.0.1</version>  
+    </dependency>    <!--gateway网关依赖-->  
+    <dependency>  
+        <groupId>org.springframework.cloud</groupId>  
+        <artifactId>spring-cloud-starter-gateway</artifactId>  
+    </dependency></dependencies>
+```
+
 1、路由到指定URL
 
 ```yml
@@ -901,7 +919,8 @@ spring:
     gateway:  
       routes:  
         - id: provider-8081  
-          uri: http://localhost:9081/  
+          # uri: http://localhost:9081/ 
+          uri: lb://depart-provider 
           predicates:  
             - Path=/provider/depart/**
 ```
