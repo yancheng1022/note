@@ -870,7 +870,7 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 
 >1、客户端向spring cloud gateway发出请求，然后在gateway handler mapping中找到与请求相匹配的路由
 >2、将其发送到gateway web handler
->3、Handler再通过指定过滤器链来将请求发送到
+>3、Handler再通过指定过滤器链来将请求发送到我们实际的服务执行业务逻辑，然后返回
 
 ## 7.2、搭建网关
 
