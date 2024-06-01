@@ -876,7 +876,7 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 
 1、路由到指定URL
 
-```
+```yml
 spring:  
   application:  
     name: kaka-gateway  
@@ -892,3 +892,16 @@ spring:
 访问http://localhost:8040/** 跳转到https://www.baidu.com/**
 
 2、路由到微服务
+
+```yml
+spring:  
+  application:  
+    name: kaka-gateway  
+  cloud:  
+    gateway:  
+      routes:  
+        - id: provider-8081  
+          uri: http://localhost:9081/  
+          predicates:  
+            - Path=/provider/depart/**
+```
