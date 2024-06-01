@@ -925,5 +925,174 @@ spring:
             - Path=/provider/depart/**
 ```
 
-## 7.3、谓词工厂
+## 7.3、谓词断言工厂
 
+Route Predicate Factories（路由断言工厂）是Spring Cloud Gateway中的一种机制，用于定义路由规则中的断言条件。在Spring Cloud Gateway中，路由断言工厂允许基于HTTP请求的各种属性（例如路径、主机、请求方法、请求头等）来匹配和过滤路由。这些断言条件决定了请求是否会被路由到特定的目标服务
+
+1、The After Route Predicate Factory
+
+After路由谓词工厂采用一个日期时间参数（java ZonedDateTime）。此谓词匹配指定日期时间之后发生的请求。以下示例配置后路由谓词：
+
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: after_route
+        uri: https://example.org
+        predicates:
+        - After=2024-06-01T08:42:47.789+08:00[Asia/Shanghai]
+```
+
+该配置匹配北京时间2024-06-01 08:42:47.789以后的任何请求。
+
+
+2、The Before Route Predicate Factory
+
+与1类似，Before谓词匹配指定日期时间之前的任何请求，示例：
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: before_route
+        uri: https://example.org
+        predicates:
+        - Before=2017-01-21T08:42:47.789+08:00[Asia/Shanghai]
+```
+
+该配置匹配北京时间2017-01-21 08:42:47.789以前的任何请求。
+
+3、The Between Route Predicate Factory
+Between路由谓词工厂有两个参数，与1)和2)相似，都是java ZonedDateTime对象。匹配两个时间之间的请求，参数2必须在参数1之后。以下示例配置了 Between 路由谓词：
+
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: between_route
+        uri: https://example.org
+        predicates:
+        - Between=2017-01-21T08:42:47.789+08:00[Asia/Shanghai], 2017-01-25T08:42:47.789+08:00[Asia/Shanghai]
+```
+
+该谓词匹配北京时间2017-01-21 08:42:47.789到2017-01-25 08:42:47.789之间的请求。
+
+4、The Cookie Route Predicate Factory
+Cookie路由谓词工厂采用两个参数：name和regexp（Java 正则表达式）。此谓词匹配cookie中具有给定名称（key）且其值（value）与正则表达式匹配的请求。以下示例配置 cookie 路由谓词工厂：
+
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: cookie_route
+        uri: https://example.org
+        predicates:
+        - Cookie=chocolate, ch.p
+```
+
+在这个例子中，chocolate表示cookie中key为chocolate，而ch.p表示value为ch+任意一个字符+p，例如chip，chap，ch1p等，但是不能匹配chp、chiip。
+
+5、The Header Route Predicate Factory
+Header路由谓词工厂采用两个参数：header和 regexp（Java 正则表达式）。与Cookie路由谓词工厂类似，只是将键值对从cookie中转移到了header中。以下示例配置Header路由谓词：
+
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: header_route
+        uri: https://example.org
+        predicates:
+        - Header=X-Request-Id, \d+
+```
+
+该谓词匹配header中有key为X-Request-Id、value匹配"\d+"即多个数字的请求。
+
+6、The Host Route Predicate Factory
+
+Host路由谓词工厂包含一个参数：主机名列表 patterns。该模式是 Ant 风格的模式，以.为分隔符。该谓词匹配Host与模式匹配的标头。以下示例配置主机路由谓词：
+```
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: host_route
+        uri: https://example.org
+        predicates:
+        - Host=**.somehost.org,**.anotherhost.org
+```
+
+该谓词匹配例如www.somehost.org、image.somehost.org的请求，即任意开头+"somehost.org"或者"anotherhost.org"结尾的主机的请求。
+
+7）The Method Route Predicate Factory
+Method路由谓词工厂包含methods参数，该参数可能是一个或多个参数，如POST、GET等。以下示例配置method路由谓词：
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: method_route
+        uri: https://example.org
+        predicates:
+        - Method=GET,POST
+该谓词匹配所有GET、POST请求。
+
+8）The Path Route Predicate Factory
+Path路由谓词工厂包含两个参数：一个 Spring 列表PathMatcher patterns和一个名为 matchTrailingSlash 的可选标志（默认为true）。以下示例配置路径路由谓词：
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: path_route
+        uri: https://example.org
+        predicates:
+        - Path=/red/{segment},/blue/{segment},matchTrailingSlash=false
+该谓词匹配/red或者/blue开头，且后面还有路径段的请求，如/red/apple，/red/apple/banana等，参数matchTrailingSlash=false表示忽略段尾的/，即将/red/apple和/red/apple/视为相同的请求，如果设置为true，则会根据规则区分这两种路径段。
+
+9）The Query Route Predicate Factory
+Query路由谓词工厂有两个参数：一个必需参数param和一个可选参数regexp（ Java 正则表达式）。以下示例配置Query路由谓词：
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: query_route
+        uri: https://example.org
+        predicates:
+        - Query=green
+该谓词匹配查询参数中包含green的请求，如www.example.org/get?green=1。
+
+10）The RemoteAddr Route Predicate Factory
+
+RemoteAddr路由谓词工厂的参数为一个列表（sources，最小大小为 1），它们是 CIDR 表示法（IPv4 或 IPv6）字符串，例如192.168.0.1/16（其中192.168.0.1是 IP 地址，16是子网掩码）。以下示例配置 RemoteAddr 路由谓词：
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: remoteaddr_route
+        uri: https://example.org
+        predicates:
+        - RemoteAddr=192.168.1.1/24
+该谓词匹配请求来源的ip与子网掩码为192.168.1.1/24的请求。
+
+11）The Weight Route Predicate Factory
+Weight路由谓词工厂有两个参数：group和weight。权重分组计算。以下示例配置Weight路由谓词：
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: weight_high
+        uri: https://weighthigh1111.org
+        predicates:
+        - Weight=group1, 8
+      - id: weight_low
+        uri: https://weightlow2222.org
+        predicates:
+        - Weight=group1, 2
+该配置表示大约80%的请求会发送到https://weighthigh1111.org，20%的请求会发送到https://weightlow2222.org。
