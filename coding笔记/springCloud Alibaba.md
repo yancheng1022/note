@@ -874,5 +874,18 @@ Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过�
 
 ## 7.2、routes使用
 
+1、路由到指定URL
+```
+spring:  
+  application:  
+    name: kaka-gateway  
+  cloud:  
+    gateway:  
+      routes:  
+        - id: baidu  
+          uri: http://www.baidu.com  
+          predicates:  
+            - Path=/**
+```
 
-
+访问http://localhost:8040/** 跳转到https://www.baidu.com/**
