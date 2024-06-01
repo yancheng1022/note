@@ -1027,9 +1027,10 @@ spring:
 
 该谓词匹配例如www.somehost.org、image.somehost.org的请求，即任意开头+"somehost.org"或者"anotherhost.org"结尾的主机的请求。
 
-7）The Method Route Predicate Factory
+7、The Method Route Predicate Factory
 Method路由谓词工厂包含methods参数，该参数可能是一个或多个参数，如POST、GET等。以下示例配置method路由谓词：
 
+```
 spring:
   cloud:
     gateway:
@@ -1038,11 +1039,13 @@ spring:
         uri: https://example.org
         predicates:
         - Method=GET,POST
+```
+
 该谓词匹配所有GET、POST请求。
 
-8）The Path Route Predicate Factory
+8、The Path Route Predicate Factory
 Path路由谓词工厂包含两个参数：一个 Spring 列表PathMatcher patterns和一个名为 matchTrailingSlash 的可选标志（默认为true）。以下示例配置路径路由谓词：
-
+```
 spring:
   cloud:
     gateway:
@@ -1051,11 +1054,14 @@ spring:
         uri: https://example.org
         predicates:
         - Path=/red/{segment},/blue/{segment},matchTrailingSlash=false
+```
+
 该谓词匹配/red或者/blue开头，且后面还有路径段的请求，如/red/apple，/red/apple/banana等，参数matchTrailingSlash=false表示忽略段尾的/，即将/red/apple和/red/apple/视为相同的请求，如果设置为true，则会根据规则区分这两种路径段。
 
-9）The Query Route Predicate Factory
+9、The Query Route Predicate Factory
 Query路由谓词工厂有两个参数：一个必需参数param和一个可选参数regexp（ Java 正则表达式）。以下示例配置Query路由谓词：
 
+```
 spring:
   cloud:
     gateway:
@@ -1064,12 +1070,15 @@ spring:
         uri: https://example.org
         predicates:
         - Query=green
+```
+
 该谓词匹配查询参数中包含green的请求，如www.example.org/get?green=1。
 
-10）The RemoteAddr Route Predicate Factory
+10、The RemoteAddr Route Predicate Factory
 
 RemoteAddr路由谓词工厂的参数为一个列表（sources，最小大小为 1），它们是 CIDR 表示法（IPv4 或 IPv6）字符串，例如192.168.0.1/16（其中192.168.0.1是 IP 地址，16是子网掩码）。以下示例配置 RemoteAddr 路由谓词：
 
+```
 spring:
   cloud:
     gateway:
@@ -1078,11 +1087,14 @@ spring:
         uri: https://example.org
         predicates:
         - RemoteAddr=192.168.1.1/24
+```
+
 该谓词匹配请求来源的ip与子网掩码为192.168.1.1/24的请求。
 
-11）The Weight Route Predicate Factory
-Weight路由谓词工厂有两个参数：group和weight。权重分组计算。以下示例配置Weight路由谓词：
+11、The Weight Route Predicate Factory
 
+Weight路由谓词工厂有两个参数：group和weight。权重分组计算。以下示例配置Weight路由谓词：
+```
 spring:
   cloud:
     gateway:
@@ -1095,4 +1107,6 @@ spring:
         uri: https://weightlow2222.org
         predicates:
         - Weight=group1, 2
+```
+
 该配置表示大约80%的请求会发送到https://weighthigh1111.org，20%的请求会发送到https://weightlow2222.org。
