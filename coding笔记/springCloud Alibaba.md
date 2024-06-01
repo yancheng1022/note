@@ -868,6 +868,9 @@ Predicate（断言）：参考的是Java8的java.util.function.Predicate，开�
 
 Filter（过滤）：指的是Spring框架中GateWayFilter的实例，使用过滤器，可以在请求被路由前或者之后对请求进行修改
 
+>1、客户端向spring cloud gateway发出请求，然后在gateway handler mapping中找到与请求相匹配的路由
+>2、将其发送到gateway web handler
+>3、Handler再通过指定过滤器链来将请求发送到
 
 ## 7.2、搭建网关
 
