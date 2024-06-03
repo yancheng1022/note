@@ -48,3 +48,5 @@ docker run -d --name person \
 
 
 
+
+docker logs --since='2024-06-02T07:00:00' --until='2024-06-02T09:00:00' 5794d > /home/gas-file.txt
