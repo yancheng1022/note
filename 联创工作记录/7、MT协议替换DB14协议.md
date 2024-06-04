@@ -122,3 +122,13 @@ m;
 2024-04-25 10:51:58
 ```
 
+
+
+# 配置
+```yml
+localsftp:  
+    monitor-mt-dir: /upload/person/
+reportInfo:  
+    protocol: 1 # 0-DB14,1-MT
+
+```
