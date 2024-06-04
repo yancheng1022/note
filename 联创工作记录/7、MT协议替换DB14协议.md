@@ -130,5 +130,10 @@ localsftp:
     monitor-mt-dir: /upload/person/
 reportInfo:  
     protocol: 1 # 0-DB14,1-MT
-
+mt-ftp:  
+    report-dir: /mt1201/source/aqjk/140602012771  
+    ip: 76.10.2.220  
+    port: 2222  
+    username: jyiot  
+    password: jyiot123
 ```
