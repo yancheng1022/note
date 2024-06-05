@@ -204,3 +204,7 @@ mt-ftp:
     username: jyiot  
     password: jyiot123
 ```
+
+数据库
+
+sensor_code 64
