@@ -1116,3 +1116,21 @@ spring:
 Gateway过滤器是Spring Cloud Gateway提供的一种机制，用于对进入网关的请求和返回进行处理和转换。它可以用于实现各种功能，如请求鉴权、请求转发、请求限流、请求重试等
 
 1、内置过滤器
+
+Spring官网给我们提供了很多很多中不同的过滤器，这里我就简单列举几个
+
+```yml
+spring:  
+  application:  
+    name: kaka-gateway  
+  cloud:  
+    gateway:  
+      routes:  
+        - id: provider-8081  
+#          uri: http://localhost:9081  
+          uri: lb://depart-provider  
+          predicates:  
+            - Path=/provider/depart/**  
+          filters:  
+            - AddRequestHeader=token,kaka
+```
