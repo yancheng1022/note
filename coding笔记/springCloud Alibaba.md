@@ -1157,26 +1157,6 @@ public String love(@RequestHeader("token") String token) {
 }
 ```
 
-
-**全局路由生效**：可以将过滤器设置到与routes(网关路由配置同一级),它会对所有的路由生效，采用默认过滤器；如下：
-
-```yml
-spring:  
-  application:  
-    name: kaka-gateway  
-  cloud:  
-    gateway:  
-      routes:  
-        - id: provider-8081  
-#          uri: http://localhost:9081  
-          uri: lb://depart-provider  
-          predicates:  
-            - Path=/provider/depart/**  
-	  default-filters:  
-            - AddRequestHeader=token,kaka 
-          
-```
-
 ### 7.4.2、自定义过滤器
 
 命名规范：过滤器工厂类名必须以GatewayFilterFactory为后缀
@@ -1240,3 +1220,8 @@ spring:
 
 ## 7.4.3、全局过滤器
 
+全局过滤器不和具体的路由关联，作用在所有路由上，不需要配置。通过全局过滤器可以实现对权限的统一校验，安全性校验等
+
+内置全局过滤器
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202406052128982.png)
