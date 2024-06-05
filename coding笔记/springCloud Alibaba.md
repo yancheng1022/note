@@ -929,6 +929,9 @@ spring:
 
 Route Predicate Factories（路由断言工厂）是Spring Cloud Gateway中的一种机制，用于定义路由规则中的断言条件。在Spring Cloud Gateway中，路由断言工厂允许基于HTTP请求的各种属性（例如路径、主机、请求方法、请求头等）来匹配和过滤路由。这些断言条件决定了请求是否会被路由到特定的目标服务
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202406052100706.png)
+
+
 1、The After Route Predicate Factory
 
 After路由谓词工厂采用一个日期时间参数（java ZonedDateTime）。此谓词匹配指定日期时间之后发生的请求。以下示例配置后路由谓词：
@@ -1115,7 +1118,7 @@ spring:
 
 Gateway过滤器是Spring Cloud Gateway提供的一种机制，用于对进入网关的请求和返回进行处理和转换。它可以用于实现各种功能，如请求鉴权、请求转发、请求限流、请求重试等
 
-1、内置过滤器
+### 7.4.1、内置过滤器
 
 Spring官网给我们提供了很多很多中不同的过滤器，这里就简单列举几个
 
@@ -1173,3 +1176,5 @@ spring:
             - AddRequestHeader=token,kaka 
           
 ```
+
+### 7.4.2、自定义过滤器
