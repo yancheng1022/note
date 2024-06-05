@@ -190,6 +190,7 @@ m;
 
 # 配置
 
+## 配置文件
 // 处理AQMC 和 AQKC
 
 ```yml
@@ -207,4 +208,8 @@ mt-ftp:
 
 数据库
 
-sensor_code 64
+## 数据库
+
+```
+	ALTER TABLE gas_real MODIFY COLUMN sensor_code varchar(64);
+```
