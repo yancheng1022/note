@@ -1222,6 +1222,23 @@ spring:
 
 全局过滤器不和具体的路由关联，作用在所有路由上，不需要配置。通过全局过滤器可以实现对权限的统一校验，安全性校验等
 
-内置全局过滤器
+实现方法：实现GlobalFilter接口
 
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202406052128982.png)
+``` java
+// 全局打印请求路径
+@Component  
+public class LogFilter implements GlobalFilter, Ordered {  
+    Logger log=  LoggerFactory.getLogger(this.getClass());  
+    @Override  
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {  
+        log.info(exchange.getRequest().getPath().value());  
+        return chain.filter(exchange);  
+    }  
+  
+    /** 数字越小越先执行 */  
+    @Override  
+    public int getOrder() {  
+        return 0;  
+    }  
+}
+```
