@@ -1,5 +1,15 @@
-# 1、服务注册与发现 - nacos
+---
+title: springCloud Alibaba
+categories:
+  - coding
+date: 2024/05/25
+tags:
+  - springCloud
+  - 微服务
+  - 编程基础
+---
 
+# 1、服务注册与发现 - nacos
 
 ## 1.1、nacos注册中心部署
 
