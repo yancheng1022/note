@@ -1180,3 +1180,37 @@ spring:
 ### 7.4.2、自定义过滤器
 
 命名规范：过滤器工厂类名必须以GatewayFilterFactory为后缀
+
+```java
+@Component  
+public class CalTimeGatewayFilterFactory extends AbstractGatewayFilterFactory<MyConfig> {  
+  
+    public CalTimeGatewayFilterFactory() {  
+        super(MyConfig.class);  
+    }  
+  
+    @Override  
+    public GatewayFilter apply(MyConfig config) {  
+        return new GatewayFilter() {  
+            @Override  
+            public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {  
+                // 记录开始时间  
+                long startTime = System.currentTimeMillis();  
+                // 放行  
+                return chain.filter(exchange).then(  
+                        Mono.fromRunnable(() -> {  
+                            // filter后处理  
+                            long endTime = System.currentTimeMillis();  
+                            System.out.println("total:" + (endTime - startTime));  
+                        })  
+                );  
+            }  
+        };  
+    }  
+  
+    @Override  
+    public List<String> shortcutFieldOrder() {  
+        return Arrays.asList("key", "value");  
+    }  
+}
+```
