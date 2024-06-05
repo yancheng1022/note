@@ -1178,3 +1178,5 @@ spring:
 ```
 
 ### 7.4.2、自定义过滤器
+
+命名规范：过滤器工厂类名必须以GatewayFilterFactory为后缀
