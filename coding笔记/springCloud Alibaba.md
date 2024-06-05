@@ -1191,9 +1191,14 @@ public class CalTimeGatewayFilterFactory extends AbstractGatewayFilterFactory<My
   
     @Override  
     public GatewayFilter apply(MyConfig config) {  
+  
         return new GatewayFilter() {  
+  
             @Override  
             public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {  
+                // 此处传来的config没用，这里只做打印显示测试  
+                System.out.println(config.getKey());  
+                System.out.println(config.getValue());  
                 // 记录开始时间  
                 long startTime = System.currentTimeMillis();  
                 // 放行  
@@ -1214,3 +1219,24 @@ public class CalTimeGatewayFilterFactory extends AbstractGatewayFilterFactory<My
     }  
 }
 ```
+
+配置文件进行配置
+
+```yml
+spring:  
+  application:  
+    name: kaka-gateway  
+  cloud:  
+    gateway:  
+      routes:  
+        - id: provider-8081  
+#          uri: http://localhost:9081  
+          uri: lb://depart-provider  
+          predicates:  
+            - Path=/provider/depart/**  
+          filters:  
+            - CalTime=a,b
+```
+
+## 7.4.3、全局过滤器
+
