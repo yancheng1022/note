@@ -190,6 +190,8 @@ m;
 
 # 配置
 
+// 处理AQMC 和 AQKC
+
 ```yml
 localsftp:  
     monitor-mt-dir: /upload/person/
