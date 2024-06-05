@@ -1117,7 +1117,17 @@ Gateway过滤器是Spring Cloud Gateway提供的一种机制，用于对进入�
 
 1、内置过滤器
 
-Spring官网给我们提供了很多很多中不同的过滤器，这里我就简单列举几个
+Spring官网给我们提供了很多很多中不同的过滤器，这里就简单列举几个
+
+| 名称                                                                  | 说明            |
+| :------------------------------------------------------------------ | :------------ |
+| AddRequestHeader                                                    | 给当前请求添加一个请求头  |
+| <span style="color: rgb(209, 209, 209);">RemoveRequestHeader</span> | 移除请求中的一个请求头   |
+| AddResponseHeader                                                   | 给响应结果添加一个响应头  |
+| RemoveResponseHeader                                                | 从响应结果中移除一个响应头 |
+| RequestRateLimiter                                                  | 限制请求的流量       |
+
+**局部路由生效**：可以将过滤器配置设置在yml文件中路由id的下一级，如下所示：
 
 ```yml
 spring:  
@@ -1133,4 +1143,33 @@ spring:
             - Path=/provider/depart/**  
           filters:  
             - AddRequestHeader=token,kaka
+```
+
+```java
+@GetMapping("/love")  
+@SentinelResource(value = "love",blockHandler = "loveBlockHandler",blockHandlerClass = DepartController.class)  
+public String love(@RequestHeader("token") String token) {  
+    System.out.println(token);  
+    return love;  
+}
+```
+
+
+**全局路由生效**：可以将过滤器设置到与routes(网关路由配置同一级),它会对所有的路由生效，采用默认过滤器；如下：
+
+```yml
+spring:  
+  application:  
+    name: kaka-gateway  
+  cloud:  
+    gateway:  
+      routes:  
+        - id: provider-8081  
+#          uri: http://localhost:9081  
+          uri: lb://depart-provider  
+          predicates:  
+            - Path=/provider/depart/**  
+	  default-filters:  
+            - AddRequestHeader=token,kaka 
+          
 ```
