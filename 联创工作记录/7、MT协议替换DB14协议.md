@@ -195,7 +195,7 @@ m;
 
 ```yml
 localsftp:  
-    monitor-mt-dir: /upload/person/
+    monitor-mt-dir: /upload/gas_mt/
 reportInfo:  
     protocol: 1 # 0-DB14,1-MT
 mt-ftp:  
