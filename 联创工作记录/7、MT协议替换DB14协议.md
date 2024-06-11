@@ -251,9 +251,9 @@ m;
 
 | DB14                      | MT   | 应急局  | 入库               | 备注  |
 | :------------------------ | :--- | ---- | ---------------- | --- |
-| AQFZ（分站）                  |      | FZXX | gas_station_info |     |
-| AQMC（模拟量传感器）、AQKC（开关量传感器） |      | CDDY | gas_base_info    |     |
-| AQSS（安全实时）                |      | SSSJ | gas_real         |     |
+| AQFZ（分站）                  | FZDY | FZXX | gas_station_info |     |
+| AQMC（模拟量传感器）、AQKC（开关量传感器） | CDDY | CDDY | gas_base_info    |     |
+| AQSS（安全实时）                | CDSS | SSSJ | gas_real         |     |
 | AQBJ（安全报警）、AQYC（安全异常）     | YCBJ | YCBJ | gas_base_info    |     |
 | AQCS（系统初始化）               |      |      | gas_aqcs         |     |
 | AQKJ（空间数据）                |      |      |                  |     |
