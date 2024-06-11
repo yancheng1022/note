@@ -249,20 +249,20 @@ m;
 
 # 6、DB14和MT对比
 
-| DB14                      | MT   | 应急局  | 入库               | 备注  |
-| :------------------------ | :--- | ---- | ---------------- | --- |
-| AQFZ（分站）                  | FZDY | FZXX | gas_station_info |     |
-| AQMC（模拟量传感器）、AQKC（开关量传感器） | CDDY | CDDY | gas_base_info    |     |
-| AQSS（安全实时）                | CDSS | SSSJ | gas_real         |     |
-| AQBJ（安全报警）、AQYC（安全异常）     | YCBJ | YCBJ | gas_base_info    |     |
-| AQCS（系统初始化）               |      |      | gas_aqcs         |     |
-| AQKJ（空间数据）                |      |      |                  |     |
-| AQDQ（断电区域）                |      |      |                  |     |
-| AQGX（传感器关系）               |      |      |                  |     |
-| AQKD（开关量变化）               |      |      |                  |     |
-| AQLJ（累积量）                 |      |      |                  |     |
-| AQMT（模拟量5min）             |      |      |                  |     |
-| AQKY（馈电异常）                |      |      |                  |     |
+| DB14                      | MT   | 应急局  | 入库               |
+| :------------------------ | :--- | ---- | ---------------- |
+| AQFZ（分站）                  | FZDY | FZXX | gas_station_info |
+| AQMC（模拟量传感器）、AQKC（开关量传感器） | CDDY | CDDY | gas_base_info    |
+| AQSS（安全实时）                | CDSS | SSSJ | gas_real         |
+| AQBJ（安全报警）、AQYC（安全异常）     | YCBJ | YCBJ | gas_base_info    |
+| AQCS（系统初始化）               |      |      | gas_aqcs         |
+| AQKJ（空间数据）                |      |      |                  |
+| AQDQ（断电区域）                |      |      |                  |
+| AQGX（传感器关系）               |      |      |                  |
+| AQKD（开关量变化）               |      |      |                  |
+| AQLJ（累积量）                 |      |      |                  |
+| AQMT（模拟量5min）             |      |      |                  |
+| AQKY（馈电异常）                |      |      |                  |
 
 
 # 配置
