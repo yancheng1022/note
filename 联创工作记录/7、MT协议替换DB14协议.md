@@ -321,3 +321,12 @@ mt-ftp:
 	ALTER TABLE gas_real MODIFY COLUMN sensor_code varchar(64);
 	ALTER TABLE gas_alarm MODIFY COLUMN sensor_code varchar(64);
 ```
+
+## 调试命令
+
+```sql
+delete from gas_base_info where create_time > '2024-06-01';
+delete from gas_station_info where update_time > '2024-06-01';
+delete from gas_alarm where record_name > '2024-06-01';
+truncate table gas_real;
+```
