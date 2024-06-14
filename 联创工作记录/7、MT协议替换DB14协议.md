@@ -305,6 +305,7 @@ localsftp:
 reportInfo:  
     protocol: 1 # 0-DB14,1-MT
     backupBaseDir-MT: /upload/backupMT
+    mt-analysis-validate: FZDY,CDDY,CDSS,YCBJ
 mt-ftp:  
     report-dir: /mt1201/source/aqjk/140602012771  
     ip: 76.10.2.220  
