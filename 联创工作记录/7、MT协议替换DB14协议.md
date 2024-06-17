@@ -300,6 +300,7 @@ m;
 // 处理AQMC 和 AQKC
 
 ```yml
+# 读取目录
 localsftp:  
     monitor-mt-dir: /upload/gas_mt/
 reportInfo:  
