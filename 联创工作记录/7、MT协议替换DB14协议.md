@@ -280,8 +280,8 @@ m;
 
 | DB14                      | MT         | 应急局  | 生成频率(MT)           | 入库               |
 | :------------------------ | :--------- | ---- | ------------------ | ---------------- |
-| AQFZ（分站）                  | FZDY       | FZXX | 至少每天一次             | gas_station_info |
-| AQMC（模拟量传感器）、AQKC（开关量传感器） | CDDY       | CDDY |                    | gas_base_info    |
+| AQFZ（分站）                  | FZDY       | FZXX | 有变化时上传<br>至少每天一次   | gas_station_info |
+| AQMC（模拟量传感器）、AQKC（开关量传感器） | CDDY       | CDDY | 有变化时上传<br>至少每天一次   | gas_base_info    |
 | AQSS（安全实时）                | CDSS       | SSSJ | 1min               | gas_real         |
 | AQBJ（安全报警）、AQYC（安全异常）     | YCBJ       | YCBJ | 发生时开始上传<br>发生期间20s | gas_base_info    |
 | AQCS（系统初始化）               |            |      |                    | gas_aqcs         |
