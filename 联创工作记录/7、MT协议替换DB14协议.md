@@ -306,7 +306,7 @@ m;
 localsftp:  
     monitor-mt-dir: /upload/gas_mt/
 reportInfo:  
-    protocol: 1 # 0-DB14,1-MT
+    fileType: 2
     backupBaseDir-MT: /upload/backupMT
     mt-analysis-validate: FZDY,CDDY,CDSS,YCBJ
 # 省局目录
@@ -336,3 +336,8 @@ delete from gas_station_info where update_time > '2024-06-01';
 delete from gas_alarm where record_name > '2024-06-01';
 truncate table gas_real;
 ```
+
+
+## 上线后修改
+
+1、redis中删除GAS的key
