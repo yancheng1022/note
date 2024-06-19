@@ -340,4 +340,5 @@ truncate table gas_real;
 
 ## 上线后修改
 
-1、redis中删除GAS的key
+1、瓦斯报警-实时报警监控：redis中删除GAS的key
+2、
