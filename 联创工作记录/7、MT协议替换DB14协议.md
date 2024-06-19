@@ -299,7 +299,8 @@ m;
 # 配置
 
 ## 配置文件
-// 处理AQMC 和 AQKC
+
+gas-etl
 
 ```yml
 # 读取目录
@@ -318,6 +319,15 @@ mt-ftp:
     password: jyiot123
 
 ```
+
+home
+
+```yml
+reportInfo:  
+    fileType: 2
+```
+
+
 
 数据库
 
