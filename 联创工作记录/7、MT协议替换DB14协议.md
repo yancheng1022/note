@@ -310,7 +310,10 @@ reportInfo:
     fileType: 2 #0-xml 1-txt 2-MT
     backupBaseDir-MT: /upload/backupMT
     mt-analysis-validate: FZDY,CDDY,CDSS,YCBJ
-    redo-report:
+    redo-report-sj:
+	    all: 0 # 默认为0。1: 全补, 0: 指定补几天的，需配置days，默认只补今天和昨天的
+        days: 0
+    redo-report-yj:
 	    all: 0 # 默认为0。1: 全补, 0: 指定补几天的，需配置days，默认只补今天和昨天的
         days: 0
 # 省局目录
