@@ -307,7 +307,7 @@ gas-etl
 localsftp:  
     monitor-mt-dir: /upload/gas_mt/
 reportInfo:  
-    fileType: 2
+    fileType: 2 #0-xml 1-txt 2-MT
     backupBaseDir-MT: /upload/backupMT
     mt-analysis-validate: FZDY,CDDY,CDSS,YCBJ
      redo-report:
