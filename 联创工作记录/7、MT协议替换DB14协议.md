@@ -310,6 +310,9 @@ reportInfo:
     fileType: 2
     backupBaseDir-MT: /upload/backupMT
     mt-analysis-validate: FZDY,CDDY,CDSS,YCBJ
+     redo-report:
+        all: 0 # 默认为0。1: 全补, 0: 指定补几天的，需配置days，默认只补今天和昨天的
+        days: 0
 # 省局目录
 mt-ftp:  
     report-dir: /mt1201/source/aqjk/140602012771  
