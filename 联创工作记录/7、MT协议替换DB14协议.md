@@ -321,7 +321,8 @@ mt-ftp:
     port: 2222  
     username: jyiot  
     password: jyiot123
-
+gas-verification:
+	gas-alarm-physics-code: 0043
 ```
 
 home
