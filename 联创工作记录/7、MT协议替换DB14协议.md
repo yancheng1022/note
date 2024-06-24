@@ -323,7 +323,7 @@ mt-ftp:
     password: jyiot123
 gas-verification:
 	gas-alarm-sensor-status: 
-	gas-alarm-physics-code: 0043-0.8,0004-0.8,0012-1.0 #甲烷，一氧化碳，氧气
+	gas-alarm-physics-code: 0001-0.8,0043-0.8,0004-0.8,0038-0.8,0012-1.0 #甲烷，激光甲烷，一氧化碳，管道一氧化碳，氧气
 ```
 
 home
