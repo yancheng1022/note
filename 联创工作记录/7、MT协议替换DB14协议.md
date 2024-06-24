@@ -322,7 +322,7 @@ mt-ftp:
     username: jyiot  
     password: jyiot123
 gas-verification:
-	gas-alarm-physics-code: 0043-0.8,0004-
+	gas-alarm-physics-code: 0043-0.8,0004-0.8,
 ```
 
 home
