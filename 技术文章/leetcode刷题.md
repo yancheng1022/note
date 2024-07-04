@@ -64,6 +64,69 @@ bool search(word) 如果数据结构中存在字符串与 word 匹配，则�
 ["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
 [[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]]
 
+```java
+class WordDictionary {  
+  
+    private Node root;  
+  
+    private class Node {  
+        public boolean isWord;  
+        public TreeMap<Character, Node> next;  
+  
+        public Node(boolean isWord) {  
+            this.isWord = isWord;  
+            next = new TreeMap<>();  
+        }  
+  
+        public Node() {  
+            this(false);  
+        }  
+    }  
+  
+    public WordDictionary() {  
+        root = new Node();  
+    }  
+  
+    public void addWord(String word) {  
+        Node cur = root;  
+        for (int i = 0; i < word.length(); i++) {  
+            char c = word.charAt(i);  
+            if (cur.next.get(c) == null) {  
+                cur.next.put(c, new Node());  
+            }  
+            cur = cur.next.get(c);  
+        }  
+        cur.isWord = true;  
+  
+    }  
+  
+    public boolean search(String word) {  
+        return match(root, word, 0);  
+    }  
+  
+    private boolean match(Node node, String word, int index) {  
+        if (index == word.length()) {  
+            return node.isWord;  
+        }  
+        char c = word.charAt(index);  
+        if ('.' != c) {  
+            if (node.next.get(c) == null) {  
+                return false;  
+            }  
+            return match(node.next.get(c), word, index + 1);  
+        } else {  
+            for (char nextChar : node.next.keySet()) {  
+                if (match(node.next.get(nextChar), word, index + 1)) {  
+                    return true;  
+                }  
+            }  
+            return false;  
+        }  
+    }  
+}
+```
+
+
 # 303、区域和检索 - 数组不可变
 
 给定一个整数数组  nums，处理以下类型的多个查询:
