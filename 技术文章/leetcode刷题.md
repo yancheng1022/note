@@ -131,3 +131,24 @@ class Solution {
 示例 1：
 输入：jewels = "aA", stones = "aAAbbbb"
 输出：3
+
+```java
+class Solution {  
+    public int numJewelsInStones(String jewels, String stones) {  
+        Set set = new HashSet();  
+        // 遍历宝石  
+        for (int i = 0; i < jewels.length(); i++) {  
+            set.add(jewels.charAt(i));  
+        }  
+        int res = 0;  
+        // 遍历石头  
+        for (int i = 0; i < stones.length(); i++) {  
+            char stone = stones.charAt(i);  
+            if (set.contains(stone)) {  
+                res++;  
+            }  
+        }  
+        return res;  
+    }  
+}
+```
