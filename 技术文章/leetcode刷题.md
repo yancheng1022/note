@@ -51,6 +51,52 @@ class Solution {
 }
 ```
 
+# 211、添加与搜索单词 - 数据结构设计
+
+请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
+实现词典类 WordDictionary ：
+WordDictionary() 初始化词典对象
+void addWord(word) 将 word 添加到数据结构中，之后可以对它进行匹配
+bool search(word) 如果数据结构中存在字符串与 word 匹配，则返回 true ；否则，返回  false 。word 中可能包含一些 '.' ，每个 . 都可以表示任何一个字母。
+
+示例：
+输入：
+["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
+[[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]]
+
+# 303、区域和检索 - 数组不可变
+
+给定一个整数数组  nums，处理以下类型的多个查询:
+
+计算索引 left 和 right （包含 left 和 right）之间的 nums 元素的 和 ，其中 left <= right
+实现 NumArray 类：
+
+NumArray(int[] nums) 使用数组 nums 初始化对象
+int sumRange(int i, int j) 返回数组 nums 中索引 left 和 right 之间的元素的 总和 ，包含 left 和 right 两点（也就是 nums[left] + nums[left + 1] + ... + nums[right] )
+ 
+
+输入：
+["NumArray", "sumRange", "sumRange", "sumRange"]
+[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+
+```java
+class NumArray {  
+  
+    private int[] sum;  
+  
+    public NumArray(int[] nums) {  
+        sum = new int[nums.length + 1];  
+        sum[0] = 0;  
+        for (int i = 1; i < sum.length; i++) {  
+            sum[i] = sum[i - 1] + nums[i - 1];  
+        }  
+    }  
+  
+    public int sumRange(int left, int right) {  
+        return sum[right + 1] - sum[left];  
+    }  
+}
+```
 
 # 349、两个数组的交集
 
@@ -141,6 +187,26 @@ class Solution {
 在此处买入 prices[4] = 4
 在此处卖出 prices[5] = 9
 总利润: ((8 - 1) - 2) + ((9 - 4) - 2) = 8
+
+```java
+class Solution {  
+    public int maxProfit(int[] prices, int fee) {  
+        int n = prices.length;  
+        if (n < 2) {  
+            return 0;  
+        }  
+        int noTake = 0; // 第一天不持有股票时拥有的最多金额  
+        int take = -prices[0]; //第一天持有股票拥有的最多金额  
+        for (int i = 1; i < n; i++) {  
+            // 第i天不持有股票（第i-1天不持有，第i-1天持有第i天卖出）  
+            noTake = Math.max(noTake, take + prices[i] - fee);  
+            // 第i天持有（第i-1天持有第i天不动，第i-1天不持有第i天买入）  
+            take = Math.max(take, noTake - prices[i]);  
+        }  
+        return noTake;  
+    }  
+}
+```
 
 
 # 771、宝石与石头
