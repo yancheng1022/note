@@ -110,5 +110,24 @@ class Solution {
 输出：[3,4,5,5,4,null,7]
 
 ```java
-
+class Solution {  
+    // 递归  
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {  
+        if (root1 == null) return root2;  
+        if (root2 == null) return root1;  
+        root1.val += root2.val;  
+        root1.left = mergeTrees(root1.left, root2.left);  
+        root1.right = mergeTrees(root1.right, root2.right);  
+        return root1;  
+    }  
+}
 ```
+
+# 771、宝石与石头
+
+ 给你一个字符串 jewels 代表石头中宝石的类型，另有一个字符串 stones 代表你拥有的石头。 stones 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+字母区分大小写，因此 "a" 和 "A" 是不同类型的石头。
+
+示例 1：
+输入：jewels = "aA", stones = "aAAbbbb"
+输出：3
