@@ -52,4 +52,48 @@ class Solution {
 ```
 
 
+# 349、两个数组的交集
+
+给定两个数组 nums1 和 nums2 ，返回 它们的 
+交集
+输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
+
+示例：
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2]
+
+```java
+class Solution {  
+    public int[] intersection(int[] nums1, int[] nums2) {  
+        // 排序  
+        Arrays.sort(nums1);  
+        Arrays.sort(nums2);  
+  
+        int a = nums1.length;  
+        int b = nums2.length;  
+        int i = 0, j = 0;  
+  
+        // hashset 存储时会去重  
+        HashSet<Integer> set = new HashSet<>();  
+        while (i < a && j < b) {  
+            if (nums1[i] == nums2[j]) {  
+                set.add(nums1[i]);  
+                i++;  
+                j++;  
+                // 谁小，谁的指针需要往后移动  
+            } else if (nums1[i] < nums2[j]) {  
+                i++;  
+            } else {  
+                j++;  
+            }  
+        }  
+        int[] res = new int[set.size()];  
+        int index = 0;  
+        for (int num : set) {  
+            res[index++] = num;  
+        }  
+        return res;  
+    }  
+}
+```
 
