@@ -271,6 +271,84 @@ class Solution {
 }
 ```
 
+# 677、键值映射
+
+设计一个 map ，满足以下几点:
+
+字符串表示键，整数表示值
+返回具有前缀等于给定字符串的键的值的总和
+实现一个 MapSum 类：
+
+MapSum() 初始化 MapSum 对象
+void insert(String key, int val) 插入 key-val 键值对，字符串表示键 key ，整数表示值 val 。如果键 key 已经存在，那么原来的键值对 key-value 将被替代成新的键值对。
+int sum(string prefix) 返回所有以该前缀 prefix 开头的键 key 的值的总和。
+
+输入：
+["MapSum", "insert", "sum", "insert", "sum"]
+[[], ["apple", 3], ["ap"], ["app", 2], ["ap"]]
+输出：
+[null, null, 3, null, 5]
+
+```java
+class MapSum {  
+  
+    private Node root;  
+  
+    private class Node {  
+        public int value;  
+        public TreeMap<Character, Node> next;  
+  
+        public Node(int value) {  
+            this.value = value;  
+            next = new TreeMap<>();  
+        }  
+  
+        public Node() {  
+            this(0);  
+        }  
+    }  
+  
+  
+    public MapSum() {  
+        root = new Node();  
+    }  
+  
+    public void insert(String word, int val) {  
+        Node cur = root;  
+        for (int i = 0; i < word.length(); i++) {  
+            char c = word.charAt(i);  
+            if (cur.next.get(c) == null) {  
+                cur.next.put(c, new Node());  
+            }  
+            cur = cur.next.get(c);  
+        }  
+        cur.value = val;  
+    }  
+  
+    public int sum(String word) {  
+        Node cur = root;  
+        for (int i = 0; i < word.length(); i++) {  
+            char c = word.charAt(i);  
+            if (cur.next.get(c) == null) {  
+                return 0;  
+            }  
+            cur = cur.next.get(c);  
+        }  
+        return sum(cur);  
+    }  
+  
+    private int sum(Node node) {  
+        if (node.next.size() == 0){  
+            return node.value;  
+        }  
+        int res = node.value;  
+        for (char c : node.next.keySet()){  
+            res += sum(node.next.get(c));  
+        }  
+        return res;  
+    }  
+}
+```
 
 # 771、宝石与石头
 
