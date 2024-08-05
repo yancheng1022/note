@@ -50,3 +50,71 @@ docker run -d --name person \
 
 
 docker logs --since='2024-06-02T07:00:00' --until='2024-06-02T09:00:00' 5794d > /home/gas-file.txt
+
+
+```java
+package net.lantrack.module.alarm.consumer;  
+  
+import com.alibaba.fastjson.JSONObject;  
+import lombok.extern.slf4j.Slf4j;  
+import net.lantrack.framework.common.utils.DateUtil;  
+import net.lantrack.module.alarm.entity.GasAlarmEntity;  
+import net.lantrack.module.alarm.service.GasAlarmService;  
+import org.apache.commons.lang.StringUtils;  
+import org.apache.kafka.clients.admin.NewTopic;  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Value;  
+import org.springframework.context.annotation.Bean;  
+import org.springframework.kafka.annotation.KafkaListener;  
+import org.springframework.stereotype.Component;  
+  
+import java.util.Objects;  
+  
+@Component  
+@Slf4j  
+public class HandleAlarmConsumer {  
+  
+  
+    @Autowired  
+    GasAlarmService gasAlarmService;  
+  
+    @Value("${baseInfo.mineCode:xxxx}")  
+    private String mineCode;  
+  
+    /**  
+     * springboot 2.2.1前版本无该配置：spring.kafka.listener.missing-topics-fatal = false  
+     * 项目启动时无topic会报错  
+     * 项目启动时自动配置对应的topic主题（有不创建，没有则自动创建）  
+     */  
+    @Bean  
+    public NewTopic topic() {  
+        return new NewTopic("gasAlarm-" + mineCode, 1, (short) 1);  
+    }  
+  
+  
+    @KafkaListener(topics = "gasAlarm-" + "#{'${baseInfo.mineCode}'}")  
+    public void receiveAdminMessage(String message) {  
+        log.error("开始处理4012手动结束瓦斯告警: " + message);  
+        // 检查字符串是否以双引号开始和结束  
+        if (StringUtils.isNotEmpty(message) && message.startsWith("\"") && message.endsWith("\"")) {  
+            // 移除第一个和最后一个字符（即双引号）  
+            message = message.substring(1, message.length() - 1);  
+        }  
+        GasAlarmEntity gasAlarmEntity = JSONObject.parseObject(message.replaceAll("\\\\", ""), GasAlarmEntity.class);  
+        // 更新结束状态  
+        GasAlarmEntity gasAlarm = gasAlarmService.getById(gasAlarmEntity.getId());  
+        if (gasAlarm != null && gasAlarm.getAlarmEndDate() != null) {  
+            GasAlarmEntity data = new GasAlarmEntity();  
+            data.setId(gasAlarmEntity.getId());  
+            data.setAlarmEndDate(gasAlarmEntity.getAlarmEndDate());  
+            data.setRecordName(DateUtil.getDateTime());  
+            gasAlarmService.updateById(data);  
+            log.error("4012手动结束瓦斯告警: 处理成功");  
+            return;  
+        }  
+        log.error("4012手动结束瓦斯告警: 已存在结束时间，处理失败");  
+    }  
+  
+}
+
+```
