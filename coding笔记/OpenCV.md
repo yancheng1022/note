@@ -59,7 +59,23 @@ public class Learn {
 
 ⦁	图像的加法：Core.add(Mat src1, Mat src2, Mat dst)；
 ⦁	图像的混合：Core.addWeighted(Mat src1, double alpha, Mat src2, double beta, double gamma, Mat dst)；
-⦁	图像的反相：Core.bitwise_not(Mat src, Mat dst)；
+⦁	图像的反相：Core.bitwise_not(Mat src, Mat dst)；(底片效果)
 ⦁	图像的平移：将图像的所有像素点按照给定的平移量（x方向，y方向）移动；
 ⦁	旋转：Imgproc.warpAffine(Mat src, Mat dst, Mat M, Size dsize, int flags);
 ⦁	缩放：Imgproc.resize(Mat src, Mat dst, Size dsize);
+
+```java
+public static void draw(){  
+    // 加载opencv动态库，System.load(ClassLoader.getSystemResource("lib/opencv_java470-无用.dll").getPath());  
+    nu.pattern.OpenCV.loadLocally();  
+    // 读取jpg文件至src中（Mat类）  
+    String imgPath1 = "D:\\code\\study\\videoAnalyzer\\videoAnalyzer\\images\\bus.jpg";  
+    String imgPath2 = "D:\\code\\study\\videoAnalyzer\\videoAnalyzer\\images\\anquan.jpg";  
+    Mat src1 = Imgcodecs.imread(imgPath1);  
+    Mat src2 = Imgcodecs.imread(imgPath2);  
+    Mat des = new Mat();  
+    Core.bitwise_not(src1, des);  
+    HighGui.imshow("img", des);  
+    HighGui.waitKey(0);  
+}
+```
