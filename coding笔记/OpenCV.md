@@ -83,3 +83,18 @@ public static void draw(){
 ⦁	图像的仿射变换
 	概念：图1中的点1，2，3与图2中的点1，2，3一一对应，利用这3组对应点求出两者的变换矩阵，然后把它应用到整幅图像；
 	3点构成一个面；仿射变换的变换矩阵大小为2*3；
+	主要函数：
+
+```java
+	Imgproc.getAffineTransform(MatOfPoint2f src, MatOfPoint2f dst)；//2*3的变换矩阵
+	Imgproc.warpAffine(Mat src, Mat dst, Mat M, Size dsize)；//应用变换矩阵变换图像
+```
+
+⦁	透视变换
+	概念：透视变换(Perspective Transformation)将图片投影到一个新的视平面，也称作投影映射；要找到4个点，其中任意三个不共线；透视变换矩阵M大小为3*3；
+	主要函数：
+
+```java
+Imgproc.getPerspectiveTransform(Mat src, Mat dst)；
+Imgproc.warpPerspective(Mat src, Mat dst, Mat M, Size dsize, int flags)；
+```
