@@ -35,3 +35,20 @@ pip install labelimg
 
 # 5、模型训练
 
+在 yolotrain 文件下新建一个训练的配置文件,例如helmet.yaml
+
+```yaml
+path: E:/yolotrain
+train: images/train
+val: images/val
+test: images/test
+nc: 2
+names: ["helmet"]
+```
+
+path: 代表训练的根目录
+train: 代表要训练的图片文件夹,相对于path路径
+val: 代表要验证的图片文件夹,相对于path路径
+test: 代表要测试的图片文件夹,相对于path路径
+nc: 代表分类名称数量，这是1个
+names: 是一个json数组，代表的是标注的分类名称(注意保持顺序)
