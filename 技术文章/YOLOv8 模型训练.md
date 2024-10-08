@@ -61,3 +61,7 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 # epochs:训练次数（默认100）
 yolo detect train data=e:/yolotrain/helmet.yaml model=e:/yolotrain/yolov8s.pt epochs=20 imgsz=640
 ```
+
+会在根目录下生成runs，里面就是训练的结果
+
+
