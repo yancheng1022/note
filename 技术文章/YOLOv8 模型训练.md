@@ -21,3 +21,7 @@ pip install labelimg
 
 > images文件夹下面的test,train,val三个文件夹，全部存放相同的要训练的图片(测试，训练，验证)
 > labels下面的train,val两个文件夹存放的是用labelimg标注的标签数据文件
+
+
+# 4、标注数据
+
