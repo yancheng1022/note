@@ -25,3 +25,5 @@ pip install labelimg
 
 # 4、标注数据
 
+虚拟环境输入labelimg 进行标注
+
