@@ -79,5 +79,6 @@ yolo detect val data=e:/yolotrain/helmet.yaml  model=e:/yolotrain/runs/detect/tr
 
 将YOLOv8训练得到的模型导出为ONNX格式，有助于更好地部署模型，并在不同的框架和平台之间进行快速交换和移植，提高模型的效用和可用性
 
-```
+``` shell
+yolo export model=e:/yolotrain/runs/detect/train/weights/best.pt format=onnx
 ```
