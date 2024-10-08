@@ -27,3 +27,5 @@ pip install labelimg
 
 虚拟环境输入labelimg 进行标注
 
+# 5、模型训练
+
