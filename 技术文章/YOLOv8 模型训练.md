@@ -52,3 +52,11 @@ val: 代表要验证的图片文件夹,相对于path路径
 test: 代表要测试的图片文件夹,相对于path路径
 nc: 代表分类名称数量，这是1个
 names: 是一个json数组，代表的是标注的分类名称(注意保持顺序)
+
+开始训练：
+
+进入虚拟机根目录：
+
+```shell
+yolo detect train data=e:/yolotrain/helmet.yaml model=e:/yolotrain/yolov8s.pt imgsz=640
+```
