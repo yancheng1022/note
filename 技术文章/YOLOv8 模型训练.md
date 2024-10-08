@@ -65,3 +65,12 @@ yolo detect train data=e:/yolotrain/helmet.yaml model=e:/yolotrain/yolov8s.pt ep
 会在根目录下生成runs，里面就是训练的结果
 
 
+# 6、验证模型
+
+训练完成后，可以对图片进行验证
+cmd控制台输入命令：
+
+```shell
+# model 参数代表是 需要验证的模型，data 代表检测的配置
+yolo detect val data=e:/yolotrain/helmet.yaml  model=e:/yolotrain/runs/detect/train/weights/best.pt
+```
