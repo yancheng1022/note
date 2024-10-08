@@ -25,7 +25,13 @@ pip install labelimg
 
 # 4、标注数据
 
-虚拟环境输入labelimg 进行标注
+将准备好的图片放到 images/train 文件夹，下面并且复制一份到 images/val 和 images/test两个文件夹
+
+配置环境 的命令控制台,输入 labelimg 命令，即可打开 labelimg 程序
+点击 Open Dir 按钮，选择 images/train 文件夹
+点击 Change Save Dir 按钮，选择到 labels/train 文件夹
+点击Save 下面的格式按钮，调整到 YOLO 格式的模式即可
+
 
 # 5、模型训练
 
