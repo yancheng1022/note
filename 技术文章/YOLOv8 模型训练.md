@@ -42,7 +42,7 @@ path: E:/yolotrain
 train: images/train
 val: images/val
 test: images/test
-nc: 2
+nc: 1
 names: ["helmet"]
 ```
 
