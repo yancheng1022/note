@@ -32,6 +32,7 @@ pip install labelimg
 点击 Change Save Dir 按钮，选择到 labels/train 文件夹
 点击Save 下面的格式按钮，调整到 YOLO 格式的模式即可
 
+>注：模型训练前要将train下的文件复制到val下
 
 # 5、模型训练
 
@@ -43,7 +44,7 @@ train: images/train
 val: images/val
 test: images/test
 nc: 1
-names: ["helmet"]
+names: ['helmet']
 ```
 
 path: 代表训练的根目录
