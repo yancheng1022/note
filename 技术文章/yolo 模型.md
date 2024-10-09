@@ -40,4 +40,10 @@ pip install onnxruntime -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-     ()  修改输出维度 gitub镜像下载地址:https://hub.nuaa.cf/shouxieai/infer python v8trans.py best.onnx 推理检测 yolo predict model=yolov8n.pt source=4.png
+6、推理检测
+```shell
+yolo predict model=yolov8n.pt source=test.jpg
+```
+
+
+     ()  修改输出维度 gitub镜像下载地址:https://hub.nuaa.cf/shouxieai/infer python v8trans.py best.onnx 推理检测 
