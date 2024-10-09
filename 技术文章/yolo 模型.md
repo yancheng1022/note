@@ -44,3 +44,6 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```shell
 yolo predict model=yolov8n.pt source=test.jpg
 ```
+
+
+yolo detect train data=e:/yolotrain/test/dianzan.yaml model=e:/yolotrain/yolov8s.pt epochs=100 imgsz=640
