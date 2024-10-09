@@ -30,8 +30,6 @@ conda env remove -n yolo
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 # 安装pytorch cpu版本
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 -i https://pypi.tuna.tsinghua.edu.cn/simple
-# 安装pytorch Gpu版本
-conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
 # yolo8
 pip install ultralytics==8.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
