@@ -17,7 +17,7 @@ pip install labelimg
 
 # 3、新建训练
 
-新建文件夹，名称叫做 yolotrain,在 yolotrain 新建labels和images文件夹，在images文件夹新建test,train,val三个文件夹，在labesl下面新建train,val两个文件夹
+新建文件夹，名称叫做 yolotrain,在 yolotrain 新建labels和images文件夹，在images文件夹新建test,train,val三个文件夹，在labels下面新建train,val两个文件夹
 
 > images文件夹下面的test,train,val三个文件夹，全部存放相同的要训练的图片(测试，训练，验证)
 > labels下面的train,val两个文件夹存放的是用labelimg标注的标签数据文件
