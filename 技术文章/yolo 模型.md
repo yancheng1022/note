@@ -27,8 +27,8 @@ conda env remove -n yolo
 
 ```shell
 # 安装pytorch
-pip3 install torch torchvision torchaudio --index-url https://mirrors.aliyun.com/pytorch-wheels/cu118
-# yolo8安装
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# yolo8
 pip install ultralytics==8.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
