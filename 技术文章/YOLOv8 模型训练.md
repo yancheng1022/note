@@ -1,10 +1,23 @@
 
-# 1、安装anaconda
+# 1、安装anaconda或miniconda
+
+1、anaconda
 
 下载anaconda，启动这个软件，新建一个虚拟环境：
 
 地址： https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-4.0.0-Windows-x86_64.exe
 
+2、miniconda
+
+地址： https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe
+环境变量：
+```
+C:\ProgramData\miniconda3 
+C:\ProgramData\miniconda3\Scripts 
+C:\ProgramData\miniconda3\Library\bin 
+```
+
+@
 # 2、环境配置
 
 ```shell
