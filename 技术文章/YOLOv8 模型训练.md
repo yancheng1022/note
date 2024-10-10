@@ -106,5 +106,7 @@ yolo detect val data=e:/yolotrain/smoke/smoke.yaml  model=e:/yolotrain/smoke/run
 将YOLOv8训练得到的模型导出为ONNX格式，有助于更好地部署模型，并在不同的框架和平台之间进行快速交换和移植，提高模型的效用和可用性
 
 ``` shell
+# 安装onnx
+pip install onnx -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx
 ```
