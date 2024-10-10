@@ -84,10 +84,10 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 进入虚拟机根目录：
 
 ```shell
-# epochs:训练次数（默认100）
+# cpu训练次数
 yolo detect train data=e:/yolotrain/smoke/smoke.yaml model=e:/yolotrain/yolov8s.pt epochs=100 imgsz=640
-yolo detect train data=e:/yolotrain/smoke/smoke.yaml model=e:/yolotrain/yolov8s.pt epochs=100 imgsz=640 batch-size 64 device 0
-python train.py --data e:/yolotrain/smoke/smoke.yaml --model e:/yolotrain/yolov8s.pt --epochs 100 --imgsz 640 --batch_size 64
+# GPU
+yolo detect train data=e:/yolotrain/smoke/smoke.yaml model=e:/yolotrain/yolov8s.pt epochs=100 imgsz=640 device=0
 ```
 
 会在根目录下生成runs，里面就是训练的结果
