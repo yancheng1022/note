@@ -17,7 +17,11 @@ C:\ProgramData\miniconda3\Scripts
 C:\ProgramData\miniconda3\Library\bin 
 ```
 
-@
+# 2、创建虚拟环境
+
+```shell
+conda create -n yolo8 python==3.8 
+```
 # 2、环境配置
 
 ```shell
