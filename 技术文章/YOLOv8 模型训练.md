@@ -21,6 +21,14 @@ C:\ProgramData\miniconda3\Library\bin
 
 ```shell
 conda create -n yolo8 python==3.8 
+# 查看现有环境
+conda env list
+# 激活环境 
+conda activate yolo
+# 激活失败 （执行该命令后重新进入cmd）
+conda init cmd.exe 
+# 删除环境 
+conda env remove -n yolo
 ```
 # 2、环境配置
 
