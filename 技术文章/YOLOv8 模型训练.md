@@ -98,7 +98,7 @@ cmd控制台输入命令：
 
 ```shell
 # model 参数代表是 需要验证的模型，data 代表检测的配置
-yolo detect val data=e:/yolotrain/helmet.yaml  model=e:/yolotrain/runs/detect/train/weights/best.pt
+yolo detect val data=e:/yolotrain/smoke/somke.yaml  model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt
 ```
 
 # 7、导出模型
