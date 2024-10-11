@@ -110,6 +110,7 @@ yolo detect val data=e:/yolotrain/smoke/smoke.yaml  model=e:/yolotrain/smoke/run
 ``` shell
 # 安装onnx
 pip install onnx -i https://pypi.tuna.tsinghua.edu.cn/simple
+# onnxsim 用于简化和优化onnx模型，移除冗余的操作符，使模型运行更快
 pip install onnxsim -i https://pypi.tuna.tsinghua.edu.cn/simple 
 pip install onnxruntime -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
