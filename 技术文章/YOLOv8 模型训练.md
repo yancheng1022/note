@@ -24,11 +24,11 @@ conda create -n yolo8 python==3.8
 # 查看现有环境
 conda env list
 # 激活环境 
-conda activate yolo
+conda activate yolo8
 # 激活失败 （执行该命令后重新进入cmd）
 conda init cmd.exe 
 # 删除环境 
-conda env remove -n yolo
+conda env remove -n yolo8
 ```
 # 2、环境配置
 
