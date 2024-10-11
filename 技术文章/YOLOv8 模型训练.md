@@ -116,6 +116,6 @@ pip install onnx -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install onnxsim -i https://pypi.tuna.tsinghua.edu.cn/simple 
 pip install onnxruntime -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
-yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx
+yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
