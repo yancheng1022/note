@@ -102,7 +102,6 @@ cmd控制台输入命令：
 # model 参数代表是 需要验证的模型，data 代表检测的配置
 yolo detect val data=e:/yolotrain/smoke/smoke.yaml  model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt
 
-yolo predict model=best.pt source=1.jpg
 ```
 
 # 7、导出模型
