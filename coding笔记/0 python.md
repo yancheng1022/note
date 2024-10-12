@@ -19,8 +19,21 @@ python区分大小写
 
 ## 2.2、注释
 
-单行注释
 
 ```python
-# 注释
+# 单行注释  #
+print("hello world")  
+print("你好，世界")  
+  
+'''  
+多行注释  
+'''  
+print("hello world")  
+print("你好，世界")  
+  
+"""  
+多行注释 
+"""  
+print("hello world")  
+print("你好，世界")
 ```
