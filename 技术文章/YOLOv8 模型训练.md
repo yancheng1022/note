@@ -141,6 +141,10 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 ### 2.1.3、yolo的训练过程
 
+原始图像（100X100X3） -  CNN  -  卷积  -  池化 -  预算处理，映射到nXnX8，然后反向的一个tio下降，得到一个最好best.pt
 
+## 2.2、检测部分
+
+通过best.pt得到卷积参数，
 
 
