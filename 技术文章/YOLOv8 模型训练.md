@@ -132,3 +132,4 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
  0 0.40729166666666666 0.6916666666666667 0.06041666666666667 0.18888888888888888
 
+类别 中心点x 中心点y 
