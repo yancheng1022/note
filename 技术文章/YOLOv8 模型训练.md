@@ -135,3 +135,6 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 类别 中心点x 中心点y 宽度占比 高度占比
 
 
+### 2.1.2、yolo的图像和标签处理
+
+一般实际是19X19的361个格子，用分类和定位算法，逐一的对每个格子进行查看，
