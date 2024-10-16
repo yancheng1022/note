@@ -137,4 +137,5 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 ### 2.1.2、yolo的图像和标签处理
 
-一般实际是19X19的361个格子，用分类和定位算法，逐一的对每个格子进行查看，
+一般实际是19X19的361个格子，用分类和定位算法，逐一的对每个格子进行查看，如果没找到预置框的位置，生成分类0的一条数据
+
