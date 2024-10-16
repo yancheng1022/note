@@ -1,5 +1,6 @@
 
-# 1、安装anaconda或miniconda
+# 1、模型训练
+## 1.1、安装anaconda或miniconda
 
 1、anaconda
 
@@ -17,7 +18,7 @@ C:\ProgramData\miniconda3\Scripts
 C:\ProgramData\miniconda3\Library\bin 
 ```
 
-# 2、创建虚拟环境
+## 1.2、创建虚拟环境
 
 ```shell
 conda create -n yolo8 python==3.8 
@@ -30,7 +31,7 @@ conda init cmd.exe
 # 删除环境 
 conda env remove -n yolo8
 ```
-# 2、环境配置
+## 1.3、环境配置
 
 ```shell
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
@@ -40,7 +41,7 @@ pip install ultralytics==8.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install labelimg
 ```
 
-# 3、新建训练
+## 1.4、新建训练
 
 新建文件夹，名称叫做 yolotrain,在 yolotrain 新建labels和images文件夹，在images文件夹新建test,train,val三个文件夹，在labels下面新建train,val两个文件夹
 
@@ -48,7 +49,7 @@ pip install labelimg
 > labels下面的train,val两个文件夹存放的是用labelimg标注的标签数据文件
 
 
-# 4、标注数据
+## 1.5、标注数据
 
 将准备好的图片放到 images/train 文件夹，下面并且复制一份到 images/val 和 images/test两个文件夹
 
@@ -59,7 +60,7 @@ pip install labelimg
 
 >注：模型训练前要将train下的文件复制到val下
 
-# 5、模型训练
+## 1.6、模型训练
 
 在 yolotrain 文件下新建一个训练的配置文件,smoke.yaml
 
@@ -93,7 +94,7 @@ yolo detect train data=e:/yolotrain/smoke/smoke.yaml model=e:/yolotrain/yolov8s.
 会在根目录下生成runs，里面就是训练的结果
 
 
-# 6、验证模型
+## 1.7、验证模型
 
 训练完成后，可以对图片进行验证
 cmd控制台输入命令：
@@ -104,7 +105,7 @@ yolo detect val data=e:/yolotrain/smoke/smoke.yaml  model=e:/yolotrain/smoke/run
 
 ```
 
-# 7、导出模型
+## 1.8、导出模型
 
 将YOLOv8训练得到的模型导出为ONNX格式，有助于更好地部署模型，并在不同的框架和平台之间进行快速交换和移植，提高模型的效用和可用性
 
@@ -119,4 +120,10 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 ```
 
 
-# 8、训练结果分析
+# 2、yolo原理
+
+## 2.1、训练部分
+
+### 2.1.1、yolo输入参数介绍
+
+图片 标签 置信度（这可以理解为一个隐藏的参数，因为是我们人工标注，所以可以认为置信度为1）
