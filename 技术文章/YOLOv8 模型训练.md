@@ -151,6 +151,10 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 
 
+### 2.2.2、交并比 iou
+
+IOU = 交集/并集 >= 0.5
+
 
 
 
