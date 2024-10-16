@@ -145,6 +145,10 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 ## 2.2、检测部分
 
-通过best.pt得到卷积参数，
+通过best.pt得到卷积，输入的图片就相当于参数，得到推理结果（包含中心点坐标，宽高，置信度等），这样就完成了一次检测
+
+
+
+
 
 
