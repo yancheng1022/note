@@ -155,6 +155,8 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 IOU = 交集/并集 >= 0.5
 
+非最大抑制算法
+
 
 
 
