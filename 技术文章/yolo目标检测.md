@@ -1,5 +1,6 @@
 
 # 1、yolo发展概况
+YOLO是一种基于深度学习的目标检测框架，其全称为"You Only Look Once"
 
 
 
