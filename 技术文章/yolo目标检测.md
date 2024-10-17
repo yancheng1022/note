@@ -47,19 +47,19 @@ FN：false Negative（错误负例）：对目标边界没有预测的边界框
 ![image.png|500](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241017131432.png)
 
 预测的是热狗答对了
-预测的是热狗打错了
+预测的是热狗答错了
 预测的不是热狗打错了
 预测的不是热狗答对了
 
 ## 2.5、precision（精准率）
 预测出来的正确的比例
-precision = TP/ total positive results
+precision = TP/ total positive results（TP+FP）
 
 >比如一共标注两个框，预测出来一个，且这一个是正确的，则准确率1/1=1
 ## 2.6、recall（召回率）
 
 所有真实标注中的真正例
-recall = TP / total ground truth boxes
+recall = TP / total ground truth boxes（TP+FN）
 
 >比如一共标注两个框，预测出来一个，且这一个是正确的，则准确率1/2=0.5
 
