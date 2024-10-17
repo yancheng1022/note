@@ -39,8 +39,8 @@ Bounding Box（边界框）：是一个围绕物体的矩形，它指定了物�
 
 ## 2.4、TP,FP,TN,FN
 
-TP：True Positive 正确的预测 - 正例： 有预测的边界框与给定类的目标边界框IOU > 0.5
-FP：False Positive 错误的预测 - 反例： 有预测的边界框与给定类的目标边界框IOU < 0.5
+TP：True Positive 正确的预测： 有预测的边界框与给定类的目标边界框IOU > 0.5
+FP：False Positive 错误的预测： 有预测的边界框与给定类的目标边界框IOU < 0.5
 
 FN：false Negative：对目标边界没有预测的边界框
 
