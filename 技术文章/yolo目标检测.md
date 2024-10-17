@@ -67,6 +67,10 @@ recall = TP / total ground truth boxes（TP+FN）
 ## 2.7、AP（平均精度）
 
 平均精度（average precision）衡量模型对正样本的预测准确性
+使用11点插值法计算平均精度
+准确度值在11个等间隔的召回率值上记录，如果IoU>=0.5，则预测为正例
+
+![image.png|475](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241017140243.png)
 
 
 
