@@ -1,6 +1,6 @@
 
 # 1、yolo发展概况
-YOLO是一种基于深度学习的目标检测框架，其全称为"You Only Look Once"
+YOLO是一种基于深度学习的目标检测框架，其全称为"You Only Look Once" 采用一种统一的检测算法，将不同的目标检测步骤整合到一个神经网络中，使得它能够高效的完成各种计算机视觉人物。有了yolo，我们可以用单个神经网络来训练整个目标检测系统
 
 ![image.png|750](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241017093022.png)
 
