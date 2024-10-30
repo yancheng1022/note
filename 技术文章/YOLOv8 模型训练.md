@@ -119,12 +119,13 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
-## 1.9、安装cuda
+## 1.9、安装cuda和cudnn
 
-地址：https://developer.nvidia.cn/cuda-toolkit
+cuda地址：https://developer.nvidia.cn/cuda-toolkit
 
 nvcc -V
 
+cudnn地址：
 # 2、yolo原理
 
 ## 2.1、训练部分
