@@ -125,7 +125,7 @@ cuda地址：https://developer.nvidia.cn/cuda-toolkit
 
 nvcc -V
 
-cudnn地址：
+cudnn地址：https://developer.nvidia.com/cudnn-archive
 # 2、yolo原理
 
 ## 2.1、训练部分
