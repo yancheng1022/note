@@ -123,6 +123,8 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 地址：https://developer.nvidia.cn/cuda-toolkit
 
+nvcc -V
+
 # 2、yolo原理
 
 ## 2.1、训练部分
