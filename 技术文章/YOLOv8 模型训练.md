@@ -83,6 +83,7 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 开始训练：
 
 进入虚拟机根目录：
+yolo detect train data=d:/data/yoloTrain/smoke/smoke.yaml model=d:/data/yoloTrain/yolov8s.pt epochs=10 imgsz=640 device=0 close_mosaic=10
 
 ```shell
 # cpu训练次数
@@ -119,6 +120,8 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
+yolo export model=d:/data/yoloTrain/smoke/runs/detect/train2/weights/best.pt format=onnx simplify=True
+
 ## 1.9、安装cuda和cudnn和pytorch
 
 1、cuda地址：https://developer.nvidia.cn/cuda-toolkit
@@ -135,6 +138,7 @@ nvcc -V
 ```
 https://pytorch.org/
 ```
+
 # 2、yolo原理
 
 ## 2.1、训练部分
