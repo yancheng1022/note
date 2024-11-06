@@ -33,3 +33,8 @@ html4
     </head>
 ```
 
+## 1.3、设置语言
+
+```html
+<html lang="zh-CN"></html>
+```
