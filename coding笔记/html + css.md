@@ -9,3 +9,17 @@ live server 热部署
 html：HyperTxt Markup Language 超文本标记语言
 
 
+## 1.1、html文档声明
+
+html5
+
+```html
+<!DOCTYPE html>
+```
+
+html4
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+```
