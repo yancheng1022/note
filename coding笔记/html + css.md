@@ -38,3 +38,8 @@ html4
 ```html
 <html lang="zh-CN"></html>
 ```
+
+## 1.4、排版标签
+
+h1,h2,h3,h4,h5,h6
+
