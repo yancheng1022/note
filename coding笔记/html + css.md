@@ -1,7 +1,7 @@
 vscode插件：
-chinese
-vscode-icons
-live server
+chinese 中文
+vscode-icons 文件图标
+live server 热部署
 
 
 # 1、HTML
