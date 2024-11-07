@@ -217,3 +217,5 @@ download：触发下载
 width
 height
 cellspacing：单元格间距
+align：水平对齐
+valign：垂直对齐
