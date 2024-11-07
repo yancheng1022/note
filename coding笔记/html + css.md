@@ -227,5 +227,48 @@ colspan：跨列
 rowspan：跨行
 
 ```html
+<!-- 跨行和跨列 -->
+         <table border="1" cellspacing="0">
+            <caption>课程表</caption>
+            <thead>
+                <tr>
+                    <td>项目</td>
+                    <td colspan="3">上课</td>
+                    <td>活动和休息</td>
 
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>星期</td>
+                    <td>星期一</td>
+                    <td>星期二</td>
+                    <td>星期三</td>
+                    <td>星期四</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">上午</td>
+                    <td>语文</td>
+                    <td>数学</td>
+                    <td>英语</td>
+                    <td>体育</td>
+                </tr>
+                <tr>
+                    <td>化学</td>
+                    <td>生物</td>
+                    <td>地理</td>
+                    <td>历史</td>
+                </tr>
+                <tr>
+                    <td>下午</td>
+                    <td>美术</td>
+                    <td>数学</td>
+                    <td>政治</td>
+                    <td>历史</td>
+                </tr>
+            </tbody>
+         </table>
 ```
+
+
+![image.png|389](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241107172346.png)
