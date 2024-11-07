@@ -327,8 +327,23 @@ rowspan：跨行
 ## 1.14、字符实体
 
 ```html
-&nbsp;
+       <!-- 字符实体-空格 -->
+       <div>hello &nbsp;&nbsp;world</div>
+       <!-- 字符实体-大于小于 -->
+       <div>&lt;h1&gt;是一个html标签</div>
+       <!-- 字符实体-&amp;表示一个& -->
+       <div>&amp;nbsp;</div>
+       <!-- 字符实体-版权所有 -->
+       <div>版权&copy;</div>
 ```
+
+## 1.15、html全局属性
+
+id：标签唯一标识
+class：给标签指定类名，然后通过css就可以给标签设置样式
+style：给标签设置css样式
+
+## 1.16、meta元信息
 ## 1.99、其它标签
 
 ```html
