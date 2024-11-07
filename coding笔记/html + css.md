@@ -276,5 +276,13 @@ rowspan：跨行
 ## 1.12、常用标签
 
 ```html
-<br>
+    <!-- 换行 -->
+    <br>
+    <!-- 分割线 -->
+     <hr>
+     <!-- 按原文显示 -->
+      <pre>
+         gory     gory
+              man       united
+      </pre>
 ```
