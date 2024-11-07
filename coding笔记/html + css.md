@@ -176,7 +176,7 @@ download：触发下载
             <caption>学生信息</caption>
             <!-- 表格头 -->
             <thead>
-                <!-- 列 -->
+                <!-- 表格行 -->
                 <tr>
                     <!-- 头部的每一列，th的h指head -->
                     <th>姓名</th>
