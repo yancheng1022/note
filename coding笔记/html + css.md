@@ -88,3 +88,5 @@ p标签中不能再用p，h1，div标签
 
 img  属性：src，alt，width，height
 
+>常见的图片格式：
+>jpg或jpeg：有损的压缩格式。占用空间小。不支持透明背景，不支持动态图
