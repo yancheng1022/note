@@ -219,3 +219,6 @@ height
 cellspacing：单元格间距
 align：水平对齐
 valign：垂直对齐
+
+
+colspan：跨列
