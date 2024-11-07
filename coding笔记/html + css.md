@@ -164,6 +164,7 @@ download：触发下载
 
 ## 1.11、表格
 
+### 1.11.1、常规表格
 表格：table
 表格标题：caption
 表格头部：thead
@@ -220,5 +221,11 @@ cellspacing：单元格间距
 align：水平对齐
 valign：垂直对齐
 
+### 1.11.2、跨行跨列
 
 colspan：跨列
+rowspan：跨行
+
+```html
+
+```
