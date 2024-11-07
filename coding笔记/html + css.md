@@ -105,3 +105,19 @@ href：要跳转的位置
 target：跳转时如何打开页面（_self：在本页签中打开（默认），_blank：在新页签中打开）
 download：触发下载
 跳转锚点：
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>mu</title>
+    </head>
+    <body>
+        <a href="#ggmu">看曼联</a>
+        <p>曼彻斯特联1</p>
+        <p>曼彻斯特联2</p>
+        <a name="ggmu"></a>
+        <img src="mu.jpg" alt="曼联">
+    </body>
+</html>
+```
