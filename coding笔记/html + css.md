@@ -116,8 +116,7 @@ download：触发下载
         <a href="#ggmu">看曼联</a>
         <p>曼彻斯特联1</p>
         <p>曼彻斯特联2</p>
-        <a name="ggmu"></a>
-        <img src="mu.jpg" alt="曼联">
+        <img id="ggmu" src="mu.jpg" alt="曼联">
     </body>
 </html>
 ```
