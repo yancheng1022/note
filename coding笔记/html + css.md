@@ -100,7 +100,7 @@ img  属性：src，alt，width，height
 ## 1.9、超链接
 
 作用：从当前页面进行跳转
-a ，常用属性：
+标签 a ，常用属性：
 href：要跳转的位置   
 target：跳转时如何打开页面（_self：在本页签中打开（默认），_blank：在新页签中打开）
 download：触发下载
@@ -122,3 +122,5 @@ download：触发下载
     </body>
 </html>
 ```
+
+唤起指定应用：
