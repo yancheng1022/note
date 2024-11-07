@@ -118,6 +118,7 @@ download：触发下载
         <p>曼彻斯特联2</p>
         <img id="ggmu" src="mu.jpg" alt="曼联">
         <a href="./test2.html#ggmu">其它页面锚点</a>
+        <a href="javascript:alert(666);">执行js脚本</a>
     </body>
 </html>
 ```
