@@ -273,7 +273,47 @@ rowspan：跨行
 
 ![image.png|389](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241107172346.png)
 
+## 1.12、表单
 
+```html
+<form action="https://search.jd.com/search" target="_blank" method="get">
+        <!-- 文本输入框 -->
+        <label for="zhanghu">账户：</label>
+        <input id="zhanghu" type="text" name="account" value="zhangsan" maxlength="10">
+        <!-- 文本输入框 - lable实现了提示文字和表单控件的关联-->
+        <label >
+            账户2：<input type="text" name="account2" id="zhanghu2">
+        </label>
+        <!-- 密码输入框 -->
+        <label for="mima">密码：</label>
+        <input id="mima" type="password" name="password" maxlength="6">
+        <!-- 单选框 -->
+        性别：<input type="radio" name="gender" value="male"> 男 <input type="radio" name="gender" value="female" checked> 女
+        <!-- 复选框 -->
+        爱好：<input type="checkbox" name="hobby" value="smoke">抽烟<input type="checkbox" name="hobby" value="drink">喝酒<input type="checkbox" name="hobby" value="perm" checked>烫头
+        <!-- 隐藏域 -->
+        <input type="hidden" name="abc" value="123">
+        <!-- 确认按钮_1 -->
+        <button>提交1</button>
+        <!-- 确认按钮_2 -->
+        <input type="submit" value="提交2">
+        <!-- 重置_1 -->
+        <button type="reset">重置1</button>
+        <!-- 重置_2 -->
+        <input type="reset" value="重置2">
+        <!-- 普通按钮_1 -->
+        <button type="button">普通按钮1</button>
+        <!-- 普通按钮_2 -->
+        <input type="button" value="普通按钮2">
+        <!-- 文本域 -->
+        文本域：<textarea name="other" rows="10" cols="30"></textarea>
+        <!-- 下拉框 -->
+         <select name="place">
+            <option value="1">山西</option>
+            <option value="2" selected>北京</option>
+         </select>
+      </form>
+```
 
 ## 1.99、其它标签
 
