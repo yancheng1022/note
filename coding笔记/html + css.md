@@ -344,6 +344,10 @@ class：给标签指定类名，然后通过css就可以给标签设置样式
 style：给标签设置css样式
 
 ## 1.16、meta元信息
+
+```
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+```
 ## 1.99、其它标签
 
 ```html
