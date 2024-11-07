@@ -214,3 +214,6 @@ download：触发下载
 ```
 
 常用属性：
+width
+height
+cellspacing：单元格间距
