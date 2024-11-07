@@ -345,8 +345,22 @@ style：给标签设置css样式
 
 ## 1.16、meta元信息
 
-```
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+```html
+<head>
+    <!-- 字符编码 -->
+    <meta charset="UTF-8">
+    <!-- 用户用IE8及其以上浏览器，进入edge渲染模式，更好的呈现网页 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对移动端的配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 配置网页关键字 -->
+     <meta name="keywords" content="曼联,欧冠">
+     <!-- 配置网页描述信息 -->
+      <meta name="description" content="曼联网站xxxxx">
+    <!-- 针对搜索引擎爬虫配置 - follow:允许爬虫跟随此页面链接；index：允许爬虫；noindex：不允许爬虫-->
+     <meta name="robots" content="follow">
+    <title>标题</title>
+</head>
 ```
 ## 1.99、其它标签
 
