@@ -169,3 +169,76 @@ download：触发下载
 表格头部：thead
 表格主体：tbody
 表格脚注：tfoot
+
+```html
+<table border="1">
+
+            <!-- 表格标题 -->
+
+            <caption>学生信息</caption>
+
+            <!-- 表格头 -->
+
+            <thead>
+
+                <!-- 列 -->
+
+                <tr>
+
+                    <!-- 头部的每一列，th的h指head -->
+
+                    <th>姓名</th>
+
+                    <th>性别</th>
+
+                    <th>年龄</th>
+
+                    <th>民族</th>
+
+                </tr>
+
+            </thead>
+
+            <!-- 表格主体 -->
+
+            <tbody>
+
+                <tr>
+
+                    <!-- body每一列，td的d指data -->
+
+                    <td>张三</td>
+
+                    <td>男</td>
+
+                    <td>十八</td>
+
+                    <td>汉族</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>李四</td>
+
+                    <td>女</td>
+
+                    <td>十八</td>
+
+                    <td>汉族</td>
+
+                </tr>
+
+            </tbody>
+
+            <!-- 表格脚注 -->
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>共计：2人</td>
+                </tr>
+            </tfoot>
+        </table>
+```
