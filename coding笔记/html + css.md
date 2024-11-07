@@ -86,3 +86,5 @@ p标签中不能再用p，h1，div标签
 
 ## 1.8、图片标签
 
+img  属性：src，alt，width，height
+
