@@ -317,6 +317,18 @@ rowspan：跨行
 
 ## 1.13、框架标签
 
+```html
+      <!-- 框架标签 -->
+       <iframe src="https://www.bilibili.com" width="900" height="600" frameborder="0"></iframe>
+       <a href="https://www.baidu.com" target="bd">点我去百度</a>
+       <iframe name="bd" width="900" height="600"  frameborder="0"></iframe>
+```
+
+## 1.14、字符实体
+
+```html
+&nbsp;
+```
 ## 1.99、其它标签
 
 ```html
