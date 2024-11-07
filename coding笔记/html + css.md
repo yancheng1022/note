@@ -117,6 +117,7 @@ download：触发下载
         <p>曼彻斯特联1</p>
         <p>曼彻斯特联2</p>
         <img id="ggmu" src="mu.jpg" alt="曼联">
+        <a href="./test2.html#ggmu">其它页面锚点</a>
     </body>
 </html>
 ```
