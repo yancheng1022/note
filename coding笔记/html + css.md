@@ -164,3 +164,8 @@ download：触发下载
 
 ## 1.11、表格
 
+表格：table
+表格标题：caption
+表格头部：thead
+表格主体：tbody
+表格脚注：tfoot
