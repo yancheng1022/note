@@ -273,7 +273,7 @@ rowspan：跨行
 
 ![image.png|389](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241107172346.png)
 
-## 1.12、常用标签
+## 1.12、其它标签
 
 ```html
     <!-- 换行 -->
@@ -282,7 +282,8 @@ rowspan：跨行
      <hr>
      <!-- 按原文显示 -->
       <pre>
-         gory     gory
-              man       united
+         Glory     Glory
+              Man       United
       </pre>
 ```
+
