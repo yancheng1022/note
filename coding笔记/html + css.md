@@ -362,7 +362,7 @@ style：给标签设置css样式
     <title>标题</title>
 </head>
 ```
-## 1.99、其它标签
+## 1.17、其它标签
 
 ```html
     <!-- 换行 -->
@@ -375,4 +375,7 @@ style：给标签设置css样式
               Man       United
       </pre>
 ```
+
+
+# 2、css
 
