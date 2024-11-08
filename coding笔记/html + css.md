@@ -414,5 +414,39 @@ style：给标签设置css样式
   内部样式和外部样式，后面的会覆盖前面的
   同一样式表中，后面的也会覆盖前面
   
-## 2.2、css基本选择器
+## 2.2、css选择器
 
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>css</title>
+        
+        <style>
+            /* 通配选择器 */
+            * {
+                color: orange;
+            }
+            /* 元素选择器 */
+            h1 {
+                color: red;
+            }
+            /* 类选择器：多个元素可以属于同一个class */
+            .key1{
+                color: blue;
+            }
+            /* id选择器: 多个元素的id属性不能重复 */
+            #key2 {
+                color: aqua;
+            }
+        </style>
+    </head>
+    <body>
+      <h1>hello,world</h1>
+      <h2>hello,world</h2>
+      <p class="key1">曼联</p>
+      <p id="key2">曼联</p>
+    </body>
+</html>
+```
