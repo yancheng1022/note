@@ -440,13 +440,22 @@ style：给标签设置css样式
             #key2 {
                 color: aqua;
             }
+            /* 交集选择器 */
+            p.key1 {
+                color: blueviolet;
+            }
+            /* 并集选择器 */
+            .key1,#key2,.key3{
+                background-color: aquamarine;
+            }
         </style>
     </head>
     <body>
       <h1>hello,world</h1>
       <h2>hello,world</h2>
       <p class="key1">曼联</p>
-      <p id="key2">曼联</p>
+      <p id="key2">mu</p>
+      <p class="key3">老特拉福德</p>
     </body>
 </html>
 ```
