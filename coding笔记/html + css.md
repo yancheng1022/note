@@ -383,5 +383,34 @@ style：给标签设置css样式
 
 ## 2.1、css编写位置
 
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>css样式位置</title>
+        <!-- 内部样式 -->
+        <style>
+            h2{
+                color: green;
+            }
+        </style>
+        <!-- 外部样式 -->
+        <link rel="stylesheet" href="a.css">
+    </head>
+    <body>
+        <!-- 行内样式 -->
+        <h1 style="color: brown;">css行内样式</h1>
+        <!-- 内部样式 -->
+        <h2>css内部样式</h2>
+        <!-- 外部样式 -->
+        <h3>css外部样式</h3>
+    </body>
+</html>
+```
 
-
+>样式优先级：
+  行内样式 > 内部样式 = 外部样式
+  内部样式和外部样式，后面的会覆盖前面的
+  同一样式表中，后面的也会覆盖前面
+  
