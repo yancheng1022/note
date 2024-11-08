@@ -448,6 +448,74 @@ style：给标签设置css样式
             .key1,#key2,.key3{
                 background-color: aquamarine;
             }
+            /* 后代选择器 */
+            ul li {
+                color: red;
+            }
+            /* 子代选择器(只有儿子) */
+            ul>a {
+                color: yellow;
+            }
+            /* 兄弟选择器(紧紧相邻的兄弟) */
+            li+a {
+                font-size: 40px;
+            }
+            /* 兄弟选择器(所有的兄弟) */
+            li~a {
+                font-size: 40px;
+            }
+            /* 属性选择器:选中具有title属性的元素 */
+            [title] {
+                color: green;
+            }
+            /* 属性选择器:选中具有具体属性值的元素 */
+            [title="kaka2"] {
+                color: blue;
+            }
+            /* 属性选择器:选中具有c开头属性值的元素 */
+            [title^="c"] {
+                color: red;
+            }
+            /* 属性选择器:选中具有3结尾属性值的元素 */
+            [title$="3"] {
+                color: orange;
+            }
+            /* 属性选择器:选中包含ckaka属性值的元素 */
+            [title*="ckaka"] {
+                color: purple;
+            }
+            /* 动态伪类选择器 link visited hover active focus(表单) */
+            a:visited {
+                color: brown;
+            }
+            a:hover {
+                color: blue;
+            }
+            input:focus {
+                background-color: green;
+            }
+            /* 结构伪类 ul下第一个儿子li元素 */
+            ul>li:first-child {
+                color: chartreuse;
+            }
+            /* 否定伪类 */
+            ul>li:not(.head){
+                color: blue;
+            }
+            /* 目标伪类 */
+            div:target {
+                background-color: green;
+                height: 300px;
+            }
+            /* 语言伪类 */
+            div:lang(en) {
+              color: chartreuse;
+            }
+            /* 伪元素选择器 */
+            div::first-letter {
+              color: red;
+              font-size: 20px;
+            }
         </style>
     </head>
     <body>
@@ -456,7 +524,25 @@ style：给标签设置css样式
       <p class="key1">曼联</p>
       <p id="key2">mu</p>
       <p class="key3">老特拉福德</p>
-    
+      <ul>
+        <li>抽烟</li>
+        <li>喝酒</li>
+        <li class="head">烫头</li>
+        <a href="#">张三</a>
+        <p>
+            <a href="#">李四</a>
+        </p>
+        <a href="#">王五</a>
+      </ul>
+      <div title="kaka">卡卡</div>
+      <div title="kaka2">卡卡</div>
+      <div title="ckaka3">卡卡</div>
+      <input type="text">
+      <a href="#six">去看第六个</a>
+      <div id="six">第六个</div>
+      <div lang="en">first</div>
+      <div>hello,Manlian</div>
     </body>
 </html>
+
 ```
