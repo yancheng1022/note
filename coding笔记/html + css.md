@@ -568,3 +568,11 @@ overflow-x: hidden
 overflow-y:scroll
 ```
 
+### 2.3.3、隐藏元素的两种方式
+
+```css
+# 隐藏并且不占据位置
+display: none
+# 隐藏并且占据位置
+visibility: hidden
+```
