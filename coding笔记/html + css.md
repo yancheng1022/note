@@ -551,5 +551,6 @@ style：给标签设置css样式
 
 ## 2.3、盒子模型
 
+盒子模型组成部分：内容、内边距、边框和外边距4个部分组成
 
-
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241109212702.png)
