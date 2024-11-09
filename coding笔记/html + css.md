@@ -560,5 +560,11 @@ style：给标签设置css样式
 第一个元素上margin会作用在父元素上，最后一个元素下maring会作用在父元素上
 如何解决？给父元素设置css样式 overflow:hidden
 
-### 2.3.2、margin合并问题
+### 2.3.2、处理内容溢出
+
+```css
+overflow: hidden   auto   scroll   
+overflow-x: hidden
+overflow-y:scroll
+```
 
