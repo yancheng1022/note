@@ -588,5 +588,32 @@ visibility: hidden
 
 底部有缝隙
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer {
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <img src="mu.jpg">
+    </div>
+</body>
+</html>
+```
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241109224429.png)
+
+解决方式：
+```css
+       img{
+            vertical-align: bottom;
+        }
+```
