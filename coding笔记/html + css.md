@@ -555,5 +555,10 @@ style：给标签设置css样式
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241109212702.png)
 
-margin塌陷问题：
+### 2.3.1、margin塌陷问题：
+
+第一个元素上margin会作用在父元素上，最后一个元素下maring会作用在父元素上
+如何解决？给父元素设置css样式 overflow:hidden
+
+### 2.3.2、margin合并问题
 
