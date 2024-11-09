@@ -583,3 +583,10 @@ visibility: hidden
 
 父元素设置：font-size: 0
 
+
+### 2.3.5、行内块的幽灵空白问题
+
+底部有缝隙
+
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241109224429.png)
