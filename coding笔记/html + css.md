@@ -578,3 +578,8 @@ display: none
 # 隐藏并且占据位置
 visibility: hidden
 ```
+
+### 2.3.4、元素之间空白问题
+
+父元素设置：font-size: 0
+
