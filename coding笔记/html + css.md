@@ -766,3 +766,11 @@ visibility: hidden
 
 ### 2.5.4、粘性定位
 
+不会脱离文档流，他是一种专门用于窗口滚动时的新的定位方式
+
+```css
+        .box1 {
+            position: sticky;
+            top: 50px;
+        }
+```
