@@ -677,6 +677,39 @@ visibility: hidden
 对兄弟元素的影响：后面的兄弟元素，会占据浮动元素之前的位置，在浮动元素下面；对前面的兄弟无影响
 对父元素的影响：不能撑起父元素的高度，导致父元素高度塌陷；但父元素的宽度依然束缚浮动元素
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer {
+            background-color: gray;
+            border: 1px solid black;
+            /* overflow: hidden用途  1) 隐藏超出父元素的内容，保持布局整洁；2) 清除浮动，使得父元素能包围其内部浮动的子元素；3) 解除margin坍塌，避免子元素外边距导致的布局问题 */
+            overflow: hidden;
+        }
+        .box {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="box box1">1</div>
+        <div class="box box2">2</div>
+        <div class="box box3">3</div>
+        <div class="box box4">4</div>
+    </div>
+</body>
+</html>
+```
+
 解决：
 
 1、给父元素设置overflow:hidden
