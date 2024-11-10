@@ -679,6 +679,10 @@ visibility: hidden
 
 解决：
 
+1、给父元素设置overflow:hidden
+
+2、给浮动元素的父元素，设置伪元素，通过伪元素清除浮动
+
 ```css
 .outer::after {
 	content: '';
@@ -686,3 +690,6 @@ visibility: hidden
 	clear: both;
 }
 ```
+
+>布局中的一个原则：设置浮动的时候，兄弟元素要么全浮动，要么全不浮动
+
