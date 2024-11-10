@@ -683,3 +683,9 @@ visibility: hidden
 	display: inline-block;
 }
 ```
+
+```css
+.box3 {
+	clear: both;
+}
+```
