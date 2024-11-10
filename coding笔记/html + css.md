@@ -612,8 +612,18 @@ visibility: hidden
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241109224429.png)
 
 解决方式：
+方式1：
 ```css
        img{
             vertical-align: bottom;
         }
 ```
+
+方式2：
+```css
+        .outer {
+            background-color: aqua;
+            font-size: 0;
+        }
+```
+这种方式在后面真有文字的情况下，需要再单独设置文字块的字体大小
