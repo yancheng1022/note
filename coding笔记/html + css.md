@@ -738,4 +738,9 @@ visibility: hidden
 
  >绝大多数情况下，相对定位会与绝对定位配合使用
  
- 
+```css
+ .box2 {
+            position: relative;
+            left: 50px;
+        }
+```
