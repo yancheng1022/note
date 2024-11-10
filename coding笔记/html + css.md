@@ -748,4 +748,8 @@ visibility: hidden
 ### 2.5.2、绝对定位
 
 给元素设置 position: absolute即可实现绝对定位，使用left，right，top，bottom四个属性调整位置
+绝对定位元素的特点：
+脱离文档流，会对后面的兄弟元素，父元素有影响
+
+### 2.5.3、固定定位
 
