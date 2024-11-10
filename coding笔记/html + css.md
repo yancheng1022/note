@@ -632,6 +632,34 @@ visibility: hidden
 ## 2.4、浮动
 
 在最初，浮动是用来实现文字环绕图片效果的，现在浮动是主流的页面布局方式之一
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer {
+            background-color: aqua;
+        }
+        img {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <img src="mu.jpg">
+        <span>曼彻斯特联足球俱乐部（Manchester United F.C.，中文简称“曼联”，英文简称“Man Utd”或“MUFC”）是一家位于英国西北区大曼彻斯特郡[曼彻斯特].....</span>
+    </div>
+</body>
+</html>
+```
+
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241110085030.png)
+
 
 ### 2.4.1、元素浮动后的特点
 1、脱离文档流
@@ -639,5 +667,8 @@ visibility: hidden
 3、不会独占一行，可以与其它元素公用一行
 4、不会margin合并，也不会margin塌陷，能够完美设置四个方向的margin和padding
 5、不会像行内块一样被当作文本处理（没有行内块的空白问题）
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241110085152.png)
+
 
 
