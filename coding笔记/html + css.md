@@ -744,3 +744,8 @@ visibility: hidden
             left: 50px;
         }
 ```
+
+### 2.5.2、绝对定位
+
+给元素设置 position: absolute即可实现绝对定位，使用left，right，top，bottom四个属性调整位置
+
