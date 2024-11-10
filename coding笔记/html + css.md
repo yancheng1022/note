@@ -678,14 +678,11 @@ visibility: hidden
 对父元素的影响：不能撑起父元素的高度，导致父元素高度塌陷；但父元素的宽度依然束缚浮动元素
 
 解决：
-```css
-.box4 {
-	display: inline-block;
-}
-```
 
 ```css
-.box3 {
+.outer::after {
+	content: '';
+	display: block;
 	clear: both;
 }
 ```
