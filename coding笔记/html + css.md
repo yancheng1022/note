@@ -818,5 +818,12 @@ html5是新一代html标准，2014年由w3c完成标准制定
 ## 3.2、新增的状态标签
 
 ```html
-
+    <!-- optium是最佳值 -->
+    <span>电量：</span>
+    <meter value="10" max="100" min="0" low="20" high="80" optimum="90"></meter>
+    <!-- 进度 -->
+    <span>进度：</span>
+    <progress max="100" value="20"></progress>
 ```
+
+## 3.3、新增列表标签
