@@ -881,5 +881,52 @@ html5是新一代html标准，2014年由w3c完成标准制定
 >传统布局：display+position+float
 >flex布局目前在移动端应用广泛，因为传统布局不能很好的呈现在移动设备上
 
+### 4.1.1、容器与项目
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer {
+            height: 300px;
+            background-color: gray;
+            height: 300px;
+            /* 将该元素变为伸缩容器（开启flex布局） */
+            display: flex;
+        }
+        .inner {
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">1</div>
+        <div class="inner">2</div>
+        <div class="inner">3</div>
+    </div>
+</body>
+</html>
+```
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241111210124.png)
+
+伸缩容器：开启了flex元素，就是伸缩容器
+
+>给元素设置：display:flex或display:inline-flex，该元素就变为伸缩容器
+>display:inline-flex很少使用，因为可以给多个伸缩容器的父容器，也设置为伸缩容器
+>一个元素可以同时是伸缩容器和伸缩项目
+
+伸缩项目：伸缩容器的子容器自动成为了伸缩项目
+
+>仅子元素成为伸缩项目，孙子元素等后代不是伸缩项目
+>无论原来哪种元素（块，行内块，行内），一旦成为伸缩项目，全部都会块状化
 
