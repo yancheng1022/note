@@ -821,11 +821,21 @@ html5是新一代html标准，2014年由w3c完成标准制定
 ## 3.3、新增列表标签
 
 ```html
-   <form action="#">
+    <!-- 下拉 -->
+    <form action="#">
         <input type="text" list="myData">
     </form>
     <datalist id="myData">
         <option value="周杰伦">周杰伦</option>
         <option value="马冬梅">马冬梅</option>
     </datalist>
+    <!-- 汇总 -->
+    <details>
+        <summary>hello</summary>
+        <p>1、hello world</p>
+        <p>2、hello mu</p>
+    </details>
 ```
+
+## 3.4、新增文本标签
+
