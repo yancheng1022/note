@@ -852,5 +852,14 @@ html5是新一代html标准，2014年由w3c完成标准制定
 ## 3.5、新增的多媒体标签
 
 ```html
-
+    <!-- 视频 控制按钮 静音 自动播放（静音播放才可生效）-->
+    <video src="fire2.mp4" controls muted autoplay></video>
+    <!-- 音频标签 -->
+    <audio src="fire2.mp3" controls></audio>
 ```
+
+# 4、css3
+
+在css2的基础上，增加了很多强大的新功能，从而解决一些实际面临的问题
+
+新特性：
