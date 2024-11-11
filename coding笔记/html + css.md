@@ -827,3 +827,13 @@ html5是新一代html标准，2014年由w3c完成标准制定
 ```
 
 ## 3.3、新增列表标签
+
+```html
+   <form action="#">
+        <input type="text" list="myData">
+    </form>
+    <datalist id="myData">
+        <option value="周杰伦">周杰伦</option>
+        <option value="马冬梅">马冬梅</option>
+    </datalist>
+```
