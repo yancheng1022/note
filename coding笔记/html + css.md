@@ -1020,3 +1020,6 @@ space-between
 space-around
 space-evenly
 stretch
+
+### 4.1.6、水平垂直居中
+
