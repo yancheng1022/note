@@ -1023,3 +1023,10 @@ stretch
 
 ### 4.1.6、水平垂直居中
 
+```css
+/* 方案1 */
+justify-content: center;
+align-items: center;
+/* 方案2 */
+margin: auto;
+```
