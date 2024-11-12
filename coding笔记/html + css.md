@@ -990,3 +990,12 @@ column-reverse：主轴方向垂直从下到上
 
 ### 4.1.4、主轴对齐方式
 
+属性名：justify-content
+常用值如下：
+- flex-start：主轴起点对齐（默认）
+- flex-end：主轴终点对齐
+- center：居中对齐
+- space-between：均匀分布，两端对齐（最常用）
+- space-around：均匀分布，两端距离是中间距离的一半
+- space-evenly：均匀分布，两端距离与中间距离一致
+
