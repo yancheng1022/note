@@ -945,3 +945,45 @@ column-reverse：主轴方向垂直从下到上
 
 ### 4.1.3、主轴换行方式
 
+属性名：flex-wrap
+
+- nowrap：不换行，默认值
+- wrap：自动换行，伸缩容器不够自动换行
+- wrap-reverse：反向换行
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer {
+            height: 300px;
+            width: 300px;
+            background-color: bisque;
+            display: flex;
+            /* 主轴换行方式 */
+            flex-wrap: wrap;
+        }
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">1</div>
+        <div class="inner">2</div>
+        <div class="inner">3</div>
+        <div class="inner">4</div>
+        <div class="inner">5</div>
+        <div class="inner">6</div>
+    </div>
+</body>
+</html>
+```
