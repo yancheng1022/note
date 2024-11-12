@@ -1001,3 +1001,22 @@ column-reverse：主轴方向垂直从下到上
 
 ### 4.1.5、侧轴对齐方式
 
+1、只有一行的情况
+align-items
+属性：
+flex-start
+flex-end
+center
+baseline
+stretch
+
+2、多行的情况
+align-content
+属性：
+flex-start
+flex-end
+center
+space-between
+space-around
+space-evenly
+stretch
