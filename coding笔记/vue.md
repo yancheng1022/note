@@ -10,3 +10,31 @@
 2、声明式编码，让编码人员无需直接操作DOM
 3、使用虚拟DOM+优秀的diff算法，尽量复用DOM节点
 
+## 1.2、起步demo
+
+```vue
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>hello,{{name}}</h1>
+    </div>
+
+    <script>
+        // 创建vue实例
+        const vm = new Vue({
+            el:'#root', //el用于指定当前vue实例为哪个容器服务，值为css选择器字符串
+            data:{ // data中用于存储数据，供给el所指定的容器去使用
+                name:"kaka"
+            }
+        })
+    </script>
+</body>
+</html>
+```
