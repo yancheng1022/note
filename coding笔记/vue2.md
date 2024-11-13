@@ -92,8 +92,16 @@
 
 ## 1.4、数据绑定
 
-v-bind是单向数据绑定（数据变化，页面变化）
-v-model双向数据绑定
+
+Vue中有2种数据绑定的方式：
+1.单向绑定(v-bind)：数据只能从data流向页面。
+2.双向绑定(v-model)：数据不仅能从data流向页面，还可以从页面流向data。
+
+>1.双向绑定一般都应用在表单类元素上（如：input、select等）
+   2.v-model:value 可以简写为 v-model，因为v-model默认收集的就是value值。
+   3.不是什么都可用v-model的.比如v-model不支持h1。v-model只能应用在表单元素上(输入元素)，与用户交互(都有共同的value属性)
+
+
 
 ```vue
 <!doctype html>
@@ -108,14 +116,7 @@ v-model双向数据绑定
 </head>
 <body>
     <div id="root">
-        <!--
-			Vue中有2种数据绑定的方式：
-					1.单向绑定(v-bind)：数据只能从data流向页面。
-					2.双向绑定(v-model)：数据不仅能从data流向页面，还可以从页面流向data。
-						备注：
-							1.双向绑定一般都应用在表单类元素上（如：input、select等）
-							2.v-model:value 可以简写为 v-model，因为v-model默认收集的就是value值。
-		 -->
+
         <label>
             单项数据绑定:
             <!--<input type='text' v-bind:value="name"/>-->
@@ -128,10 +129,7 @@ v-model双向数据绑定
             <input type='text' v-model="name"/>
         </label>
         <br/>
-         <!--
-         不是什么都可用v-model的 这里v-model不支持h1
-         v-model只能应用在表单元素上(输入元素)，与用户交互(都有共同的value属性)
-         -->
+
         <h1 v-bind:x="name">
             你好啊
         </h1>
