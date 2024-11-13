@@ -101,8 +101,6 @@ Vue中有2种数据绑定的方式：
    2.v-model:value 可以简写为 v-model，因为v-model默认收集的就是value值。
    3.不是什么都可用v-model的.比如v-model不支持h1。v-model只能应用在表单元素上(输入元素)，与用户交互(都有共同的value属性)
 
-
-
 ```vue
 <!doctype html>
 <html lang="en">
