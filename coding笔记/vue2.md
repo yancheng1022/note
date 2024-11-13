@@ -234,7 +234,7 @@ Vue中有2种数据绑定的方式：
 
 ## 2.4、事件处理
 
-事件的基本使用：
+### 2.4.1、事件的基本使用
 1.使用v-on:xxx 或 @xxx 绑定事件，其中xxx是事件名；
 2.事件的回调需要配置在methods对象中，最终会在vm上；
 3.methods中配置的函数，不要用箭头函数！否则this就不是vm了；
@@ -290,7 +290,7 @@ Vue中有2种数据绑定的方式：
 </html>
 ```
 
-## 2.5、事件修饰符
+### 2.4.2、事件修饰符
 
 Vue中的事件修饰符：
 1.prevent：阻止默认事件（常用）；
@@ -402,8 +402,69 @@ Vue中的事件修饰符：
 ```
 
 
-## 2.6、键盘事件
+### 2.4.3、键盘事件
+
+1.Vue中常用的按键别名：
+                        回车 => enter
+                        删除 => delete (捕获“删除”和“退格”键)
+                        退出 => esc
+                        空格 => space
+                        换行 => tab (特殊，必须配合keydown去使用)
+                        上 => up
+                        下 => down
+                        左 => left
+                        右 => right
+
+2.Vue未提供别名的按键，可以使用按键原始的key值去绑定，但注意要转为kebab-case（短横线命名）
+
+3.系统修饰键（用法特殊）：ctrl、alt、shift、meta
+                        (1).配合keyup使用：按下修饰键的同时，再按下其他键，随后释放其他键，事件才被触发。
+                        (2).配合keydown使用：正常触发事件。
+                        
+4.也可以使用keyCode去指定具体的按键（不推荐）
+5.Vue.config.keyCodes.自定义键名 = 键码，可以去定制按键别名
 
 ```vue
-
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue 键盘事件</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="root">
+        <!--vue中键盘事件的绑定 一般用keyUp(keydown)-->
+        <h1>欢迎来到{{ name }}</h1>
+        <input type="text" @keyup.enter="showInfo" placeholder="按下回车提示输入"/>
+        <input type="text" @keyup.delete="showInfo" placeholder="退格或删除提示输入"/>
+        <input type="text" @keyup.esc="showInfo" placeholder="按下esc提示输入"/>
+        <input type="text" @keydown.tab="showInfo" placeholder="按下tab示输入"/>
+        <input type="text" @keyup.ctrl="showInfo" placeholder="按下command提示输入"/>
+        <input type="text" @keydown.p="showInfo" placeholder="按下p提示输入"/>
+        <!--键盘事件的修饰符也可以连用-->
+       <input type="text" @keydown.command.g="showInfo" placeholder="按下command和g提示输入"/>
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el:'#root',
+            data:{
+                name: 'shanghai'
+            },
+            methods:{
+                showInfo:function (e){
+                    // if(e.keyCode === 13) {
+                    //     console.log(e.target.value);
+                    // }
+                    console.log(e.target.value);
+                    console.log(e.key); //按下的名字
+                }
+            }
+        })
+    </script>
+</body>
+</html>
 ```
