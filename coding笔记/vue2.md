@@ -225,3 +225,6 @@ Vue中有2种数据绑定的方式：
 
 ## 2.3、理解MVVM
 
+1. M：模型(Model) ：data中的数据
+2. V：视图(View) ：模板代码
+3. VM：视图模型(ViewModel)：Vue实例
