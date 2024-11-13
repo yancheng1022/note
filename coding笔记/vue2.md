@@ -234,6 +234,13 @@ Vue中有2种数据绑定的方式：
 
 ## 2.4、事件处理
 
+事件的基本使用：
+1.使用v-on:xxx 或 @xxx 绑定事件，其中xxx是事件名；
+2.事件的回调需要配置在methods对象中，最终会在vm上；
+3.methods中配置的函数，不要用箭头函数！否则this就不是vm了；
+4.methods中配置的函数，都是被Vue所管理的函数，this的指向是vm 或 组件实例对象；
+5.@click="demo" 和 @click="demo($event)" 效果一致，但后者可以传参；
+
 ```vue
 <!doctype html>
 <html lang="en">
@@ -246,14 +253,6 @@ Vue中有2种数据绑定的方式：
     <script src="../js/vue.js"></script>
 </head>
 <body>
-        <!--
-				事件的基本使用：
-							1.使用v-on:xxx 或 @xxx 绑定事件，其中xxx是事件名；
-							2.事件的回调需要配置在methods对象中，最终会在vm上；
-							3.methods中配置的函数，不要用箭头函数！否则this就不是vm了；
-							4.methods中配置的函数，都是被Vue所管理的函数，this的指向是vm 或 组件实例对象；
-							5.@click="demo" 和 @click="demo($event)" 效果一致，但后者可以传参；
-		-->
     <div id="root">
         <!--指令语法 v开头 例如v-on:click点击事件-->
         <h1>欢迎 {{ name }} </h1>
@@ -286,8 +285,6 @@ Vue中有2种数据绑定的方式：
                 }
             }
         });
-
-
     </script>
 </body>
 </html>
