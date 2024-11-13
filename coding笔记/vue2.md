@@ -39,7 +39,72 @@
 </html>
 ```
 
-## 1.3、模板语法
+## 1.3、el与data的两种写法
+```vue
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>el和data的两种写法</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+   <div id="root">
+       <!--
+
+		-->
+
+       <h1>你好，{{ name }}</h1>
+   </div>
+   <script type="text/javascript">
+       Vue.config.productionTip = false;
+       //el的两种写法
+       // const v = new Vue({
+       //     // el: '#root', //第一种写法
+       //     data: {
+       //         name: '上海'
+       //     }
+       // });
+       //
+       // // console.log(v);
+       // //关联root容器，用mount方法
+       // setTimeout(() => {
+       //     v.$mount('#root'); //第二种写法 挂载到页面上
+       // }, 3000)
+
+       //data的两种写法
+       new Vue({
+          el: '#root',
+           //data的第一种写法:对象式
+           // data: {
+           //     name: 'shanghai'
+           // }
+           //第二种写法: 函数式(返回对象中包含你想渲染的模版数据)
+           //学习组件的时候要是用函数式 这个函数是Vue来调用的
+           // data: () => {
+           //    console.log(`@@@@`, this); //此时this是window，因为箭头函数没有自己的this，它向外查找找到的window
+           //    return ({
+           //         name: 'shanghai'
+           //     })
+           // }
+           //尽量不要写成剪头函数，因为会丢失this
+           data (){
+              console.log('@@@', this); //此时this是Vue
+              return {
+                  name: 'shanghai'
+              }
+           }
+       });
+   </script>
+</body>
+</html>
+```
+
+# 2、基本语法
+## 2.1、模板语法
 
 插值语法：插值语法一般用在标签体的值{{}}
 指令语法：用于解析标签(标签体,标签属性, 绑定事件)上，类似于v-bind
@@ -90,7 +155,7 @@
 </html>
 ```
 
-## 1.4、数据绑定
+## 2.2、数据绑定
 
 
 Vue中有2种数据绑定的方式：
