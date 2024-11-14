@@ -22,7 +22,7 @@ docker run \
 --name minio \
 -d --restart=always \
 -e "MINIO_ACCESS_KEY=minio" \
--e "MINIO_SECRET_KEY=minio123" \
+-e "MINIO_SECRET_KEY=lantrack@123" \
 -v /opt/minio/data:/data \
 -v /opt/minio/config:/root/.minio \
 minio/minio server \
@@ -39,4 +39,14 @@ springBoot集成的话，使用9000端口
 ```shell
 iptables -I INPUT -p tcp --dport 9000 -j ACCEPT
 service iptables save
+```
+
+# 5、新建buckets、access keys
+
+
+access key和secret key：
+
+```txt
+4lmXJON1Tg6wcva3yms2
+ptwEzlaFVPWThTfLcDDQKuiy7mpG9NM2waBtcnVX
 ```
