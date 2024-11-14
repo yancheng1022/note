@@ -522,13 +522,6 @@ Vue中的事件修饰符：
                 //defineProperty
                 //注意vm._data是不存在计算属性的
                 //计算属性算完之后直接丢到了viewModel实例对象身上
-                /**
-                 * get的调用时机
-                 * 1.初次读取计算属性时
-                 * 2.所依赖的数据(data中的属性)发生变化时，不改变的话直接读缓存
-                 * 3.methods没有缓存，读几次就调用几次无论要用的数据是否发生变化
-                 *  @returns {string}
-                 */
                 get(){
                     //此时get函数中的this指向是vm
                     console.log('get调用了', this);
