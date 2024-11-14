@@ -662,7 +662,7 @@ Vue中的事件修饰符：
     vm.$watch('isHot', {
         immediate: true, //当这个属性为true时，页面刚渲染就运行handler函数
         //handler 什么时候调用呢
-        //当isHot发生改变就会调用该函数
+        //当isHot发生改变就会调用该函数 
         //handler接收两个参数，一个是这个状态参数改变前的值，另一个是改变后的旧值
         handler(newValue, preValue){
             console.log('ishot 被修改了');
