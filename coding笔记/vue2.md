@@ -1312,9 +1312,11 @@ key的内部原理
 7、v-show 	: 条件渲染 (动态控制节点是否展示)
 8、v-text 	: 向其所在的节点中渲染文本内容。 (纯文本渲染)（与插值语法的区别：v-text会替换掉节点中的内容，{{xx}}则不会）
 9、v-html  : 向指定节点中渲染包含html结构的内容（在网站上动态渲染任意HTML是非常危险的，容易导致XSS攻击）
-	10、v-cloak : 本质是一个特殊属性，Vue实例创建完毕并接管容器后，会删掉v-cloak属性（使用css配合v-cloak可以解决网速慢时页面展示出{{xxx}}的问题）
+10、v-cloak : 本质是一个特殊属性，Vue实例创建完毕并接管容器后，会删掉v-cloak属性（使用css配合v-cloak可以解决网速慢时页面展示出{{xxx}}的问题）
 
 ```html
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8" />
     <title>v-cloak指令</title>
@@ -1323,6 +1325,56 @@ key的内部原理
             display:none;
         }
     </style>
-    <!-- 引入Vue -->
 </head>
+<body>
+
+<div id="root">
+    <h2 v-cloak>{{name}}</h2>
+</div>
+<script type="text/javascript" src="http://localhost:8080/resource/5s/vue.js"></script>
+</body>
+
+<script type="text/javascript">
+    console.log(1)
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+    new Vue({
+        el:'#root',
+        data:{
+            name:'尚硅谷'
+        }
+    })
+</script>
+</html>
+```
+
+11、v-once ：v-once所在节点在初次动态渲染后，就视为静态内容了。以后数据的改变不会引起v-once所在结构的更新，可以用于优化性能
+
+```vue
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-once指令</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h2 v-once>初始化n的值为:{{ n }}</h2>
+    <h2>当前的n值为:{{ n }}</h2>
+    <button @click="n++">带我n+1</button>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+    new Vue({
+        el:"#root",
+        data:{
+           n:1
+        }
+    })
+</script>
+</body>
+</html>
 ```
