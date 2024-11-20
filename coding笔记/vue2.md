@@ -1762,3 +1762,8 @@ new Vue({
 </script>
 </html>
 ```
+
+## 2.14、vue脚手架
+
+地址：https://cli.vuejs.org/zh
+
