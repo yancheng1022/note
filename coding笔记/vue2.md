@@ -1765,13 +1765,33 @@ new Vue({
 
 ## 2.14、vue脚手架
 
-node安装：https://nodejs.cn/download/
+### 2.14.1、node安装
+
+1、地址：https://nodejs.cn/download/
+2、安装成功校验
 
 ```txt
-安装成功校验
 node -v
 npm -v
 ```
+
+3、修改全局模块下载路径
+
+我希望将全模块所在路径和缓存路径放在我node.js安装的文件夹中，则找到安装的目录，在安装目录下新建两个文件夹【node_global】和【node_cache】
+
+```shell
+npm config set prefix "D:\soft\node\node_global"
+npm config set cache "D:\soft\node\node_cache"
+```
+
+
+
+
+
+
+
+
+
 
 vue文档地址：https://cli.vuejs.org/zh
 
