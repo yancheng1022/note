@@ -1788,7 +1788,9 @@ npm config set cache "D:\soft\node\node_cache"
 
 用户变量下path的npm路径修改为：D:\soft\node\node_global
 
-系统变量下新建：NODE_PATH    D:\soft\node\node_modules
+系统变量下新建：NODE_PATH    D:\soft\node\node_global\node_modules
+
+系统变量path添加：%NODE_PATH%
 
 
 
