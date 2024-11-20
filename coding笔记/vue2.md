@@ -1415,6 +1415,9 @@ key的内部原理
 
 ## 2.12、vue生命周期
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20241120101053.png)
+
+
 ```vue
 <!doctype html>
 <html lang="en">
