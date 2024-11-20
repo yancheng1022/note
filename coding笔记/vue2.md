@@ -1765,5 +1765,6 @@ new Vue({
 
 ## 2.14、vue脚手架
 
-地址：https://cli.vuejs.org/zh
+node安装：https://nodejs.cn/download/
+vue文档地址：https://cli.vuejs.org/zh
 
