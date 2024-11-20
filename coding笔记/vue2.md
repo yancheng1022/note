@@ -1795,6 +1795,13 @@ npm config set cache "D:\soft\node\node_cache"
 >经过上面的步骤，nodejs下载的模块就会自动下载到我们自定义的目录，接下来我们测试一下。输入下面的命令：npm install express -g 
 
 
+5、更新npm源为淘宝镜像
+
+```shell
+npm config set registry https://registry.npmmirror.com
+# 查看是否成功
+npm config get registry
+```
 
 
 
