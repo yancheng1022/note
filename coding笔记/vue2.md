@@ -1784,9 +1784,11 @@ npm config set prefix "D:\soft\node\node_global"
 npm config set cache "D:\soft\node\node_cache"
 ```
 
+4、环境变量修改
 
+用户变量下path的npm路径修改为：D:\soft\node\node_global
 
-
+系统变量下新建：NODE_PATH    D:\soft\node\node_modules
 
 
 
