@@ -1526,4 +1526,4 @@ Vue中使用组件的三大步骤：
         2.全局注册：靠Vue.component('组件名',组件)
 
 三、编写组件标签：
-        <school></school>
+        < school>< /school>
