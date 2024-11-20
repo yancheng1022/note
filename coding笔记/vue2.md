@@ -1803,7 +1803,13 @@ npm config set registry https://registry.npm.taobao.org
 npm config get registry
 ```
 
+6、全局安装基于淘宝的cnpm
 
+由于npm的服务器在海外，所以访问速度比较慢，访问不稳定，cnpm的服务器是由淘宝团队提 供服务器在国内cnpm是npm镜像，一般会同步更新，相差在10分钟，所以cnpm在安装一些软件时候会比较有优势。但是一般cnpm只用于安装时候，所以在项目创建与卸载等相关操作时候我们还是使用npm
+
+```shell
+npm install -g cnpm --registry=https://registry.npmmirror.com
+```
 
 
 
