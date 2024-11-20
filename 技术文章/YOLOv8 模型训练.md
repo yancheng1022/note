@@ -122,6 +122,8 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 yolo export model=d:/data/yoloTrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 
+yolo export model=D:/data/yoloTrain/test/best.pt format=onnx simplify=True
+
 ## 1.9、安装cuda和cudnn和pytorch
 
 1、cuda地址：https://developer.nvidia.cn/cuda-toolkit
