@@ -1809,9 +1809,14 @@ npm config get registry
 
 ```shell
 npm install -g cnpm --registry=https://registry.npmmirror.com
+cnpm -v
 ```
 
 
+### 2.14.2、安装vue脚手架
 
+```shell
+npm install -g @vue/cli
+```
 vue文档地址：https://cli.vuejs.org/zh
 
