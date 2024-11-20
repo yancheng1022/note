@@ -1824,7 +1824,7 @@ npm install -g @vue/cli
 ```
 
 
-2、切换到项目目录
+2、切换到项目目录，创建项目
 
 ```
 vue create my-project
