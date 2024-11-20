@@ -1798,7 +1798,7 @@ npm config set cache "D:\soft\node\node_cache"
 5、更新npm源为淘宝镜像
 
 ```shell
-npm config set registry https://registry.npmmirror.com
+npm config set registry https://registry.npm.taobao.org
 # 查看是否成功
 npm config get registry
 ```
