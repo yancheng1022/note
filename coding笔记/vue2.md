@@ -1813,10 +1813,19 @@ cnpm -v
 ```
 
 
-### 2.14.2、安装vue脚手架
+### 2.14.2、安装使用vue脚手架
+
+vue文档地址：https://cli.vuejs.org/zh
+
+1、安装
 
 ```shell
 npm install -g @vue/cli
 ```
-vue文档地址：https://cli.vuejs.org/zh
 
+
+2、切换到项目目录
+
+```
+vue create my-project
+```
