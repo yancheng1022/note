@@ -1831,7 +1831,7 @@ vue create my-project
 ```
 
 
-## 2.15、ref
+## 2.15、ref属性
 
 ```vue
 <template>
@@ -1866,3 +1866,6 @@ export default {
 </script>
 
 ```
+
+## 2.16、props配置
+
