@@ -1763,9 +1763,10 @@ new Vue({
 </html>
 ```
 
-## 2.14、vue脚手架
+# 3、进阶知识
+## 3.1、vue脚手架
 
-### 2.14.1、node安装
+### 3.1.1、node安装
 
 1、地址：https://nodejs.cn/download/
 2、安装成功校验
@@ -1813,7 +1814,7 @@ cnpm -v
 ```
 
 
-### 2.14.2、安装使用vue脚手架
+### 3.1.2、安装使用vue脚手架
 
 vue文档地址：https://cli.vuejs.org/zh
 
@@ -1831,7 +1832,7 @@ vue create my-project
 ```
 
 
-## 2.15、ref属性
+## 3.2、ref属性
 
 ```vue
 <template>
@@ -1867,9 +1868,9 @@ export default {
 
 ```
 
-## 2.16、props配置
+## 3.3、props配置
 
-1、Student.vue
+1、student.vue
 ```vue
 <template>
    <div class="demo">
@@ -1949,5 +1950,177 @@ export default {
   },
 }
 </script>
+```
+
+## 3.4、组件自定义事件
+
+
+```vue
+<template>
+   <div class="app">
+      <h1>{{ msg }},学生姓名是:{{ studentName }}</h1>
+      <!--通过绑定一个自定义事件实现了子给父传递数据(自定义事件绑在子组件上) 第一种写法使用@或v-on-->
+      <!--once代表改事件只执行一次-->
+<!--      <Student @personalEvent="getStudentName" @demo="demo"/>-->
+      <!--第二种写法使用ref绑定事件--->
+      <Student ref="student" @click.native="show"/>
+      <!--通过父组件给子组件传递函数类型的props实现了子给父传递数据-->
+      <School :getSchoolName="getSchoolName"/>
+   </div>
+</template>
+
+<script>
+import Student from "@/components/Student";
+import School from "@/components/School";
+export default {
+  name: "App",
+  components:{
+    School,
+    Student,
+  },
+  data(){
+    return {
+      msg: 'helloこんにちは',
+      studentName:''
+    }
+  },
+  methods:{
+    getSchoolName(name){
+      console.log(`app收到了学校名,${name}`);
+    },
+    getStudentName(name, ...params){
+      console.log('自定义');
+      console.log(`app收到了学生名, ${name}`);
+      this.studentName = name;
+      console.log(`剩余参数,${params}`);
+    },
+    demo(){
+      console.log('demo事件被触发了');
+    },
+    show(){
+      console.log(`123`);
+    }
+  },
+  mounted() {
+    //可以通过ref拿到组件实例对象
+    // setTimeout(() => {
+    //   this.$refs.student.$on('personalEvent', this.getStudentName); //当App组件一挂载完毕经过三秒我就在Student组件上绑定事件
+    //   //this.$refs.student.$once('personalEvent', this.getStudentName); //注意此时事件只执行一次就不执行了(once),一次性
+    // },3000)
+    //注意这里回调要写成剪头函数，不然this会丢失,这个this就是(vc)app,而不是(vc)student
+    this.$refs.student.$on('personalEvent', (name) => {
+       console.log(this);
+       console.log(name);
+       this.studentName = name;
+    });
+  }
+}
+</script>
+
+<style>
+   /*
+   全局的样式是不需要加scoped
+   全局共享
+   */
+   .app{
+     background: gray;
+     padding: 5px;
+   }
+</style>
+
+
 
 ```
+
+
+## 3.5、插槽
+
+默认插槽，具名插槽，作用域插槽
+
+```vue
+<template>
+  <div class="category">
+    <h3>{{ title }}</h3>
+    <!--插槽,等着组件的使用者进行填充-->
+    <slot>我是默认值</slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Category",
+  props:[ 'listData', 'title' ]
+}
+</script>
+
+<style scoped>
+   .category{
+     background: skyblue;
+     width: 200px;
+     height: 300px;
+   }
+   h3{
+     text-align: center;
+     background: orange;
+   }
+   img{
+     width: 100%;
+   }
+</style>
+```
+
+```vue
+
+<template>
+   <div class="container">
+     <Category title="美食">
+       <img src="" alt="delicious food"/>
+     </Category>
+
+     <Category title="游戏" :listData="games">
+       <ul>
+         <li v-for="(g , index) in games" :key="index">{{ g }}</li>
+       </ul>
+     </Category>
+
+     <Category title="电影">
+       <video src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" controls></video>
+     </Category>
+   </div>
+</template>
+
+<script>
+import Category from "@/components/Category";
+export default {
+  name: "App",
+  components:{
+    Category
+  },
+  data(){
+    return {
+      foods:['火锅','烧烤','小龙虾','牛排'],
+      games:['红色警戒','穿越火线','劲舞团','超级玛丽'],
+      films:['《教父》','《拆弹专家》','《你好，李焕英》','《尚硅谷》']
+    }
+  }
+}
+</script>
+<style lang="css" scoped>
+   .container{
+     display: flex;
+     justify-content: space-around;
+   }
+   video {
+     width: 100%;
+   }
+   img{
+     width: 100%;
+   }
+</style>
+```
+
+
+## 3.6、vuex
+
+## 3.7、路由
+
