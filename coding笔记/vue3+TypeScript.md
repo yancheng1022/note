@@ -1944,7 +1944,7 @@ export const useTalkStore = defineStore('talk',()=>{
   - 事件对象`$event`: 是包含事件相关信息的对象（`pageX`、`pageY`、`target`、`keyCode`）
 - 自定义事件：
   - 事件名是任意名称
-  - <strong style="color:red">事件对象`$event`: 是调用`emit`时所提供的数据，可以是任意类型！！！</strong >
+  - < strong style="color:red">事件对象`$event`: 是调用`emit`时所提供的数据，可以是任意类型！！！</strong >
 
 3. 示例：
 
