@@ -1878,9 +1878,6 @@ export const useTalkStore = defineStore('talk',()=>{
 - 把`$listeners`所有的东西，合并到`$attrs`中了。
 - `$children`被砍掉了。
 
-**常见搭配形式：**
-
-<img src="images/image-20231119185900990.png" alt="image-20231119185900990" style="zoom:60%;" /> 
 
 ## 6.1. 【props】
 
