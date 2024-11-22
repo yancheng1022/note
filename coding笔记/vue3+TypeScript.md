@@ -987,71 +987,70 @@ function test(){
 
 ## 3.12. 【props】
 
-> ```js
->// 定义一个接口，限制每个Person对象的格式
-> export interface PersonInter {
->  id:string,
->  name:string,
->     age:number
->    }
->    
-> // 定义一个自定义类型Persons
-> export type Persons = Array<PersonInter>
-> ```
-> 
-> `App.vue`中代码：
->
-> ```vue
-><template>
-> 	<Person :list="persons"/>
-> </template>
->   
-> <script lang="ts" setup name="App">
->   import Person from './components/Person.vue'
->   import {reactive} from 'vue'
->     import {type Persons} from './types'
->   
->     let persons = reactive<Persons>([
->      {id:'e98219e12',name:'张三',age:18},
->       {id:'e98219e13',name:'李四',age:19},
->        {id:'e98219e14',name:'王五',age:20}
->      ])
->    </script>
->   
-> ```
-> 
-> `Person.vue`中代码：
->
-> ```Vue
-><template>
-> <div class="person">
->  <ul>
->      <li v-for="item in list" :key="item.id">
->         {{item.name}}--{{item.age}}
->       </li>
->     </ul>
->    </div>
->    </template>
->   
-> <script lang="ts" setup name="Person">
-> import {defineProps} from 'vue'
-> import {type PersonInter} from '@/types'
->   
->   // 第一种写法：仅接收
-> // const props = defineProps(['list'])
->   
->   // 第二种写法：接收+限制类型
-> // defineProps<{list:Persons}>()
->   
->   // 第三种写法：接收+限制类型+指定默认值+限制必要性
-> let props = withDefaults(defineProps<{list?:Persons}>(),{
->      list:()=>[{id:'asdasg01',name:'小猪佩奇',age:18}]
->   })
->    console.log(props)
->   </script>
->   ```
-> 
+ ```js
+// 定义一个接口，限制每个Person对象的格式
+ export interface PersonInter {
+  id:string,
+  name:string,
+     age:number
+    }
+    
+ // 定义一个自定义类型Persons
+ export type Persons = Array<PersonInter
+ ```
 
+ App.vue中代码：
+
+ ```vue
+<template
+ 	<Person :list="persons"/
+ </template
+   
+ <script lang="ts" setup name="App"
+   import Person from './components/Person.vue'
+   import {reactive} from 'vue'
+     import {type Persons} from './types'
+   
+     let persons = reactive<Persons([
+      {id:'e98219e12',name:'张三',age:18},
+       {id:'e98219e13',name:'李四',age:19},
+        {id:'e98219e14',name:'王五',age:20}
+      ])
+    </script
+   
+ ```
+ 
+ Person.vue中代码：
+ 
+
+ ```vue
+<template
+ <div class="person"
+  <ul
+      <li v-for="item in list" :key="item.id"
+         {{item.name}}--{{item.age}}
+       </li
+     </ul
+    </div
+    </template
+   
+ <script lang="ts" setup name="Person"
+ import {defineProps} from 'vue'
+ import {type PersonInter} from '@/types'
+   
+   // 第一种写法：仅接收
+ // const props = defineProps(['list'])
+   
+   // 第二种写法：接收+限制类型
+ // defineProps<{list:Persons}()
+   
+   // 第三种写法：接收+限制类型+指定默认值+限制必要性
+ let props = withDefaults(defineProps<{list?:Persons}(),{
+      list:()=[{id:'asdasg01',name:'小猪佩奇',age:18}]
+   })
+    console.log(props)
+   </script
+   ```
 ## 3.13. 【生命周期】
 
 * 概念：`Vue`组件实例在创建时要经历一系列的初始化步骤，在此过程中`Vue`会在合适的时机，调用特定的函数，从而让开发者有机会在特定阶段运行自己的代码，这些特定的函数统称为：生命周期钩子
