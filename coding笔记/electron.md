@@ -8,4 +8,11 @@ npm create vue@latest
 ```
 
 2、 根目录下创建electron目录
-3、
+3、固定端口号（vite.config.js）
+```js
+  server: {
+    port: 8022,
+  }
+```
+
+4、electron下新建
