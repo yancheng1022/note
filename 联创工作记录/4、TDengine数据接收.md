@@ -32,3 +32,10 @@ aq_gas_028000001_029a05
 
 
 
+# 3、数据备份
+docker exec -it e16 bash
+
+select * from aq_gas_067000002_200106 where ts> '2024-12-15 03:57:00.000' >> data.csv;
+
+docker cp <containerId>:/path/to/file/in/container /path/to/destination/on/host
+docker cp /path/to/file/on/host <containerId>:/path/to/destination/in/container
