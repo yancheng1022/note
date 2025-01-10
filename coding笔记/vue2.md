@@ -1,3 +1,15 @@
+---
+title: vue2
+date: 2024/10/6
+categories:
+  - coding
+tags:
+  - 前端
+  - vue
+  - vue2
+---
+
+
 # 1、vue简介
 用于构建用户界面的渐进式javascript框架
 
