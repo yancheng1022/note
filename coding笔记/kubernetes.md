@@ -1,5 +1,15 @@
-# 1、kubernetes基础
+---
+title: kubernetes
+date: 2024/09/1
+categories:
+  - coding
+tags:
+  - 运维
+  - k8s
+  - kubernetes
+---
 
+# 1、kubernetes基础
 
 ## 1.1、简介
 
