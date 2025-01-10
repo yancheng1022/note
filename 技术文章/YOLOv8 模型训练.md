@@ -1,4 +1,14 @@
-
+---
+title: YOLOv8 模型训练
+date: 2024/11/01
+updated: 2023/11/02
+categories:
+  - coding
+tags:
+  - yolo
+  - 视觉分析
+  - 小模型
+---
 # 1、模型训练
 ## 1.1、安装anaconda或miniconda
 
