@@ -37,7 +37,7 @@ springBoot集成的话，使用9000端口
 # 4、防火墙配置
 
 ```shell
-iptables -I INPUT -p tcp --dport 9000 -j ACCEPT
+iptables -I INPUT -p tcp --dport 9001 -j ACCEPT
 service iptables save
 ```
 
