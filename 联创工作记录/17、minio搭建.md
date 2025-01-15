@@ -21,8 +21,8 @@ docker run \
 --net=host \
 --name minio \
 -d --restart=always \
--e "MINIO_ACCESS_KEY=minio" \
--e "MINIO_SECRET_KEY=lantrack@123" \
+-e "MINIO_ACCESS_KEY=admin" \
+-e "MINIO_SECRET_KEY=lantrack@123456" \
 -v /opt/minio/data:/data \
 -v /opt/minio/config:/root/.minio \
 minio/minio server \
