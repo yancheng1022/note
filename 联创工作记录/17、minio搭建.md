@@ -41,6 +41,7 @@ iptables -I INPUT -p tcp --dport 9001 -j ACCEPT
 service iptables save
 ```
 
+sudo [firewall-cmd](https://so.csdn.net/so/search?q=firewall-cmd&spm=1001.2101.3001.7020) --add-port=9001/tcp --permanent
 # 5、新建buckets、access keys
 
 
