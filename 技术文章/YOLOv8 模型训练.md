@@ -192,4 +192,44 @@ IOU = 交集/并集 >= 0.5
 
 ## 2.3、linux+docker使用GPU推理
 
+0、安装cuda、cudnn
 
+1、安装NVIDIA Container Toolkit
+
+在做算法服务容器化部署的时候需要搭建支持调用NV GPU的Docker环境，这就需要NVIDIA Container Toolkit工具包，NVIDIA Container Toolkit 使用户能够构建和运行 GPU 加速的容器
+
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-yum-or-dnf
+
+2、容器配置文件修改
+
+```yml
+services:  
+  analyzer:  
+    image: ${ANALYZER_SERVICES_IMAGE_NAME}:${ANALYZER_SERVERS_IMAGE_TAG}  
+    restart: always  
+    container_name: analyzer  
+    hostname: analyzer  
+    network_mode: default  
+    ports:  
+      - 40154:8083  
+    environment:  
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  
+      - NVIDIA_VISIBLE_DEVICES=all  
+      - LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH  
+    volumes:  
+      - /home/lantrack/4015/module/upload:/upload  
+      - /home/lantrack/cdeslogs/analyzer:/cdeslogs  
+      - /usr/local/cuda/lib64:/usr/local/cuda/lib64  
+    devices:  
+      - /dev/nvidiactl  
+      - /dev/nvidia-uvm  
+      - /dev/nvidia-uvm-tools  
+    runtime: nvidia
+```
+
+3、进入容器查看是否生效
+
+```shell
+docker exec -it analyzer /bin/bash
+nvidia-smi
+```
