@@ -8,12 +8,6 @@
 
 然后是模型训练的一些优缺点，。。。
 
-
-![mu.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/mu.jpg)
-
-
-
-
-
+![luo.webp](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/luo.webp)
 
 
