@@ -9,7 +9,8 @@
 然后是模型训练的一些优缺点，。。。
 
 
-![曼联.webp](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/%E6%9B%BC%E8%81%94%20(4).webp)
+![丹尼尔詹姆斯.webp](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/%E4%B8%B9%E5%B0%BC%E5%B0%94%E8%A9%B9%E5%A7%86%E6%96%AF.webp)
+
 
 
 
