@@ -9,7 +9,8 @@
 然后是模型训练的一些优缺点，。。。
 
 
-![曼联.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/5912a7b27836014edd40ddac880566a.jpg)
+![布林德.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/2c6a224ab4788d8233a917466d2fbd4.jpg)
+
 
 
 
