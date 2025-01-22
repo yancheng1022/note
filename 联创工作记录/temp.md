@@ -9,7 +9,8 @@
 然后是模型训练的一些优缺点，。。。
 
 
-![丹尼尔詹姆斯.webp](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/%E4%B8%B9%E5%B0%BC%E5%B0%94%E8%A9%B9%E5%A7%86%E6%96%AF.webp)
+![3236e369a778940d6b004434586a3a5.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/3236e369a778940d6b004434586a3a5.jpg)
+
 
 
 
