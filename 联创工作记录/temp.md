@@ -9,7 +9,8 @@
 然后是模型训练的一些优缺点，。。。
 
 
-![狗狗.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/9ced5c2be4b4081931218de226ef06f.jpg)
+![猪八戒.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/%E7%8C%AA%E5%85%AB%E6%88%92.jpg)
+
 
 
 
