@@ -9,6 +9,16 @@
 然后是模型训练的一些优缺点，。。。
 
 
+![我们阿森纳是不可战胜的.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/1737523448010.jpg)
+
+
+
+
+
+
+
+
+
 
 
 
