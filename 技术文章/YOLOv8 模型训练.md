@@ -130,7 +130,7 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
-yolo export model=d:/data/yoloTrain/煤矿安全帽检测/runs/detect/train/weights/best.pt format=onnx simplify=True
+yolo export model=d:/data/yoloTrain/道路表面缺陷检测/runs/detect/train/weights/best.pt format=onnx simplify=True
 
 ## 1.9、安装cuda和cudnn和pytorch
 
