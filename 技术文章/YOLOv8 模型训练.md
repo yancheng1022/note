@@ -132,14 +132,8 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 yolo export model=d:/data/yoloTrain/道路表面缺陷检测/runs/detect/train/weights/best.pt format=onnx simplify=True
 
-yolo export model=D:/data/temp/best_cs2_model.pt format=onnx simplify=True
-
-python export.py \
-  --weightsD:/data/temp/best_cs2_model.pt \        
-  --grid \                      
-  --simplify \                  
-  --dynamic \                   
-  --img-size 640 640             
+（yolo7）
+python export.py --weights D:/data/temp/best_cs2_model.pt --grid --simplify --dynamic --img-size 640 640       
 ## 1.9、安装cuda和cudnn和pytorch
 
 1、cuda地址：https://developer.nvidia.cn/cuda-toolkit
