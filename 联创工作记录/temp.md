@@ -3,7 +3,12 @@ nvidia-smi
 nvcc --version
 
 
-
+import torch  
+print(torch.__version__)  
+print(torch.version.cuda)  
+print(torch.version)  
+print("当前可用的GPU数量: ", torch.cuda.device_count())  
+print(torch.cuda.is_available())
 
 
 
