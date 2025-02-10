@@ -10,3 +10,5 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 # 3、权重文件放到weights目录下
 
 v5lite_s,复制到yolov5的文件夹
+
+np.int 后面加_
