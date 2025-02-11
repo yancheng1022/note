@@ -5,15 +5,6 @@
 
 
 
-![9048d0a84341eb8db184156ad2c16f9.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/9048d0a84341eb8db184156ad2c16f9.jpg)
-
-
-
-
-
-
-
-
 
 nvidia-smi
 nvcc --version
