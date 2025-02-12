@@ -130,7 +130,7 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
-yolo export model=d:/data/yoloTrain/石头分类/runs/detect/train/weights/best.pt format=onnx simplify=True
+yolo export model=d:/data/yoloTrain/煤矿皮带大块检测/runs/detect/train/weights/best.pt format=onnx simplify=True
 
 （yolo7）
 python export.py --weights D:/data/temp/best_cs2_model.pt --grid --simplify --dynamic --img-size 640 640       
