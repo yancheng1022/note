@@ -93,7 +93,7 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 开始训练：
 
 进入虚拟机根目录：
-yolo detect train data=d:/data/yoloTrain/石头分类/data.yaml model=d:/data/yoloTrain/yolov8s.pt epochs=100 imgsz=640 device=0 close_mosaic=0
+yolo detect train data=d:/data/yoloTrain/煤矿皮带大块检测/data.yaml model=d:/data/yoloTrain/yolov8s.pt epochs=100 imgsz=640 device=0 close_mosaic=0
 
 ```shell
 # cpu训练次数
