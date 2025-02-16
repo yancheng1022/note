@@ -132,6 +132,8 @@ yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=on
 
 yolo export model=D:/code/yolo/ultralytics-11/runs/detect/train4/best.pt format=onnx simplify=True
 onnx2tf -i D:/test/best.onnx -o D:/test
+tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model D:/test/tf D:/test/js
+
 （yolo7）
 python export.py --weights D:/data/temp/best_cs2_model.pt --grid --simplify --dynamic --img-size 640 640       
 ## 1.9、安装cuda和cudnn和pytorch
