@@ -95,6 +95,8 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 进入虚拟机根目录：
 yolo detect train data=D:/data/yoloTrain/RTTS图像去雾数据集/data.yaml model=d:/data/yoloTrain/yolo/yolov8n.pt epochs=100 imgsz=640 device=0 close_mosaic=0
 
+yolo detect train data=D:/data/yoloTrain/RTTS图像去雾数据集/data.yaml model=D:/data/yoloTrain/yolo/yolov8n.pt epochs=100 imgsz=640 device=0 close_mosaic=0
+
 ```shell
 # cpu训练次数
 yolo detect train data=e:/yolotrain/smoke/smoke.yaml model=e:/yolotrain/yolov8s.pt epochs=100 imgsz=640
