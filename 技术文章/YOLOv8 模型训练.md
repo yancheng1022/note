@@ -132,8 +132,8 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
-yolo export model=D:/code/yolo/ultralytics-11/run2ss/detect/train4/best.pt format=onnx simplify=True
-onnx2tf -i D:/test/best.onnx -o D:/test
+yolo export model=C:/Users/28979/Downloads/best.pt format=onnx simplify=True
+
 tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model D:/test/tf D:/test/js
 
 （yolo7）
