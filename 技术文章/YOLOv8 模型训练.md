@@ -31,7 +31,7 @@ C:\ProgramData\miniconda3\Library\bin
 ## 1.2、创建虚拟环境
 
 ```shell
-conda create -n yolo8 python==3.8 
+conda create -n detenction python==3.8 
 # 查看现有环境
 conda env list
 # 激活环境 
