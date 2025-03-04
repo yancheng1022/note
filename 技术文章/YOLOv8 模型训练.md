@@ -132,6 +132,9 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
+```gnuplot
+-i https://mirrors.aliyun.com/pypi/simple
+```
 yolo export model=D:/data/temp/yolov8s_csgo_mirage-320-v41-al-gen-bg.pt format=onnx simplify=True
 
 tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model D:/test/tf D:/test/js
