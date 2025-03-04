@@ -9,6 +9,7 @@ tags:
   - 视觉分析
   - 小模型
 ---
+
 # 1、模型训练
 ## 1.1、安装anaconda或miniconda
 
@@ -31,7 +32,7 @@ C:\ProgramData\miniconda3\Library\bin
 ## 1.2、创建虚拟环境
 
 ```shell
-conda create -n detenction python==3.8 
+conda create -n yolo8 python==3.8 
 # 查看现有环境
 conda env list
 # 激活环境 
@@ -47,7 +48,7 @@ conda env remove -n yolo8
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
 pip config set install.trusted-host pypi.tuna.tsinghua.edu.cn
 pip install yolo
-pip install ultralytics -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install ultralytics==8.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install labelimg
 ```
 
@@ -93,9 +94,7 @@ names: 是一个json数组，代表的是标注的分类名称(注意保持顺�
 开始训练：
 
 进入虚拟机根目录：
-yolo detect train data=C:/Users/勿忘我/Desktop/u/myMT/data.yaml model=C:/Users/勿忘我/Desktop/u/myMT/yolov8n.pt epochs=10 imgsz=640 device=0 
-
-yolo detect train data=D:/data/yoloTrain/RTTS图像去雾数据集/data.yaml model=D:/data/yoloTrain/yolo/yolov8n.pt epochs=100 imgsz=640 device=0 close_mosaic=0
+yolo detect train data=d:/data/yoloTrain/smoke/smoke.yaml model=d:/data/yoloTrain/yolov8s.pt epochs=150 imgsz=640 device=0 close_mosaic=0
 
 ```shell
 # cpu训练次数
@@ -132,15 +131,8 @@ pip install onnxruntime-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 yolo export model=e:/yolotrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 ```
 
-```gnuplot
--i https://mirrors.aliyun.com/pypi/simple
-```
-yolo export model=C:/Windows/System32/runs/detect/train3/weights/best.pt format=onnx simplify=True
+yolo export model=d:/data/yoloTrain/smoke/runs/detect/train/weights/best.pt format=onnx simplify=True
 
-tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model D:/test/tf D:/test/js
-
-（yolo7）
-python export.py --weights D:/data/temp/best_cs2_model.pt --grid --simplify --dynamic --img-size 640 640       
 ## 1.9、安装cuda和cudnn和pytorch
 
 1、cuda地址：https://developer.nvidia.cn/cuda-toolkit
@@ -199,46 +191,4 @@ IOU = 交集/并集 >= 0.5
 
 
 
-## 2.3、linux+docker使用GPU推理
 
-0、安装cuda、cudnn
-
-1、安装NVIDIA Container Toolkit
-
-在做算法服务容器化部署的时候需要搭建支持调用NV GPU的Docker环境，这就需要NVIDIA Container Toolkit工具包，NVIDIA Container Toolkit 使用户能够构建和运行 GPU 加速的容器
-
-https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-yum-or-dnf
-
-2、容器配置文件修改
-
-```yml
-services:  
-  analyzer:  
-    image: ${ANALYZER_SERVICES_IMAGE_NAME}:${ANALYZER_SERVERS_IMAGE_TAG}  
-    restart: always  
-    container_name: analyzer  
-    hostname: analyzer  
-    network_mode: default  
-    ports:  
-      - 40154:8083  
-    environment:  
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  
-      - NVIDIA_VISIBLE_DEVICES=all  
-      - LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH  
-    volumes:  
-      - /home/lantrack/4015/module/upload:/upload  
-      - /home/lantrack/cdeslogs/analyzer:/cdeslogs  
-      - /usr/local/cuda/lib64:/usr/local/cuda/lib64  
-    devices:  
-      - /dev/nvidiactl  
-      - /dev/nvidia-uvm  
-      - /dev/nvidia-uvm-tools  
-    runtime: nvidia
-```
-
-3、进入容器查看是否生效
-
-```shell
-docker exec -it analyzer /bin/bash
-nvidia-smi
-```
