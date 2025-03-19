@@ -104,3 +104,17 @@ docker run -id -p 1935:1935 -p 8080:80 -p 8443:443 -p 8554:554 -p 10000:10000 -p
 | **10000** (UDP) | 10000 | WebRTC/SRT | 低延迟音视频传输（UDP通道）  | WebRTC实时通信、SRT流媒体传输   |
 | **8000** (UDP)  | 8000  | RTP/RTCP   | 实时传输协议及控制协议      | 音视频数据包传输、流媒体质量控制      |
 | **9000** (UDP)  | 9000  | RTC/SRT    | 实时通信或安全可靠传输      | WebRTC ICE协商、SRT流媒体传输 |
+
+# 3、ffmpeg
+
+## 3.1、拉取镜像
+
+```shell
+docker pull jrottenberg/ffmpeg
+```
+
+## 3.2、运行
+
+```shell
+docker run -itd --name ffmpeg -p 8081:8080 -v /home/ffmpeg/:/mnt/app/ --entrypoint='bash' jrottenberg/ffmpeg
+```
