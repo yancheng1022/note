@@ -34,3 +34,10 @@ systemctl enable docker
 # 查看状态
 systemctl status docker
 ```
+
+## 1.6、3. 设置Docker国内镜像源
+由于docker默认从docker hub https://registry.hub.docker.com/ 下载镜像，所以速度非常慢，可以通过设置为国内镜像源（加速器）
+
+（1）通过 vi/vim 进入/etc/docker/daemon.json，如果没有这个文件，需要在 /etc/docker目录下手动进行创建这个目录。
+
+（2）然后写入一下的内容
