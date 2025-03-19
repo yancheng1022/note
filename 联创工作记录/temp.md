@@ -19,12 +19,32 @@ pip install -r requirements.txt
 
 docker run -d \
   --restart always \
-  --name analyzer \
-  --hostname analyzer \
+  --name module \
+  --hostname module \
   --network default \
-  -p 40154:8083 \
+  -p 40154:8082 \
   -v /home/lantrack/4015/analyzer/upload:/upload \
   -v /home/lantrack/cdeslogs/analyzer:/cdeslogs \
-  39.105.159.2:10443/library/4015-aiva-server-prod/analyzer:0.0.25
+  39.105.159.2:10443/library/4015-aiva-server-prod/analyzer:0.0.26
   
   docker login https://ai.iqianyao.com:10443 -u admin -p Shanzesun@2023wujiu
+
+docker run -d \
+  --restart always \
+  --name module \
+  --hostname module \
+  --network default \
+  -p 40153:8082 \
+  -v /home/lantrack/4015/module/upload:/upload \
+  -v /home/lantrack/cdeslogs/module:/cdeslogs \
+  39.105.159.2/library/4015-aiva-server-prod/module:1.0
+
+docker run -d \
+  --restart always \
+  --name module \
+  --hostname module \
+  --network default \
+  -p 40153:8082 \
+  -v /home/lantrack/4015/module/upload:/upload \
+  -v /home/lantrack/cdeslogs/module:/cdeslogs \
+  39.105.159.2:10443/library/4015-aiva-server-prod/module:1.0
