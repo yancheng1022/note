@@ -118,3 +118,28 @@ docker pull jrottenberg/ffmpeg
 ```shell
 docker run -itd --name ffmpeg -p 8081:8080 -v /home/ffmpeg/:/mnt/app/ --entrypoint='bash' jrottenberg/ffmpeg
 ```
+
+## 3.3、测试文件拷贝到容器内
+
+```shell
+docker cp /test/test.mp4 fervent_panini:/
+```
+
+## 3.4、进入容器推流
+
+```shell
+docker exec -it 3c615cda1714 /bin/bash
+
+ffmpeg -re -i "smoke.mp4" -vcodec h264 -b:v 1000k -maxrate 1000k -bufsize 2000k -vf "scale=1280:720" -acodec aac -b:a 128k -f rtsp -rtsp_transport tcp rtsp://111.53.30.112:8554/live/test
+```
+
+## 3.5、脚本编写
+
+```shell
+vim rtmp_test.sh
+
+docker exec -i  9074663f321a /bin/bash -c 'ffmpeg -re -i "smoke.mp4" -vcodec h264 -b:v 1000k -maxrate 1000k -bufsize 2000k -vf "scale=1280:720" -acodec aac -b:a 128k -f rtsp -rtsp_transport tcp rtsp://111.53.30.112:8554/live/test'
+
+chmod +x rtmp_test.sh 
+./rtmp_test.sh 
+```
