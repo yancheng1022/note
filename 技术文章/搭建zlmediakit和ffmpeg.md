@@ -82,4 +82,14 @@ sudo systemctl restart docker
 
 # 2、zlmediaki
 
-##
+## 2.1、拉取镜像
+
+```shell
+docker pull zlmediakit/zlmediakit:master
+```
+
+## 2.2、运行
+
+```shell
+
+```
