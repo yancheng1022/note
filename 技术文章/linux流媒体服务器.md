@@ -1,3 +1,12 @@
+---
+title: linux搭建流媒体服务器
+date: 2025/02/17
+categories:
+  - coding
+tags:
+  - 流媒体服务器
+---
+
 # 1、docker
 
 ## 1.1、更新yum
