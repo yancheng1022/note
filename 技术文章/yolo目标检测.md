@@ -11,4 +11,10 @@
 
 YOLO（you only look once）是一种目标检测算法，由Joseph Redmon等人在2015年提出。它的主要思想是将目标检测任务看作一个回归问题，并且可以在一个神经网络中同时预测目标的位置和类别。该算法被命名为YOLOv1。其中在2016年，YOLOv2发布，YOLOv3在2018年发布
 
+# 2、yolov1网络结构
+
+1. 输入图像大小为448X448，经过若干个卷积层和池化层，变为7X7X1024张量
+2. 最后经过两层全连接层，输出张量维度为7X7X30，这就是Yolov1的整个神经网络结构，和一般的卷积分类网络没有太多区别
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250408092939.png)
 
