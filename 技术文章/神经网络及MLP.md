@@ -32,7 +32,8 @@
 
 ## 2、前向传播
 
-  
+  下标：维度
+  上标：层次
 
 ![](https://picx.zhimg.com/v2-2f8801e7f948ab3df32b76a453e6804b_1440w.jpg)
 
