@@ -25,8 +25,8 @@
 结合上图，假设要对以下2维数据使用神经网络分类，这里分为三类。
 
   
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250412203951.png)
 
-![](https://pic4.zhimg.com/v2-3608c602752478801e5d3d5511df402f_1440w.jpg)
 
   
 
@@ -35,7 +35,8 @@
   下标：维度
   上标：层次
 
-![](https://picx.zhimg.com/v2-2f8801e7f948ab3df32b76a453e6804b_1440w.jpg)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250412203925.png)
+
 
   
 
