@@ -49,3 +49,4 @@ RAG（Retrieval-Augmented Generation）技术原理：
  ollama是一个用于本地运行和管理大语言模型（LLM）的工具。
 
 2、环境变量配置
+（1）OLLAMA_HOST=0.0.0.0:11434：让虚拟机里的程序能访问本机上运行的 Ollama 模型
