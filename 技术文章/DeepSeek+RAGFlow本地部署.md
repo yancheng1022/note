@@ -14,3 +14,6 @@
 使用RAG技术（Retrieval-Augmented Generation，检索增强生成）构建个人知识库。为此我们需要：
 - 本地部署RAG技术所需要的开源框架RAGFlow；
 - 本地部署Embedding大模型（或者直接部署自带Embedding模型的RAGFlow版本）；
+
+# 2、RAG和模型微调的区别
+
