@@ -69,9 +69,16 @@ https://github.com/infiniflow/ragflow
 轻量版是不携带embedding模型，需要修改配置下载完整版
 docker/.env文件
 
+```
+RAGFLOW_IMAGES=
+```
+
+
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250424095000.png)
 
-3、
+
+
+3、利用提前编译好的docker镜像启动服务器
 ```
 cd ragflow/docker
 docker compose -f docker-compose.yml up -d
