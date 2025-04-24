@@ -83,3 +83,8 @@ RAGFLOW_IMAGES=
 cd ragflow/docker
 docker compose -f docker-compose.yml up -d
 ```
+
+4、访问 localhost:80 
+
+# 5、在RAGFlow中构建个人知识库
+
