@@ -49,4 +49,10 @@ RAG（Retrieval-Augmented Generation）技术原理：
  ollama是一个用于本地运行和管理大语言模型（LLM）的工具。
 
 2、环境变量配置
-（1）OLLAMA_HOST=0.0.0.0:11434：让虚拟机里的程序能访问本机上运行的 Ollama 模型
+（1）OLLAMA_HOST=0.0.0.0:11434：让虚拟机里的程序能访问本机上运行的 Ollama 模型（因为RAGFlow是部署在虚拟机里的，默认情况下，Ollama 只能允许本机访问（监听 localhost:11434），其他设备（比如虚拟机）是无法连接的）
+（2）OLLAMA_MODELS ：默认模型下载到C盘，如果希望下载到其他盘可以配置
+
+>配置完环境变量后要重启电脑
+
+3、通过ollama下载模型deepseek-r1:32b
+ollama run deepseek-r1:32b；
