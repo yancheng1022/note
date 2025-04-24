@@ -63,4 +63,16 @@ ollama run deepseek-r1:32b；
 1、下载RAGflow源代码
 https://github.com/infiniflow/ragflow
 
+2、安装docker
 
+3、轻量版改为完整版
+轻量版是不携带embedding模型，需要修改配置下载完整版
+docker/.env文件
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250424095000.png)
+
+3、
+```
+cd ragflow/docker
+docker compose -f docker-compose.yml up -d
+```
