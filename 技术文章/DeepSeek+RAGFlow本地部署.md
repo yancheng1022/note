@@ -56,3 +56,11 @@ RAG（Retrieval-Augmented Generation）技术原理：
 
 3、通过ollama下载模型deepseek-r1:32b
 ollama run deepseek-r1:32b；
+
+
+## 4.2、docker部署RAGflow
+
+1、下载RAGflow源代码
+https://github.com/infiniflow/ragflow
+
+
