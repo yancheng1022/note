@@ -88,3 +88,4 @@ docker compose -f docker-compose.yml up -d
 
 # 5、在RAGFlow中构建个人知识库
 
+用户头像 - 模型提供商 - 添加ollama - 添加模型 
