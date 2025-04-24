@@ -89,4 +89,7 @@ docker compose -f docker-compose.yml up -d
 # 5、在RAGFlow中构建个人知识库
 
 用户头像 - 模型提供商 - 添加ollama - 添加模型 
-cmd -ollama可以看到安装的模型
+开启Hyper-V，ipconfig查看ip
+cmd -ollama list可以看到安装的模型
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250424134728.png)
