@@ -9,4 +9,8 @@ lcd C:\Users\admin1\Desktop\yc
 cd /home/lantrack
 # 拷贝文件
 put ragflow-plus-main.zip
+# 解压
+unzip ragflow-plus-main.zip
+# 重命名
+mv ragflow-plus-main ragflow-plus
 ```
