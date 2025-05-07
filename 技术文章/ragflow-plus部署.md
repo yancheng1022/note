@@ -40,4 +40,6 @@ docker compose -f docker-compose_gpu.yml up -d
 
 docker compose -f docker-compose_gpu.yml up -d --build vllm-bge
 
-docker compose -f docker-compose_gpu.yml up -d
+docker compose -f docker-compose_gpu.yml up -d  --build 
+
+docker compose -f docker-compose_gpu.yml stop
