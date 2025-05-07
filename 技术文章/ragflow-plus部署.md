@@ -32,3 +32,8 @@ docker compose -f docker/docker-compose.yml up -d
 访问地址：`服务器ip:80`，进入到前台界面
 
 访问地址：`服务器ip:8888`，进入到后台管理界面
+
+
+docker compose -f docker-compose.yml down -v
+
+docker compose -f docker-compose_gpu.yml up -d
