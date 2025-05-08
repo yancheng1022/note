@@ -56,3 +56,32 @@ vim ~/.bashrc
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.4/lib64
 export PATH=$PATH:/usr/local/cuda-12.4/bin
 source ~/.bashrc
+# 4、nvidia-container-toolkit 安装
+
+vi  /etc/yum.repos.d/nvidia-container-toolkit.repo
+
+```shell
+[root@localhost docker]# cat /etc/yum.repos.d/nvidia-container-toolkit.repo
+[nvidia-container-toolkit]
+name=nvidia-container-toolkit
+baseurl=https://mirrors.ustc.edu.cn/libnvidia-container/stable/rpm/$basearch
+repo_gpgcheck=1
+gpgcheck=0
+enabled=1
+gpgkey=https://mirrors.ustc.edu.cn/libnvidia-container/gpgkey
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+    
+[nvidia-container-toolkit-experimental]
+name=nvidia-container-toolkit-experimental
+baseurl=https://mirrors.ustc.edu.cn/libnvidia-container/experimental/rpm/$basearch
+repo_gpgcheck=1
+gpgcheck=0
+enabled=0
+gpgkey=https://mirrors.ustc.edu.cn/libnvidia-container/gpgkey
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+```
+
+ sudo yum clean all
+ sudo yum install -y nvidia-container-toolkit
