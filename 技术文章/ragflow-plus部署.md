@@ -44,10 +44,11 @@ docker compose -f docker-compose_gpu.yml up -d  --build  vllm-deepseek
 
 docker compose -f docker-compose_gpu.yml stop vllm-deepseek
 
+# 3、cuda安装
+1、
+
+2、修改环境变量
 vim ~/.bashrc
-
-
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.4/lib64
 export PATH=$PATH:/usr/local/cuda-12.4/bin
-
 source ~/.bashrc
