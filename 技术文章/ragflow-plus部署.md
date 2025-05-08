@@ -40,9 +40,9 @@ docker compose -f docker-compose_gpu.yml up -d
 
 docker compose -f docker-compose_gpu.yml up -d --build vllm-bge
 
-docker compose -f docker-compose_gpu.yml up -d  --build 
+docker compose -f docker-compose_gpu.yml up -d  --build  management-backend
 
-docker compose -f docker-compose_gpu.yml stop
+docker compose -f docker-compose_gpu.yml stop management-backend
 
 vim ~/.bashrc
 
