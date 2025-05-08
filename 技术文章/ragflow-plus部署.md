@@ -45,7 +45,11 @@ docker compose -f docker-compose_gpu.yml up -d  --build  vllm-deepseek
 docker compose -f docker-compose_gpu.yml stop vllm-deepseek
 
 # 3、cuda安装
-1、
+1、https://developer.nvidia.com/cuda-12-4-0-download-archive
+获取runfile命令
+
+2、执行sh cuda_12.4.0_550.54.14_linux.run
+在执行run脚本时会出现安装的选项，如果你已经安装cuda driver了则把安装选项中的cuda driver勾掉即可，无需重复安装
 
 2、修改环境变量
 vim ~/.bashrc
