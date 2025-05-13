@@ -36,7 +36,7 @@ docker compose -f docker/docker-compose.yml up -d
 
 docker compose -f docker-compose.yml down -v
 
-docker compose -f docker-compose_gpu.yml up -d
+docker compose -f docker-compose.yml up -d
 
 docker compose -f docker-compose_gpu.yml up -d --build vllm-bge
 
