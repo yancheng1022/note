@@ -85,3 +85,113 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 
  sudo yum clean all
  sudo yum install -y nvidia-container-toolkit
+
+
+# 5、迁移
+
+迁移到新机器时,直接把项目拷贝过来还不可以
+
+_要把每个容器的数据也拷贝过去(dify是直接放在项目下的,很方便)_
+
+**1.先查看一个mysql容器的数据放在哪里(ragflow-mysql:容器名)**
+
+```bash
+docker inspect ragflow-mysql | grep Mounts -A 10
+```
+
+命令返回结果如下:
+
+```bash
+   
+   "Mounts": [
+                {
+                    "Type": "volume",
+                    "Source": "ragflow_mysql_data",
+                    "Target": "/var/lib/mysql",
+                    "VolumeOptions": {}
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+--
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/scia/ragflow/docker/init.sql",
+                "Destination": "/data/application/init.sql",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+```
+
+**2.实际物理存储路径(docker管理卷:ragflow_mysql_data)**
+
+```bash
+docker volume inspect ragflow_mysql_data | grep Mountpoint
+```
+
+命令返回的结果
+
+```bash
+  "Mountpoint": "/var/lib/docker/volumes/ragflow_mysql_data/_data",
+```
+
+**3.进入到 /var/lib/docker/volumes/**
+
+```bash
+ll
+```
+
+命令返回的结果
+
+```bash
+drwx-----x  3 root root   4096 Mar 11 14:25 ragflow_esdata01/
+drwx-----x  3 root root   4096 Mar 11 14:25 ragflow_minio_data/
+drwx-----x  3 root root   4096 Mar 11 14:25 ragflow_mysql_data/
+drwx-----x  3 root root   4096 Mar 11 14:25 ragflow_redis_data/
+```
+
+把这些都打包了,依次执行以下命令
+
+```bash
+tar -cvf ragflow_esdata01.tar ragflow_esdata01
+```
+
+```bash
+tar -cvf ragflow_minio_data.tar ragflow_minio_data
+```
+
+```bash
+tar -cvf ragflow_mysql_data.tar ragflow_mysql_data
+```
+
+```bash
+ tar -cvf ragflow_redis_data.tar ragflow_redis_data
+```
+
+4.将原项目也进行打包
+
+```bash
+tar -cvf ragflow.tar ragflow
+```
+
+5.将打包后的tar文件全部上传到新机器,并解压
+
+```bash
+tar -xvf 包名.tar
+```
+
+6.启动项目
+
+```bash
+#把原容器删了
+docker compose -f docker-compose.yml -p ragflow down
+docker compose -f docker-compose.yml -p ragflow up -d
+
+查看服务日志
+docker logs -f ragflow-server
+```
