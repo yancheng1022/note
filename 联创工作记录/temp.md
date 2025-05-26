@@ -50,6 +50,8 @@ docker run -d \
   -v /home/lantrack/cdeslogs/module:/cdeslogs \
   39.105.159.2:10443/library/4015-aiva-server-prod/module:1.0
 
+ragflow
+pdf的解析会有内存泄漏现象，deepdoc    用Plain Text会快一些
 
 幻觉问题
 检索结果不相关或信息不足时模型更容易幻觉
