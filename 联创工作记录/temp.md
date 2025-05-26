@@ -49,3 +49,8 @@ docker run -d \
   -v /home/lantrack/4015/module/upload:/upload \
   -v /home/lantrack/cdeslogs/module:/cdeslogs \
   39.105.159.2:10443/library/4015-aiva-server-prod/module:1.0
+
+
+幻觉问题
+检索结果不相关或信息不足时模型更容易幻觉
+当最相关文档相似度低于阈值时拒绝回答
