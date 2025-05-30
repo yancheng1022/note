@@ -196,7 +196,10 @@ docker compose -f docker-compose.yml -p ragflow up -d
 docker logs -f ragflow-server
 ```
 
-# 6、本地模型部署
+# 6、ollama下载
+curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
+sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+
 
 
 docker run -d -v /home/ollama:/root/.ollama -p 11435:11434 --name ollama ollama/ollama
