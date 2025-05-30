@@ -195,3 +195,7 @@ docker compose -f docker-compose.yml -p ragflow up -d
 查看服务日志
 docker logs -f ragflow-server
 ```
+
+# 6、本地模型部署
+
+docker run -d -v /home/ollama:/root/.ollama -p 11435:11434 --name ollama ollama/ollama
