@@ -199,3 +199,4 @@ docker logs -f ragflow-server
 # 6、本地模型部署
 
 docker run -d -v /home/ollama:/root/.ollama -p 11435:11434 --name ollama ollama/ollama
+docker exec -it ollama bash
