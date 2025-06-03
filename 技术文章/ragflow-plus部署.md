@@ -199,7 +199,7 @@ docker logs -f ragflow-server
 # 6、ollama下载
 
 
-docker run -d --gpus=all -p 11434:11434 -v /home/lantrack/ollama:/root/.ollama --name ollama ollama/ollama
+docker run -d --gpus=all -p 11435:11435 -v /home/lantrack/ollama:/root/.ollama --name ollama2 ollama/ollama
 
 docker exec -it ollama bash
 
