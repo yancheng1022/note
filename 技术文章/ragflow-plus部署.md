@@ -201,8 +201,5 @@ docker logs -f ragflow-server
 
 docker run -d -p 11434:11434 -v /home/lantrack/ollama:/root/.ollama -p --name ollama ollama/ollama
 
-docker run -d -v /home/ollama:/root/.ollama -p 11435:11434 --name ollama ollama/ollama
 docker exec -it ollama bash
 
-docker pull oli HW/ollama
-docker run -it --rm oli HW/ollama
