@@ -34,3 +34,5 @@ yolo8
 代码exportTflite.py
 
 # 3、kmodel
+E:\code\kmodel
+
