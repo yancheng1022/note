@@ -32,3 +32,5 @@ NCNN是腾讯优图实验室开源的高性能神经网络推理框架，专为�
 yolo8 
 
 代码exportTflite.py
+
+# 3、kmodel
