@@ -22,7 +22,14 @@ mv ragflow-plus-main ragflow-plus
 ```shell
 docker compose -f docker/docker-compose_gpu.yml up -d
 ```
+docker run -d --name attu -p 18000:3000 \
+  -e MILVUS_URL=host.docker.internal:19530 \
+  --add-host=host.docker.internal:host-gateway zilliz/attu:v2.3.8
+————————————————
 
+                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+                        
+原文链接：https://blog.csdn.net/wkh___/article/details/146346041
 使用CPU运行：
 
 ```shell
