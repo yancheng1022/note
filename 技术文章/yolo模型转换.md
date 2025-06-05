@@ -34,6 +34,9 @@ yolo8
 代码exportTflite.py
 
 # 3、kmodel
+
 E:\code\kmodel
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250605235120.png)
+
+python to_kmodel.py --target k230 --model C:\Users\28979\Downloads\code\1\best.onnx --dataset C:\Users\28979\Downloads\code\val --input_width 640 --input_height 640 --ptq_option 0
