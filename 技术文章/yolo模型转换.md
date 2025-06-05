@@ -36,3 +36,4 @@ yolo8
 # 3、kmodel
 E:\code\kmodel
 
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250605235120.png)
