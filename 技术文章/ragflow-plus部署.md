@@ -26,7 +26,7 @@ docker compose -f docker/docker-compose_gpu.yml up -d
 使用CPU运行：
 
 ```shell
-docker compose -f docker/docker-compose.yml up -d
+docker compose -f docker-compose.yml up -d
 ```
 
 访问地址：`服务器ip:80`，进入到前台界面
