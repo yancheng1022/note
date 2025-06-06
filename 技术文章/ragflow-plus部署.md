@@ -208,3 +208,6 @@ docker exec -it ollama bash
 docker run -d --name attu -p 18000:3000 \
   -e MILVUS_URL=host.docker.internal:19530 \
   --add-host=host.docker.internal:host-gateway zilliz/attu:v2.3.8
+
+
+sudo ln -s /home/docker/containers /var/run/docker
