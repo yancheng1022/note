@@ -15,6 +15,7 @@ unzip ragflow-plus-main.zip
 mv ragflow-plus-main ragflow-plus
 ```
 
+curl --location --request POST 'http://localhost:3000/api/channels/import/oneapi' \ --header 'Authorization: Bearer aiproxy' \ --header 'Content-Type: application/json' \ --data-raw '{ "dsn": "mysql://root:123456@tcp(mysql:3306)/oneapi" }'
 # 2、运行
 
 使用GPU运行：
