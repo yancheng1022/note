@@ -144,7 +144,7 @@ ffmpeg -re -i "smoke.mp4" -vcodec h264 -b:v 1000k -maxrate 1000k -bufsize 2000k 
 
 循环推流
 ```shell
-ffmpeg -re -stream_loop -1 -i "smoke.mp4" -vcodec h264 -b:v 1000k -maxrate 1000k -bufsize 2000k -vf "scale=1280:720" -acodec aac -b:a 128k -f rtsp -rtsp_transport tcp rtsp://111.53.30.112:8554/live/test
+ffmpeg -re -stream_loop -1 -i "person.mp4" -vcodec h264 -b:v 1000k -maxrate 1000k -bufsize 2000k -vf "scale=1280:720" -acodec aac -b:a 128k -f rtsp -rtsp_transport tcp rtsp://111.53.30.112:8554/live/test
 ```
 ## 3.5、脚本编写
 
