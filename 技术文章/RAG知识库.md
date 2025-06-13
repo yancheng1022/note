@@ -74,8 +74,17 @@ docker exec -it ollama bash
 ```
 
 
+# 7、attu(Milvus客户端)
 
+```shell
+docker run -d --name attu -p 18000:3000 \
+  -e MILVUS_URL=host.docker.internal:19530 \
+  --add-host=host.docker.internal:host-gateway zilliz/attu:v2.3.8
+```
 
+docker compose -f docker-compose.yml down -v
+
+docker compose -f docker-compose.yml up -d
 
 
 ![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250610172247.png)
