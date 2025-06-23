@@ -131,3 +131,11 @@ RAG（Retrieval-Augmented Generation）技术原理：
 ![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250610172247.png)
 
 首先将资料文字向量化（就是将文字转化为一堆数字），存储到向量数据库。后续在进行检索的时候，将问题进行向量化，根据向量的相似度在向量库进行检索。然后调用大模型生成结果
+
+
+# 3、RAG方案
+
+## 3.1、fastgpt
+
+
+## 3.2、ragflow
