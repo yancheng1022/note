@@ -136,7 +136,7 @@ RAG（Retrieval-Augmented Generation）技术原理：
 # 3、RAG方案
 
 1、fastgpt和ragflow都不支持外挂数据库，dify支持
-
+2、
 
 ## 3.1、fastgpt
 
