@@ -140,6 +140,8 @@ RAG（Retrieval-Augmented Generation）技术原理：
 
 ## 3.1、fastgpt
 
+### 3.1.2、修改知识库信息
+
 docker exec -it 681 /bin/bash
 mongo --username root --password 123456 --authenticationDatabase admin
 use fastgpt
