@@ -151,7 +151,7 @@ db.datasets.find().pretty()
 db.datasets.find({"name":"1"}).pretty()
 
 db.datasets.updateOne(
-  { name: "演示test" },
+  { name: "非煤" },
   { $set: { vectorModel: "bge-m3" } }
 )
 ## 3.2、ragflow
