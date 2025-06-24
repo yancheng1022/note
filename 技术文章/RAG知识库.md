@@ -152,7 +152,7 @@ db.datasets.find({"name":"非煤"}).pretty()
 
 db.datasets.updateOne(
   { name: "法律法规" },
-  { $set: { vectorModel: "bge-m3" } }
+  { $set: { vectorModel: "BAAI/bge-m3" } }
 )
 
 db.datasets.updateOne(
