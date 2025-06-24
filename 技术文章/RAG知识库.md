@@ -154,4 +154,11 @@ db.datasets.updateOne(
   { name: "法律法规" },
   { $set: { vectorModel: "bge-m3" } }
 )
+
+db.datasets.updateOne(
+  { name: "法律法规" },
+  { $set: { vectorModel: "BAAI/bge-m3" } }
+)
+
+
 ## 3.2、ragflow
