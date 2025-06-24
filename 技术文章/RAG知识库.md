@@ -145,4 +145,5 @@ mongo --username root --password 123456 --authenticationDatabase admin
 use fastgpt
 db.getCollectionNames()
 db.datasets.find().pretty()
+db.datasets.find({"name":"1"}).pretty()
 ## 3.2、ragflow
