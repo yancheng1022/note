@@ -148,10 +148,10 @@ use fastgpt
 db.getCollectionNames()
 db.datasets.find().pretty()
 
-db.datasets.find({"name":"1"}).pretty()
+db.datasets.find({"name":"法律法规"}).pretty()
 
 db.datasets.updateOne(
-  { name: "部门规章政策文件-煤矿" },
+  { name: "法律法规" },
   { $set: { vectorModel: "bge-m3" } }
 )
 ## 3.2、ragflow
