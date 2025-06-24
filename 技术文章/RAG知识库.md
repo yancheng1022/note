@@ -148,7 +148,7 @@ use fastgpt
 db.getCollectionNames()
 db.datasets.find().pretty()
 
-db.datasets.find({"name":"法律法规"}).pretty()
+db.datasets.find({"name":"非煤"}).pretty()
 
 db.datasets.updateOne(
   { name: "法律法规" },
@@ -156,7 +156,7 @@ db.datasets.updateOne(
 )
 
 db.datasets.updateOne(
-  { {name: "法律法规" ,}},
+  { {name: "法律法规" ,“ "682c16a47313d4f78acac0b1”}},
   { $set: { vectorModel: "BAAI/bge-m3" } }
 )
 
