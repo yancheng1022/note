@@ -156,8 +156,8 @@ db.datasets.updateOne(
 )
 
 db.datasets.updateOne(
-  { {name: "法律法规" ,“ "682c16a47313d4f78acac0b1”}},
-  { $set: { vectorModel: "BAAI/bge-m3" } }
+  { name: "法律法规" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
+  { $set: { vectorModel: "bge-m3" } }
 )
 
 
