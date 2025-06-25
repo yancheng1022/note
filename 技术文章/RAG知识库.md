@@ -156,9 +156,27 @@ db.datasets.updateOne(
 )
 
 db.datasets.updateOne(
-  { name: "法律法规" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
-  { $set: { vectorModel: "bge-m3" } }
+  { name: "ollama-test" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
+  { $set: { vectorModel: "BAAI/bge-m3" } }
 )
 
+部门规章政策文件-非煤
 
+部门规章政策文件-通用
+
+部门规章政策文件-煤矿
+
+标准规范-通用
+
+标准规范-非煤
+
+标准规范-煤矿
+
+非煤
+
+法律法规
+
+演示test
+
+ollama-test
 ## 3.2、ragflow
