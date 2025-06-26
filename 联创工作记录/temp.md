@@ -1,60 +1,37 @@
-扩容优化 - 素数
-处理哈希冲突的方式：开放地址法 - 线性探测法  平方探测   二次哈希
+# YOLO数据集统计报告
 
+数据集路径: `E:\data\yoloTrain\安全帽数据集`
 
+## 数据集概览
+| 数据集 | 图像数量 | 标注框数量 |
+|--------|----------|------------|
+| train | 6064 | 95843 |
+| val | 1516 | 24717 |
+| **总计** | **7580** | **120560** |
 
+## 类别分布
+| 类别ID | 类别名称 | 标注框数量 | 占比 |
+|--------|----------|------------|------|
+| 0 | helmet | 9046 | 7.50% |
+| 1 | head | 111514 | 92.50% |
 
+## 详细统计
+### train集
+- 图像数量: 6064
+- 标注框数量: 95843
+- 类别分布:
+  - helmet: 7299 个
+  - head: 88544 个
 
-参考：https://blog.csdn.net/2401_85556416/article/details/141431698
+### val集
+- 图像数量: 1516
+- 标注框数量: 24717
+- 类别分布:
+  - helmet: 1747 个
+  - head: 22970 个
 
-conda create -n yolov10 python=3.11.4
-
-https://github.com/THU-MIG/yolov10 
-
-
-https://pytorch.org/get-started/previous-versions/
-
-
-pip install -r requirements.txt
-
-
-docker run -d \
-  --restart always \
-  --name module \
-  --hostname module \
-  --network default \
-  -p 40154:8082 \
-  -v /home/lantrack/4015/analyzer/upload:/upload \
-  -v /home/lantrack/cdeslogs/analyzer:/cdeslogs \
-  39.105.159.2:10443/library/4015-aiva-server-prod/analyzer:0.0.26
-  
-  docker login https://ai.iqianyao.com:10443 -u admin -p Shanzesun@2023wujiu
-
-docker run -d \
-  --restart always \
-  --name module \
-  --hostname module \
-  --network default \
-  -p 40153:8082 \
-  -v /home/lantrack/4015/module/upload:/upload \
-  -v /home/lantrack/cdeslogs/module:/cdeslogs \
-  39.105.159.2/library/4015-aiva-server-prod/module:1.0
-
-docker run -d \
-  --restart always \
-  --name module \
-  --hostname module \
-  --network default \
-  -p 40153:8082 \
-  -v /home/lantrack/4015/module/upload:/upload \
-  -v /home/lantrack/cdeslogs/module:/cdeslogs \
-  39.105.159.2:10443/library/4015-aiva-server-prod/module:1.0
-
-ragflow
-pdf的解析会有内存泄漏现象，deepdoc    用Plain Text会快一些
-
-幻觉问题
-检索结果不相关或信息不足时模型更容易幻觉
-当最相关文档相似度低于阈值时拒绝回答
-
-1、dify后台问题
+## 数据集信息
+- 类别数量 (nc): 2
+- 类别列表:
+  - 0: helmet
+  - 1: head
