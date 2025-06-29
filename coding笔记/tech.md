@@ -944,13 +944,13 @@ spring会创建一个代理对象作，利用事务管理器创建一个数据�
 
 ## 4.9、@Transactional属性
 
-| **参 数 名 称** | **功 能 描 述** |
-| ---- | ---- |
-| readOnly | 该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)` 注意是一次执行多次查询来统计某些信息，这时为了保证数据整体的一致性，要用只读事务 |
-| rollbackFor | rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class}) |
-| **propagation** | 该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)` |
-| **isolation** | 该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置 |
-| timeout | 该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒 |
+| **参 数 名 称**     | **功 能 描 述**                                                                                                                                                                                         |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| readOnly        | 该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：`@Transactional(readOnly=true)` 注意是一次执行多次查询来统计某些信息，这时为了保证数据整体的一致性，要用只读事务                                                                    |
+| rollbackFor     | rollbackFor 该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class,Exception.class}) |
+| **propagation** | 该属性用于设置事务的传播行为。例如：`@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)`                                                                                                            |
+| **isolation**   | 该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置                                                                                                                                   |
+| timeout         | 该属性用于设置事务的超时秒数，默认值为-1表示永不超时 事物超时设置：`@Transactional(timeout=30)` ，设置为30秒                                                                                                                             |
 
 1、propagation：事务传播行为，指的就是当一个事务方法被另一个事务方法调用时，这个事务与事务应该如何运行
 
