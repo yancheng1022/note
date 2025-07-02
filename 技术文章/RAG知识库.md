@@ -162,3 +162,5 @@ db.datasets.updateOne(
 
 
 ## 3.2、ragflow
+mysql -uroot -p     
+infini_rag_flow
