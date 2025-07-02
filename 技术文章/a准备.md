@@ -72,6 +72,30 @@ public class BService {
 
 
 # 4、spring cloud
+## 4.1、nacos注册中心工作流程
+
+**服务注册**:Nacos Client会通过发送REST请求的方式向Nacos Server注册自己的服务，提供自身的元数据，比如ip地址、端口等信息。Nacos Server接收到注册请求后，就会把这些元数据信息存储在一个双层的内存Map中（外层key是namespace，内层key是group:service）。
+
+**服务心跳**:在服务注册后，Nacos Client会维护一个定时心跳来持续通知Nacos Server，说明服务一直处于可用状态，防止被剔除。默认5s发送一次心跳。
+
+**服务同步**:Nacos Server集群之间会互相同步服务实例，用来保证服务信息的一致性。
+
+**服务发现**:服务消费者(Nacos Client)在调用服务提供者的服务时，会发送一个REST请求给NacosServer，获取上面注册的服务清单，并且缓存在Nacos Client本地，同时会在Nacos Client本地开启个定时任务（默认35s）定时拉取服务端最新的注册表信息更新到本地缓存
+
+**服务健康检查**:Nacos Server会开启一个定时任务用来检查注册服务实例的健康情况，对于超过15s没有收到客户端心跳的实例会将它的healthy属性置为false(客户端服务发现时不会发现)，如果某个实例超过30秒没有收到心跳，直接别除该实例(被剔除的实例如果恢复发送心跳则会重新注册)
+
+## 4.2、nacos领域模型
+
+nacos的服务由三元组唯一确定（namespace、group、serviceName）
+nacos的配置由三元组唯一确定（namespace、group、dataId）
+
+| 模型名称      | 解释                                     |
+| --------- | -------------------------------------- |
+| Namespace | 实现环境隔离，默认值public（一般用于区分测试、生产环境等）       |
+| Group     | 不同的service可以组成一个Group，默认值Default-Group |
+| Service   | 服务名称                                   |
+| Cluster   | 对指定的微服务虚拟划分，默认值Default                 |
+| Instance  | 某个服务的具体实例（ip+端口）                       |
 
 # 5、mybatis
 
