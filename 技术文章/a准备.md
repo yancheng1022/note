@@ -71,3 +71,6 @@ MySQL的三大日志系统也是类似的道理，他们各自承担着不同的
 4、数据分离：垂直分库，水平分表
 5、读写分离：mysql设置主从，主库写数据，从库读取数据
 6、服务监控
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702151217.png)
+
+## 7.2、雪花算法
