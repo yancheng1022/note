@@ -27,5 +27,10 @@ https://zhuanlan.zhihu.com/p/136422134
 
 # 5、mybatis
 
+
 # 6、数据库
 
+## 6.1、mysql架构
+
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702141645.png)
