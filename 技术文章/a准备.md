@@ -148,6 +148,10 @@ public interface ProviderServiceApi {
 ```
 
 ## 4.4、流量治理-sentinel
+sentinel 的使用可以分为两个部分:
+1、核心库（Java 客户端）：不依赖任何框架/库，能够运行于 Java 8 及以上的版本的运行时环境，同时对 Dubbo / Spring Cloud 等框架也有较好的支持。
+2、控制台（Dashboard）：Dashboard 主要负责管理推送规则、监控、管理机器信息等。基于 Spring Boot 开发，打包后可以直接运行。
+
 
 # 5、mybatis
 
