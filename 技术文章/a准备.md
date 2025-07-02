@@ -238,7 +238,7 @@ MySQL的三大日志系统也是类似的道理，他们各自承担着不同的
 
 1. 按物理存储分类
 聚簇索引(Clustered Index)：索引的叶子节点直接存储完整的数据行（数据即索引）
-非聚簇索引(Non-Clustered Index)：也叫二级索引(Secondary Index)，索引和数据分开存储
+非聚簇索引(Non-Clustered Index)：也叫二级索引(Secondary Index)，索引的叶子节点存储的是主键值或数据行的物理地址（索引和数据分离）
 >MyISAM的所有索引都是非聚簇索引，InnoDB的非主键索引都是二级索引
 
 2. 按逻辑功能分类
