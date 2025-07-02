@@ -246,23 +246,12 @@ R-Tree索引：用于空间数据索引，MyISAM支持空间索引
 非聚簇索引(Non-Clustered Index)：也叫二级索引(Secondary Index)，索引和数据分开存储
 >MyISAM的所有索引都是非聚簇索引，InnoDB的非主键索引都是二级索引
 
-
 3. 按逻辑功能分类
-主键索引(Primary Key)
-唯一且非空的索引
-一个表只能有一个主键索引
-唯一索引(Unique Index)
-确保索引列的值唯一
-允许有空值
-普通索引(Normal Index)
-最基本的索引类型
-没有唯一性限制
-复合索引(Composite Index)
-多个列组合的索引
-遵循最左前缀原则
-前缀索引(Prefix Index)
-对列的前面部分建立索引
-节省索引空间
+主键索引(Primary Key)：唯一且非空的索引，一个表只能有一个主键索引
+唯一索引(Unique Index)：确保索引列的值唯一，允许有空值
+普通索引(Normal Index)：最基本的索引类型，没有唯一性限制
+复合索引(Composite Index)：多个列组合的索引，遵循最左前缀原则
+前缀索引(Prefix Index)：对列的前面部分建立索引，节省索引空间
 
 
 # 7、设计题
