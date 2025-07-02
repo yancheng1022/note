@@ -18,9 +18,14 @@ https://zhuanlan.zhihu.com/p/136422134
 1、实例化：解析配置为BeanDefinition对象，通过反射创建实例
 2、属性赋值：Spring 将值和bean的引用注入到bean对应的属性中
 3、回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法
-
+4、初始化（Initialization）：分别调用（1）BeanPostProcessor的前置处理器，（2）InitialzingBean的afterPropertiesSet（）方法，（3）调用init初始化方法（4）调用BeanPostProcessor的后置处理器
+5、使用（In Use）：在初始化完成之后，Bean就可以被使用了。
+6、销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
 
 
 # 4、spring cloud
 
 # 5、mybatis
+
+# 6、数据库
+
