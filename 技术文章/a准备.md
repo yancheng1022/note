@@ -35,6 +35,6 @@ https://zhuanlan.zhihu.com/p/136422134
 
 1、客户端通过连接器和服务端建立连接
 2、分析器进行词法分析拆分为token(如SELECT、FROM等)，然后语法分析判断是否符合语法规范
-3、优化器进行优化处理，比如决定使用哪个索引，
+3、优化器进行优化处理，比如决定使用哪个索引，生成执行计划
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702141645.png)
