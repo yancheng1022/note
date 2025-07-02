@@ -17,7 +17,7 @@ https://zhuanlan.zhihu.com/p/136422134
 ## 3.1、bean生命周期
 1、实例化
 2、属性赋值
-
+3、
 
 
 # 4、spring cloud
