@@ -38,7 +38,7 @@ https://zhuanlan.zhihu.com/p/136422134
 3、优化器进行优化处理，比如决定使用哪个索引，生成执行计划
 4、然后通过执行器调用存储引擎执行具体的sql
 5、存储引擎有很多实现（myisam、innodb等）innodb是目前主流的方案
-6、inndb分两层，内存层和磁盘层。内存主要做运行时的读取写入（内存块），磁盘主要做持久化（.ibd文件，undo log，redo log，bin log）
+6、inndb分两层，内存层和磁盘层。内存主要做运行时的读取写入（undo log buffer，redo log buffer），磁盘主要做持久化（.ibd文件，undo log，redo log，bin log）
 > 注意：bin log是在任何存储引擎都有，undo log和redo log是在innodb下独有的
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702141645.png)
@@ -52,8 +52,7 @@ https://zhuanlan.zhihu.com/p/136422134
 MySQL的三大日志系统也是类似的道理，他们各自承担着不同的职责，共同保证数据的安全性和可靠性。其中:
 
 1、undo log就相当于使用铅笔写字，可以随时擦除。主要用来记录事务执行前的数据状态状态。主要用于:（1）事务回滚:当事务执行失败需要撤销时，根据undolog恢复数据。（2）实现MVCC:支持数据库的并发访问，让不同事务能看到对应时间点的数据版本
-2、redo log就相当于用钢笔写下正式内容。主要记录事务修改后的数据状态。主要作用:
-。确保事务的持久性:即使数据库崩溃，也能通过redolog恢复已提交的事务
-。提升性能:先将修改写入redolog(顺序写，速度快)再慢慢更新到磁盘数据文件(随机写，速度慢)3、binlog就相当于把日志复印一份保存。主要记录所有数据库的变更操作。主要作用:
-主从复制:将主库的变更同步到从库
-。数据恢复:通过历史bin log恢复某个时间点的数据状态。
+2、redo log就相当于用钢笔写下正式内容。主要记录事务修改后的数据状态。主要作用:（1）确保事务的持久性:即使数据库崩溃，也能通过redolog恢复已提交的事务（2）提升性能:先将修改写入redolog(顺序写，速度快)再慢慢更新到磁盘数据文件(随机写，速度慢)
+3、binlog就相当于把日志复印一份保存。主要记录所有数据库的变更操作。主要作用:（1）主从复制:将主库的变更同步到从库（2）数据恢复:通过历史bin log恢复某个时间点的数据状态
+
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702145028.png)
