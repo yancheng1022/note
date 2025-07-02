@@ -14,7 +14,11 @@ https://zhuanlan.zhihu.com/p/136422134
 # 2、基础
 
 # 3、spring全家桶、mybatis
-## 3.1、bean实例化流程
+## 3.1、bean生命周期
+1、实例化
+2、属性赋值
+
+
 
 # 4、spring cloud
 
