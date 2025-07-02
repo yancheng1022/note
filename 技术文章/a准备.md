@@ -37,6 +37,7 @@ https://zhuanlan.zhihu.com/p/136422134
 2、分析器进行词法分析拆分为token(如SELECT、FROM等)，然后语法分析判断是否符合语法规范
 3、优化器进行优化处理，比如决定使用哪个索引，生成执行计划
 4、然后通过执行器调用存储引擎执行具体的sql
-5、存储yiinnodb
+5、存储引擎有很多实现（myisam、innodb等）innodb是目前主流的方案
+6、inndb分两层，内存层和磁盘层。内存主要做运行时的读取写入（内存块），磁盘主要做持久化（.ibd文件，undo log，redo log，bin log）
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702141645.png)
