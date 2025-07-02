@@ -39,5 +39,6 @@ https://zhuanlan.zhihu.com/p/136422134
 4、然后通过执行器调用存储引擎执行具体的sql
 5、存储引擎有很多实现（myisam、innodb等）innodb是目前主流的方案
 6、inndb分两层，内存层和磁盘层。内存主要做运行时的读取写入（内存块），磁盘主要做持久化（.ibd文件，undo log，redo log，bin log）
+> 注意：bin log是在任何存储引擎都有，undo log和redo log是在innodb下独有的
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702141645.png)
