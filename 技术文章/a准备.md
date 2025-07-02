@@ -15,9 +15,10 @@ https://zhuanlan.zhihu.com/p/136422134
 
 # 3、spring全家桶、mybatis
 ## 3.1、bean生命周期
-1、实例化
-2、属性赋值
-3、
+1、实例化：解析配置为BeanDefinition对象，通过反射创建实例
+2、属性赋值：Spring 将值和bean的引用注入到bean对应的属性中
+3、回调实现Aware接口的方法。BeanNameAware，BeanFactoryAware，ApplicationContextAware对应的方法
+
 
 
 # 4、spring cloud
