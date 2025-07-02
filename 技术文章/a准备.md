@@ -97,6 +97,59 @@ nacos的配置由三元组唯一确定（namespace、group、dataId）
 | Cluster   | 对指定的微服务虚拟划分，默认值Default                 |
 | Instance  | 某个服务的具体实例（ip+端口）                       |
 
+## 4.3、服务调用open Feign
+RestTemplate发起远程调用的代码时会存在一些问题比如：代码可读性差，参数复杂URL难以维护
+OpenFeign的设计宗旨式简化Java Http客户端的开发。用户只需创建一个接口并添加相应的注解，即可实现对远程服务的调用。OpenFeign 是 Spring Cloud 的一部分，它支持 Spring MVC 的注解，如 @RequestMapping，使得使用 HTTP 请求访问远程服务就像调用本地方法一样直观和易于维护。OpenFeign集成了Ribbon，实现了客户端负载均衡
+
+
+## 4.1、实现流程
+
+1、调用方添加依赖
+
+```xml
+<dependency>  
+    <groupId>org.springframework.cloud</groupId>  
+    <artifactId>spring-cloud-starter-openfeign</artifactId>  
+</dependency>
+```
+
+2、启动类添加注解@EnableFeignClients
+
+```java
+@SpringBootApplication  
+@EnableFeignClients  
+public class NacosConsumer8080 {  
+  
+    public static void main(String[] args) {  
+        SpringApplication.run(NacosConsumer8080.class, args);  
+    }  
+  
+}
+```
+
+3、调用方定义pai
+
+```java
+@FeignClient("depart-provider")  
+public interface ProviderServiceApi {  
+  
+    @GetMapping("/provider/depart/list")  
+    List<Depart> getInfo();  
+}
+```
+
+4、调用方调用pai
+
+```java
+    @GetMapping("/list")  
+    public List<Depart> listHandle() {  
+//        String url = SERVICE_PROCIER + "/list";  
+//        return template.getForObject(url, List.class);  
+        return providerServiceApi.getInfo();  
+    }
+```
+
+
 # 5、mybatis
 
 
