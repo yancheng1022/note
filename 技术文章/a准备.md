@@ -445,10 +445,12 @@ explain select name from user
 （7）all：不走索引，进行了全表扫描，这时候表示通常需要增加索引来进行优化了
 
 **关键字段2：Extar**
-（1）Using index，Using wher：select操作中使用了覆盖索引(Covering Index)，需要的数据都能在索引中找到，避免回表查询
-（2）Using index condition：查找使用了索引，但需要回表查询
-（3）Using temporary：执行查询时使用了临时表来处理结果集，通常发生在排序操作或多个连接的情况下
-（4）Using filesort：将用外部排序而不是索引排序，这个其实也是让order by后面的字段走索引就行了
+（1）Using index：覆盖索引（无需回表）。
+（2）Using where：WHERE 条件过滤数据。
+（3）Using temporary：使用临时表（需优化，如 GROUP BY 无索引）。
+（4）Using filesort：使用外部排序（需优化，如 ORDER BY 无索引）。
+（5）Using join buffer：使用连接缓存（需调整 join_buffer_size）
+
 
 
 # 7、设计题
