@@ -376,6 +376,36 @@ explain select * from employees where name like "张%" and age = 20
 1、count（1）和count（星）是一样的，不管是innodb还是myisam （其中myisam一个字段存储行数，innodb利用索引统计）
 2、count（字段）会选择该字段的可用索引进行统计，如果没有则进行全部扫描，同时它会过滤掉null值
 
+## 6.14、如何定位慢查询
+
+1. 开启慢查询日志
+```sql
+-- 开启慢查询日志
+SET GLOBAL slow_query_log = 'ON';
+-- 设置慢查询阈值(秒)
+SET GLOBAL long_query_time = 1;
+-- 查看日志文件位置
+SHOW VARIABLES LIKE 'slow_query_log_file';
+```
+
+2. EXPLAIN分析
+```sql
+EXPLAIN SELECT * FROM users WHERE username = 'test';
+```
+
+## 6.15、in和exist的区别
+
+```sql
+select    *      from   a     where    id    in  （select  id  from  b） ;    
+select    *      from   a     where    id    exists  （select  id  from  b） ;   
+``` 
+
+使用in ,sql语句是先执行子查询，也就是先查询b表，再查a表，而使用exists是先查主表a ,再查子表b; 
+
+对于主表数据较多时，我们使用in速度比exist更快，反之，从表b较大时，使用exist查询速度更快（都会使用索引）,
+
+如果使用的是not in与not exists，直接使用not exists，因为not in 会进行全表扫描不走索引，not exists会走索引。 
+
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
 高并发系统特点就是短时间内大量用户请求访问系统，需要系统能快速稳定的响应（高性能，高可用）
