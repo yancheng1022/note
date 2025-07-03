@@ -423,18 +423,26 @@ select    *      from   a     where    id    exists  （select  id  from  b） ;
 | **filtered**      | 存储引擎返回数据后，经服务器层过滤的剩余百分比（100 表示未过滤） | `10.0`（仅 10% 数据符合条件）、`100.0`                                                                                                                                 |
 | **Extra**         | 额外执行信息（重要优化提示）                     | `Using index`（覆盖索引）、`Using where`（额外过滤）、`Using filesort`（需排序）                                                                                                |
 **关键字段1：type**
-system：表只有一行（系统表）
-const：通过主键或唯一索引一次就找到
-eq_ref：唯一索引扫描（多表连接中使用主键或唯一索引）
-ref：非唯一索引扫描
-fulltext：全文索引扫描
-ref_or_null：类似 ref，但包含 NULL 值的搜索
-index_merge：索引合并优化
-unique_subquery：在 IN 子查询中使用主键
-index_subquery：在 IN 子查询中使用非唯一索引
-range：索引范围扫描
-index：全索引扫描
-ALL：全表扫描（最差情况）
+
+（1）system：system是const的特例，表示表中只有一行记录，这个几乎不会出现，也作为了解。
+（2）const: 通过索引直接访问一行数据，主键或唯一索引进行等值比较时出现
+```sql
+explain select * from user where id =2;
+```
+（3）eq_ref: 当使用连接查询时，如果查询使用的是主键或唯一索引来查询
+```sql
+EXPLAIN SELECT * FROM users JOIN orders ON users.id = orders.user_id;
+```
+（4）ref：使用的是非唯一索引来匹配行时
+```sql
+explain select * from user where name = '张三'
+```
+（5）range：range使用索引来检索给定范围的行数据，一般是在where后面使用between、<>、in等查询语句就会出现range
+（6）index：使用索引进行全索引扫描
+```sql
+explain select name from user
+```
+（7）all：不走索引，进行了全表扫描，这时候表示通常需要增加索引来进行优化了
 
 
 # 7、设计题
