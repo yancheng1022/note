@@ -422,6 +422,21 @@ select    *      from   a     where    id    exists  （select  id  from  b） ;
 | **rows**          | 预估需要扫描的行数（越小越好）                    | `1`（精确匹配）、`1000`（全表扫描）                                                                                                                                       |
 | **filtered**      | 存储引擎返回数据后，经服务器层过滤的剩余百分比（100 表示未过滤） | `10.0`（仅 10% 数据符合条件）、`100.0`                                                                                                                                 |
 | **Extra**         | 额外执行信息（重要优化提示）                     | `Using index`（覆盖索引）、`Using where`（额外过滤）、`Using filesort`（需排序）                                                                                                |
+**关键字段1：type**
+system：表只有一行（系统表）
+const：通过主键或唯一索引一次就找到
+eq_ref：唯一索引扫描（多表连接中使用主键或唯一索引）
+ref：非唯一索引扫描
+fulltext：全文索引扫描
+ref_or_null：类似 ref，但包含 NULL 值的搜索
+index_merge：索引合并优化
+unique_subquery：在 IN 子查询中使用主键
+index_subquery：在 IN 子查询中使用非唯一索引
+range：索引范围扫描
+index：全索引扫描
+ALL：全表扫描（最差情况）
+
+
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
 高并发系统特点就是短时间内大量用户请求访问系统，需要系统能快速稳定的响应（高性能，高可用）
