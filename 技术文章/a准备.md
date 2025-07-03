@@ -350,6 +350,7 @@ SELECT MAX(price) FROM products;
 ## 6.12、索引下推
 
 索引下推是MySQL 5.6版本引入的一项优化技术，用于提高查询性能。核心思想是将WHERE条件过滤的部分下推到存储引擎层执行，而不是在服务器层进行过滤。服务层按照过滤后的数据再一回表扫描。目的就是减少回表次数
+> 回表：当使用普通索引（非聚簇索引）查询时，MySQL需要先通过索引找到主键值，然后再根据主键值去聚簇索引中查找完整数据行的过程
 
 适用于组合索引（复合索引）。WHERE条件中有一部分可以通过索引判断，另一部分不能
 
@@ -368,6 +369,7 @@ explain select * from employees where name like "张%" and age = 20
 3. 只返回同时满足两个条件的记录给服务层
 
 >当一条sql使用索引下推技术后，在explain执行计划中，extra列中出现using index condition的信息
+
 
 ## 6.13、cout(1)和count(星)和count(字段)区别
 
