@@ -302,9 +302,19 @@ SELECT REPLACE('I like apples', 'apples', 'bananas');
 SELECT SUBSTRING('abcdef', 2, 3); -- 输出: 'bcd'（从第2个字符开始取3个）
 ```
 
-4. 生成0-1中间的随机数
+4. 生成0-1中间的随机数RAND() 
 ```sql
 SELECT RAND(); -- 输出: 如 0.752345
+```
+
+5. 返回当前日期和时间
+```sql
+SELECT NOW();
+```
+
+6. 计算两个日期相差的天数DATEDIFF(date1, date2) 
+```sql
+SELECT DATEDIFF('2023-10-25', '2023-10-20'); -- 输出: 5
 ```
 
 # 7、设计题
