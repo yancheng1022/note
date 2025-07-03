@@ -297,6 +297,16 @@ SELECT CONCAT('Hello', ' ', 'World');
 SELECT REPLACE('I like apples', 'apples', 'bananas');
 ```
 
+3. 截取子字符串SUBSTRING(str, start, length) 
+```sql
+SELECT SUBSTRING('abcdef', 2, 3); -- 输出: 'bcd'（从第2个字符开始取3个）
+```
+
+4. 生成0-1中间的随机数
+```sql
+SELECT RAND(); -- 输出: 如 0.752345
+```
+
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
 高并发系统特点就是短时间内大量用户请求访问系统，需要系统能快速稳定的响应（高性能，高可用）
