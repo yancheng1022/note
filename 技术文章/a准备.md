@@ -340,7 +340,12 @@ SELECT MAX(price) FROM products;
 2. 不可重复读：一个事务多次读取同一条记录，出现读取数据不一致的情况。一般因为另一个事务更新了这条记录而引发的。
 3. 幻读：在一次事务中，多次读取到的条数不一致
 
+## 6.11、innodb和myisam区别
 
+1、innodb支持事务，外键。myisam不支持
+2、innodb支持行锁，myisam不支持
+3、innodb使用聚簇索引，myisam使用非聚簇索引
+4、innodb不存储行数，myisam存储行数
 
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
