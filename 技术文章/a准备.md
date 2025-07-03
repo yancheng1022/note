@@ -287,6 +287,15 @@ select * from table where c = '1' and b > 1 and a='2' //走ab（因为优化成a
 
 ## 6.9、mysql常用函数
 
+1. 字符串拼接CONCAT(str1, str2, ...)
+```sql
+SELECT CONCAT('Hello', ' ', 'World');
+```
+
+2. 替换字符串中的指定内容REPLACE(str, old_str, new_str) 
+```sql
+SELECT REPLACE('I like apples', 'apples', 'bananas');
+```
 
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
