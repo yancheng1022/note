@@ -317,6 +317,22 @@ SELECT NOW();
 SELECT DATEDIFF('2023-10-25', '2023-10-20'); -- 输出: 5
 ```
 
+7. 统计行数COUNT() 
+```sql
+SELECT COUNT(*) FROM users; -- 返回用户总数
+```
+
+8. 求和 / 平均值SUM() / AVG() 
+```sql
+SELECT AVG(salary) FROM employees;
+```
+
+9. 返回最大值/最小值MAX() / MIN() 
+```sql
+SELECT MAX(price) FROM products;
+```
+
+
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
 高并发系统特点就是短时间内大量用户请求访问系统，需要系统能快速稳定的响应（高性能，高可用）
