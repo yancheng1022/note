@@ -406,6 +406,22 @@ select    *      from   a     where    id    exists  （select  id  from  b） ;
 
 如果使用的是not in与not exists，直接使用not exists，因为not in 会进行全表扫描不走索引，not exists会走索引。 
 
+## 6.16、explain分析
+
+| **字段**            | **说明**                             | **常见值/示例**                                                                |
+| ----------------- | ---------------------------------- | ------------------------------------------------------------------------- |
+| **id**            | 查询标识符，表示 SELECT 的顺序                | `1`（简单查询）、`2`（子查询）、`NULL`（UNION 结果）                                       |
+| **select_type**   | 查询类型                               | `SIMPLE`、`PRIMARY`、`SUBQUERY`、`DERIVED`、`UNION`、`UNION RESULT` 等          |
+| **table**         | 查询涉及的表名                            | `users`、`<derived2>`（派生表）、`<union1,2>`（UNION 结果）                          |
+| **partitions**    | 查询涉及的分区（非分区表为 NULL）                | `p0`、`p1`、`NULL`                                                          |
+| **type**          | 访问类型（性能关键指标，从最优到最差排序）              | `system` > `const` > `eq_ref` > `ref` > `range` > `index` > `ALL`（全表扫描最差） |
+| **possible_keys** | 可能使用的索引（查询优化器评估可用的索引）              | `PRIMARY`、`idx_name`、`NULL`（无可用索引）                                        |
+| **key**           | 实际使用的索引（若为 NULL 表示未使用索引）           | `PRIMARY`、`idx_email`、`NULL`                                              |
+| **key_len**       | 使用的索引长度（字节数，越大说明索引利用率越高）           | `4`（INT 主键）、`767`（VARCHAR(255) UTF-8 索引）                                  |
+| **ref**           | 与索引比较的列或常量（显示索引如何被引用）              | `const`、`db.users.id`、`NULL`                                              |
+| **rows**          | 预估需要扫描的行数（越小越好）                    | `1`（精确匹配）、`1000`（全表扫描）                                                    |
+| **filtered**      | 存储引擎返回数据后，经服务器层过滤的剩余百分比（100 表示未过滤） | `10.0`（仅 10% 数据符合条件）、`100.0`                                              |
+| **Extra**         | 额外执行信息（重要优化提示）                     | `Using index`（覆盖索引）、`Using where`（额外过滤）、`Using filesort`（需排序）             |
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
 高并发系统特点就是短时间内大量用户请求访问系统，需要系统能快速稳定的响应（高性能，高可用）
