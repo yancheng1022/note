@@ -342,10 +342,24 @@ SELECT MAX(price) FROM products;
 
 ## 6.11、innodb和myisam区别
 
-1、innodb支持事务，外键。myisam不支持
-2、innodb支持行级锁和表级锁（默认行级锁），myisam仅支持表级锁
-3、innodb使用聚簇索引，myisam使用非聚簇索引
-4、innodb不存储行数，myisam存储行数(表锁没有并发修改的问题，所以维护成本低)
+1. nnodb支持事务，外键。myisam不支持
+2. innodb支持行级锁和表级锁（默认行级锁），myisam仅支持表级锁
+3. innodb使用聚簇索引，myisam使用非聚簇索引
+4. innodb不存储行数，myisam存储行数(表锁没有并发修改的问题，所以维护成本低)
+
+## 1.18、索引下推
+
+索引下推的下推其实就是指将部分上层（服务层）负责的事情，交给了下层（引擎层）去处理.存储引擎根据联合索引按照条件过滤。按照过滤后的数据再一回表扫描。目的就是减少回表次数
+
+```sql
+explain select * from employees where name like "yc%" and age = 18
+```
+
+mysql5.6版本前：这个查询只能匹配到yc开头的索引，然后拿这些索引对应的主键，到主键索引找对应的记录，再对比age是否满足
+5.6以后使用了索引下推，匹配到yc开头的索引后，同时还会在索引里过滤age字段，最后拿着过滤完的主键id再回表查询
+
+
+>当一条sql使用索引下推技术后，在explain执行计划中，extra列中出现using index condition的信息
 
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
