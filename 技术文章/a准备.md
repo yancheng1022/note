@@ -526,7 +526,7 @@ SPOP luckdraw:product:a 1
 zadd zsetofpost 89 post:1
 ```
 
-6、bitmap
+6、bitmaps
 不是实际的数据类型，而是基于 String 类型的位操作
 使用场景：每日签到。因为Bit的值为0或者1，位图的每一位代表一天的签到，1表示已签，0表示未签。考虑到每月初需要重置连续签到次数，最简单的方式是按用户每月存一条签到数据（也可以每年存一条数据）。Key的格式为`u:sign:uid:yyyyMM`，Value则采用长度为4个字节（32位）的位图（最大月份只有31天）
 
