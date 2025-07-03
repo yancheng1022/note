@@ -345,7 +345,7 @@ SELECT MAX(price) FROM products;
 1、innodb支持事务，外键。myisam不支持
 2、innodb支持行级锁和表级锁（默认行级锁），myisam仅支持表级锁
 3、innodb使用聚簇索引，myisam使用非聚簇索引
-4、innodb不存储行数，myisam存储行数
+4、innodb不存储行数，myisam存储行数(表锁没有并发修改的问题，所以维护成本低)
 
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
