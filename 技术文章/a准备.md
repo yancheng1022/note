@@ -410,7 +410,7 @@ select    *      from   a     where    id    exists  （select  id  from  b） ;
 
 | **字段**            | **说明**                             | **常见值/示例**                                                                |
 | ----------------- | ---------------------------------- | ------------------------------------------------------------------------- |
-| **id**            | 查询标识符，表示 SELECT 的顺序                | `1`（简单查询）、`2`（子查询）、`NULL`（UNION 结果）                                       |
+| **id**            | 查询标识符，表示 SELECT 的顺序                | 数字越大越先执行                                                                  |
 | **select_type**   | 查询类型                               | `SIMPLE`、`PRIMARY`、`SUBQUERY`、`DERIVED`、`UNION`、`UNION RESULT` 等          |
 | **table**         | 查询涉及的表名                            | `users`、`<derived2>`（派生表）、`<union1,2>`（UNION 结果）                          |
 | **partitions**    | 查询涉及的分区（非分区表为 NULL）                | `p0`、`p1`、`NULL`                                                          |
