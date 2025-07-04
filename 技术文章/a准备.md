@@ -32,10 +32,10 @@ https://zhuanlan.zhihu.com/p/136422134
 6、销毁（Destruction）：当Spring容器关闭时，会销毁所有的Bean。在销毁Bean之前，（1）如果实现DisposableBean接口，Spring将调用它的destory()接口方法（2）如果bean使用destroy-method声明了销毁方法，该方法也会被调用
 
 ## 3.2、控制反转和依赖注入
-### 控制反转(Inversion of Control, IoC)
+控制反转(Inversion of Control, IoC)
 控制反转是一种软件设计原则，它将传统程序流程的控制权从应用程序代码转移到了框架或容器中。在传统编程中，我们的代码直接调用依赖对象；而在IoC中，这种控制关系被"反转"了 - 框架或容器负责管理对象的生命周期和依赖关系
 
-### 依赖注入(Dependency Injection, DI)
+依赖注入(Dependency Injection, DI)
 依赖注入是实现IoC的一种具体技术，它通过容器将依赖对象"注入"到需要使用它们的类中，而不是让类自己创建或查找依赖对象
 
 ## 3.3、spring依赖注入的方式
