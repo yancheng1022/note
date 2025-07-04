@@ -657,7 +657,47 @@ Consumer（消费者）：消费者是消息的接收方，负责从队列获取
  如果消息不太重要，丢失也没有影响，那么自动ACK会比较方便
  如果消息非常重要，不容丢失。那么最好在消费完成后手动ACK，否则接收消息后就自动ACK，RabbitMQ就会把消息从队列中删除
 
-
+```java
+@Configuration
+public class RabbitConfig {
+ 
+    @Bean
+    public RabbitTemplate createRabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        rabbitTemplate.setConnectionFactory(connectionFactory);
+ 
+        //设置消息投递失败的策略，有两种策略：自动删除或返回到客户端。
+        //我们既然要做可靠性，当然是设置为返回到客户端(true是返回客户端，false是自动删除)
+        rabbitTemplate.setMandatory(true);
+ 
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                log.info("相关数据：" + correlationData);
+                if (ack) {
+                    log.info("投递成功,确认情况：" + ack);
+                } else {
+                    log.info("投递失败,确认情况：" + ack);
+                    log.info("原因：" + cause);
+                }
+            }
+        });
+ 
+        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
+            @Override
+            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+               log.info("ReturnCallback:     " + "消息：" + message);
+               log.info("ReturnCallback:     " + "回应码：" + replyCode);
+               log.info("ReturnCallback:     " + "回应信息：" + replyText);
+               log.info("ReturnCallback:     " + "交换机：" + exchange);
+               log.info("ReturnCallback:     " + "路由键：" + routingKey);
+            }
+        });
+ 
+        return rabbitTemplate;
+    }
+}
+```
 
 # 7、设计题
 ## 7.1、如何设计一个高并发系统
