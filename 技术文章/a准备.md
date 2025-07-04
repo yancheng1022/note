@@ -607,7 +607,16 @@ AOF 文件包含全量 RDB 数据 + 增量 AOF 命令。
 | 数据安全性 | 可能会丢失最后一次持久化后的数据 | 根据策略决定 |
 
 
-## 8、mq
+# 8、mq
+## 8.1、rabbitmq架构
+![RabbitMQ架构](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/202307241048618.png)
+Producer（生产者）：生产者是消息的发送方，负责将消息发布到RabbitMQ的交换机（Exchange）。
+broker（服务端）：接收客户端的连接，实现AMQP实体服务。
+VHost：虚拟主机，用于逻辑隔离。一个虚拟主机里面可以有若干个Exchange和Queue
+Exchange（交换机）：交换机是消息的接收和路由中心，它接受来自生产者的消息，并将消息路由到一个或多个与之绑定的队列（Queue）中。
+Queue（队列）：队列是消息的存储和消费地，它保存着未被消费的消息，等待消费者（Consumer）从队列获取并处理消息。
+Binding（绑定）：绑定是交换机和队列之间的关联关系，它定义了交换机将信息路由到了哪些队列中。
+Consumer（消费者）：消费者是消息的接收方，负责从队列获取消息，并进行处理和消费。
 
 
 
