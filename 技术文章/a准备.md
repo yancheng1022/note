@@ -725,6 +725,18 @@ public class RabbitConfig {
 
 
 # 9、并发编程
+## 9.1、线程状态
+
+
+ 1. NEW（新建）：线程被创建但尚未启动（未调用 start() 方法）
+ 2. RUNNABLE（可运行）：线程正在 JVM 中执行或等待系统资源（如 CPU 时间片）
+ 3. BLOCKED（阻塞）：线程等待获取一个 同步锁（synchronized 锁）时进入阻塞状态
+ 4. WAITING（无限等待）：线程因调用以下方法进入等待状态（Object.wait()，Thread.join()），需要其他线程显式唤醒
+ 5. TIMED_WAITING（超时等待）线程在带超时时间的方法中等待：Thread.sleep(long)，Object.wait(long)
+ 6. TERMINATED（终止）：线程执行完毕或异常退出后进入终止状态
+
+
+
 
 
 
