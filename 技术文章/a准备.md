@@ -736,7 +736,22 @@ public class RabbitConfig {
 
 
 ## 9.2、java线程创建的方式
-
+1. 继承Thread类
+2. 实现Runnable接口
+3. 实现Callable接口（带返回值）
+4. 使用线程池（Executor框架）
+```java
+public static void main(String[] args) {
+        // 创建线程池
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        // 提交任务
+        executor.execute(() -> {
+            System.out.println("线程池中的线程执行任务");
+        });
+        // 关闭线程池
+        executor.shutdown();
+    }
+```
 
 
 
