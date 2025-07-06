@@ -727,7 +727,6 @@ public class RabbitConfig {
 # 9、并发编程
 ## 9.1、线程状态
 
-
  1. NEW（新建）：线程被创建但尚未启动（未调用 start() 方法）
  2. RUNNABLE（可运行）：线程正在 JVM 中执行或等待系统资源（如 CPU 时间片）
  3. BLOCKED（阻塞）：线程等待获取一个 同步锁（synchronized 锁）时进入阻塞状态
@@ -736,6 +735,7 @@ public class RabbitConfig {
  6. TERMINATED（终止）：线程执行完毕或异常退出后进入终止状态
 
 
+## 9.2、java线程创建的方式
 
 
 
