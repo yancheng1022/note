@@ -724,7 +724,8 @@ public class RabbitConfig {
 利用消息或队列的 TTL特性，当消息过期后通过死信交换机路由到目标队列
 
 
-# 8、JUC
+# 9、并发编程
+
 
 
 
