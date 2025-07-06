@@ -736,9 +736,58 @@ public class RabbitConfig {
 
 
 ## 9.2、java线程创建的方式
+
 1. 继承Thread类
+```java
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        // 线程执行的代码
+        System.out.println("线程运行中...");
+    }
+}
+// 使用方式
+MyThread thread = new MyThread();
+thread.start();
+```
+
 2. 实现Runnable接口
+```java
+public class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        // 线程执行的代码
+        System.out.println("Runnable线程运行中...");
+    }
+}
+// 使用方式
+Thread thread = new Thread(new MyRunnable());
+thread.start();
+// 或者使用Lambda表达式
+Thread lambdaThread = new Thread(() -> {
+    System.out.println("Lambda线程运行中...");
+});
+lambdaThread.start();
+```
+
 3. 实现Callable接口（带返回值）
+```java
+public class MyCallable implements Callable<String> {
+    @Override
+    public String call() throws Exception {
+        // 线程执行的代码
+        return "Callable线程返回值";
+    }
+}
+// 使用方式
+FutureTask<String> futureTask = new FutureTask<>(new MyCallable());
+Thread thread = new Thread(futureTask);
+thread.start();
+// 获取返回值
+String result = futureTask.get();
+System.out.println(result);
+```
+
 4. 使用线程池（Executor框架）
 ```java
 public static void main(String[] args) {
