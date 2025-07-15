@@ -954,15 +954,15 @@ spring会创建一个代理对象作，利用事务管理器创建一个数据�
 
 1、propagation：事务传播行为，指的就是当一个事务方法被另一个事务方法调用时，这个事务与事务应该如何运行
 
-|**事务传播行为类型**|**说明**|
-|---|---|
-|PROPAGATION_SUPPORTS|支持事务。若当前没有事务以非事务方式执行；若当前有事务，加入此事务中|
-|PROPAGATION_NOT_SUPPORTED|不支持事务。若当前存在事务，把当前事务挂起，然后运行方法|
-|PROPAGATION_NEVER|不使用事务。若当前方法存在事务，则抛出IllegalTransactionStateException异常，否则继续使用无事务机制运行|
-|PROPAGATION_MANDATORY|强制使用事务。若当前有事务，就使用当前事务；若当前没有事务，抛出IllegalTransactionStateException异常|
-|**PROPAGATION_REQUIRED**|需要事务（**默认**）。若当前无事务，新建一个事务；若当前有事务，加入此事务中|
-|**PROPAGATION_REQUIRES_NEW**|新建事务。无论当前是否有事务，都新建事务运行|
-|**PROPAGATION_NESTED**|嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作|
+| **事务传播行为类型**                 | **说明**                                                              |
+| ---------------------------- | ------------------------------------------------------------------- |
+| PROPAGATION_SUPPORTS         | 支持事务。若当前没有事务以非事务方式执行；若当前有事务，加入此事务中                                  |
+| PROPAGATION_NOT_SUPPORTED    | 不支持事务。若当前存在事务，把当前事务挂起，然后运行方法                                        |
+| PROPAGATION_NEVER            | 不使用事务。若当前方法存在事务，则抛出IllegalTransactionStateException异常，否则继续使用无事务机制运行 |
+| PROPAGATION_MANDATORY        | 强制使用事务。若当前有事务，就使用当前事务；若当前没有事务，抛出IllegalTransactionStateException异常  |
+| **PROPAGATION_REQUIRED**     | 需要事务（**默认**）。若当前无事务，新建一个事务；若当前有事务，加入此事务中                            |
+| **PROPAGATION_REQUIRES_NEW** | 新建事务。无论当前是否有事务，都新建事务运行                                              |
+| **PROPAGATION_NESTED**       | 嵌套。如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作        |
 
 
 2、isolation ：事务隔离级别，默认的隔离级别，使用数据库默认的事务隔离级别，下面四个与JDBC的隔离级别相对应
