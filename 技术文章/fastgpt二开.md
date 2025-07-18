@@ -8,7 +8,7 @@ MONGODB_HOME
 %MONGODB_HOME%\bin
 
 2、启动命令
-mongod --dbpath="D:\package\mongodb\data\db" --bind_ip=0.0.0.0
+mongod --dbpath="D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\data\db" --bind_ip=0.0.0.0
 
 # 2、postgresql
 1、下载地址
