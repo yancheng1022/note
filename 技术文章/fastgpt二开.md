@@ -8,7 +8,7 @@ MONGODB_HOME
 %MONGODB_HOME%\bin
 
 2、启动命令
-mongod --dbpath="D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\data\db" --bind_ip=0.0.0.0
+mongod --dbpath="D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\data\db" --bind_ip=0.0.0.0  --replSet myReplicaSet
 
 mongod --config D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\mongod.cfg
 # 2、postgresql
