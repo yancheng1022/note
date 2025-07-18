@@ -14,7 +14,7 @@ mongod --dbpath="D:\package\mongodb\data\db" --bind_ip=0.0.0.0
 1、下载地址
 https://pan.quark.cn/s/84b02d9e31a3
 
-
+2、为PostgreSQL超级用户（默认为postgres）设置密码
 
 # 3、pgvector
 1、下载地址
