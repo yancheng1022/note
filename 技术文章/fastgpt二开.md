@@ -11,6 +11,33 @@ MONGODB_HOME
 mongod --dbpath="D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\data\db" --bind_ip=0.0.0.0  --replSet myReplicaSet
 
 mongod --config D:\soft\dev\mongodb\mongodb-win32-x86_64-windows-6.0.25\mongod.cfg
+
+#停止mongo
+systemctl stop mongod
+systemctl status mongod
+ 
+#备份配置文件
+cp -a  /etc/mongod.conf /etc/mongod.conf.bk
+ 
+#编辑配置文件
+vim  /etc/mongod.conf
+#添加以下内容
+replication:
+  oplogSizeMB: 2000
+  replSetName: rs0   
+  enableMajorityReadConcern: true
+ 
+#保存
+#启动mongo
+systemctl start mongod
+systemctl status mongod
+ 
+ 
+##初始化副本
+mongosh
+mongosh> rs.initiate( { _id: "rs0", version: 1, members: [ { _id: 0, host: "localhost:27016" } ] })
+mongosh> rs.status
+ 
 # 2、postgresql
 1、下载地址
 https://pan.quark.cn/s/84b02d9e31a3
