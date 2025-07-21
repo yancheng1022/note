@@ -92,3 +92,6 @@ db.team_members.insert({
     createTime: new ISODate(),
     defaultTeam: true
 });
+
+
+db.team_members.updateOne({userId: "6823154ed183465469e67fde"}, { $set: {teamId: "682c16a47313d4f78acac0b1"} });
