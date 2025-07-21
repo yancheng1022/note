@@ -94,4 +94,4 @@ db.team_members.insert({
 });
 
 
-db.team_members.updateOne({userId: "6823154ed183465469e67fde"}, { $set: {teamId: "682c16a47313d4f78acac0b1"} });
+db.team_members.updateOne({db.users.findOne({username:"root"}, {_id:1})._id}, { $set: {db.teams.findOne({name:"lantrack"}, {_id:1})._id} });
