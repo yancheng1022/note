@@ -1,4 +1,5 @@
-# 1、mongodb
+# 1、本地运行
+## 1.1、mongodb
 
 1、下载地址
 https://www.mongodb.com/try/download/community
@@ -38,13 +39,13 @@ mongosh
 mongosh> rs.initiate( { _id: "rs0", version: 1, members: [ { _id: 0, host: "localhost:27016" } ] })
 mongosh> rs.status
  
-# 2、postgresql
+## 1.2、postgresql
 1、下载地址
 https://pan.quark.cn/s/84b02d9e31a3
 
 2、为PostgreSQL超级用户（默认为postgres）设置密码
 
-# 3、pgvector
+## 1.3、pgvector
 1、下载地址
 https://github.com/pgvector/pgvector/tags
 
@@ -59,3 +60,25 @@ nmake /F Makefile.win install
 
 4、最后在数据库连接工具中，选中具体的数据库实例，执行以下命令，就能扩展 vector 类型了
 CREATE EXTENSION vector;
+
+# 2、修改信息
+
+## 2.1、修改知识库信息
+
+docker exec -it 681 /bin/bash
+mongo --username root --password 123456 --authenticationDatabase admin
+use fastgpt
+db.getCollectionNames()
+db.datasets.find().pretty()
+
+db.datasets.find({"name":"非煤"}).pretty()
+
+db.datasets.updateOne(
+  { name: "法律法规" },
+  { $set: { vectorModel: "BAAI/bge-m3" } }
+)
+
+db.datasets.updateOne(
+  { name: "ollama-test" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
+  { $set: { vectorModel: "BAAI/bge-m3" } }
+)
