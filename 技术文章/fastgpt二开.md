@@ -82,3 +82,13 @@ db.datasets.updateOne(
   { name: "ollama-test" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
   { $set: { vectorModel: "BAAI/bge-m3" } }
 )
+
+db.team_members.insert({
+    teamId: db.teams.findOne({name:"lantrack"}, {_id:1})._id, 
+    userId: db.users.findOne({username:"root"}, {_id:1})._id, 
+    name: "Owner",
+    role: "owner",
+    status: "active",
+    createTime: new ISODate(),
+    defaultTeam: true
+});
