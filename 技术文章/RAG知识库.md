@@ -210,9 +210,8 @@ docker save -o lantrack-fastgpt-1.0.tar 2e0
 
 docker load -i lantrack-fastgpt-1.0.tar 
 
-registry.cn-hangzhou.aliyuncs.com/fastgpt/fastgpt:v4.9.3
+docker compose -f docker-compose.yml up -d
 
-docker co
 
 ### 3.1.2、修改知识库信息
 
