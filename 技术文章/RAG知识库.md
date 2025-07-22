@@ -207,6 +207,11 @@ CREATE EXTENSION vector;
 docker build -f ./projects/app/Dockerfile -t 39.105.159.2:10443/library/lantrack-fastgpt/fastgpt:1.0 . --build-arg name=app
 
 docker save -o lantrack-fastgpt-1.0.tar 2e0
+
+docker load -i lantrack-fastgpt-1.0.tar 
+
+registry.cn-hangzhou.aliyuncs.com/fastgpt/fastgpt:v4.9.3
+
 ### 3.1.2、修改知识库信息
 
 docker exec -it 681 /bin/bash
