@@ -212,6 +212,8 @@ docker load -i lantrack-fastgpt-1.0.tar
 
 registry.cn-hangzhou.aliyuncs.com/fastgpt/fastgpt:v4.9.3
 
+docker co
+
 ### 3.1.2、修改知识库信息
 
 docker exec -it 681 /bin/bash
