@@ -202,6 +202,9 @@ nmake /F Makefile.win install
 4、最后在数据库连接工具中，选中具体的数据库实例，执行以下命令，就能扩展 vector 类型了
 CREATE EXTENSION vector;
 
+### 3.1.2、打包部署镜像
+
+
 
 ### 3.1.2、修改知识库信息
 
