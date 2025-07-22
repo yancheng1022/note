@@ -21,7 +21,6 @@ systemctl start docker
 # 7、设置开机启动
 systemctl enable docker
 ```
-
 ## 1.2、cuda
 1、https://developer.nvidia.com/cuda-12-4-0-download-archive
 获取runfile命令
