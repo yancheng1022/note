@@ -222,7 +222,7 @@ db.getCollectionNames()
 db.datasets.find().pretty()
 
 db.datasets.find({"name":"非煤"}).pretty()
-
+db.chatitems.find({"query":"兴安煤矿四水平中部变电硐室机电管理制度中停送电管理制度部分缺少停送电安全措施内容"}).pretty()
 db.datasets.updateOne(
   { name: "法律法规" },
   { $set: { vectorModel: "BAAI/bge-m3" } }
