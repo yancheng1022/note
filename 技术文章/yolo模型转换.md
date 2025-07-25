@@ -41,4 +41,4 @@ E:\code\kmodel
 
 python to_kmodel.py --target k230 --model C:\Users\28979\Downloads\code\1\best.onnx --dataset C:\Users\28979\Downloads\code\val --input_width 640 --input_height 640 --ptq_option 0
 
-python to_kmodel.py --target k230 --model E:\temp\5\best.onnx  --input_width 640 --input_height 640 --ptq_option 0
+python to_kmodel.py --target k230 --model E:\temp\5\best.onnx  --dataset C:\Users\28979\Downloads\code\val  --input_width 640 --input_height 640 --ptq_option 0
