@@ -227,6 +227,9 @@ db.datasets.updateOne(
   { name: "法律法规" },
   { $set: { vectorModel: "BAAI/bge-m3" } }
 )
+db.chatitems.find({
+  "value.text.content": "兴安煤矿"
+}).pretty()
 
 db.datasets.updateOne(
   { name: "ollama-test" , "teamId": ObjectId("682c16a47313d4f78acac0b1")},
