@@ -220,7 +220,7 @@ mongo --username root --password 123456 --authenticationDatabase admin
 use fastgpt
 db.getCollectionNames()
 db.datasets.find().pretty()
-db.changeUserPassword("root", "lantrack.net")
+db.changeUserPassword("root", "123456")
 db.datasets.find({"name":"非煤"}).pretty()
 db.chatitems.find({"query":"兴安煤矿四水平中部变电硐室机电管理制度中停送电管理制度部分缺少停送电安全措施内容"}).pretty()
 db.datasets.updateOne(
