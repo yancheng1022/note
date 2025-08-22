@@ -813,6 +813,45 @@ public static void main(String[] args) {
     }
 ```
 
+## 9.3、线程池参数
+Java 线程池的核心是 java.util.concurrent.ThreadPoolExecutor 类
+
+7大参数如下：
+1、corePoolSize (核心线程数)
+线程池中始终保持存活的线程数量，即使它们是空闲的。
+除非设置了 allowCoreThreadTimeOut(true)，否则核心线程不会被回收。
+
+2、maximumPoolSize (最大线程数)
+
+线程池允许创建的最大线程数量。
+当工作队列满了之后，线程池会创建新线程来执行任务，直到线程数达到此值。
+
+3、keepAliveTime (线程空闲时间)
+当线程数超过 corePoolSize 时，非核心空闲线程在等待新任务的最长时间，超过这个时间就会被回收。
+如果设置了 allowCoreThreadTimeOut(true)，此策略也会应用于核心线程。
+
+4、unit (时间单位)
+keepAliveTime 的时间单位（如 TimeUnit.SECONDS）。
+
+5、workQueue (工作队列)
+用于保存等待执行的任务的阻塞队列。
+常用的有：
+ArrayBlockingQueue：有界队列，必须指定大小。
+LinkedBlockingQueue：无界队列（默认容量为 Integer.MAX_VALUE），可能导致 OOM
+SynchronousQueue：不存储元素的队列，每个插入操作必须等待另一个线程的移除操作。
+
+6、threadFactory (线程工厂)
+用于创建新线程的工厂。可以设置线程名、优先级、是否为守护线程等，便于排查问题。
+通常使用 Executors.defaultThreadFactory()。
+
+7、handler (拒绝策略)
+当线程数达到最大值且工作队列已满时，如何处理新提交的任务。
+
+内置策略：
+AbortPolicy（默认）：直接抛出 RejectedExecutionException 
+CallerRunsPolicy：由提交任务的调用者线程（如 main 线程）自己执行该任务。
+DiscardPolicy：直接丢弃新任务，不抛异常。
+DiscardOldestPolicy：丢弃队列中最老的一个任务，然后尝试再次提交新任务。
 
 # 10、jvm
 ## 10.1、jvm内存模型
