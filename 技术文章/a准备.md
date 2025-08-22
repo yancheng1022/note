@@ -859,6 +859,14 @@ DiscardOldestPolicy：丢弃队列中最老的一个任务，然后尝试再次�
 如果已经满了，判断工作队列是否满，没有满的话放到工作队列等待，有线程空闲了就会从工作队列获取任务执行
 工作队列满了，判断核心线程数是否达到最大，没有的话创建非核心线程执行，达到最大了则执行拒绝策略
 
+## 9.5、Executors 工厂类
+|工厂方法|说明|潜在问题|
+|---|---|---|
+|`newFixedThreadPool(int nThreads)`|创建固定大小的线程池（核心线程数=最大线程数），使用无界队列 (`LinkedBlockingQueue`)。|**队列无界**，可能堆积大量任务导致 OOM。|
+|`newSingleThreadExecutor()`|创建只有一个线程的线程池，保证任务顺序执行，使用无界队列。|**队列无界**，可能堆积大量任务导致 OOM。|
+|`newCachedThreadPool()`|创建可缓存的线程池（核心线程数为0，最大线程数为`Integer.MAX_VALUE`），使用 `SynchronousQueue`。|**线程数无界**，可能创建大量线程导致 CPU 和内存耗尽。|
+|`newScheduledThreadPool(int corePoolSize)`|创建支持定时及周期性任务执行的线程池。||
+
 # 10、jvm
 ## 10.1、jvm内存模型
 **1、程序计数器**
