@@ -971,4 +971,7 @@ Java堆的唯一目的就是存放对象实例，几乎所有的对象实例都�
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250702151217.png)
 
 
-## 7.2、oom排查
+## 7.2、OOM排查
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250825174508.png)
+
+
