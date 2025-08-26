@@ -1053,4 +1053,21 @@ SET key value NX PX timeout
 
 
 解锁：
-
+释放锁需要使用Lua脚本（eval）来保证“判断值”和“删除锁”这两个步骤的原子性，避免误删别人的锁
+```java
+public boolean releaseLock(Jedis jedis, String lockKey, String requestId) {
+        // 使用Lua脚本保证判断和删除的原子性
+        String luaScript = 
+            "if redis.call('get', KEYS[1]) == ARGV[1] then " +
+            "    return redis.call('del', KEYS[1]) " +
+            "else " +
+            "    return 0 " +
+            "end";
+        
+        // KEYS[1] 是 lockKey, ARGV[1] 是 requestId
+        Object result = jedis.eval(luaScript, 1, lockKey, requestId);
+        
+        // 如果删除成功，返回1；否则返回0
+        return Long.valueOf(1).equals(result);
+    }
+```
