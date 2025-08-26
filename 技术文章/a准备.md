@@ -1051,3 +1051,5 @@ PX：设置Key的过期时间（毫秒）。这是为了防止客户端崩溃或
 
 SET key value NX PX timeout
 
+
+
