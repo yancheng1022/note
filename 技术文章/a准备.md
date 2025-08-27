@@ -1133,3 +1133,8 @@ char[] buffer = new char[1024 * 1024]
 
 ## 7.8、jvm调优
 
+jvm参数分三类：
+1、标准指令： -开头，可以用java -help打印出来
+2、非标准指令： -X开头，跟特定hotsport版本对应，可以用java -X打印（-Xms -Xmx -Xss）
+3、不稳定参数：-XX开头，跟特定hotsport版本对应，变化很大
+
