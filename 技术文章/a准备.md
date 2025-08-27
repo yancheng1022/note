@@ -90,6 +90,8 @@ public class BService {
 }
 ```
 
+## 3.4、springboot自动配置原理
+“约定大于配置”，通过条件化配置（@Conditional），在满足特定条件时自动在应用上下文中创建和配置 Bean
 
 # 4、spring cloud
 ## 4.1、nacos注册中心工作流程
