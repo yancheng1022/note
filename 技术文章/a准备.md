@@ -1138,3 +1138,10 @@ jvm参数分三类：
 2、非标准指令： -X开头，跟特定hotsport版本对应，可以用java -X打印（-Xms -Xmx -Xss）
 3、不稳定参数：-XX开头，跟特定hotsport版本对应，变化很大
 
+优化minor gc
+通常情况，由于新生代空间比较小，Eden区很快被填满，就会导致频繁的Minor gc，因此可以通过增大新生代空间-Xmn来降低Minor gc的频率
+
+```
+jstat -gc pid 间隔(1000) 观察ygc的回收次数
+
+```
