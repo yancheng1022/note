@@ -1148,4 +1148,6 @@ jstat -gc pid 间隔(1000) 观察ygc的回收次数
 
 
 优化full gc
-原因：大对象（sql未分页），内存泄露（IO未释放，）
+原因：大对象（sql未分页），内存泄露（IO未释放，static引用未释放）
+
+jmap -dump
