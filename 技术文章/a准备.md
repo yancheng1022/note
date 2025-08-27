@@ -974,6 +974,10 @@ Java堆的唯一目的就是存放对象实例，几乎所有的对象实例都�
 
 ## 10.4、full gc场景
 
+Full GC（全局垃圾回收）是指同时清理 整个堆内存（Young Generation 新生代 + Old Generation 老年代）以及 方法区（Metaspace） 的垃圾回收事件。
+影响： 由于需要回收整个堆，Full GC 通常会导致长时间的 “Stop-The-World” 停顿，即所有应用线程都会被暂停。这对于延迟敏感的应用（如Web服务、交易系统）是致命的，会导致请求超时、用户体验卡顿等问题。
+触发条件： Full GC 的触发条件取决于所使用的垃圾收集器（Garbage Collector），但通常包括以下几种情况：
+
 
 
 
