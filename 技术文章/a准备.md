@@ -90,6 +90,14 @@ public class BService {
 }
 ```
 
+## 3.4、springboot自动配置原理
+“约定大于配置”，通过条件化配置（@Conditional），在满足特定条件时自动在应用上下文中创建和配置 Bean
+1、通过@SpringBootApplication引入@EnableAutoConfiguration，负责启动自动配置功能
+2、@EnableAutoConfiguration引入了@Import注解，导入一个ImportSelector
+3、它会读取所有/META-INF/spring.factory文件，然后把扫描到的文件包装成properties对象
+4、从properties中获取EnableAutoConfiguration的key里对应的所有的类
+5、通过@condition注解加载所需要的自动配置类
+
 
 # 4、spring cloud
 ## 4.1、nacos注册中心工作流程
