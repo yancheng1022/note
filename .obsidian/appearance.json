@@ -3,5 +3,8 @@
   "theme": "obsidian",
   "cssTheme": "Everforest",
   "baseFontSize": 18,
-  "interfaceFontFamily": "楷体"
+  "interfaceFontFamily": "楷体",
+  "enabledCssSnippets": [
+    "custom-icons-files-and-folders"
+  ]
 }
