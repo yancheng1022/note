@@ -1,5 +1,5 @@
 ---
-title: 各框架下的SPI机制实现原理
+title: SPI
 categories:
   - coding
 date: 2022/11/21
