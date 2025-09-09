@@ -1,5 +1,5 @@
 ---
-title: YOLOv8 模型训练
+title: YOLO
 date: 2024/11/01
 updated: 2023/11/02
 categories:
