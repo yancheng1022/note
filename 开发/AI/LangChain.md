@@ -50,3 +50,11 @@ langchain-Core：基础抽象和LangChain表达式语言 (LCEL)
 ### 1.4.2、LangGraph
 LangGraph可以看做基于LangChain的api的进一步封装，能够协调多个Chain、Agent、Tools完成更复杂的任务，实现更高级的功能。
 
+### 1.4.3、LangSmith
+链路追踪。提供了6大功能，涉及Debugging (调试)、Playground (沙盒)、Prompt Management (提示管理)、Annotation (注释)、Testing (测试)、Monitoring (监控)等。与LangChain无缝集成，帮助你从原型阶段过渡到生产阶段
+
+### 1.4.4、LangServe
+
+将LangChain的可运行项和链部署为REST API，使得它们可以通过网络进行调用。Java怎么调用langchain呢？就通过这个langserve。将langchain应用包装成一个rest api，对外暴露服务。同时，支持更高的并发，稳定性更好
+
+>LangChain当中，最有前途的两个模块就是：LangGraph，LangSmith。LangChain能做RAG，其它的⼀些框架也能做，而且做的也不错，⽐如LlamaIndex。所以这时候LangChain要在Agent这块发⼒，那就需要LangGraph。而LangSmith，做运维、监控。故⼆者是LangChain⾥最有前途的
