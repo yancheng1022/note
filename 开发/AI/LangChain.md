@@ -32,8 +32,21 @@ SemanticKernel ：也称为sk，微软推出的，对于C#同学来说，那就�
 在大语言模型（LLM）如 ChatGPT、Claude、DeepSeek 等快速发展的今天，开发者不仅希望能“使用”这些模型，还希望能 将它们灵活集成到自己的应用中 ，实现更强大的对话能力、检索增强生成（RAG）、工具调用（Tool Calling）、多轮推理等功能。LangChain 为更方便解决这些问题，而生的。比如：大模型默认不能联网，如果需要联网，用langchain
 
 ## 1.4、架构设计
-### 1.4.1、总体架构图
 
 ![image.png|700](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250916124904.png)
 
 图中展示了LangChain生态系统的主要组件及其分类，分为三个层次：架构(Architecture)、组件(Components)和部署(Deployment)。
+
+### 1.4.1、LangChain
+langchain：构成应用程序认知架构的Chains，Agents，Retrieval strategies等
+>构成应⽤程序的链、智能体、RAG
+
+langchain-community：第三方集成⽐如：Model I/O、Retrieval、Tool & Toolkit；合作伙伴包 langchain-openai，langchain-anthropic等。
+
+langchain-Core：基础抽象和LangChain表达式语言 (LCEL)
+
+小结：LangChain，就是AI应用组装套件，封装了一堆的API。langchain框架不大，但是里面琐碎的知识点特别多。就像玩乐高，提供了很多标准化的乐高零件（比如，连接器、轮子等)
+
+### 1.4.2、LangGraph
+LangGraph可以看做基于LangChain的api的进一步封装，能够协调多个Chain、Agent、Tools完成更复杂的任务，实现更高级的功能。
+
