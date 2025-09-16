@@ -113,3 +113,7 @@ Embeddings：把文字转换为更易于相似度计算的编码。这种编码�
 举例：努力学习考试内容，长期记住，活学活用。特点：成本最高；在前面的方式解决不了问题的情况下，再使用
 
 ![image.png|800](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250916205406.png)
+
+# 3、LangChain的核心组件
+文档：https://python.langchain.com/v0.1/docs/modules/
+
