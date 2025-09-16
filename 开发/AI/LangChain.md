@@ -30,3 +30,10 @@ SemanticKernel ：也称为sk，微软推出的，对于C#同学来说，那就�
 ## 1.3、为什么需要LangChain
 
 在大语言模型（LLM）如 ChatGPT、Claude、DeepSeek 等快速发展的今天，开发者不仅希望能“使用”这些模型，还希望能 将它们灵活集成到自己的应用中 ，实现更强大的对话能力、检索增强生成（RAG）、工具调用（Tool Calling）、多轮推理等功能。LangChain 为更方便解决这些问题，而生的。比如：大模型默认不能联网，如果需要联网，用langchain
+
+## 1.4、架构设计
+### 1.4.1、总体架构图
+
+![image.png|700](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250916124904.png)
+
+图中展示了LangChain生态系统的主要组件及其分类，分为三个层次：架构(Architecture)、组件(Components)和部署(Deployment)。
