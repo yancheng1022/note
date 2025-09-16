@@ -9,6 +9,8 @@ LangChain 之于 LLMs，类似 Spring 之于 Java
 
 顾名思义，LangChain中的“Lang”是指language，即⼤语⾔模型，“Chain”即“链”，也就是将⼤模型与外部数据&各种组件连接成链，以此构建AI应⽤程序。
 
+LangChain 是一个帮助你构建 LLM 应用的 全套工具集 。这里涉及到prompt 构建、LLM 接入、记忆管理、工具调用、RAG、智能体开发等模块
+
 ![image.png|800](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20250916123739.png)
 
 ## 1.2、大模型应用开发框架
@@ -26,4 +28,5 @@ SpringAI/SpringAI Alibaba ：有待进一步成熟，此外只是简单的对于
 SemanticKernel ：也称为sk，微软推出的，对于C#同学来说，那就是5颗星
 
 ## 1.3、为什么需要LangChain
+
 在大语言模型（LLM）如 ChatGPT、Claude、DeepSeek 等快速发展的今天，开发者不仅希望能“使用”这些模型，还希望能 将它们灵活集成到自己的应用中 ，实现更强大的对话能力、检索增强生成（RAG）、工具调用（Tool Calling）、多轮推理等功能。LangChain 为更方便解决这些问题，而生的。比如：大模型默认不能联网，如果需要联网，用langchain
