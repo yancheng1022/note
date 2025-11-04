@@ -218,6 +218,8 @@ yolo8
 代码exportTflite.py
 
 
+python export.py --weights E:\temp\5\mobilefacenet_fp32.onnx --include tflite --img 640
+
 ## 3.2、ncnn
 
 NCNN是腾讯优图实验室开源的高性能神经网络推理框架，专为移动端及嵌入式设备设计，以轻量化、高效率为核心优势
