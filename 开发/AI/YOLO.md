@@ -241,3 +241,4 @@ python export.py   --weights D:\code\yolo\yolov5-master\runs\train\exp73\weights
 yolo5,8导出kmodel：
 python to_kmodel.py --target k230 --model D:\code\yolo\yolov5-master\runs\train\exp73\weights\best.onnx --dataset E:\data\yoloTrain\data11\train\images --input_width 640 --input_height 640 --ptq_option 0
 
+python to_kmodel.py --target k230 --model E:\temp\7\best.onnx --dataset E:\data\yoloTrain\数字识别数据集\train\images --input_width 640 --input_height 640 --ptq_option 0
