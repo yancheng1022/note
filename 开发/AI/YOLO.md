@@ -241,4 +241,4 @@ python export.py   --weights D:\code\yolo\yolov5-master\runs\train\exp73\weights
 yolo5,8导出kmodel：
 python to_kmodel.py --target k230 --model D:\code\yolo\yolov5-master\runs\train\exp73\weights\best.onnx --dataset E:\data\yoloTrain\data11\train\images --input_width 640 --input_height 640 --ptq_option 0
 
-
+python export.py   --weights E:\temp\8\shoppingbest5.pt   --include onnx   --img 640   --batch 1   --simplify   --opset 12   --dynamic
