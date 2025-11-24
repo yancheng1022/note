@@ -11,4 +11,4 @@
 
 1、创建表：addEntOnly.ftl
 2、创建存储过程：addEntOnly.ftl
-3、创建
+3、初始化数据：addEntOnly.ftl
