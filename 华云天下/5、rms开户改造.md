@@ -8,3 +8,7 @@
 
 
 /addEnt  gls开户
+
+1、创建表：addEntOnly.ftl
+2、创建存储过程：addEntOnly.ftl
+3、创建
