@@ -1,246 +1,128 @@
+# 🚀【数据集名称】无人机违章建筑及河道检测标注数据集 | 高精度VOC/YOLO格式
 
-ublic static final String API_CALL_LOG_WITH_TASK = "api_call_log_with_task";
+---
 
+## 📌 数据集概览
 
-package com.huayunworld.cca.shortmessage.service.impl;  
-  
-import com.alibaba.cloud.commons.lang.StringUtils;  
-import com.alibaba.fastjson.JSON;  
-import com.alibaba.fastjson.JSONObject;  
-import com.cncloud.qframe.exception.ServiceException;  
-import com.huayunworld.cca.common.constant.Constants;  
-import com.huayunworld.cca.common.util.MessageUtils;  
-import com.huayunworld.cca.common.util.ObjectUtils;  
-import com.huayunworld.cca.common.util.SendMessageUtil;  
-import com.huayunworld.cca.shortmessage.constant.MQConstants;  
-import com.huayunworld.cca.shortmessage.service.ISendMessageTypeService;  
-import org.apache.activemq.command.ActiveMQTopic;  
-import org.apache.commons.codec.digest.DigestUtils;  
-import org.apache.http.Header;  
-import org.apache.http.client.methods.CloseableHttpResponse;  
-import org.apache.http.client.methods.HttpPost;  
-import org.apache.http.entity.StringEntity;  
-import org.apache.http.impl.client.CloseableHttpClient;  
-import org.apache.http.impl.client.HttpClients;  
-import org.apache.http.util.EntityUtils;  
-import org.slf4j.Logger;  
-import org.slf4j.LoggerFactory;  
-import org.springframework.jms.core.JmsTemplate;  
-import org.springframework.stereotype.Service;  
-  
-import javax.annotation.Resource;  
-import javax.jms.Destination;  
-import java.io.IOException;  
-import java.util.*;  
-  
-/**  
- * 中燃短信网关 Service  
- */@Service("SendMessageZRQServiceImpl")  
-public class SendMessageZRQServiceImpl implements ISendMessageTypeService {  
-  
-    private static Logger log = LoggerFactory.getLogger(SendMessageZRQServiceImpl.class);  
-  
-    @Resource  
-    private JmsTemplate jmsTemplate;  
-  
-    @Override  
-    public String sendMessage(Map<String, String> map) throws ServiceException {  
-        log.info("进入发送短信方法 SendMessageZRQServiceImpl.sendMessage(),接收到的参数为：{}", map);  
-        JSONObject resultJson = new JSONObject();  
-        String sendStatus;  
-        String sendMsg;  
-        CloseableHttpClient client = HttpClients.createDefault();  
-        CloseableHttpResponse response = null;  
-        String url = map.get("url");  
-        JSONObject logObject = new JSONObject();  
-        HttpPost httpPost = new HttpPost(url);  
-        JSONObject param = new JSONObject();  
-        Header[] responseHeaders = null;  
-        String code = "";  
-        String result = "";  
-        Long startTime = 0L;  
-        Long durationMs = 0L;  
-        try {  
-            //手机号码  
-            String mobile = map.get("mobile");  
-            if (SendMessageUtil.isCellPhone(mobile)) {  
-                //短信内容  
-                String message = map.get("message");  
-                //短信网关  
-                JSONObject jsonData = JSON.parseObject(map.get("param"));  
-                //这里是参数列表  
-                String appId = jsonData.getString("accesskey");  
-                String appSecret = jsonData.getString("secret");  
-                String timestamp = String.valueOf(System.currentTimeMillis());  
-                String data = appId + timestamp + appSecret;  
-                String sign = DigestUtils.md5Hex(data).toUpperCase();  
-                httpPost.setHeader("X-APP-ID", appId);  
-                httpPost.setHeader("X-TIMESTAMP", timestamp);  
-                httpPost.setHeader("X-SIGN", sign);  
-                List<String> phoneList = new ArrayList<>();  
-                phoneList.add(mobile);  
-                param.put("content", message);  
-                param.put("phoneNumberList", phoneList);  
-                StringEntity entity = new StringEntity(param.toString(), "UTF-8");  
-                entity.setContentType("application/json");  
-                httpPost.setEntity(entity);  
-                startTime = System.currentTimeMillis();  
-                response = client.execute(httpPost);  
-                durationMs = System.currentTimeMillis() - startTime;  
-                log.info("result:[{}]", response);  
-                if (!ObjectUtils.empty(response)) {  
-                    responseHeaders = response.getAllHeaders();  
-                    result = EntityUtils.toString(response.getEntity(), "UTF-8");  
-                    if (result.startsWith("{")) {  
-                        JSONObject rs = JSONObject.parseObject(result);  
-                        code = rs.getString("code");  
-                        if ("200".equals(code)) {  
-                            sendStatus = Constants.SUCCESS;  
-                            sendMsg = "发送成功";  
-                            log.error(result);  
-                        } else {  
-                            sendStatus = Constants.SEND_FAILURE;  
-                            sendMsg = rs.get("message") != null ? rs.get("message").toString() : result;  
-                        }  
-                    } else {  
-                        sendStatus = Constants.SEND_FAILURE;  
-                        sendMsg = result;  
-                    }  
-                } else {  
-                    sendStatus = Constants.SEND_FAILURE;  
-                    sendMsg = "接口未返回数据";  
-                }  
-            } else {  
-                sendStatus = Constants.SEND_FAILURE;  
-                sendMsg = MessageUtils.message("sms.phone.error");  
-            }  
-        } catch (Exception e) {  
-            log.error("发送短信异常 SendMessageZRQServiceImpl.sendMessage()", e);  
-            sendStatus = Constants.SEND_FAILURE;  
-            sendMsg = MessageUtils.message("sms.exception");  
-        }  
-        resultJson.put("sendStatus", sendStatus);  
-        resultJson.put("sendMsg", sendMsg);  
-        try {  
-            logObject.put("callType", "API");  
-            logObject.put("status", Constants.SUCCESS.equals(sendStatus) ? "SUCCESS" : "FAILURE");  
-            logObject.put("requestUrl", url);  
-            logObject.put("requestMethod", "POST");  
-            Header[] allHeaders = httpPost.getAllHeaders();  
-            JSONObject headObject = new JSONObject();  
-            Arrays.stream(allHeaders).forEach(header -> headObject.put(header.getName(), header.getValue()));  
-            logObject.put("requestHeaders", headObject.toJSONString());  
-            logObject.put("requestBody", param.toString());  
-            logObject.put("requestTime", startTime);  
-            logObject.put("responseHttpStatus", code);  
-            if (responseHeaders != null){  
-                JSONObject responseHeadObject = new JSONObject();  
-                Arrays.stream(responseHeaders).forEach(header -> responseHeadObject.put(header.getName(), header.getValue()));  
-                logObject.put("responseHeaders", responseHeadObject.toJSONString());  
-            }  
-            logObject.put("responseBody", result);  
-            logObject.put("errorMessage", sendMsg);  
-            logObject.put("durationMs", durationMs);  
-            logObject.put("callerIdentifier", "shortmessage:SendMessageZRQServiceImpl");  
-            logObject.put("apiName", "中燃短信发送接口");  
-            Long time = System.currentTimeMillis();  
-            logObject.put("createTime", time);  
-            logObject.put("updateTime", time);  
-            logObject.put("recordTime", time);  
-            String topicName = MQConstants.API_CALL_LOG_WITH_TASK;  
-            Destination topicDestination = new ActiveMQTopic(topicName);  
-            log.info("开始推送中燃短信发送日志TOPIC消息 SendMessageZRQServiceImpl.sendMessage()，推送的数据为：topicName={},content={}",topicName, logObject);  
-            jmsTemplate.convertAndSend(topicDestination, logObject.toJSONString());  
-            log.info("推送中燃短信发送日志TOPIC消息成功");  
-        } catch (Exception e) {  
-            log.error("中燃短信发送日志TOPIC消息消息异常", e);  
-        }  
-        return resultJson.toJSONString();  
-    }  
-  
-  
-    @Override  
-    public String sendMessageGroup(Map<String, String> map) throws ServiceException {  
-        return sendMessage(map);  
-    }  
-  
-  
-    public static void main(String[] args) {  
-        String validCode = "1234";  
-        String telephone = "13672161182";  
-        int minute = 5;  
-        JSONObject param = new JSONObject();  
-        String content = "【中国燃气】您的短信验证码为" + validCode + "，该验证码在" + minute + "分钟内有效，请您尽快完成操作（中燃集团–举报中心）";  
-        List<String> phoneList = new ArrayList<String>();  
-        phoneList.add(telephone);  
-        param.put("content", content);  
-        param.put("phoneNumberList", phoneList);  
-        JSONObject result = doPostSendSMSNew(param);  
-        System.out.println(result);  
-    }  
-  
-  
-    public static JSONObject doPostSendSMSNew(JSONObject param) {  
-        CloseableHttpResponse response = null;  
-        JSONObject returnObj = new JSONObject();  
-        String url = "https://cjdsm.chinagasholdings.com/api/open-api/v2/text/task/create";  
-        String appId = "c2k26U8XBSly7hh4BZdzXXjk1wkGKMgQ";  
-        String appSecret = "Ptsty0BPsjJckwQOyW2eOJP0W85EQYRDfpsJ6SSHvBXGB6AhKNplXmD4gLM7Q5KY";  
-        CloseableHttpClient client = HttpClients.createDefault();  
-        try {  
-            if (StringUtils.isBlank(url)) {  
-                returnObj.put("success", "false");  
-                returnObj.put("msg", "无平台地址");  
-                return returnObj;  
-            }  
-            HttpPost httpPost = new HttpPost(url);  
-            String timestamp = String.valueOf(System.currentTimeMillis());  
-            String data = appId + timestamp + appSecret;  
-            String sign = DigestUtils.md5Hex(data).toUpperCase();  
-            httpPost.setHeader("X-APP-ID", appId);  
-            httpPost.setHeader("X-TIMESTAMP", timestamp);  
-            httpPost.setHeader("X-SIGN", sign);  
-            StringEntity entity = new StringEntity(param.toString(), "UTF-8");  
-            entity.setContentType("application/json");  
-            httpPost.setEntity(entity);  
-            response = client.execute(httpPost);  
-            if (response.getEntity() != null) {  
-                String result = EntityUtils.toString(response.getEntity(), "UTF-8");  
-                if (result.startsWith("{")) {  
-                    JSONObject rs = JSONObject.parseObject(result);  
-                    String code = rs.getString("code");  
-                    if ("200".equals(code)) {  
-                        returnObj.put("success", "true");  
-                        returnObj.put("msg", rs.get("message"));  
-                        log.error(result);  
-                    } else {//403,短信发送失败  
-                        returnObj.put("success", "false");  
-                        returnObj.put("msg", rs.get("message"));  
-                        log.error(result);  
-                    }  
-                } else {  
-                    returnObj.put("success", "false");  
-                    returnObj.put("msg", result);  
-                }  
-            } else {  
-                returnObj.put("success", "false");  
-                returnObj.put("msg", "短信发送失败");  
-            }  
-        } catch (Exception e) {  
-            log.error("发送短信出现异常:[{}]", e.getMessage());  
-            returnObj.put("success", "false");  
-            returnObj.put("msg", "短信发送失败");  
-        } finally {  
-            if (response != null) {  
-                try {  
-                    response.close();  
-                } catch (IOException e) {  
-                    log.error("httpclient===关闭流异常" + e.getMessage() + ",错误信息" + e);  
-                }  
-            }  
-        }  
-        return returnObj;  
-    }  
-  
-  
-}
+| 项目 | 内容 |
+|------|------|
+| **数据集名称** | buildingwater（无人机违章建筑与河道检测数据集） |
+| **发布机构** | [你的机构/品牌名称] |
+| **发布日期** | 2025年12月2日 |
+| **更新频率** | 持续更新，支持长期项目与研究 |
+| **许可协议** | 学术研究免费 / 商业使用需授权 |
+
+---
+
+## 🗂 数据详情
+
+### 📊 基础统计
+- **总图像数量**：1,364 张（高清无人机航拍）
+- **标注格式**：PASCAL VOC（.xml），**支持一键转换YOLO格式**
+- **总标注框数**：6,677 个
+- **平均每图目标数**：≈ 4.89 个
+
+### 🏗 类别一：违章建筑（building）
+- **图像数量**：1,080 张
+- **标注框数**：3,288 个
+- **包含场景**：未批先建房屋、临时棚屋、屋顶加建、侵占绿地/耕地构筑物等
+
+### 🌊 类别二：河道问题（water）
+- **图像数量**：1,131 张
+- **标注框数**：3,389 个
+- **包含场景**：河道水域、水面漂浮物、非法码头、河道违建、排污口、阻水障碍物等
+
+> ⚠️ 注意：部分图像同时包含建筑与河道目标，因此类别图像数之和大于总数，更贴近实际监测场景。
+
+---
+
+## 🎯 应用场景
+
+| 任务类型 | 可支持项目 |
+|----------|------------|
+| **目标检测** | YOLO系列、Faster R-CNN、RetinaNet等 |
+| **违章建筑自动识别** | 城市违建巡检、耕地保护监测 |
+| **河道“四乱”监测** | 乱占、乱采、乱堆、乱建自动化识别 |
+| **多时相变化检测** | 配合时间序列数据，支持违建增长分析 |
+| **无人机遥感应用** | 国土资源监测、智慧城市管理 |
+
+---
+
+## ✨ 核心优势
+
+- ✅ **高质量标注**：由专业标注团队完成，边界框精准，类别定义清晰
+- ✅ **真实场景覆盖**：涵盖多种光照、角度、尺度，提升模型泛化能力
+- ✅ **多格式支持**：提供VOC格式，附赠转换脚本，轻松适配YOLO、COCO等框架
+- ✅ **持续维护**：数据集随时间更新，支持技术咨询与使用指导
+
+---
+
+## 📥 获取方式
+
+### 🆓 学术用户
+- 高校、科研院所师生可申请**免费试用版**（限100张样本+标注）
+- 需提供单位邮箱与简要研究说明
+
+### 💼 企业/项目用户
+- **标准版**（完整数据集 + 基础技术支持）：**￥699**
+- **专业版**（数据集 + 定制脚本 + 远程部署支持）：**￥2,999**
+- **企业VIP**（全系列数据集终身更新 + 优先技术支持 + 定制训练服务）：**￥6,999**
+
+### 👑 会员计划
+- **VIP会员**：享所有数据集**半价**，持续更新（￥699/年）
+- **至尊VIP**：一次性获取全站现有及未来全部数据集，永久免费更新（￥6,999）
+- **无人机专项套餐**：涵盖建筑、河道、农田、道路等全场景数据集（￥3,999）
+
+> 🎁 本月限时福利：前50名购买VIP赠送《无人机视觉实战指南》电子书 + 3次远程调试支持。
+
+---
+
+## 🛠 配套服务
+
+我们提供一站式视觉解决方案，包括：
+
+- 模型训练与调优指导
+- 部署环境远程配置
+- 定制标注与数据增强
+- 毕业设计/课题辅导
+- 企业项目合作开发
+
+---
+
+## ❓ 常见问题
+
+**Q：标注格式如何转换？**  
+A：提供Python转换脚本，支持VOC→YOLO/COCO，开箱即用。
+
+**Q：能否用于商业项目？**  
+A：可购买商业授权，并提供合规性建议。
+
+**Q：数据会持续更新吗？**  
+A：每月至少更新一个场景，VIP用户免费同步。
+
+**Q：是否有预览数据？**  
+A：关注公众号回复“**样例**”，获取10张图像+标注示例。
+
+---
+
+## 📢 联系我们
+
+- **公众号**：[你的公众号名称]
+- **微信客服**：[微信号/二维码]
+- **邮箱**：contact@yourdomain.com
+- **备注**：如需特定场景数据集，欢迎留言，我们将在**72小时内**协助全网搜寻并共享资源。
+
+---
+
+## 🔗 相关推荐
+
+- 【链接】无人机农田病害检测数据集
+- 【链接】城市道路裂缝检测数据集
+- 【链接】电力巡检绝缘子缺陷数据集
+
+---
+
+> ✨ **我们的使命：提供高质量、可落地的视觉数据，助力AI技术真正服务于产业与社会治理。**  
+> 📅 下一期预告：《无人机夜间违建红外检测数据集》即将上线，关注我们，不再错过！
+
+---
