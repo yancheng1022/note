@@ -41,7 +41,7 @@ C:\ProgramData\miniconda3
 C:\ProgramData\miniconda3\Scripts 
 C:\ProgramData\miniconda3\Library\bin 
 ```
-
+2、创建虚拟环境
 ```shell
 conda create -n yolo python==3.8
 # 查看现有环境
