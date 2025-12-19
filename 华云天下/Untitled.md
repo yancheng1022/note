@@ -75,10 +75,13 @@ if __name__ == '__main__':
                 optimizer='SGD',  # 设置优化器为SGD（随机梯度下降），用于模型参数更新  
                 )
 ```
-5、配置文件
+5、配置文件 data.yaml
 ```yaml
-
-
+path: D:/data/yoloTrain/道路表面缺陷检测
+train: images/train
+val: images/val
+nc: 2
+names: ['Cracks', 'pothole']
 ```
 
 ## 🛠 6、配套服务
