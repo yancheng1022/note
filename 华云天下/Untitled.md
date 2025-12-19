@@ -31,6 +31,35 @@
 
 
 ## 🧠 5、模型训练
+## 5.1、环境准备
+
+1、安装miniconda
+地址： https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe
+环境变量（根据实际的安装目录配置）：
+```
+C:\ProgramData\miniconda3 
+C:\ProgramData\miniconda3\Scripts 
+C:\ProgramData\miniconda3\Library\bin 
+```
+
+```shell
+conda create -n yolo python==3.8
+# 查看现有环境
+conda env list
+# 激活环境 
+conda activate yolo
+# 激活失败 （执行该命令后重新进入cmd）
+conda init cmd.exe 
+```
+### 5.1.3、训练源码下载
+
+```shell
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
+pip config set install.trusted-host pypi.tuna.tsinghua.edu.cn
+pip install yolo
+pip install ultralytics==8.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install labelimg
+```
 
 
 ## 🛠 6、配套服务
