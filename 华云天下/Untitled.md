@@ -92,5 +92,6 @@ names: ['phone']
 ## ❓ 7、常见问题
 
 **Q：标注格式如何转换？**  
-A：免费提供Python转换脚本，支持YOLO→VOC/COCO，开箱即用。
+A：提供Python转换脚本，支持YOLO→VOC/COCO，开箱即用。
+https://download.csdn.net/download/qq_34645958/92486136?spm=1001.2014.3001.5503
 
