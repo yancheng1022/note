@@ -22,7 +22,8 @@
 
 ## ✨ 4、效果演示
 
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20251222213454.png)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20251223222420.png)
+
 
 ## 🧠 5、模型训练
 
