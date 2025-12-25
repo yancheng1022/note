@@ -21,7 +21,7 @@
 | **总计** | **-**  | **6064** | **95843** |
 ## ✨ 4、效果演示
 
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20251224232805.png)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20251225233346.png)
 
 ## 🧠 5、模型训练
 
@@ -71,13 +71,11 @@ if __name__ == '__main__':
 5、配置文件 data.yaml
 
 ```yaml
-path: D:/data/yoloTrain/人车数据集
+path: D:/data/yoloTrain/head
 train: images/train
 val: images/val
-# number of classes
-nc: 2
-# class names
-names: ["Person", "Car"]
+nc: 1
+names: ['person']
 ```
 
 ## 🛠 6、配套服务
