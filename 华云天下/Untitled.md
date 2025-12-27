@@ -73,11 +73,12 @@ if __name__ == '__main__':
 5、配置文件 data.yaml
 
 ```yaml
-path: D:/data/yoloTrain/钓鱼
+path: D:/data/yoloTrain/helmet
 train: images/train
 val: images/val
-nc: 1
-names: ['IF']
+test: images/test
+nc: 2
+names: ['helmet','head']
 ```
 
 ## 🛠 6、配套服务
