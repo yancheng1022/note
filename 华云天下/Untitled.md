@@ -22,7 +22,8 @@
 | **总计** | **-**     | **7952** | **16508** |
 ## ✨ 4、效果演示
 
-![](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/67430a81225c280ad02999b28d79af3.jpg)
+![a7ab8ca67bbd3f636aa2d829e622c2c.jpg](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/a7ab8ca67bbd3f636aa2d829e622c2c.jpg)
+
 
 ## 🧠 5、模型训练
 
@@ -72,11 +73,11 @@ if __name__ == '__main__':
 5、配置文件 data.yaml
 
 ```yaml
-path: D:/data/yoloTrain/电动自行车
+path: D:/data/yoloTrain/口罩/face_mask
 train: images/train
 val: images/val
 nc: 2
-names: ['motorcycle','bicycle']
+names: ['face','face_mask']
 ```
 
 ## 🛠 6、配套服务
