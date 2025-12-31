@@ -36,7 +36,7 @@
 | **总计** | **-**               | **7915** | **48843** |
 ## ✨ 4、效果演示
 
-![3ee4a7cb899802af882ad5543ff8bac.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/3ee4a7cb899802af882ad5543ff8bac.png)
+![822f733cb34c2d379fae12435a82196.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/822f733cb34c2d379fae12435a82196.png)
 
 ## 🧠 5、模型训练
 
