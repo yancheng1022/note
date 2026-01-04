@@ -10,24 +10,16 @@
 | **任务类型**  | 目标检测（Object Detection）                                             |
 | **类别**    | 'Bacteria_Leaf_Blight', 'Brown_Spot', 'Leaf_smut'                  |
 | **标注格式**  | YOLO TXT 格式（`<类别> <中心x> <中心y> <宽度> <高度>`，坐标和尺寸均为相对于图像宽高的归一化值（0-1）） |
-| **图片总数**  | 8629                                                               |
-| **标注总数**  | 457066                                                             |
+| **图片总数**  | 6715                                                               |
+| **标注总数**  | 24197                                                              |
 
 ## 🗂 3、数据详情
-
-| 类别ID   | 类别名称            | 图片数量     | 标注数量       |
-| ------ | --------------- | -------- | ---------- |
-| 0      | pedestrian      | 7083     | 109187     |
-| 1      | people          | 5226     | 38560      |
-| 2      | bicycle         | 3496     | 13069      |
-| 3      | car             | 8178     | 187005     |
-| 4      | van             | 6537     | 32702      |
-| 5      | truck           | 4567     | 16284      |
-| 6      | tricycle        | 2270     | 6387       |
-| 7      | awning-tricycle | 1604     | 4377       |
-| 8      | bus             | 2992     | 9117       |
-| 9      | motor           | 5516     | 40378      |
-| **总计** | **-**           | **8629** | **457066** |
+| 类别ID   | 类别名称                 | 图片数量     | 标注数量      |
+| ------ | -------------------- | -------- | --------- |
+| 0      | Bacteria_Leaf_Blight | 2863     | 3217      |
+| 1      | Brown_Spot           | 1576     | 13992     |
+| 2      | Leaf_smut            | 2209     | 6988      |
+| **总计** | **-**                | **6715** | **24197** |
 ## ✨ 4、效果演示
 
 ![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20260104220307.png)
@@ -80,22 +72,11 @@ if __name__ == '__main__':
 5、配置文件 data.yaml
 
 ```yaml
-path: E:/data/yoloTrain/uav
-test: test/images  # test images
-train: train/images  # train images
-val: val/images  # val images
-names:
-  0: pedestrian
-  1: people
-  2: bicycle
-  3: car
-  4: van
-  5: truck
-  6: tricycle
-  7: awning-tricycle
-  8: bus
-  9: motor
-
+path: D:/data/yoloTrain/水稻病害检测
+train: images/train
+val: images/val
+nc: 3
+names: ['Bacteria_Leaf_Blight', 'Brown_Spot', 'Leaf_smut']
 ```
 
 ## 🛠 6、配套服务
