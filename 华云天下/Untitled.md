@@ -97,4 +97,4 @@ names: ['car', 'bus', 'truck']
 A：提供Python转换脚本，支持YOLO→VOC/COCO，开箱即用：[点击下载转换脚本](https://download.csdn.net/download/qq_34645958/92486136?spm=1001.2014.3001.5503)
 
 
-我这边国银的开发做完了，
+我这边客户资料同步身份证号
