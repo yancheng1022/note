@@ -22,7 +22,7 @@
 | **总计** | **-**                | **6715** | **24197** |
 ## ✨ 4、效果演示
 
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20260104220307.png)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20260107222412.png)
 
 ## 🧠 5、模型训练
 
@@ -72,11 +72,10 @@ if __name__ == '__main__':
 5、配置文件 data.yaml
 
 ```yaml
-path: D:/data/yoloTrain/水稻病害检测
-train: images/train
-val: images/val
-nc: 3
-names: ['Bacteria_Leaf_Blight', 'Brown_Spot', 'Leaf_smut']
+train: E:/data/yoloTrain/dog/images/train
+val: E:/data/yoloTrain/dog/images/val
+nc: 2
+names: ['Leashed_Dog','Unleashed_Dog']
 ```
 
 ## 🛠 6、配套服务
