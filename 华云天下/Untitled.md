@@ -22,7 +22,8 @@
 
 ## ✨ 4、效果演示
 
-![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20260116234904.png)
+![image.png](https://yancey-note-img.oss-cn-beijing.aliyuncs.com/20260116235616.png)
+
 
 
 
