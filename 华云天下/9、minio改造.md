@@ -20,3 +20,9 @@ private String fileStorageUrl;
 
 String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils.getEntId());
 ```
+
+# 2、改造记录
+
+| 模块       | 功能  | 接口                          |
+| -------- | --- | --------------------------- |
+| hy-email |     | /email/fileOper/uploadImage |
