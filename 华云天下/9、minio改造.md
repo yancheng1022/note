@@ -29,3 +29,5 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 | hy-email | 上传附件-通用接口             | /email/fileOper/uploadAttach |
 | hy-email | 邮件接收任务                | ReceivingMailJob.execute     |
 | hy-email |                       | /email//create/uploadImages  |
+
+
