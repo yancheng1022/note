@@ -31,3 +31,5 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 | hy-email |                       | /email//create/uploadImages  |
 
 
+国银那边，年前的bug都改完了，如果有新提的话继续看
+还有就是主产品hy模块minio改造，之前一直没空看，就改了几个接口，这周有空的话继续改
