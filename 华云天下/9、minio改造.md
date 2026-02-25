@@ -39,5 +39,5 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 | hy-email | 上传图片                  | /email/create/uploadImages   |
 
 
-呼入明细 /report/detail/data/load                         voice_call_result_data
-工作台   /report/workbench/call/interact
+数据统计-呼入明细  /report/detail/data/load                         voice_call_result_data
+工作台                    /report/workbench/call/interact             r_resc_e
