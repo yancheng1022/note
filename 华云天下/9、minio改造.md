@@ -8,9 +8,11 @@ dev01@60.10.135.210 -p 10049
 
 原始：
 FastDFSUtil.downloadFile
+new FastDFSUtil().downloadFile
+FastDFSUtil.uploadFile
 
 
-
+FastDFSUtil.uploadFile
 
 新：
 ```java
