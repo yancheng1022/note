@@ -40,4 +40,4 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 
 
 数据统计-呼入明细  /report/detail/data/load                         voice_call_result_data
-工作台                    /report/workbench/call/interact             r_resc_e   _r_c_e
+工作台                    /report/workbench/call/interact             r_resc_e   jab_r_c_e
