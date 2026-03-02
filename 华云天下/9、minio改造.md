@@ -44,4 +44,4 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 
 
 国银还有两个bug需要看一下
-另外hy模块的minio改完了，
+另外hy模块的minio改完了，sit环境有问题，所以还没有自测，
