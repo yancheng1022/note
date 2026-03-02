@@ -45,4 +45,4 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 
 国银还有两个bug需要看一下
 另外hy模块的minio改完了，sit环境有问题，所以还没有自测
-另外联通114的慢sql，这周应该要测，这块到时候志鹏要一起看一下测试范围
+还有联通114的慢sql，这周应该要测，这块到时候志鹏要一起看一下测试范围
