@@ -41,3 +41,7 @@ String url = fileStorageUrl+fileService.upload(uploadFiles, platform, ShiroUtils
 
 数据统计-呼入明细  /report/detail/data/load                         voice_call_result_data
 工作台                    /report/workbench/call/interact             jab_resc_e   jab_r_c_e
+
+
+国银还有两个bug需要看一下
+另外hy模块的minio改完了，
