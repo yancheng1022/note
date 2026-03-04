@@ -30,4 +30,4 @@ curl -X GET "localhost:9200/work_order_info/_mapping?pretty" -u elastic:elastic@
 
 3、删除索引
 
-curl -X DELETE "localhost:9200/work_order_info?pretty" -u elastic:elastic@huayunworld.com
+curl -X DELETE "localhost:9200/work_order_info_test?pretty" -u elastic:elastic@huayunworld.com
