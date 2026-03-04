@@ -19,3 +19,15 @@ MODIFY COLUMN `field03` varchar(100) DEFAULT NULL COMMENT '预留字段03';
 
 1 、创建索引
 curl -X PUT "localhost:9200/work_order_info?pretty" -H "Content-Type: application/json" -u elastic:elastic@huayunworld.com -d'
+
+
+
+2、查看索引
+
+curl -X GET "localhost:9200/_cat/indices?v" -u elastic:elastic@huayunworld.com
+
+curl -X GET "localhost:9200/work_order_info/_mapping?pretty" -u elastic:elastic@huayunworld.com
+
+3、删除索引
+
+curl -X DELETE "localhost:9200/work_order_info?pretty" -u elastic:elastic@huayunworld.com
