@@ -26,7 +26,7 @@ curl -X PUT "localhost:9200/work_order_info?pretty" -H "Content-Type: applicatio
 
 curl -X GET "localhost:9200/_cat/indices?v" -u elastic:elastic@huayunworld.com
 
-curl -X GET "localhost:9200/work_order_info_test/_mapping?pretty" -u elastic:elastic@huayunworld.com
+curl -X GET "localhost:9200/work_order_info/_mapping?pretty" -u elastic:elastic@huayunworld.com
 
 3、删除索引
 
